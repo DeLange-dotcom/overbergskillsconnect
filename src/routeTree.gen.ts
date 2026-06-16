@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as TermsRouteImport } from './routes/terms'
 import { Route as RequestSupportRouteImport } from './routes/request-support'
 import { Route as RegisterProviderRouteImport } from './routes/register-provider'
 import { Route as PrivacyRouteImport } from './routes/privacy'
@@ -21,6 +22,11 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin/index'
 import { Route as AuthenticatedAdminProvidersIdRouteImport } from './routes/_authenticated/admin/providers/$id'
 
+const TermsRoute = TermsRouteImport.update({
+  id: '/terms',
+  path: '/terms',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const RequestSupportRoute = RequestSupportRouteImport.update({
   id: '/request-support',
   path: '/request-support',
@@ -86,6 +92,7 @@ export interface FileRoutesByFullPath {
   '/privacy': typeof PrivacyRoute
   '/register-provider': typeof RegisterProviderRoute
   '/request-support': typeof RequestSupportRoute
+  '/terms': typeof TermsRoute
   '/admin/': typeof AuthenticatedAdminIndexRoute
   '/admin/providers/$id': typeof AuthenticatedAdminProvidersIdRoute
 }
@@ -98,6 +105,7 @@ export interface FileRoutesByTo {
   '/privacy': typeof PrivacyRoute
   '/register-provider': typeof RegisterProviderRoute
   '/request-support': typeof RequestSupportRoute
+  '/terms': typeof TermsRoute
   '/admin': typeof AuthenticatedAdminIndexRoute
   '/admin/providers/$id': typeof AuthenticatedAdminProvidersIdRoute
 }
@@ -112,6 +120,7 @@ export interface FileRoutesById {
   '/privacy': typeof PrivacyRoute
   '/register-provider': typeof RegisterProviderRoute
   '/request-support': typeof RequestSupportRoute
+  '/terms': typeof TermsRoute
   '/_authenticated/admin/': typeof AuthenticatedAdminIndexRoute
   '/_authenticated/admin/providers/$id': typeof AuthenticatedAdminProvidersIdRoute
 }
@@ -126,6 +135,7 @@ export interface FileRouteTypes {
     | '/privacy'
     | '/register-provider'
     | '/request-support'
+    | '/terms'
     | '/admin/'
     | '/admin/providers/$id'
   fileRoutesByTo: FileRoutesByTo
@@ -138,6 +148,7 @@ export interface FileRouteTypes {
     | '/privacy'
     | '/register-provider'
     | '/request-support'
+    | '/terms'
     | '/admin'
     | '/admin/providers/$id'
   id:
@@ -151,6 +162,7 @@ export interface FileRouteTypes {
     | '/privacy'
     | '/register-provider'
     | '/request-support'
+    | '/terms'
     | '/_authenticated/admin/'
     | '/_authenticated/admin/providers/$id'
   fileRoutesById: FileRoutesById
@@ -165,10 +177,18 @@ export interface RootRouteChildren {
   PrivacyRoute: typeof PrivacyRoute
   RegisterProviderRoute: typeof RegisterProviderRoute
   RequestSupportRoute: typeof RequestSupportRoute
+  TermsRoute: typeof TermsRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/terms': {
+      id: '/terms'
+      path: '/terms'
+      fullPath: '/terms'
+      preLoaderRoute: typeof TermsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/request-support': {
       id: '/request-support'
       path: '/request-support'
@@ -272,6 +292,7 @@ const rootRouteChildren: RootRouteChildren = {
   PrivacyRoute: PrivacyRoute,
   RegisterProviderRoute: RegisterProviderRoute,
   RequestSupportRoute: RequestSupportRoute,
+  TermsRoute: TermsRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
