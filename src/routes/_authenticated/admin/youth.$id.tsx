@@ -3,6 +3,8 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { supabase } from "@/integrations/supabase/client";
 import { BadgeChip } from "@/components/site/BadgeChip";
+import { AdminPccPanel } from "@/components/site/AdminPccPanel";
+import { VerificationBadge } from "@/components/site/VerificationBadge";
 import { YOUTH_BADGES, YOUTH_INTERESTS, YOUTH_SKILLS, labelFromList } from "@/lib/youth";
 import { toast } from "sonner";
 
@@ -83,6 +85,13 @@ function AdminYouthDetail() {
           <h1 className="text-3xl font-heading font-bold">{p.full_name}</h1>
           <div className="text-sm text-brand-dark/60 mt-1">
             {p.age_group} · {p.town} · {p.school ?? "—"} · DOB {p.dob}
+          </div>
+          <div className="mt-3">
+            <VerificationBadge
+              level={((p as never as { verification_level?: string }).verification_level ?? "unverified") as never}
+              size="lg"
+              showTooltip
+            />
           </div>
         </header>
 

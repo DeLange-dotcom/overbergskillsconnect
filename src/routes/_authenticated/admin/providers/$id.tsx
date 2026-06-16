@@ -4,6 +4,8 @@ import { useState } from "react";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { supabase } from "@/integrations/supabase/client";
 import { PROVIDER_STATUS_LABELS, categoryLabel, travelLabel } from "@/lib/constants";
+import { AdminPccPanel } from "@/components/site/AdminPccPanel";
+import { VerificationBadge } from "@/components/site/VerificationBadge";
 import { ArrowLeft, FileDown, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 
@@ -130,6 +132,13 @@ function ProviderDetail() {
             <p className="text-brand-dark/60 text-sm">
               {provider.town} · Registered {new Date(provider.created_at).toLocaleDateString()}
             </p>
+            <div className="mt-2">
+              <VerificationBadge
+                level={(provider.verification_level ?? "unverified") as never}
+                size="lg"
+                showTooltip
+              />
+            </div>
           </div>
           <button
             onClick={generatePDF}
@@ -214,6 +223,8 @@ function ProviderDetail() {
           </div>
 
           <aside className="space-y-6">
+            <AdminPccPanel table="service_providers" id={id} />
+
             <Section title="Status">
               <select
                 defaultValue={provider.status}
