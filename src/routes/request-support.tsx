@@ -203,6 +203,7 @@ function RequestSupport() {
           {errors.consent_contact && (
             <p className="text-xs text-destructive">{errors.consent_contact}</p>
           )}
+          <TermsAcceptance name="accept_terms" error={errors.accept_terms} />
           <button
             type="submit"
             disabled={submitting}
