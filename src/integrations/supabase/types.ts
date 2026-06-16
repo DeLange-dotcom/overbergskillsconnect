@@ -81,10 +81,23 @@ export type Database = {
           further_education: string | null
           highest_grade: string | null
           id: string
+          identity_verified: boolean
+          interview_completed: boolean
           opportunity_types: string[]
+          pcc_admin_notes: string | null
+          pcc_certificate_path: string | null
+          pcc_expiry_review_date: string | null
+          pcc_issue_date: string | null
+          pcc_number: string | null
+          pcc_status: Database["public"]["Enums"]["pcc_status"] | null
+          pcc_verified: boolean
+          pcc_verified_at: string | null
+          pcc_verified_by: string | null
+          pcc_wants_assistance: boolean
           physical_address: string | null
           qualifications: string | null
           reference_code: string
+          references_checked: boolean
           skills_to_learn: string | null
           status: Database["public"]["Enums"]["apprentice_status"]
           terms_accepted_at: string | null
@@ -93,6 +106,7 @@ export type Database = {
           transport_available: boolean | null
           updated_at: string
           user_id: string | null
+          verification_level: Database["public"]["Enums"]["verification_level"]
           whatsapp_number: string | null
           why_interested: string | null
         }
@@ -110,10 +124,23 @@ export type Database = {
           further_education?: string | null
           highest_grade?: string | null
           id?: string
+          identity_verified?: boolean
+          interview_completed?: boolean
           opportunity_types?: string[]
+          pcc_admin_notes?: string | null
+          pcc_certificate_path?: string | null
+          pcc_expiry_review_date?: string | null
+          pcc_issue_date?: string | null
+          pcc_number?: string | null
+          pcc_status?: Database["public"]["Enums"]["pcc_status"] | null
+          pcc_verified?: boolean
+          pcc_verified_at?: string | null
+          pcc_verified_by?: string | null
+          pcc_wants_assistance?: boolean
           physical_address?: string | null
           qualifications?: string | null
           reference_code?: string
+          references_checked?: boolean
           skills_to_learn?: string | null
           status?: Database["public"]["Enums"]["apprentice_status"]
           terms_accepted_at?: string | null
@@ -122,6 +149,7 @@ export type Database = {
           transport_available?: boolean | null
           updated_at?: string
           user_id?: string | null
+          verification_level?: Database["public"]["Enums"]["verification_level"]
           whatsapp_number?: string | null
           why_interested?: string | null
         }
@@ -139,10 +167,23 @@ export type Database = {
           further_education?: string | null
           highest_grade?: string | null
           id?: string
+          identity_verified?: boolean
+          interview_completed?: boolean
           opportunity_types?: string[]
+          pcc_admin_notes?: string | null
+          pcc_certificate_path?: string | null
+          pcc_expiry_review_date?: string | null
+          pcc_issue_date?: string | null
+          pcc_number?: string | null
+          pcc_status?: Database["public"]["Enums"]["pcc_status"] | null
+          pcc_verified?: boolean
+          pcc_verified_at?: string | null
+          pcc_verified_by?: string | null
+          pcc_wants_assistance?: boolean
           physical_address?: string | null
           qualifications?: string | null
           reference_code?: string
+          references_checked?: boolean
           skills_to_learn?: string | null
           status?: Database["public"]["Enums"]["apprentice_status"]
           terms_accepted_at?: string | null
@@ -151,6 +192,7 @@ export type Database = {
           transport_available?: boolean | null
           updated_at?: string
           user_id?: string | null
+          verification_level?: Database["public"]["Enums"]["verification_level"]
           whatsapp_number?: string | null
           why_interested?: string | null
         }
@@ -708,13 +750,26 @@ export type Database = {
           full_name: string
           id: string
           id_passport_number: string
+          identity_verified: boolean
+          interview_completed: boolean
           looking_for: Database["public"]["Enums"]["availability_type"][]
           max_travel: Database["public"]["Enums"]["travel_distance"]
           mobile_number: string
           nationality: string
           own_transport: boolean
+          pcc_admin_notes: string | null
+          pcc_certificate_path: string | null
+          pcc_expiry_review_date: string | null
+          pcc_issue_date: string | null
+          pcc_number: string | null
+          pcc_status: Database["public"]["Enums"]["pcc_status"] | null
+          pcc_verified: boolean
+          pcc_verified_at: string | null
+          pcc_verified_by: string | null
+          pcc_wants_assistance: boolean
           physical_address: string
           previous_employer: string | null
+          references_checked: boolean
           rejection_reason: string | null
           services: Database["public"]["Enums"]["service_category"][]
           skills_summary: string
@@ -725,6 +780,7 @@ export type Database = {
           typical_hours: string[]
           updated_at: string
           user_id: string | null
+          verification_level: Database["public"]["Enums"]["verification_level"]
           whatsapp_number: string | null
           years_experience: number | null
         }
@@ -748,13 +804,26 @@ export type Database = {
           full_name: string
           id?: string
           id_passport_number: string
+          identity_verified?: boolean
+          interview_completed?: boolean
           looking_for?: Database["public"]["Enums"]["availability_type"][]
           max_travel?: Database["public"]["Enums"]["travel_distance"]
           mobile_number: string
           nationality: string
           own_transport?: boolean
+          pcc_admin_notes?: string | null
+          pcc_certificate_path?: string | null
+          pcc_expiry_review_date?: string | null
+          pcc_issue_date?: string | null
+          pcc_number?: string | null
+          pcc_status?: Database["public"]["Enums"]["pcc_status"] | null
+          pcc_verified?: boolean
+          pcc_verified_at?: string | null
+          pcc_verified_by?: string | null
+          pcc_wants_assistance?: boolean
           physical_address: string
           previous_employer?: string | null
+          references_checked?: boolean
           rejection_reason?: string | null
           services?: Database["public"]["Enums"]["service_category"][]
           skills_summary: string
@@ -765,6 +834,7 @@ export type Database = {
           typical_hours?: string[]
           updated_at?: string
           user_id?: string | null
+          verification_level?: Database["public"]["Enums"]["verification_level"]
           whatsapp_number?: string | null
           years_experience?: number | null
         }
@@ -788,13 +858,26 @@ export type Database = {
           full_name?: string
           id?: string
           id_passport_number?: string
+          identity_verified?: boolean
+          interview_completed?: boolean
           looking_for?: Database["public"]["Enums"]["availability_type"][]
           max_travel?: Database["public"]["Enums"]["travel_distance"]
           mobile_number?: string
           nationality?: string
           own_transport?: boolean
+          pcc_admin_notes?: string | null
+          pcc_certificate_path?: string | null
+          pcc_expiry_review_date?: string | null
+          pcc_issue_date?: string | null
+          pcc_number?: string | null
+          pcc_status?: Database["public"]["Enums"]["pcc_status"] | null
+          pcc_verified?: boolean
+          pcc_verified_at?: string | null
+          pcc_verified_by?: string | null
+          pcc_wants_assistance?: boolean
           physical_address?: string
           previous_employer?: string | null
+          references_checked?: boolean
           rejection_reason?: string | null
           services?: Database["public"]["Enums"]["service_category"][]
           skills_summary?: string
@@ -805,6 +888,7 @@ export type Database = {
           typical_hours?: string[]
           updated_at?: string
           user_id?: string | null
+          verification_level?: Database["public"]["Enums"]["verification_level"]
           whatsapp_number?: string | null
           years_experience?: number | null
         }
@@ -1180,13 +1264,26 @@ export type Database = {
           guardian_phone: string | null
           guardian_relationship: string | null
           id: string
+          identity_verified: boolean
           interests: string[]
+          interview_completed: boolean
           languages: string[]
           learning_city_interest: boolean
           mentor_match_opt_in: boolean
           mobile_number: string | null
           notes_admin: string | null
           opportunity_types: string[]
+          pcc_admin_notes: string | null
+          pcc_certificate_path: string | null
+          pcc_expiry_review_date: string | null
+          pcc_issue_date: string | null
+          pcc_number: string | null
+          pcc_status: Database["public"]["Enums"]["pcc_status"] | null
+          pcc_verified: boolean
+          pcc_verified_at: string | null
+          pcc_verified_by: string | null
+          pcc_wants_assistance: boolean
+          references_checked: boolean
           school: string | null
           skills: string[]
           status: Database["public"]["Enums"]["youth_status"]
@@ -1195,6 +1292,7 @@ export type Database = {
           town: string
           updated_at: string
           user_id: string | null
+          verification_level: Database["public"]["Enums"]["verification_level"]
         }
         Insert: {
           age_group?: string | null
@@ -1214,13 +1312,26 @@ export type Database = {
           guardian_phone?: string | null
           guardian_relationship?: string | null
           id?: string
+          identity_verified?: boolean
           interests?: string[]
+          interview_completed?: boolean
           languages?: string[]
           learning_city_interest?: boolean
           mentor_match_opt_in?: boolean
           mobile_number?: string | null
           notes_admin?: string | null
           opportunity_types?: string[]
+          pcc_admin_notes?: string | null
+          pcc_certificate_path?: string | null
+          pcc_expiry_review_date?: string | null
+          pcc_issue_date?: string | null
+          pcc_number?: string | null
+          pcc_status?: Database["public"]["Enums"]["pcc_status"] | null
+          pcc_verified?: boolean
+          pcc_verified_at?: string | null
+          pcc_verified_by?: string | null
+          pcc_wants_assistance?: boolean
+          references_checked?: boolean
           school?: string | null
           skills?: string[]
           status?: Database["public"]["Enums"]["youth_status"]
@@ -1229,6 +1340,7 @@ export type Database = {
           town: string
           updated_at?: string
           user_id?: string | null
+          verification_level?: Database["public"]["Enums"]["verification_level"]
         }
         Update: {
           age_group?: string | null
@@ -1248,13 +1360,26 @@ export type Database = {
           guardian_phone?: string | null
           guardian_relationship?: string | null
           id?: string
+          identity_verified?: boolean
           interests?: string[]
+          interview_completed?: boolean
           languages?: string[]
           learning_city_interest?: boolean
           mentor_match_opt_in?: boolean
           mobile_number?: string | null
           notes_admin?: string | null
           opportunity_types?: string[]
+          pcc_admin_notes?: string | null
+          pcc_certificate_path?: string | null
+          pcc_expiry_review_date?: string | null
+          pcc_issue_date?: string | null
+          pcc_number?: string | null
+          pcc_status?: Database["public"]["Enums"]["pcc_status"] | null
+          pcc_verified?: boolean
+          pcc_verified_at?: string | null
+          pcc_verified_by?: string | null
+          pcc_wants_assistance?: boolean
+          references_checked?: boolean
           school?: string | null
           skills?: string[]
           status?: Database["public"]["Enums"]["youth_status"]
@@ -1263,6 +1388,7 @@ export type Database = {
           town?: string
           updated_at?: string
           user_id?: string | null
+          verification_level?: Database["public"]["Enums"]["verification_level"]
         }
         Relationships: []
       }
@@ -1646,6 +1772,7 @@ export type Database = {
       mentor_status: "pending" | "approved" | "active" | "inactive"
       opportunity_status: "open" | "reviewing" | "filled" | "closed"
       payment_status: "pending" | "succeeded" | "failed" | "refunded"
+      pcc_status: "have" | "applied" | "none"
       provider_app_status: "pending" | "approved" | "rejected"
       provider_status:
         | "pending_review"
@@ -1688,6 +1815,7 @@ export type Database = {
         | "within_20km"
         | "within_50km"
         | "overberg_wide"
+      verification_level: "unverified" | "bronze" | "silver" | "gold"
       youth_application_status:
         | "interested"
         | "applied"
@@ -1867,6 +1995,7 @@ export const Constants = {
       mentor_status: ["pending", "approved", "active", "inactive"],
       opportunity_status: ["open", "reviewing", "filled", "closed"],
       payment_status: ["pending", "succeeded", "failed", "refunded"],
+      pcc_status: ["have", "applied", "none"],
       provider_app_status: ["pending", "approved", "rejected"],
       provider_status: [
         "pending_review",
@@ -1913,6 +2042,7 @@ export const Constants = {
         "within_50km",
         "overberg_wide",
       ],
+      verification_level: ["unverified", "bronze", "silver", "gold"],
       youth_application_status: [
         "interested",
         "applied",
