@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { z } from "zod";
 import { SiteLayout } from "@/components/site/SiteLayout";
+import { TermsAcceptance } from "@/components/site/TermsAcceptance";
 import { supabase } from "@/integrations/supabase/client";
 import {
   SERVICE_CATEGORIES,
@@ -10,6 +11,7 @@ import {
   LOOKING_FOR,
   TRAVEL,
 } from "@/lib/constants";
+import { TERMS_VERSION, recordTermsAcceptance } from "@/lib/terms";
 import { toast } from "sonner";
 import { CheckCircle2, Loader2 } from "lucide-react";
 
