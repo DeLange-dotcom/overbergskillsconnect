@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
-import { Heart, Search, HelpingHand, UserPlus, ShieldCheck, Handshake, ClipboardList } from "lucide-react";
+import { Heart, Search, HelpingHand, UserPlus, ShieldCheck, Handshake, ClipboardList, Briefcase } from "lucide-react";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { supabase } from "@/integrations/supabase/client";
 
