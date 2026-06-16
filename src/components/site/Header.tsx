@@ -76,7 +76,7 @@ export function Header() {
         <div className="flex items-center gap-2">
           <Link
             to="/donate"
-            className="hidden sm:inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-brand-accent text-white text-sm font-medium hover:brightness-110 transition"
+            className="hidden sm:inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-brand-accent text-white text-sm font-medium hover:brightness-110 transition whitespace-nowrap"
           >
             <Heart className="size-4" /> Donate
           </Link>
