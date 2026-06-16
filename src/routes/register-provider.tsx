@@ -126,9 +126,13 @@ function RegisterProvider() {
     }
 
     const d = parsed.data;
-    const { data, error } = await supabase
+    const providerId = crypto.randomUUID();
+    const applicationCode = `HIN-${providerId.slice(0, 8).toUpperCase()}`;
+    const { error } = await supabase
       .from("service_providers")
       .insert({
+        id: providerId,
+        application_code: applicationCode,
         full_name: d.full_name,
         id_passport_number: d.id_passport_number,
         nationality: d.nationality,
@@ -158,11 +162,9 @@ function RegisterProvider() {
         consent_no_guarantee: d.consent_no_guarantee,
         terms_accepted_at: new Date().toISOString(),
         terms_version_accepted: TERMS_VERSION,
-      })
-      .select("id, application_code")
-      .single();
+      });
 
-    if (error || !data) {
+    if (error) {
       toast.error(error?.message ?? "Could not submit your application.");
       setSubmitting(false);
       return;
@@ -171,14 +173,14 @@ function RegisterProvider() {
     // Insert references
     await supabase.from("provider_references").insert([
       {
-        service_provider_id: data.id,
+        service_provider_id: providerId,
         reference_name: d.ref1_name,
         reference_contact: d.ref1_contact,
       },
       ...(d.ref2_name && d.ref2_contact
         ? [
             {
-              service_provider_id: data.id,
+              service_provider_id: providerId,
               reference_name: d.ref2_name,
               reference_contact: d.ref2_contact,
             },
@@ -190,10 +192,10 @@ function RegisterProvider() {
     await recordTermsAcceptance({
       context: "provider_registration",
       referenceTable: "service_providers",
-      referenceId: data.id,
+      referenceId: providerId,
     });
 
-    setDone({ code: data.application_code });
+    setDone({ code: applicationCode });
     setSubmitting(false);
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
