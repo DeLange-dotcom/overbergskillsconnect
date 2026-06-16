@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
-import { Heart, Search, HelpingHand, UserPlus, ShieldCheck, Handshake, ClipboardList } from "lucide-react";
+import { Heart, Search, HelpingHand, UserPlus, ShieldCheck, Handshake, ClipboardList, Briefcase } from "lucide-react";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { supabase } from "@/integrations/supabase/client";
 
@@ -91,6 +91,14 @@ function Home() {
               tagColor="text-brand-primary"
               title="Youth Opportunities Hub"
               icon={<UserPlus className="size-5" />}
+              variant="soft"
+            />
+            <CardCta
+              to="/apprenticeships"
+              tag="Skills & Work"
+              tagColor="text-brand-primary"
+              title="Find or Offer an Apprenticeship"
+              icon={<Briefcase className="size-5" />}
               variant="soft"
             />
             <CardCta
