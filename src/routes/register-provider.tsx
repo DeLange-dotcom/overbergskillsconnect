@@ -280,7 +280,63 @@ function RegisterProvider() {
                 required
                 error={errors.id_passport_number}
               />
-              <Field label="Nationality" name="nationality" required error={errors.nationality} />
+              <div>
+                <Label>
+                  Nationality<span className="text-destructive">*</span>
+                </Label>
+                <input
+                  name="nationality"
+                  type="text"
+                  value={nationality}
+                  onChange={(e) => setNationality(e.target.value)}
+                  placeholder="e.g. South African"
+                  className="w-full px-4 py-3 border border-brand-dark/10 rounded-xl bg-white focus:outline-none focus:border-brand-primary"
+                />
+                {errors.nationality && (
+                  <p className="text-xs text-destructive mt-1">{errors.nationality}</p>
+                )}
+              </div>
+              {isForeign && (
+                <div className="sm:col-span-2">
+                  <Label>
+                    Do you hold a valid South African work permit?
+                    <span className="text-destructive">*</span>
+                  </Label>
+                  <div className="flex gap-6 mt-2">
+                    <label className="flex items-center gap-2">
+                      <input
+                        type="radio"
+                        name="work_permit"
+                        value="yes"
+                        checked={workPermit === "yes"}
+                        onChange={() => setWorkPermit("yes")}
+                      />
+                      <span>Yes</span>
+                    </label>
+                    <label className="flex items-center gap-2">
+                      <input
+                        type="radio"
+                        name="work_permit"
+                        value="no"
+                        checked={workPermit === "no"}
+                        onChange={() => setWorkPermit("no")}
+                      />
+                      <span>No</span>
+                    </label>
+                  </div>
+                  {errors.work_permit && (
+                    <p className="text-xs text-destructive mt-1">{errors.work_permit}</p>
+                  )}
+                  {terminated && (
+                    <div className="mt-3 rounded-xl border border-destructive/30 bg-destructive/5 p-4 text-sm text-destructive">
+                      Unfortunately, Hineni can only register providers who are
+                      South African citizens or hold a valid South African work
+                      permit. Your application cannot be submitted.
+                    </div>
+                  )}
+                </div>
+              )}
+
               <Field
                 label="Date of birth"
                 name="date_of_birth"
