@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as YouthRouteImport } from './routes/youth'
 import { Route as TermsRouteImport } from './routes/terms'
+import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as RequestSupportRouteImport } from './routes/request-support'
 import { Route as RegisterProviderRouteImport } from './routes/register-provider'
 import { Route as PrivacyRouteImport } from './routes/privacy'
@@ -46,6 +47,11 @@ const YouthRoute = YouthRouteImport.update({
 const TermsRoute = TermsRouteImport.update({
   id: '/terms',
   path: '/terms',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ResetPasswordRoute = ResetPasswordRouteImport.update({
+  id: '/reset-password',
+  path: '/reset-password',
   getParentRoute: () => rootRouteImport,
 } as any)
 const RequestSupportRoute = RequestSupportRouteImport.update({
@@ -198,6 +204,7 @@ export interface FileRoutesByFullPath {
   '/privacy': typeof PrivacyRoute
   '/register-provider': typeof RegisterProviderRoute
   '/request-support': typeof RequestSupportRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/terms': typeof TermsRoute
   '/youth': typeof YouthRouteWithChildren
   '/apprenticeships/become-mentor': typeof ApprenticeshipsBecomeMentorRoute
@@ -227,6 +234,7 @@ export interface FileRoutesByTo {
   '/privacy': typeof PrivacyRoute
   '/register-provider': typeof RegisterProviderRoute
   '/request-support': typeof RequestSupportRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/terms': typeof TermsRoute
   '/youth': typeof YouthRouteWithChildren
   '/apprenticeships/become-mentor': typeof ApprenticeshipsBecomeMentorRoute
@@ -258,6 +266,7 @@ export interface FileRoutesById {
   '/privacy': typeof PrivacyRoute
   '/register-provider': typeof RegisterProviderRoute
   '/request-support': typeof RequestSupportRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/terms': typeof TermsRoute
   '/youth': typeof YouthRouteWithChildren
   '/apprenticeships/become-mentor': typeof ApprenticeshipsBecomeMentorRoute
@@ -289,6 +298,7 @@ export interface FileRouteTypes {
     | '/privacy'
     | '/register-provider'
     | '/request-support'
+    | '/reset-password'
     | '/terms'
     | '/youth'
     | '/apprenticeships/become-mentor'
@@ -318,6 +328,7 @@ export interface FileRouteTypes {
     | '/privacy'
     | '/register-provider'
     | '/request-support'
+    | '/reset-password'
     | '/terms'
     | '/youth'
     | '/apprenticeships/become-mentor'
@@ -348,6 +359,7 @@ export interface FileRouteTypes {
     | '/privacy'
     | '/register-provider'
     | '/request-support'
+    | '/reset-password'
     | '/terms'
     | '/youth'
     | '/apprenticeships/become-mentor'
@@ -379,6 +391,7 @@ export interface RootRouteChildren {
   PrivacyRoute: typeof PrivacyRoute
   RegisterProviderRoute: typeof RegisterProviderRoute
   RequestSupportRoute: typeof RequestSupportRoute
+  ResetPasswordRoute: typeof ResetPasswordRoute
   TermsRoute: typeof TermsRoute
   YouthRoute: typeof YouthRouteWithChildren
 }
@@ -397,6 +410,13 @@ declare module '@tanstack/react-router' {
       path: '/terms'
       fullPath: '/terms'
       preLoaderRoute: typeof TermsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reset-password': {
+      id: '/reset-password'
+      path: '/reset-password'
+      fullPath: '/reset-password'
+      preLoaderRoute: typeof ResetPasswordRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/request-support': {
@@ -657,6 +677,7 @@ const rootRouteChildren: RootRouteChildren = {
   PrivacyRoute: PrivacyRoute,
   RegisterProviderRoute: RegisterProviderRoute,
   RequestSupportRoute: RequestSupportRoute,
+  ResetPasswordRoute: ResetPasswordRoute,
   TermsRoute: TermsRoute,
   YouthRoute: YouthRouteWithChildren,
 }
