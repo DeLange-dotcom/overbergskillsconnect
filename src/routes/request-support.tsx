@@ -2,8 +2,10 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { z } from "zod";
 import { SiteLayout } from "@/components/site/SiteLayout";
+import { TermsAcceptance } from "@/components/site/TermsAcceptance";
 import { supabase } from "@/integrations/supabase/client";
 import { SERVICE_CATEGORIES, DAYS, HOURS, LOOKING_FOR } from "@/lib/constants";
+import { TERMS_VERSION, recordTermsAcceptance } from "@/lib/terms";
 import { CheckCircle2, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 
@@ -33,6 +35,9 @@ const schema = z.object({
   preferred_times: z.array(z.string()),
   notes: z.string().max(1000).optional().or(z.literal("")),
   consent_contact: z.literal(true, { errorMap: () => ({ message: "Required" }) }),
+  accept_terms: z.literal(true, {
+    errorMap: () => ({ message: "You must accept the Terms & Disclaimer to continue." }),
+  }),
 });
 
 function RequestSupport() {
