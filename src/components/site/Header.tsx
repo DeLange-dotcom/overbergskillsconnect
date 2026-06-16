@@ -32,7 +32,7 @@ export function Header() {
 
   return (
     <header className="border-b border-brand-dark/5 bg-brand-page sticky top-0 z-40 backdrop-blur">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between gap-4">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between gap-4">
         <Link to="/" className="flex items-center gap-2 shrink-0">
           <div className="size-9 rounded-full bg-brand-primary text-primary-foreground grid place-items-center font-heading font-bold">
             H
@@ -45,7 +45,7 @@ export function Header() {
           </div>
         </Link>
 
-        <nav className="hidden lg:flex items-center gap-7 text-sm">
+        <nav className="hidden lg:flex items-center gap-6 text-sm whitespace-nowrap">
           {NAV.map((n) => (
             <Link
               key={n.to}
@@ -59,15 +59,15 @@ export function Header() {
           ))}
           <Link
             to="/youth"
-            className="px-4 py-2 rounded-full bg-brand-primary text-primary-foreground text-sm font-medium hover:brightness-110 transition"
-            activeProps={{ className: "px-4 py-2 rounded-full bg-brand-primary text-primary-foreground text-sm font-medium brightness-110" }}
+            className="px-4 py-2 rounded-full bg-brand-primary text-primary-foreground text-sm font-medium hover:brightness-110 transition whitespace-nowrap"
+            activeProps={{ className: "px-4 py-2 rounded-full bg-brand-primary text-primary-foreground text-sm font-medium brightness-110 whitespace-nowrap" }}
           >
             Youth Hub
           </Link>
           <Link
             to="/apprenticeships"
-            className="px-4 py-2 rounded-full bg-brand-primary text-primary-foreground text-sm font-medium hover:brightness-110 transition"
-            activeProps={{ className: "px-4 py-2 rounded-full bg-brand-primary text-primary-foreground text-sm font-medium brightness-110" }}
+            className="px-4 py-2 rounded-full bg-brand-primary text-primary-foreground text-sm font-medium hover:brightness-110 transition whitespace-nowrap"
+            activeProps={{ className: "px-4 py-2 rounded-full bg-brand-primary text-primary-foreground text-sm font-medium brightness-110 whitespace-nowrap" }}
           >
             Apprenticeships
           </Link>
