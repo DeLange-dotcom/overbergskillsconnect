@@ -83,10 +83,24 @@ function RegisterProvider() {
   const [submitting, setSubmitting] = useState(false);
   const [done, setDone] = useState<{ code: string } | null>(null);
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [nationality, setNationality] = useState("");
+  const [workPermit, setWorkPermit] = useState<"yes" | "no" | "">("");
+
+  const isSouthAfrican = /south\s*afric/i.test(nationality.trim());
+  const isForeign = nationality.trim().length >= 2 && !isSouthAfrican;
+  const terminated = isForeign && workPermit === "no";
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setErrors({});
+
+    if (terminated) {
+      toast.error(
+        "Application cannot continue without a valid South African work permit."
+      );
+      return;
+    }
+
     setSubmitting(true);
 
     const fd = new FormData(e.currentTarget);
@@ -94,7 +108,9 @@ function RegisterProvider() {
       full_name: fd.get("full_name") as string,
       id_passport_number: fd.get("id_passport_number") as string,
       nationality: fd.get("nationality") as string,
+      work_permit: (fd.get("work_permit") as string) || (isSouthAfrican ? "na" : undefined),
       date_of_birth: fd.get("date_of_birth") as string,
+
       mobile_number: fd.get("mobile_number") as string,
       whatsapp_number: fd.get("whatsapp_number") as string,
       email: fd.get("email") as string,
