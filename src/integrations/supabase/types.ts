@@ -55,6 +55,8 @@ export type Database = {
           requester_name: string
           service_provider_id: string
           status: string
+          terms_accepted_at: string | null
+          terms_version_accepted: string | null
         }
         Insert: {
           admin_notes?: string | null
@@ -66,6 +68,8 @@ export type Database = {
           requester_name: string
           service_provider_id: string
           status?: string
+          terms_accepted_at?: string | null
+          terms_version_accepted?: string | null
         }
         Update: {
           admin_notes?: string | null
@@ -77,6 +81,8 @@ export type Database = {
           requester_name?: string
           service_provider_id?: string
           status?: string
+          terms_accepted_at?: string | null
+          terms_version_accepted?: string | null
         }
         Relationships: [
           {
@@ -316,6 +322,8 @@ export type Database = {
           services: Database["public"]["Enums"]["service_category"][]
           skills_summary: string
           status: Database["public"]["Enums"]["provider_status"]
+          terms_accepted_at: string | null
+          terms_version_accepted: string | null
           town: string
           typical_hours: string[]
           updated_at: string
@@ -354,6 +362,8 @@ export type Database = {
           services?: Database["public"]["Enums"]["service_category"][]
           skills_summary: string
           status?: Database["public"]["Enums"]["provider_status"]
+          terms_accepted_at?: string | null
+          terms_version_accepted?: string | null
           town: string
           typical_hours?: string[]
           updated_at?: string
@@ -392,6 +402,8 @@ export type Database = {
           services?: Database["public"]["Enums"]["service_category"][]
           skills_summary?: string
           status?: Database["public"]["Enums"]["provider_status"]
+          terms_accepted_at?: string | null
+          terms_version_accepted?: string | null
           town?: string
           typical_hours?: string[]
           updated_at?: string
@@ -417,6 +429,8 @@ export type Database = {
           requester_name: string
           service_needed: Database["public"]["Enums"]["service_category"]
           status: Database["public"]["Enums"]["request_status"]
+          terms_accepted_at: string | null
+          terms_version_accepted: string | null
           updated_at: string
           urgency: string | null
         }
@@ -435,6 +449,8 @@ export type Database = {
           requester_name: string
           service_needed: Database["public"]["Enums"]["service_category"]
           status?: Database["public"]["Enums"]["request_status"]
+          terms_accepted_at?: string | null
+          terms_version_accepted?: string | null
           updated_at?: string
           urgency?: string | null
         }
@@ -453,8 +469,52 @@ export type Database = {
           requester_name?: string
           service_needed?: Database["public"]["Enums"]["service_category"]
           status?: Database["public"]["Enums"]["request_status"]
+          terms_accepted_at?: string | null
+          terms_version_accepted?: string | null
           updated_at?: string
           urgency?: string | null
+        }
+        Relationships: []
+      }
+      terms_acceptances: {
+        Row: {
+          acceptance_text: string
+          accepted_at: string
+          context: string
+          created_at: string
+          id: string
+          ip_address: string | null
+          reference_id: string | null
+          reference_table: string | null
+          terms_version: string
+          user_agent: string | null
+          user_id: string | null
+        }
+        Insert: {
+          acceptance_text: string
+          accepted_at?: string
+          context: string
+          created_at?: string
+          id?: string
+          ip_address?: string | null
+          reference_id?: string | null
+          reference_table?: string | null
+          terms_version: string
+          user_agent?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          acceptance_text?: string
+          accepted_at?: string
+          context?: string
+          created_at?: string
+          id?: string
+          ip_address?: string | null
+          reference_id?: string | null
+          reference_table?: string | null
+          terms_version?: string
+          user_agent?: string | null
+          user_id?: string | null
         }
         Relationships: []
       }

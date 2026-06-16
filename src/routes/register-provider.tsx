@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { z } from "zod";
 import { SiteLayout } from "@/components/site/SiteLayout";
+import { TermsAcceptance } from "@/components/site/TermsAcceptance";
 import { supabase } from "@/integrations/supabase/client";
 import {
   SERVICE_CATEGORIES,
@@ -10,6 +11,7 @@ import {
   LOOKING_FOR,
   TRAVEL,
 } from "@/lib/constants";
+import { TERMS_VERSION, recordTermsAcceptance } from "@/lib/terms";
 import { toast } from "sonner";
 import { CheckCircle2, Loader2 } from "lucide-react";
 
@@ -59,6 +61,9 @@ const schema = z.object({
   consent_background_checks: z.literal(true, { errorMap: () => ({ message: "Required" }) }),
   consent_share_authorities: z.literal(true, { errorMap: () => ({ message: "Required" }) }),
   consent_no_guarantee: z.literal(true, { errorMap: () => ({ message: "Required" }) }),
+  accept_terms: z.literal(true, {
+    errorMap: () => ({ message: "You must accept the Terms & Disclaimer to continue." }),
+  }),
 });
 
 function RegisterProvider() {
@@ -104,6 +109,7 @@ function RegisterProvider() {
       consent_background_checks: fd.get("consent_background_checks") === "on",
       consent_share_authorities: fd.get("consent_share_authorities") === "on",
       consent_no_guarantee: fd.get("consent_no_guarantee") === "on",
+      accept_terms: fd.get("accept_terms") === "on",
     };
 
     const parsed = schema.safeParse(raw);
@@ -150,6 +156,8 @@ function RegisterProvider() {
         consent_background_checks: d.consent_background_checks,
         consent_share_authorities: d.consent_share_authorities,
         consent_no_guarantee: d.consent_no_guarantee,
+        terms_accepted_at: new Date().toISOString(),
+        terms_version_accepted: TERMS_VERSION,
       })
       .select("id, application_code")
       .single();
@@ -177,6 +185,13 @@ function RegisterProvider() {
           ]
         : []),
     ]);
+
+    // Record terms acceptance for the audit log
+    await recordTermsAcceptance({
+      context: "provider_registration",
+      referenceTable: "service_providers",
+      referenceId: data.id,
+    });
 
     setDone({ code: data.application_code });
     setSubmitting(false);
@@ -393,6 +408,10 @@ function RegisterProvider() {
                 I understand that registration does not guarantee work.
               </Consent>
             </div>
+          </Fieldset>
+
+          <Fieldset title="Terms & Disclaimer (required)">
+            <TermsAcceptance name="accept_terms" error={errors.accept_terms} />
           </Fieldset>
 
           <div className="flex flex-wrap gap-3 items-center pt-4">

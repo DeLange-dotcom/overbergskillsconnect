@@ -2,8 +2,10 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { SiteLayout } from "@/components/site/SiteLayout";
+import { TermsAcceptance } from "@/components/site/TermsAcceptance";
 import { supabase } from "@/integrations/supabase/client";
 import { SERVICE_CATEGORIES, TRAVEL, categoryLabel, travelLabel } from "@/lib/constants";
+import { TERMS_VERSION, recordTermsAcceptance } from "@/lib/terms";
 import { MapPin, Car, Calendar, Clock, MessageCircle, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 
@@ -155,23 +157,41 @@ function FindHelp() {
 
 function ContactModal({ provider, onClose }: { provider: Provider; onClose: () => void }) {
   const [submitting, setSubmitting] = useState(false);
+  const [accepted, setAccepted] = useState(false);
+  const [showError, setShowError] = useState(false);
 
   async function submit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    setSubmitting(true);
-    const fd = new FormData(e.currentTarget);
-    const { error } = await supabase.from("contact_requests").insert({
-      service_provider_id: provider.id,
-      requester_name: (fd.get("name") as string).trim(),
-      requester_contact: (fd.get("contact") as string).trim(),
-      requester_email: ((fd.get("email") as string) || "").trim() || null,
-      message: ((fd.get("message") as string) || "").trim() || null,
-    });
-    setSubmitting(false);
-    if (error) {
-      toast.error(error.message);
+    if (!accepted) {
+      setShowError(true);
       return;
     }
+    setSubmitting(true);
+    const fd = new FormData(e.currentTarget);
+    const { data: inserted, error } = await supabase
+      .from("contact_requests")
+      .insert({
+        service_provider_id: provider.id,
+        requester_name: (fd.get("name") as string).trim(),
+        requester_contact: (fd.get("contact") as string).trim(),
+        requester_email: ((fd.get("email") as string) || "").trim() || null,
+        message: ((fd.get("message") as string) || "").trim() || null,
+        terms_accepted_at: new Date().toISOString(),
+        terms_version_accepted: TERMS_VERSION,
+      })
+      .select("id")
+      .single();
+    if (error || !inserted) {
+      setSubmitting(false);
+      toast.error(error?.message ?? "Could not send your request.");
+      return;
+    }
+    await recordTermsAcceptance({
+      context: "contact_request",
+      referenceTable: "contact_requests",
+      referenceId: inserted.id,
+    });
+    setSubmitting(false);
     toast.success("Hineni has received your request and will be in touch.");
     onClose();
   }
@@ -210,6 +230,14 @@ function ContactModal({ provider, onClose }: { provider: Provider; onClose: () =
             rows={3}
             placeholder="Briefly, what help are you looking for?"
             className="w-full px-4 py-3 border border-brand-dark/10 rounded-xl"
+          />
+          <TermsAcceptance
+            checked={accepted}
+            onChange={(v) => {
+              setAccepted(v);
+              if (v) setShowError(false);
+            }}
+            error={showError && !accepted ? "You must accept the Terms & Disclaimer to continue." : undefined}
           />
           <div className="flex gap-2 justify-end pt-2">
             <button
