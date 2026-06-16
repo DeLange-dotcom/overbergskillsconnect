@@ -33,6 +33,7 @@ const schema = z.object({
   full_name: z.string().trim().min(2).max(120),
   id_passport_number: z.string().trim().min(4).max(40),
   nationality: z.string().trim().min(2).max(60),
+  work_permit: z.enum(["yes", "no", "na"]).optional(),
   date_of_birth: z.string().min(1, "Date of birth is required"),
   mobile_number: z.string().trim().min(7).max(20),
   whatsapp_number: z.string().trim().max(20).optional().or(z.literal("")),
@@ -64,16 +65,42 @@ const schema = z.object({
   accept_terms: z.literal(true, {
     errorMap: () => ({ message: "You must accept the Terms & Disclaimer to continue." }),
   }),
+}).superRefine((data, ctx) => {
+  const isSA = /south\s*afric/i.test(data.nationality.trim());
+  if (!isSA) {
+    if (!data.work_permit || data.work_permit === "na") {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ["work_permit"],
+        message: "Please confirm whether you hold a valid South African work permit.",
+      });
+    }
+  }
 });
+
 
 function RegisterProvider() {
   const [submitting, setSubmitting] = useState(false);
   const [done, setDone] = useState<{ code: string } | null>(null);
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [nationality, setNationality] = useState("");
+  const [workPermit, setWorkPermit] = useState<"yes" | "no" | "">("");
+
+  const isSouthAfrican = /south\s*afric/i.test(nationality.trim());
+  const isForeign = nationality.trim().length >= 2 && !isSouthAfrican;
+  const terminated = isForeign && workPermit === "no";
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setErrors({});
+
+    if (terminated) {
+      toast.error(
+        "Application cannot continue without a valid South African work permit."
+      );
+      return;
+    }
+
     setSubmitting(true);
 
     const fd = new FormData(e.currentTarget);
@@ -81,7 +108,9 @@ function RegisterProvider() {
       full_name: fd.get("full_name") as string,
       id_passport_number: fd.get("id_passport_number") as string,
       nationality: fd.get("nationality") as string,
+      work_permit: (fd.get("work_permit") as string) || (isSouthAfrican ? "na" : undefined),
       date_of_birth: fd.get("date_of_birth") as string,
+
       mobile_number: fd.get("mobile_number") as string,
       whatsapp_number: fd.get("whatsapp_number") as string,
       email: fd.get("email") as string,
@@ -251,7 +280,63 @@ function RegisterProvider() {
                 required
                 error={errors.id_passport_number}
               />
-              <Field label="Nationality" name="nationality" required error={errors.nationality} />
+              <div>
+                <Label>
+                  Nationality<span className="text-destructive">*</span>
+                </Label>
+                <input
+                  name="nationality"
+                  type="text"
+                  value={nationality}
+                  onChange={(e) => setNationality(e.target.value)}
+                  placeholder="e.g. South African"
+                  className="w-full px-4 py-3 border border-brand-dark/10 rounded-xl bg-white focus:outline-none focus:border-brand-primary"
+                />
+                {errors.nationality && (
+                  <p className="text-xs text-destructive mt-1">{errors.nationality}</p>
+                )}
+              </div>
+              {isForeign && (
+                <div className="sm:col-span-2">
+                  <Label>
+                    Do you hold a valid South African work permit?
+                    <span className="text-destructive">*</span>
+                  </Label>
+                  <div className="flex gap-6 mt-2">
+                    <label className="flex items-center gap-2">
+                      <input
+                        type="radio"
+                        name="work_permit"
+                        value="yes"
+                        checked={workPermit === "yes"}
+                        onChange={() => setWorkPermit("yes")}
+                      />
+                      <span>Yes</span>
+                    </label>
+                    <label className="flex items-center gap-2">
+                      <input
+                        type="radio"
+                        name="work_permit"
+                        value="no"
+                        checked={workPermit === "no"}
+                        onChange={() => setWorkPermit("no")}
+                      />
+                      <span>No</span>
+                    </label>
+                  </div>
+                  {errors.work_permit && (
+                    <p className="text-xs text-destructive mt-1">{errors.work_permit}</p>
+                  )}
+                  {terminated && (
+                    <div className="mt-3 rounded-xl border border-destructive/30 bg-destructive/5 p-4 text-sm text-destructive">
+                      Unfortunately, Hineni can only register providers who are
+                      South African citizens or hold a valid South African work
+                      permit. Your application cannot be submitted.
+                    </div>
+                  )}
+                </div>
+              )}
+
               <Field
                 label="Date of birth"
                 name="date_of_birth"
@@ -419,7 +504,7 @@ function RegisterProvider() {
           <div className="flex flex-wrap gap-3 items-center pt-4">
             <button
               type="submit"
-              disabled={submitting}
+              disabled={submitting || terminated}
               className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-brand-primary text-white font-medium hover:brightness-110 disabled:opacity-60"
             >
               {submitting && <Loader2 className="size-4 animate-spin" />}
