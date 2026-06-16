@@ -21,13 +21,35 @@ function ResetPasswordPage() {
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
-    // Supabase auto-exchanges the recovery token from the URL hash on load.
     const { data: sub } = supabase.auth.onAuthStateChange((event) => {
-      if (event === "PASSWORD_RECOVERY" || event === "SIGNED_IN") setReady(true);
+      if (event === "PASSWORD_RECOVERY" || event === "SIGNED_IN" || event === "INITIAL_SESSION") {
+        setReady(true);
+      }
     });
-    supabase.auth.getSession().then(({ data }) => {
+
+    (async () => {
+      // PKCE flow: ?code=...
+      const url = new URL(window.location.href);
+      const code = url.searchParams.get("code");
+      if (code) {
+        const { error } = await supabase.auth.exchangeCodeForSession(code);
+        if (!error) {
+          setReady(true);
+          url.searchParams.delete("code");
+          window.history.replaceState({}, "", url.pathname + url.search);
+          return;
+        }
+      }
+      // Implicit/hash recovery flow: #access_token=...&type=recovery
+      const hash = window.location.hash;
+      if (hash.includes("access_token") || hash.includes("type=recovery")) {
+        // getSession will trigger detectSessionInUrl processing
+        await supabase.auth.getSession();
+      }
+      const { data } = await supabase.auth.getSession();
       if (data.session) setReady(true);
-    });
+    })();
+
     return () => sub.subscription.unsubscribe();
   }, []);
 
