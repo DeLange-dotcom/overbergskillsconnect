@@ -8,7 +8,6 @@ const NAV = [
   { to: "/find-help", label: "Find Help" },
   { to: "/register-provider", label: "Register" },
   { to: "/request-support", label: "Request Support" },
-  { to: "/youth", label: "Youth Hub" },
   { to: "/how-it-works", label: "How it works" },
   { to: "/donate", label: "Donate" },
 ];
