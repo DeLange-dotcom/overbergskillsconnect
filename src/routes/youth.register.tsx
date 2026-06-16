@@ -3,6 +3,7 @@ import { useState, useMemo } from "react";
 import { z } from "zod";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { TermsAcceptance } from "@/components/site/TermsAcceptance";
+import { PccSection, readPccFromForm } from "@/components/site/PccSection";
 import { supabase } from "@/integrations/supabase/client";
 import {
   YOUTH_INTERESTS,
@@ -99,9 +100,17 @@ function RegisterYouth() {
     };
 
     const parsed = baseSchema.safeParse(raw);
-    if (!parsed.success) {
-      const errs: Record<string, string> = {};
-      parsed.error.issues.forEach((i) => (errs[i.path.join(".")] = i.message));
+    const pcc = readPccFromForm(fd);
+    const pccErrors: Record<string, string> = {};
+    if (!pcc.pcc_status) pccErrors.pcc_status = "Please choose an option.";
+    if (pcc.pcc_status === "have" && !pcc.pcc_issue_date)
+      pccErrors.pcc_issue_date = "Issue date is required.";
+
+    if (!parsed.success || Object.keys(pccErrors).length) {
+      const errs: Record<string, string> = { ...pccErrors };
+      if (!parsed.success) {
+        parsed.error.issues.forEach((i) => (errs[i.path.join(".")] = i.message));
+      }
       setErrors(errs);
       setSubmitting(false);
       toast.error("Please fix the highlighted fields.");
@@ -159,6 +168,10 @@ function RegisterYouth() {
         guardian_consent_at: d.guardian_consent_given ? new Date().toISOString() : null,
         terms_accepted_at: new Date().toISOString(),
         terms_version_accepted: TERMS_VERSION,
+        pcc_status: pcc.pcc_status,
+        pcc_issue_date: pcc.pcc_issue_date,
+        pcc_number: pcc.pcc_number,
+        pcc_wants_assistance: pcc.pcc_wants_assistance,
       })
       .select("id, application_code")
       .single();
@@ -345,6 +358,8 @@ function RegisterYouth() {
               <span>I'd like to be matched with a mentor when available.</span>
             </label>
           </Fieldset>
+
+          <PccSection errors={errors} />
 
           <Fieldset title="Terms & Disclaimer (required)">
             <TermsAcceptance name="accept_terms" error={errors.accept_terms} />
