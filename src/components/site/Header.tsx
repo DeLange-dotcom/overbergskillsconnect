@@ -138,13 +138,21 @@ export function Header() {
             >
               Apprenticeships
             </Link>
-            {signedIn && (
+            {signedIn ? (
               <Link
                 to="/admin"
                 onClick={() => setOpen(false)}
                 className="px-3 py-2.5 rounded-lg text-brand-dark/80 hover:bg-brand-soft"
               >
                 Admin Dashboard
+              </Link>
+            ) : (
+              <Link
+                to="/auth"
+                onClick={() => setOpen(false)}
+                className="px-3 py-2.5 rounded-lg text-brand-dark/80 hover:bg-brand-soft"
+              >
+                Admin sign-in
               </Link>
             )}
           </nav>
