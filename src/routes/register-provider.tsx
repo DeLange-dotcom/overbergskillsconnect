@@ -186,6 +186,13 @@ function RegisterProvider() {
         : []),
     ]);
 
+    // Record terms acceptance for the audit log
+    await recordTermsAcceptance({
+      context: "provider_registration",
+      referenceTable: "service_providers",
+      referenceId: data.id,
+    });
+
     setDone({ code: data.application_code });
     setSubmitting(false);
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -401,6 +408,10 @@ function RegisterProvider() {
                 I understand that registration does not guarantee work.
               </Consent>
             </div>
+          </Fieldset>
+
+          <Fieldset title="Terms & Disclaimer (required)">
+            <TermsAcceptance name="accept_terms" error={errors.accept_terms} />
           </Fieldset>
 
           <div className="flex flex-wrap gap-3 items-center pt-4">
