@@ -61,6 +61,9 @@ const schema = z.object({
   consent_background_checks: z.literal(true, { errorMap: () => ({ message: "Required" }) }),
   consent_share_authorities: z.literal(true, { errorMap: () => ({ message: "Required" }) }),
   consent_no_guarantee: z.literal(true, { errorMap: () => ({ message: "Required" }) }),
+  accept_terms: z.literal(true, {
+    errorMap: () => ({ message: "You must accept the Terms & Disclaimer to continue." }),
+  }),
 });
 
 function RegisterProvider() {
@@ -106,6 +109,7 @@ function RegisterProvider() {
       consent_background_checks: fd.get("consent_background_checks") === "on",
       consent_share_authorities: fd.get("consent_share_authorities") === "on",
       consent_no_guarantee: fd.get("consent_no_guarantee") === "on",
+      accept_terms: fd.get("accept_terms") === "on",
     };
 
     const parsed = schema.safeParse(raw);
@@ -152,6 +156,8 @@ function RegisterProvider() {
         consent_background_checks: d.consent_background_checks,
         consent_share_authorities: d.consent_share_authorities,
         consent_no_guarantee: d.consent_no_guarantee,
+        terms_accepted_at: new Date().toISOString(),
+        terms_version_accepted: TERMS_VERSION,
       })
       .select("id, application_code")
       .single();
