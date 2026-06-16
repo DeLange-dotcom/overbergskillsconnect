@@ -62,6 +62,7 @@ function RequestSupport() {
       preferred_times: fd.getAll("preferred_times") as string[],
       notes: fd.get("notes") as string,
       consent_contact: fd.get("consent_contact") === "on",
+      accept_terms: fd.get("accept_terms") === "on",
     };
     const parsed = schema.safeParse(raw);
     if (!parsed.success) {
@@ -73,24 +74,36 @@ function RequestSupport() {
     }
 
     const d = parsed.data;
-    const { error } = await supabase.from("service_requests").insert({
-      requester_name: d.requester_name,
-      contact_number: d.contact_number,
-      email: d.email || null,
-      location: d.location,
-      service_needed: d.service_needed as never,
-      urgency: d.urgency || null,
-      arrangement: (d.arrangement || null) as never,
-      preferred_days: d.preferred_days,
-      preferred_times: d.preferred_times,
-      notes: d.notes || null,
-      consent_contact: d.consent_contact,
-    });
-    setSubmitting(false);
-    if (error) {
-      toast.error(error.message);
+    const { data: inserted, error } = await supabase
+      .from("service_requests")
+      .insert({
+        requester_name: d.requester_name,
+        contact_number: d.contact_number,
+        email: d.email || null,
+        location: d.location,
+        service_needed: d.service_needed as never,
+        urgency: d.urgency || null,
+        arrangement: (d.arrangement || null) as never,
+        preferred_days: d.preferred_days,
+        preferred_times: d.preferred_times,
+        notes: d.notes || null,
+        consent_contact: d.consent_contact,
+        terms_accepted_at: new Date().toISOString(),
+        terms_version_accepted: TERMS_VERSION,
+      })
+      .select("id")
+      .single();
+    if (error || !inserted) {
+      setSubmitting(false);
+      toast.error(error?.message ?? "Could not send your request.");
       return;
     }
+    await recordTermsAcceptance({
+      context: "service_request",
+      referenceTable: "service_requests",
+      referenceId: inserted.id,
+    });
+    setSubmitting(false);
     setDone(true);
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
