@@ -9,10 +9,24 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as RequestSupportRouteImport } from './routes/request-support'
+import { Route as RegisterProviderRouteImport } from './routes/register-provider'
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as HowItWorksRouteImport } from './routes/how-it-works'
+import { Route as FindHelpRouteImport } from './routes/find-help'
+import { Route as DonateRouteImport } from './routes/donate'
 import { Route as IndexRouteImport } from './routes/index'
 
+const RequestSupportRoute = RequestSupportRouteImport.update({
+  id: '/request-support',
+  path: '/request-support',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RegisterProviderRoute = RegisterProviderRouteImport.update({
+  id: '/register-provider',
+  path: '/register-provider',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PrivacyRoute = PrivacyRouteImport.update({
   id: '/privacy',
   path: '/privacy',
@@ -23,6 +37,16 @@ const HowItWorksRoute = HowItWorksRouteImport.update({
   path: '/how-it-works',
   getParentRoute: () => rootRouteImport,
 } as any)
+const FindHelpRoute = FindHelpRouteImport.update({
+  id: '/find-help',
+  path: '/find-help',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DonateRoute = DonateRouteImport.update({
+  id: '/donate',
+  path: '/donate',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -31,36 +55,88 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/donate': typeof DonateRoute
+  '/find-help': typeof FindHelpRoute
   '/how-it-works': typeof HowItWorksRoute
   '/privacy': typeof PrivacyRoute
+  '/register-provider': typeof RegisterProviderRoute
+  '/request-support': typeof RequestSupportRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/donate': typeof DonateRoute
+  '/find-help': typeof FindHelpRoute
   '/how-it-works': typeof HowItWorksRoute
   '/privacy': typeof PrivacyRoute
+  '/register-provider': typeof RegisterProviderRoute
+  '/request-support': typeof RequestSupportRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/donate': typeof DonateRoute
+  '/find-help': typeof FindHelpRoute
   '/how-it-works': typeof HowItWorksRoute
   '/privacy': typeof PrivacyRoute
+  '/register-provider': typeof RegisterProviderRoute
+  '/request-support': typeof RequestSupportRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/how-it-works' | '/privacy'
+  fullPaths:
+    | '/'
+    | '/donate'
+    | '/find-help'
+    | '/how-it-works'
+    | '/privacy'
+    | '/register-provider'
+    | '/request-support'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/how-it-works' | '/privacy'
-  id: '__root__' | '/' | '/how-it-works' | '/privacy'
+  to:
+    | '/'
+    | '/donate'
+    | '/find-help'
+    | '/how-it-works'
+    | '/privacy'
+    | '/register-provider'
+    | '/request-support'
+  id:
+    | '__root__'
+    | '/'
+    | '/donate'
+    | '/find-help'
+    | '/how-it-works'
+    | '/privacy'
+    | '/register-provider'
+    | '/request-support'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  DonateRoute: typeof DonateRoute
+  FindHelpRoute: typeof FindHelpRoute
   HowItWorksRoute: typeof HowItWorksRoute
   PrivacyRoute: typeof PrivacyRoute
+  RegisterProviderRoute: typeof RegisterProviderRoute
+  RequestSupportRoute: typeof RequestSupportRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/request-support': {
+      id: '/request-support'
+      path: '/request-support'
+      fullPath: '/request-support'
+      preLoaderRoute: typeof RequestSupportRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/register-provider': {
+      id: '/register-provider'
+      path: '/register-provider'
+      fullPath: '/register-provider'
+      preLoaderRoute: typeof RegisterProviderRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/privacy': {
       id: '/privacy'
       path: '/privacy'
@@ -75,6 +151,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof HowItWorksRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/find-help': {
+      id: '/find-help'
+      path: '/find-help'
+      fullPath: '/find-help'
+      preLoaderRoute: typeof FindHelpRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/donate': {
+      id: '/donate'
+      path: '/donate'
+      fullPath: '/donate'
+      preLoaderRoute: typeof DonateRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -87,8 +177,12 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  DonateRoute: DonateRoute,
+  FindHelpRoute: FindHelpRoute,
   HowItWorksRoute: HowItWorksRoute,
   PrivacyRoute: PrivacyRoute,
+  RegisterProviderRoute: RegisterProviderRoute,
+  RequestSupportRoute: RequestSupportRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
