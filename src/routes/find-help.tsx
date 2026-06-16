@@ -231,6 +231,14 @@ function ContactModal({ provider, onClose }: { provider: Provider; onClose: () =
             placeholder="Briefly, what help are you looking for?"
             className="w-full px-4 py-3 border border-brand-dark/10 rounded-xl"
           />
+          <TermsAcceptance
+            checked={accepted}
+            onChange={(v) => {
+              setAccepted(v);
+              if (v) setShowError(false);
+            }}
+            error={showError && !accepted ? "You must accept the Terms & Disclaimer to continue." : undefined}
+          />
           <div className="flex gap-2 justify-end pt-2">
             <button
               type="button"
