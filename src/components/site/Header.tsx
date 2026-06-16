@@ -45,7 +45,7 @@ export function Header() {
           </div>
         </Link>
 
-        <nav className="hidden lg:flex items-center gap-6 text-sm whitespace-nowrap">
+        <nav className="hidden xl:flex items-center gap-6 text-sm whitespace-nowrap">
           {NAV.map((n) => (
             <Link
               key={n.to}
