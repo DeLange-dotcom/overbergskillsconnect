@@ -132,9 +132,9 @@ function Home() {
             Hineni checks ID, work permits and references, and requests police clearances where
             appropriate. Sensitive information is never shown publicly.
           </Step>
-          <Step n={3} icon={<Handshake className="size-5" />} title="Safe Connection">
-            Approved providers are listed publicly without private details. Hineni introduces
-            households, farms and businesses to the right person — safely.
+          <Step n={3} icon={<Handshake className="size-5" />} title="Safe Match">
+            Approved providers are listed publicly with no private details shown. Hineni
+            safely matches households, farms and businesses with the right people.
           </Step>
         </div>
       </section>
