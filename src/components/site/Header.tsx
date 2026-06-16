@@ -106,6 +106,14 @@ export function Header() {
                 {n.label}
               </Link>
             ))}
+            <Link
+              to="/youth"
+              onClick={() => setOpen(false)}
+              className="mt-1 px-3 py-2.5 rounded-lg text-center bg-brand-primary text-primary-foreground font-medium hover:brightness-110"
+              activeProps={{ className: "mt-1 px-3 py-2.5 rounded-lg text-center bg-brand-primary text-primary-foreground font-medium brightness-110" }}
+            >
+              Youth Hub
+            </Link>
             {signedIn && (
               <Link
                 to="/admin"
