@@ -90,7 +90,7 @@ export function Header() {
           ) : null}
           <button
             onClick={() => setOpen((v) => !v)}
-            className="lg:hidden size-10 rounded-full bg-brand-soft grid place-items-center"
+            className="xl:hidden size-10 rounded-full bg-brand-soft grid place-items-center"
             aria-label="Toggle menu"
           >
             {open ? <X className="size-5" /> : <Menu className="size-5" />}
