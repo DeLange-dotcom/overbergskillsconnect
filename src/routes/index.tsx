@@ -78,14 +78,6 @@ function Home() {
               variant="accent"
             />
             <CardCta
-              to="/request-support"
-              tag="Need Assistance"
-              tagColor="text-brand-primary"
-              title="Request Support"
-              icon={<HelpingHand className="size-5" />}
-              variant="soft"
-            />
-            <CardCta
               to="/youth"
               tag="Ages 15–25"
               tagColor="text-brand-primary"
@@ -99,6 +91,14 @@ function Home() {
               tagColor="text-brand-primary"
               title="Find or Offer an Apprenticeship"
               icon={<Briefcase className="size-5" />}
+              variant="soft"
+            />
+            <CardCta
+              to="/request-support"
+              tag="Need Assistance"
+              tagColor="text-brand-primary"
+              title="Request Support"
+              icon={<HelpingHand className="size-5" />}
               variant="soft"
             />
             <CardCta
