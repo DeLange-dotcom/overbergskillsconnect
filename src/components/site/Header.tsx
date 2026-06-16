@@ -32,7 +32,7 @@ export function Header() {
 
   return (
     <header className="border-b border-brand-dark/5 bg-brand-page sticky top-0 z-40 backdrop-blur">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between gap-4">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between gap-4">
         <Link to="/" className="flex items-center gap-2 shrink-0">
           <div className="size-9 rounded-full bg-brand-primary text-primary-foreground grid place-items-center font-heading font-bold">
             H
@@ -45,13 +45,13 @@ export function Header() {
           </div>
         </Link>
 
-        <nav className="hidden lg:flex items-center gap-7 text-sm">
+        <nav className="hidden xl:flex items-center gap-6 text-sm whitespace-nowrap">
           {NAV.map((n) => (
             <Link
               key={n.to}
               to={n.to}
-              className="text-brand-dark/70 hover:text-brand-primary transition-colors"
-              activeProps={{ className: "text-brand-primary font-semibold" }}
+              className="text-brand-dark/70 hover:text-brand-primary transition-colors whitespace-nowrap"
+              activeProps={{ className: "text-brand-primary font-semibold whitespace-nowrap" }}
               activeOptions={{ exact: n.to === "/" }}
             >
               {n.label}
@@ -59,15 +59,15 @@ export function Header() {
           ))}
           <Link
             to="/youth"
-            className="px-4 py-2 rounded-full bg-brand-primary text-primary-foreground text-sm font-medium hover:brightness-110 transition"
-            activeProps={{ className: "px-4 py-2 rounded-full bg-brand-primary text-primary-foreground text-sm font-medium brightness-110" }}
+            className="px-4 py-2 rounded-full bg-brand-primary text-primary-foreground text-sm font-medium hover:brightness-110 transition whitespace-nowrap"
+            activeProps={{ className: "px-4 py-2 rounded-full bg-brand-primary text-primary-foreground text-sm font-medium brightness-110 whitespace-nowrap" }}
           >
             Youth Hub
           </Link>
           <Link
             to="/apprenticeships"
-            className="px-4 py-2 rounded-full bg-brand-primary text-primary-foreground text-sm font-medium hover:brightness-110 transition"
-            activeProps={{ className: "px-4 py-2 rounded-full bg-brand-primary text-primary-foreground text-sm font-medium brightness-110" }}
+            className="px-4 py-2 rounded-full bg-brand-primary text-primary-foreground text-sm font-medium hover:brightness-110 transition whitespace-nowrap"
+            activeProps={{ className: "px-4 py-2 rounded-full bg-brand-primary text-primary-foreground text-sm font-medium brightness-110 whitespace-nowrap" }}
           >
             Apprenticeships
           </Link>
@@ -76,7 +76,7 @@ export function Header() {
         <div className="flex items-center gap-2">
           <Link
             to="/donate"
-            className="hidden sm:inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-brand-accent text-white text-sm font-medium hover:brightness-110 transition"
+            className="hidden sm:inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-brand-accent text-white text-sm font-medium hover:brightness-110 transition whitespace-nowrap"
           >
             <Heart className="size-4" /> Donate
           </Link>
@@ -90,7 +90,7 @@ export function Header() {
           ) : null}
           <button
             onClick={() => setOpen((v) => !v)}
-            className="lg:hidden size-10 rounded-full bg-brand-soft grid place-items-center"
+            className="xl:hidden size-10 rounded-full bg-brand-soft grid place-items-center"
             aria-label="Toggle menu"
           >
             {open ? <X className="size-5" /> : <Menu className="size-5" />}
@@ -99,7 +99,7 @@ export function Header() {
       </div>
 
       {open && (
-        <div className="lg:hidden border-t border-brand-dark/5 bg-brand-page">
+        <div className="xl:hidden border-t border-brand-dark/5 bg-brand-page">
           <nav className="px-4 py-4 flex flex-col gap-2">
             {NAV.map((n) => (
               <Link
