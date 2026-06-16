@@ -23,6 +23,7 @@ export function Footer() {
             <li><Link to="/register-provider" className="hover:text-brand-primary">Register your skills</Link></li>
             <li><Link to="/find-help" className="hover:text-brand-primary">Find approved help</Link></li>
             <li><Link to="/request-support" className="hover:text-brand-primary">Request support</Link></li>
+            <li><Link to="/youth" className="hover:text-brand-primary">Youth Opportunities Hub</Link></li>
             <li><Link to="/donate" className="hover:text-brand-primary">Donate to Hineni</Link></li>
           </ul>
         </div>
