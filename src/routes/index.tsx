@@ -94,6 +94,14 @@ function Home() {
               variant="soft"
             />
             <CardCta
+              to="/apprenticeships"
+              tag="Skills & Work"
+              tagColor="text-brand-primary"
+              title="Find or Offer an Apprenticeship"
+              icon={<Briefcase className="size-5" />}
+              variant="soft"
+            />
+            <CardCta
               to="/donate"
               tag="Support Us"
               tagColor="text-brand-accent"
