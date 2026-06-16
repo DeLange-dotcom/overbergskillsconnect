@@ -64,6 +64,13 @@ export function Header() {
           >
             Youth Hub
           </Link>
+          <Link
+            to="/apprenticeships"
+            className="px-4 py-2 rounded-full bg-brand-primary text-primary-foreground text-sm font-medium hover:brightness-110 transition"
+            activeProps={{ className: "px-4 py-2 rounded-full bg-brand-primary text-primary-foreground text-sm font-medium brightness-110" }}
+          >
+            Apprenticeships
+          </Link>
         </nav>
 
         <div className="flex items-center gap-2">
