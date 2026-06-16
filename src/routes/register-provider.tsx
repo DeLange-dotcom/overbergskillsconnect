@@ -504,7 +504,7 @@ function RegisterProvider() {
           <div className="flex flex-wrap gap-3 items-center pt-4">
             <button
               type="submit"
-              disabled={submitting}
+              disabled={submitting || terminated}
               className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-brand-primary text-white font-medium hover:brightness-110 disabled:opacity-60"
             >
               {submitting && <Loader2 className="size-4 animate-spin" />}
