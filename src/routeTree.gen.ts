@@ -38,6 +38,7 @@ import { Route as AuthenticatedAdminApprenticeshipsRouteImport } from './routes/
 import { Route as AuthenticatedAdminYouthIndexRouteImport } from './routes/_authenticated/admin/youth.index'
 import { Route as AuthenticatedAdminYouthIdRouteImport } from './routes/_authenticated/admin/youth.$id'
 import { Route as AuthenticatedAdminProvidersIdRouteImport } from './routes/_authenticated/admin/providers/$id'
+import { Route as AuthenticatedAdminApprenticesIdRouteImport } from './routes/_authenticated/admin/apprentices.$id'
 
 const YouthRoute = YouthRouteImport.update({
   id: '/youth',
@@ -193,6 +194,12 @@ const AuthenticatedAdminProvidersIdRoute =
     path: '/admin/providers/$id',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedAdminApprenticesIdRoute =
+  AuthenticatedAdminApprenticesIdRouteImport.update({
+    id: '/admin/apprentices/$id',
+    path: '/admin/apprentices/$id',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -220,6 +227,7 @@ export interface FileRoutesByFullPath {
   '/admin/youth-opportunities': typeof AuthenticatedAdminYouthOpportunitiesRoute
   '/youth/portfolio': typeof AuthenticatedYouthPortfolioRoute
   '/admin/': typeof AuthenticatedAdminIndexRoute
+  '/admin/apprentices/$id': typeof AuthenticatedAdminApprenticesIdRoute
   '/admin/providers/$id': typeof AuthenticatedAdminProvidersIdRoute
   '/admin/youth/$id': typeof AuthenticatedAdminYouthIdRoute
   '/admin/youth/': typeof AuthenticatedAdminYouthIndexRoute
@@ -250,6 +258,7 @@ export interface FileRoutesByTo {
   '/admin/youth-opportunities': typeof AuthenticatedAdminYouthOpportunitiesRoute
   '/youth/portfolio': typeof AuthenticatedYouthPortfolioRoute
   '/admin': typeof AuthenticatedAdminIndexRoute
+  '/admin/apprentices/$id': typeof AuthenticatedAdminApprenticesIdRoute
   '/admin/providers/$id': typeof AuthenticatedAdminProvidersIdRoute
   '/admin/youth/$id': typeof AuthenticatedAdminYouthIdRoute
   '/admin/youth': typeof AuthenticatedAdminYouthIndexRoute
@@ -282,6 +291,7 @@ export interface FileRoutesById {
   '/_authenticated/admin/youth-opportunities': typeof AuthenticatedAdminYouthOpportunitiesRoute
   '/_authenticated/youth/portfolio': typeof AuthenticatedYouthPortfolioRoute
   '/_authenticated/admin/': typeof AuthenticatedAdminIndexRoute
+  '/_authenticated/admin/apprentices/$id': typeof AuthenticatedAdminApprenticesIdRoute
   '/_authenticated/admin/providers/$id': typeof AuthenticatedAdminProvidersIdRoute
   '/_authenticated/admin/youth/$id': typeof AuthenticatedAdminYouthIdRoute
   '/_authenticated/admin/youth/': typeof AuthenticatedAdminYouthIndexRoute
@@ -314,6 +324,7 @@ export interface FileRouteTypes {
     | '/admin/youth-opportunities'
     | '/youth/portfolio'
     | '/admin/'
+    | '/admin/apprentices/$id'
     | '/admin/providers/$id'
     | '/admin/youth/$id'
     | '/admin/youth/'
@@ -344,6 +355,7 @@ export interface FileRouteTypes {
     | '/admin/youth-opportunities'
     | '/youth/portfolio'
     | '/admin'
+    | '/admin/apprentices/$id'
     | '/admin/providers/$id'
     | '/admin/youth/$id'
     | '/admin/youth'
@@ -375,6 +387,7 @@ export interface FileRouteTypes {
     | '/_authenticated/admin/youth-opportunities'
     | '/_authenticated/youth/portfolio'
     | '/_authenticated/admin/'
+    | '/_authenticated/admin/apprentices/$id'
     | '/_authenticated/admin/providers/$id'
     | '/_authenticated/admin/youth/$id'
     | '/_authenticated/admin/youth/'
@@ -601,6 +614,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminProvidersIdRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/admin/apprentices/$id': {
+      id: '/_authenticated/admin/apprentices/$id'
+      path: '/admin/apprentices/$id'
+      fullPath: '/admin/apprentices/$id'
+      preLoaderRoute: typeof AuthenticatedAdminApprenticesIdRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
   }
 }
 
@@ -609,6 +629,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedAdminYouthOpportunitiesRoute: typeof AuthenticatedAdminYouthOpportunitiesRoute
   AuthenticatedYouthPortfolioRoute: typeof AuthenticatedYouthPortfolioRoute
   AuthenticatedAdminIndexRoute: typeof AuthenticatedAdminIndexRoute
+  AuthenticatedAdminApprenticesIdRoute: typeof AuthenticatedAdminApprenticesIdRoute
   AuthenticatedAdminProvidersIdRoute: typeof AuthenticatedAdminProvidersIdRoute
   AuthenticatedAdminYouthIdRoute: typeof AuthenticatedAdminYouthIdRoute
   AuthenticatedAdminYouthIndexRoute: typeof AuthenticatedAdminYouthIndexRoute
@@ -621,6 +642,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
     AuthenticatedAdminYouthOpportunitiesRoute,
   AuthenticatedYouthPortfolioRoute: AuthenticatedYouthPortfolioRoute,
   AuthenticatedAdminIndexRoute: AuthenticatedAdminIndexRoute,
+  AuthenticatedAdminApprenticesIdRoute: AuthenticatedAdminApprenticesIdRoute,
   AuthenticatedAdminProvidersIdRoute: AuthenticatedAdminProvidersIdRoute,
   AuthenticatedAdminYouthIdRoute: AuthenticatedAdminYouthIdRoute,
   AuthenticatedAdminYouthIndexRoute: AuthenticatedAdminYouthIndexRoute,
