@@ -1,91 +1,62 @@
-# Youth Opportunities Hub
+# Apprenticeships & Mentorships Hub
 
-A new section of Hineni for young people aged 15–25 to register, discover opportunities, build a digital portfolio, and progress along the pathway: Register → Volunteer → Training → Work Experience → Employment → Mentorship → Community Leadership.
+A new top-level section integrated alongside the Skills Register and Youth Hub, supporting four pathways: seek apprenticeship, offer apprenticeship, find mentor, become mentor. Includes a special "Master Craftspeople & Knowledge Keepers" mentor flag, an admin matching dashboard, and a public impact dashboard.
 
-## What users will see
+## Navigation
 
-### Public
-- **/youth** — Hub landing page. Explains the pathway, the two age groups (15–17 Youth, 18–25 Young Adult), child-safety promise, and CTAs:
-  - "Register as a Young Person"
-  - "Browse Opportunities"
-  - "Post an Opportunity" (for vetted organisations)
-- **/youth/opportunities** — Public opportunity board. Filters: category (Paid / Volunteer / Training / Internship / Community Service), type (holiday, weekend, casual, volunteer, job shadow, apprenticeship, learnership, mentorship, training), town, minimum age. Each card shows title, organisation, category, age range, location, closing date, and an "Express interest" button (routed through Hineni — never reveals contact details for under-18 applicants).
-- **/youth/register** — Youth registration form (sections: Personal, Education, Guardian & Emergency, Interests, Opportunity Types, Availability, Skills, Consents, Terms). Mandatory parent/guardian consent block appears when DOB makes the applicant under 18. Reuses the existing Terms & Disclaimer component.
-- **/youth/post-opportunity** — Form for organisations to submit an opportunity for Hineni vetting. Includes a child-safety declaration when the opportunity is open to under-18s.
+- Add **Apprenticeships** to `Header.tsx` main nav and `Footer.tsx`.
+- Keep Youth Hub as the trailing CTA button.
 
-### Authenticated youth
-- **/youth/portfolio** — Digital portfolio for the signed-in young person:
-  - Profile header (name, town, age group, status)
-  - Skills, interests, availability
-  - Experience timeline (opportunities applied for / completed)
-  - Volunteer hours total and log
-  - Training courses + certificates
-  - References
-  - Badges earned (Community Volunteer, First Job Completed, Reliable Worker, Environmental Champion, Hospitality Helper, Digital Skills Learner, Community Leader)
-  - Pathway tracker showing current stage
-- Youth can also see their own applications and update their availability/skills.
+## Routes (`src/routes/`)
 
-### Admin
-- **/admin/youth** — Pending youth registrations, approve / hold / reject, view guardian consent record.
-- **/admin/youth-opportunities** — Moderate submitted opportunities, mark `child_safe_reviewed`, approve/reject. Only approved opportunities appear on the public board.
-- **/admin/youth/:id** — Full profile with audit access (guardian record, age-group label, opportunities, hours, badges). Award/revoke badges, log completed training, confirm hours.
+Public:
+- `apprenticeships.tsx` — Hub homepage with 4 pathway cards, learning pathway visual, impact stats.
+- `apprenticeships.register-apprentice.tsx` — Apprentice registration form.
+- `apprenticeships.register-provider.tsx` — Provider + opportunity registration form.
+- `apprenticeships.opportunities.tsx` — Public board of open opportunities (status = Open).
+- `apprenticeships.mentors.tsx` — Searchable list of approved mentors (filter by category/location/format).
+- `apprenticeships.become-mentor.tsx` — Mentor registration (includes "Master Craftsperson / Knowledge Keeper" toggle + traditional-skill categories).
+- `apprenticeships.impact.tsx` — Public impact dashboard.
 
-## Child-safety rules (enforced, not just shown)
-- DOB drives `age_group` (15–17 / 18–25). Under 15 or over 25 is rejected at submit.
-- Under-18 registrations REQUIRE: guardian full name, guardian relationship, guardian phone, guardian email, `guardian_consent_given = true`, plus the existing Terms & Disclaimer acceptance recorded in the audit log.
-- Opportunities are flagged `prohibited_for_minors = true` whenever the organisation selects hazardous work, late-night hours, alcohol service, heavy machinery, or any category restricted under SA labour law. The board hides those from anyone whose age group is 15–17, and admin must explicitly confirm a "not hazardous, not interfering with schooling" check before approval.
-- Contact between organisations and under-18 youth is always brokered through Hineni — direct contact details are never exposed publicly.
+Authenticated (under `_authenticated/admin/`):
+- `apprenticeships.index.tsx` — Admin overview: apprentices, providers, mentors, opportunities, matches.
+- `apprenticeships.matching.tsx` — Matching dashboard (apprentice↔opportunity, apprentice↔mentor) with status tracking.
 
-## Data model (Lovable Cloud)
+## Database (single migration)
 
-New tables (all with grants, RLS, and policies in the same migration):
+New tables (all RLS-enabled, GRANTs included, `updated_at` trigger via existing `tg_set_updated_at`):
 
-- `youth_profiles` — owner `user_id` (nullable so admin can pre-register from paper forms), full_name, dob, age_group (generated), town, school, education_level, guardian_name, guardian_relationship, guardian_phone, guardian_email, guardian_consent_given, guardian_consent_at, emergency_contact_name, emergency_contact_phone, interests text[], opportunity_types text[], availability text[], skills text[], languages text[], status (pending/approved/on_hold/rejected), terms_accepted_at, terms_version_accepted, application_code, created_at, updated_at.
-- `youth_opportunities` — posted_by_user_id, organisation_name, contact_email, contact_phone, title, description, category (paid/volunteer/training/internship/community_service), opportunity_type, min_age, max_age, town, start_date, end_date, closing_date, prohibited_for_minors, child_safe_reviewed, status (pending/approved/rejected/closed), approval_notes, created_at, updated_at.
-- `youth_applications` — youth_profile_id, opportunity_id, status (interested/applied/shortlisted/placed/completed/withdrawn), hours_logged, completed_at, notes, created_at, updated_at.
-- `youth_training` — youth_profile_id, course_name, provider, completed_at, certificate_url, verified_by_admin.
-- `youth_references` — youth_profile_id, reference_name, reference_contact, relationship, opportunity_id (nullable), notes.
-- `youth_badges` — youth_profile_id, badge_key (enum of the seven badges), awarded_at, awarded_by, notes. Unique on (profile, badge_key).
-- Public view `youth_opportunities_public` (security_invoker) exposing only approved rows with safe columns for the board.
+1. **`apprentices`** — personal details, education, career_interests text[], opportunity_types text[], availability text[], why/skills text, cv_url, status enum (`registered|reviewed|interview|matched|active|completed`), user_id (nullable for guest), terms_acceptance_id.
+2. **`apprenticeship_providers`** — provider_type, org details, user_id, status (`pending|approved|rejected`).
+3. **`apprenticeship_opportunities`** — provider_id FK, title, industry, skills_offered text[], placements_available int, paid bool, stipend numeric, duration, start_date, min_age, qualifications, transport_req, safety_req, status (`open|reviewing|filled|closed`).
+4. **`mentors`** — name, contact, categories text[], years_experience, background, biography, availability text, formats text[] (in_person/online/phone/group), is_knowledge_keeper bool, knowledge_keeper_categories text[], status (`pending|approved|active|inactive`), user_id.
+5. **`apprentice_applications`** — apprentice_id, opportunity_id, status (`submitted|interview|placed|completed|declined`), notes.
+6. **`mentor_matches`** — apprentice_id (or user_id), mentor_id, status (`requested|approved|active|completed|declined`), notes.
 
-RLS summary:
-- Youth can read/update their own `youth_profiles` row and read their applications, training, references, badges.
-- Organisations (any authenticated user) can insert `youth_opportunities` and read their own submissions.
-- Anonymous visitors can read `youth_opportunities_public` only.
-- Admins (existing `has_role(_, 'admin')`) can read/write everything and award badges.
-- Audit-log entries written for: youth registration submit, guardian consent, opportunity submission, opportunity approval/rejection, badge award, hours confirmation, admin PDF export.
+RLS:
+- Apprentices/providers/mentors: insert allowed for anyone (anon + authenticated) for self-registration; select own row by user_id; admins via `has_role(auth.uid(),'admin')` can select/update all.
+- Opportunities & approved mentors: public SELECT only via security_invoker views (`apprenticeship_opportunities_public`, `mentors_public`) limited to approved/open rows + safe columns.
+- Applications/matches: admin-only via `has_role`; the apprentice may select their own.
 
-## Pathway and badges
-Pathway stage is derived per profile from data already in the system (volunteer hours, completed applications, training count, mentorship flag) and surfaced on the portfolio as a 6-step progress bar. Badge awards are admin-driven from the admin detail page but the rules are documented in `src/lib/youthBadges.ts` so future automation can mirror them.
+All contact brokered through Hineni — no contact info exposed in public views.
 
-## Future "Learning City" hooks
-Add nullable fields on `youth_profiles` (`learning_city_interest`, `mentor_match_opt_in`) and on `youth_opportunities` (`linked_programme`) so later integrations with Hineni Learning City, mentorship schemes, and employer partnerships do not require schema rewrites.
+## Library files
 
-## Files I will add/change
+- `src/lib/apprenticeships.ts` — constants: `CAREER_INTERESTS`, `OPPORTUNITY_TYPES`, `AVAILABILITY`, `PROVIDER_TYPES`, `MENTOR_CATEGORIES`, `MENTOR_FORMATS`, `KNOWLEDGE_KEEPER_CATEGORIES`, `LEARNING_PATHWAY` (8 stages), status labels/colors.
+- `src/components/site/LearningPathway.tsx` — 8-step horizontal pathway visual (Register → Volunteer → Holiday Work → Apprenticeship → Skills Training → Employment → Mentor → Community Leader).
+- `src/components/site/PathwayCard.tsx` — reusable card for the 4 hub pathways.
+- `src/components/site/OpportunityCard.tsx` — apprenticeship opportunity card.
+- `src/components/site/MentorCard.tsx` — mentor profile card with knowledge-keeper badge.
 
-New routes:
-- `src/routes/youth.tsx` (hub landing)
-- `src/routes/youth.opportunities.tsx` (board)
-- `src/routes/youth.register.tsx` (registration)
-- `src/routes/youth.post-opportunity.tsx` (organisation submission)
-- `src/routes/_authenticated/youth.portfolio.tsx`
-- `src/routes/_authenticated/admin/youth.index.tsx`
-- `src/routes/_authenticated/admin/youth.$id.tsx`
-- `src/routes/_authenticated/admin/youth-opportunities.tsx`
+## Integration
 
-New supporting files:
-- `src/lib/youth.ts` — constants (interests, opportunity types, availability, skills, badges, hazardous-category list, pathway stages).
-- `src/lib/youthBadges.ts` — badge metadata + suggested-award rules.
-- `src/components/site/YouthOpportunityCard.tsx`
-- `src/components/site/PathwayTracker.tsx`
-- `src/components/site/BadgeChip.tsx`
+- Hub homepage links into existing Youth Hub, Skills Register, Volunteer programme.
+- Impact dashboard runs aggregate counts via a public server fn using `supabaseAdmin` (counts only, no PII).
+- Terms & Disclaimer acceptance reused on all three registration forms via existing `TermsAcceptance` component.
+- All forms validated with `zod`; mobile-first layout, large tap targets, minimal text fields per step.
 
-Edits:
-- `src/components/site/Header.tsx` and `Footer.tsx` — add "Youth Hub" nav link.
-- `src/routes/index.tsx` — add a small "Youth Opportunities Hub" highlight card on the home page.
-- One Supabase migration for the tables, view, grants, RLS, and audit-log triggers.
+## Out of scope
 
-## Out of scope for this step
-- Automated badge awarding (admin-driven for now; rules file is the seed).
-- Stripe sponsorship of youth programmes (existing donation page already covers giving).
-- Direct messaging between youth and organisations (all contact stays brokered through Hineni).
+- Direct messaging (all contact brokered).
+- Automated matching algorithm (admins match manually for now).
+- CV file upload UI beyond a simple Supabase Storage upload to existing patterns (use `provider-documents` bucket or skip CV upload in v1 — TBD; default: text "CV URL" field, file upload deferred).

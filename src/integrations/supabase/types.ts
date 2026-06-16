@@ -14,6 +14,279 @@ export type Database = {
   }
   public: {
     Tables: {
+      apprentice_applications: {
+        Row: {
+          apprentice_id: string
+          created_at: string
+          id: string
+          notes: string | null
+          opportunity_id: string
+          status: Database["public"]["Enums"]["application_status"]
+          updated_at: string
+        }
+        Insert: {
+          apprentice_id: string
+          created_at?: string
+          id?: string
+          notes?: string | null
+          opportunity_id: string
+          status?: Database["public"]["Enums"]["application_status"]
+          updated_at?: string
+        }
+        Update: {
+          apprentice_id?: string
+          created_at?: string
+          id?: string
+          notes?: string | null
+          opportunity_id?: string
+          status?: Database["public"]["Enums"]["application_status"]
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "apprentice_applications_apprentice_id_fkey"
+            columns: ["apprentice_id"]
+            isOneToOne: false
+            referencedRelation: "apprentices"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "apprentice_applications_opportunity_id_fkey"
+            columns: ["opportunity_id"]
+            isOneToOne: false
+            referencedRelation: "apprenticeship_opportunities"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "apprentice_applications_opportunity_id_fkey"
+            columns: ["opportunity_id"]
+            isOneToOne: false
+            referencedRelation: "apprenticeship_opportunities_public"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      apprentices: {
+        Row: {
+          availability: string[]
+          career_interests: string[]
+          certificates: string | null
+          contact_number: string | null
+          created_at: string
+          cv_url: string | null
+          dob: string
+          drivers_licence: boolean | null
+          email: string | null
+          full_name: string
+          further_education: string | null
+          highest_grade: string | null
+          id: string
+          opportunity_types: string[]
+          physical_address: string | null
+          qualifications: string | null
+          reference_code: string
+          skills_to_learn: string | null
+          status: Database["public"]["Enums"]["apprentice_status"]
+          terms_accepted_at: string | null
+          terms_version: string | null
+          town: string
+          transport_available: boolean | null
+          updated_at: string
+          user_id: string | null
+          whatsapp_number: string | null
+          why_interested: string | null
+        }
+        Insert: {
+          availability?: string[]
+          career_interests?: string[]
+          certificates?: string | null
+          contact_number?: string | null
+          created_at?: string
+          cv_url?: string | null
+          dob: string
+          drivers_licence?: boolean | null
+          email?: string | null
+          full_name: string
+          further_education?: string | null
+          highest_grade?: string | null
+          id?: string
+          opportunity_types?: string[]
+          physical_address?: string | null
+          qualifications?: string | null
+          reference_code?: string
+          skills_to_learn?: string | null
+          status?: Database["public"]["Enums"]["apprentice_status"]
+          terms_accepted_at?: string | null
+          terms_version?: string | null
+          town: string
+          transport_available?: boolean | null
+          updated_at?: string
+          user_id?: string | null
+          whatsapp_number?: string | null
+          why_interested?: string | null
+        }
+        Update: {
+          availability?: string[]
+          career_interests?: string[]
+          certificates?: string | null
+          contact_number?: string | null
+          created_at?: string
+          cv_url?: string | null
+          dob?: string
+          drivers_licence?: boolean | null
+          email?: string | null
+          full_name?: string
+          further_education?: string | null
+          highest_grade?: string | null
+          id?: string
+          opportunity_types?: string[]
+          physical_address?: string | null
+          qualifications?: string | null
+          reference_code?: string
+          skills_to_learn?: string | null
+          status?: Database["public"]["Enums"]["apprentice_status"]
+          terms_accepted_at?: string | null
+          terms_version?: string | null
+          town?: string
+          transport_available?: boolean | null
+          updated_at?: string
+          user_id?: string | null
+          whatsapp_number?: string | null
+          why_interested?: string | null
+        }
+        Relationships: []
+      }
+      apprenticeship_opportunities: {
+        Row: {
+          approved: boolean
+          created_at: string
+          description: string | null
+          duration: string | null
+          id: string
+          industry: string
+          min_age: number | null
+          paid: boolean
+          placements_available: number
+          preferred_qualifications: string | null
+          provider_id: string
+          safety_requirements: string | null
+          skills_offered: string[]
+          start_date: string | null
+          status: Database["public"]["Enums"]["opportunity_status"]
+          stipend_amount: number | null
+          title: string
+          town: string | null
+          transport_requirements: string | null
+          updated_at: string
+        }
+        Insert: {
+          approved?: boolean
+          created_at?: string
+          description?: string | null
+          duration?: string | null
+          id?: string
+          industry: string
+          min_age?: number | null
+          paid?: boolean
+          placements_available?: number
+          preferred_qualifications?: string | null
+          provider_id: string
+          safety_requirements?: string | null
+          skills_offered?: string[]
+          start_date?: string | null
+          status?: Database["public"]["Enums"]["opportunity_status"]
+          stipend_amount?: number | null
+          title: string
+          town?: string | null
+          transport_requirements?: string | null
+          updated_at?: string
+        }
+        Update: {
+          approved?: boolean
+          created_at?: string
+          description?: string | null
+          duration?: string | null
+          id?: string
+          industry?: string
+          min_age?: number | null
+          paid?: boolean
+          placements_available?: number
+          preferred_qualifications?: string | null
+          provider_id?: string
+          safety_requirements?: string | null
+          skills_offered?: string[]
+          start_date?: string | null
+          status?: Database["public"]["Enums"]["opportunity_status"]
+          stipend_amount?: number | null
+          title?: string
+          town?: string | null
+          transport_requirements?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "apprenticeship_opportunities_provider_id_fkey"
+            columns: ["provider_id"]
+            isOneToOne: false
+            referencedRelation: "apprenticeship_providers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      apprenticeship_providers: {
+        Row: {
+          contact_number: string
+          contact_person: string
+          created_at: string
+          email: string
+          id: string
+          organisation_name: string
+          physical_address: string | null
+          provider_type: string
+          status: Database["public"]["Enums"]["provider_app_status"]
+          terms_accepted_at: string | null
+          terms_version: string | null
+          town: string
+          updated_at: string
+          user_id: string | null
+          website: string | null
+        }
+        Insert: {
+          contact_number: string
+          contact_person: string
+          created_at?: string
+          email: string
+          id?: string
+          organisation_name: string
+          physical_address?: string | null
+          provider_type: string
+          status?: Database["public"]["Enums"]["provider_app_status"]
+          terms_accepted_at?: string | null
+          terms_version?: string | null
+          town: string
+          updated_at?: string
+          user_id?: string | null
+          website?: string | null
+        }
+        Update: {
+          contact_number?: string
+          contact_person?: string
+          created_at?: string
+          email?: string
+          id?: string
+          organisation_name?: string
+          physical_address?: string | null
+          provider_type?: string
+          status?: Database["public"]["Enums"]["provider_app_status"]
+          terms_accepted_at?: string | null
+          terms_version?: string | null
+          town?: string
+          updated_at?: string
+          user_id?: string | null
+          website?: string | null
+        }
+        Relationships: []
+      }
       audit_log: {
         Row: {
           action: string
@@ -149,6 +422,130 @@ export type Database = {
           payment_status?: Database["public"]["Enums"]["payment_status"]
           phone?: string | null
           purpose?: Database["public"]["Enums"]["donation_purpose"]
+        }
+        Relationships: []
+      }
+      mentor_matches: {
+        Row: {
+          apprentice_id: string | null
+          created_at: string
+          id: string
+          mentor_id: string
+          notes: string | null
+          status: Database["public"]["Enums"]["mentor_match_status"]
+          updated_at: string
+          user_id: string | null
+        }
+        Insert: {
+          apprentice_id?: string | null
+          created_at?: string
+          id?: string
+          mentor_id: string
+          notes?: string | null
+          status?: Database["public"]["Enums"]["mentor_match_status"]
+          updated_at?: string
+          user_id?: string | null
+        }
+        Update: {
+          apprentice_id?: string | null
+          created_at?: string
+          id?: string
+          mentor_id?: string
+          notes?: string | null
+          status?: Database["public"]["Enums"]["mentor_match_status"]
+          updated_at?: string
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "mentor_matches_apprentice_id_fkey"
+            columns: ["apprentice_id"]
+            isOneToOne: false
+            referencedRelation: "apprentices"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "mentor_matches_mentor_id_fkey"
+            columns: ["mentor_id"]
+            isOneToOne: false
+            referencedRelation: "mentors"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "mentor_matches_mentor_id_fkey"
+            columns: ["mentor_id"]
+            isOneToOne: false
+            referencedRelation: "mentors_public"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      mentors: {
+        Row: {
+          approved: boolean
+          availability: string | null
+          biography: string | null
+          categories: string[]
+          contact_number: string
+          created_at: string
+          email: string
+          formats: string[]
+          full_name: string
+          id: string
+          is_knowledge_keeper: boolean
+          knowledge_keeper_categories: string[]
+          professional_background: string | null
+          status: Database["public"]["Enums"]["mentor_status"]
+          terms_accepted_at: string | null
+          terms_version: string | null
+          town: string | null
+          updated_at: string
+          user_id: string | null
+          years_experience: number | null
+        }
+        Insert: {
+          approved?: boolean
+          availability?: string | null
+          biography?: string | null
+          categories?: string[]
+          contact_number: string
+          created_at?: string
+          email: string
+          formats?: string[]
+          full_name: string
+          id?: string
+          is_knowledge_keeper?: boolean
+          knowledge_keeper_categories?: string[]
+          professional_background?: string | null
+          status?: Database["public"]["Enums"]["mentor_status"]
+          terms_accepted_at?: string | null
+          terms_version?: string | null
+          town?: string | null
+          updated_at?: string
+          user_id?: string | null
+          years_experience?: number | null
+        }
+        Update: {
+          approved?: boolean
+          availability?: string | null
+          biography?: string | null
+          categories?: string[]
+          contact_number?: string
+          created_at?: string
+          email?: string
+          formats?: string[]
+          full_name?: string
+          id?: string
+          is_knowledge_keeper?: boolean
+          knowledge_keeper_categories?: string[]
+          professional_background?: string | null
+          status?: Database["public"]["Enums"]["mentor_status"]
+          terms_accepted_at?: string | null
+          terms_version?: string | null
+          town?: string | null
+          updated_at?: string
+          user_id?: string | null
+          years_experience?: number | null
         }
         Relationships: []
       }
@@ -973,6 +1370,66 @@ export type Database = {
       }
     }
     Views: {
+      apprenticeship_opportunities_public: {
+        Row: {
+          created_at: string | null
+          description: string | null
+          duration: string | null
+          id: string | null
+          industry: string | null
+          min_age: number | null
+          paid: boolean | null
+          placements_available: number | null
+          preferred_qualifications: string | null
+          safety_requirements: string | null
+          skills_offered: string[] | null
+          start_date: string | null
+          status: Database["public"]["Enums"]["opportunity_status"] | null
+          stipend_amount: number | null
+          title: string | null
+          town: string | null
+          transport_requirements: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          description?: string | null
+          duration?: string | null
+          id?: string | null
+          industry?: string | null
+          min_age?: number | null
+          paid?: boolean | null
+          placements_available?: number | null
+          preferred_qualifications?: string | null
+          safety_requirements?: string | null
+          skills_offered?: string[] | null
+          start_date?: string | null
+          status?: Database["public"]["Enums"]["opportunity_status"] | null
+          stipend_amount?: number | null
+          title?: string | null
+          town?: string | null
+          transport_requirements?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          description?: string | null
+          duration?: string | null
+          id?: string | null
+          industry?: string | null
+          min_age?: number | null
+          paid?: boolean | null
+          placements_available?: number | null
+          preferred_qualifications?: string | null
+          safety_requirements?: string | null
+          skills_offered?: string[] | null
+          start_date?: string | null
+          status?: Database["public"]["Enums"]["opportunity_status"] | null
+          stipend_amount?: number | null
+          title?: string | null
+          town?: string | null
+          transport_requirements?: string | null
+        }
+        Relationships: []
+      }
       approved_providers_public: {
         Row: {
           available_immediately: boolean | null
@@ -1022,6 +1479,51 @@ export type Database = {
           registered: number | null
           requests: number | null
           sponsored_checks: number | null
+        }
+        Relationships: []
+      }
+      mentors_public: {
+        Row: {
+          availability: string | null
+          biography: string | null
+          categories: string[] | null
+          created_at: string | null
+          formats: string[] | null
+          full_name: string | null
+          id: string | null
+          is_knowledge_keeper: boolean | null
+          knowledge_keeper_categories: string[] | null
+          professional_background: string | null
+          town: string | null
+          years_experience: number | null
+        }
+        Insert: {
+          availability?: string | null
+          biography?: string | null
+          categories?: string[] | null
+          created_at?: string | null
+          formats?: string[] | null
+          full_name?: string | null
+          id?: string | null
+          is_knowledge_keeper?: boolean | null
+          knowledge_keeper_categories?: string[] | null
+          professional_background?: string | null
+          town?: string | null
+          years_experience?: number | null
+        }
+        Update: {
+          availability?: string | null
+          biography?: string | null
+          categories?: string[] | null
+          created_at?: string | null
+          formats?: string[] | null
+          full_name?: string | null
+          id?: string | null
+          is_knowledge_keeper?: boolean | null
+          knowledge_keeper_categories?: string[] | null
+          professional_background?: string | null
+          town?: string | null
+          years_experience?: number | null
         }
         Relationships: []
       }
@@ -1119,10 +1621,32 @@ export type Database = {
     }
     Enums: {
       app_role: "admin" | "user"
+      application_status:
+        | "submitted"
+        | "interview"
+        | "placed"
+        | "completed"
+        | "declined"
+      apprentice_status:
+        | "registered"
+        | "reviewed"
+        | "interview"
+        | "matched"
+        | "active"
+        | "completed"
       availability_type: "full_time" | "part_time" | "casual" | "temporary"
       donation_frequency: "once_off" | "monthly"
       donation_purpose: "general" | "sponsor_vetting"
+      mentor_match_status:
+        | "requested"
+        | "approved"
+        | "active"
+        | "completed"
+        | "declined"
+      mentor_status: "pending" | "approved" | "active" | "inactive"
+      opportunity_status: "open" | "reviewing" | "filled" | "closed"
       payment_status: "pending" | "succeeded" | "failed" | "refunded"
+      provider_app_status: "pending" | "approved" | "rejected"
       provider_status:
         | "pending_review"
         | "awaiting_documents"
@@ -1315,10 +1839,35 @@ export const Constants = {
   public: {
     Enums: {
       app_role: ["admin", "user"],
+      application_status: [
+        "submitted",
+        "interview",
+        "placed",
+        "completed",
+        "declined",
+      ],
+      apprentice_status: [
+        "registered",
+        "reviewed",
+        "interview",
+        "matched",
+        "active",
+        "completed",
+      ],
       availability_type: ["full_time", "part_time", "casual", "temporary"],
       donation_frequency: ["once_off", "monthly"],
       donation_purpose: ["general", "sponsor_vetting"],
+      mentor_match_status: [
+        "requested",
+        "approved",
+        "active",
+        "completed",
+        "declined",
+      ],
+      mentor_status: ["pending", "approved", "active", "inactive"],
+      opportunity_status: ["open", "reviewing", "filled", "closed"],
       payment_status: ["pending", "succeeded", "failed", "refunded"],
+      provider_app_status: ["pending", "approved", "rejected"],
       provider_status: [
         "pending_review",
         "awaiting_documents",
