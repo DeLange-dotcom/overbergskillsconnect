@@ -5,6 +5,7 @@ import { toast } from "sonner";
 import { CheckCircle2, Loader2 } from "lucide-react";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { TermsAcceptance } from "@/components/site/TermsAcceptance";
+import { PccSection, readPccFromForm } from "@/components/site/PccSection";
 import { supabase } from "@/integrations/supabase/client";
 import { TERMS_VERSION, recordTermsAcceptance } from "@/lib/terms";
 import {
@@ -77,9 +78,17 @@ function Page() {
       accept_terms: fd.get("accept_terms") === "on",
     };
     const parsed = schema.safeParse(raw);
-    if (!parsed.success) {
-      const errs: Record<string, string> = {};
-      parsed.error.issues.forEach((i) => (errs[i.path.join(".")] = i.message));
+    const pcc = readPccFromForm(fd);
+    const pccErrors: Record<string, string> = {};
+    if (!pcc.pcc_status) pccErrors.pcc_status = "Please choose an option.";
+    if (pcc.pcc_status === "have" && !pcc.pcc_issue_date)
+      pccErrors.pcc_issue_date = "Issue date is required.";
+
+    if (!parsed.success || Object.keys(pccErrors).length) {
+      const errs: Record<string, string> = { ...pccErrors };
+      if (!parsed.success) {
+        parsed.error.issues.forEach((i) => (errs[i.path.join(".")] = i.message));
+      }
       setErrors(errs);
       setSubmitting(false);
       toast.error("Please fix the highlighted fields.");
@@ -110,6 +119,10 @@ function Page() {
         cv_url: d.cv_url || null,
         terms_accepted_at: new Date().toISOString(),
         terms_version: TERMS_VERSION,
+        pcc_status: pcc.pcc_status,
+        pcc_issue_date: pcc.pcc_issue_date,
+        pcc_number: pcc.pcc_number,
+        pcc_wants_assistance: pcc.pcc_wants_assistance,
       })
       .select("id, reference_code")
       .single();
@@ -199,6 +212,8 @@ function Page() {
               <input name="cv_url" type="url" placeholder="https://…" className="w-full px-4 py-3 border border-brand-dark/10 rounded-xl bg-white" />
             </div>
           </Fieldset>
+
+          <PccSection errors={errors} />
 
           <Fieldset title="Terms & Disclaimer (required)">
             <TermsAcceptance name="accept_terms" error={errors.accept_terms} />

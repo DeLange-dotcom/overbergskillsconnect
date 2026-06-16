@@ -87,6 +87,15 @@ function AdminApp() {
                     </td>
                     <td className="px-3 py-2 text-brand-dark/60">{new Date(r.created_at).toLocaleDateString()}</td>
                     <td className="px-3 py-2">
+                      {tab === "apprentices" && (
+                        <Link
+                          to="/admin/apprentices/$id"
+                          params={{ id: r.id }}
+                          className="text-brand-primary text-xs font-medium hover:underline mr-3"
+                        >
+                          Open
+                        </Link>
+                      )}
                       {tab === "mentors" && !r.approved && (
                         <button onClick={() => approve("mentors", r.id)} className="inline-flex items-center gap-1 text-xs px-3 py-1.5 rounded-full bg-brand-primary text-white">
                           <CheckCircle className="size-3" /> Approve
