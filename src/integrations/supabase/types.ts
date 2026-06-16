@@ -590,6 +590,387 @@ export type Database = {
           },
         ]
       }
+      youth_applications: {
+        Row: {
+          completed_at: string | null
+          created_at: string
+          hours_logged: number
+          id: string
+          notes: string | null
+          opportunity_id: string | null
+          status: Database["public"]["Enums"]["youth_application_status"]
+          updated_at: string
+          youth_profile_id: string
+        }
+        Insert: {
+          completed_at?: string | null
+          created_at?: string
+          hours_logged?: number
+          id?: string
+          notes?: string | null
+          opportunity_id?: string | null
+          status?: Database["public"]["Enums"]["youth_application_status"]
+          updated_at?: string
+          youth_profile_id: string
+        }
+        Update: {
+          completed_at?: string | null
+          created_at?: string
+          hours_logged?: number
+          id?: string
+          notes?: string | null
+          opportunity_id?: string | null
+          status?: Database["public"]["Enums"]["youth_application_status"]
+          updated_at?: string
+          youth_profile_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "youth_applications_opportunity_id_fkey"
+            columns: ["opportunity_id"]
+            isOneToOne: false
+            referencedRelation: "youth_opportunities"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "youth_applications_opportunity_id_fkey"
+            columns: ["opportunity_id"]
+            isOneToOne: false
+            referencedRelation: "youth_opportunities_public"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "youth_applications_youth_profile_id_fkey"
+            columns: ["youth_profile_id"]
+            isOneToOne: false
+            referencedRelation: "youth_profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      youth_badges: {
+        Row: {
+          awarded_at: string
+          awarded_by: string | null
+          badge_key: Database["public"]["Enums"]["youth_badge_key"]
+          id: string
+          notes: string | null
+          youth_profile_id: string
+        }
+        Insert: {
+          awarded_at?: string
+          awarded_by?: string | null
+          badge_key: Database["public"]["Enums"]["youth_badge_key"]
+          id?: string
+          notes?: string | null
+          youth_profile_id: string
+        }
+        Update: {
+          awarded_at?: string
+          awarded_by?: string | null
+          badge_key?: Database["public"]["Enums"]["youth_badge_key"]
+          id?: string
+          notes?: string | null
+          youth_profile_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "youth_badges_youth_profile_id_fkey"
+            columns: ["youth_profile_id"]
+            isOneToOne: false
+            referencedRelation: "youth_profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      youth_opportunities: {
+        Row: {
+          approval_notes: string | null
+          category: Database["public"]["Enums"]["youth_opportunity_category"]
+          child_safe_reviewed: boolean
+          closing_date: string | null
+          contact_email: string | null
+          contact_name: string | null
+          contact_phone: string | null
+          created_at: string
+          description: string
+          end_date: string | null
+          hazardous_flag: boolean
+          id: string
+          linked_programme: string | null
+          max_age: number
+          min_age: number
+          opportunity_type: string
+          organisation_name: string
+          posted_by_user_id: string | null
+          prohibited_for_minors: boolean
+          start_date: string | null
+          status: Database["public"]["Enums"]["youth_opportunity_status"]
+          title: string
+          town: string
+          updated_at: string
+        }
+        Insert: {
+          approval_notes?: string | null
+          category: Database["public"]["Enums"]["youth_opportunity_category"]
+          child_safe_reviewed?: boolean
+          closing_date?: string | null
+          contact_email?: string | null
+          contact_name?: string | null
+          contact_phone?: string | null
+          created_at?: string
+          description: string
+          end_date?: string | null
+          hazardous_flag?: boolean
+          id?: string
+          linked_programme?: string | null
+          max_age?: number
+          min_age?: number
+          opportunity_type: string
+          organisation_name: string
+          posted_by_user_id?: string | null
+          prohibited_for_minors?: boolean
+          start_date?: string | null
+          status?: Database["public"]["Enums"]["youth_opportunity_status"]
+          title: string
+          town: string
+          updated_at?: string
+        }
+        Update: {
+          approval_notes?: string | null
+          category?: Database["public"]["Enums"]["youth_opportunity_category"]
+          child_safe_reviewed?: boolean
+          closing_date?: string | null
+          contact_email?: string | null
+          contact_name?: string | null
+          contact_phone?: string | null
+          created_at?: string
+          description?: string
+          end_date?: string | null
+          hazardous_flag?: boolean
+          id?: string
+          linked_programme?: string | null
+          max_age?: number
+          min_age?: number
+          opportunity_type?: string
+          organisation_name?: string
+          posted_by_user_id?: string | null
+          prohibited_for_minors?: boolean
+          start_date?: string | null
+          status?: Database["public"]["Enums"]["youth_opportunity_status"]
+          title?: string
+          town?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      youth_profiles: {
+        Row: {
+          age_group: string | null
+          application_code: string
+          availability: string[]
+          created_at: string
+          dob: string
+          education_level: string | null
+          email: string | null
+          emergency_contact_name: string | null
+          emergency_contact_phone: string | null
+          full_name: string
+          guardian_consent_at: string | null
+          guardian_consent_given: boolean
+          guardian_email: string | null
+          guardian_name: string | null
+          guardian_phone: string | null
+          guardian_relationship: string | null
+          id: string
+          interests: string[]
+          languages: string[]
+          learning_city_interest: boolean
+          mentor_match_opt_in: boolean
+          mobile_number: string | null
+          notes_admin: string | null
+          opportunity_types: string[]
+          school: string | null
+          skills: string[]
+          status: Database["public"]["Enums"]["youth_status"]
+          terms_accepted_at: string | null
+          terms_version_accepted: string | null
+          town: string
+          updated_at: string
+          user_id: string | null
+        }
+        Insert: {
+          age_group?: string | null
+          application_code?: string
+          availability?: string[]
+          created_at?: string
+          dob: string
+          education_level?: string | null
+          email?: string | null
+          emergency_contact_name?: string | null
+          emergency_contact_phone?: string | null
+          full_name: string
+          guardian_consent_at?: string | null
+          guardian_consent_given?: boolean
+          guardian_email?: string | null
+          guardian_name?: string | null
+          guardian_phone?: string | null
+          guardian_relationship?: string | null
+          id?: string
+          interests?: string[]
+          languages?: string[]
+          learning_city_interest?: boolean
+          mentor_match_opt_in?: boolean
+          mobile_number?: string | null
+          notes_admin?: string | null
+          opportunity_types?: string[]
+          school?: string | null
+          skills?: string[]
+          status?: Database["public"]["Enums"]["youth_status"]
+          terms_accepted_at?: string | null
+          terms_version_accepted?: string | null
+          town: string
+          updated_at?: string
+          user_id?: string | null
+        }
+        Update: {
+          age_group?: string | null
+          application_code?: string
+          availability?: string[]
+          created_at?: string
+          dob?: string
+          education_level?: string | null
+          email?: string | null
+          emergency_contact_name?: string | null
+          emergency_contact_phone?: string | null
+          full_name?: string
+          guardian_consent_at?: string | null
+          guardian_consent_given?: boolean
+          guardian_email?: string | null
+          guardian_name?: string | null
+          guardian_phone?: string | null
+          guardian_relationship?: string | null
+          id?: string
+          interests?: string[]
+          languages?: string[]
+          learning_city_interest?: boolean
+          mentor_match_opt_in?: boolean
+          mobile_number?: string | null
+          notes_admin?: string | null
+          opportunity_types?: string[]
+          school?: string | null
+          skills?: string[]
+          status?: Database["public"]["Enums"]["youth_status"]
+          terms_accepted_at?: string | null
+          terms_version_accepted?: string | null
+          town?: string
+          updated_at?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
+      youth_references: {
+        Row: {
+          created_at: string
+          id: string
+          notes: string | null
+          opportunity_id: string | null
+          reference_contact: string
+          reference_name: string
+          relationship: string | null
+          updated_at: string
+          youth_profile_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          notes?: string | null
+          opportunity_id?: string | null
+          reference_contact: string
+          reference_name: string
+          relationship?: string | null
+          updated_at?: string
+          youth_profile_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          notes?: string | null
+          opportunity_id?: string | null
+          reference_contact?: string
+          reference_name?: string
+          relationship?: string | null
+          updated_at?: string
+          youth_profile_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "youth_references_opportunity_id_fkey"
+            columns: ["opportunity_id"]
+            isOneToOne: false
+            referencedRelation: "youth_opportunities"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "youth_references_opportunity_id_fkey"
+            columns: ["opportunity_id"]
+            isOneToOne: false
+            referencedRelation: "youth_opportunities_public"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "youth_references_youth_profile_id_fkey"
+            columns: ["youth_profile_id"]
+            isOneToOne: false
+            referencedRelation: "youth_profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      youth_training: {
+        Row: {
+          certificate_url: string | null
+          completed_at: string | null
+          course_name: string
+          created_at: string
+          id: string
+          provider: string | null
+          updated_at: string
+          verified_by_admin: boolean
+          youth_profile_id: string
+        }
+        Insert: {
+          certificate_url?: string | null
+          completed_at?: string | null
+          course_name: string
+          created_at?: string
+          id?: string
+          provider?: string | null
+          updated_at?: string
+          verified_by_admin?: boolean
+          youth_profile_id: string
+        }
+        Update: {
+          certificate_url?: string | null
+          completed_at?: string | null
+          course_name?: string
+          created_at?: string
+          id?: string
+          provider?: string | null
+          updated_at?: string
+          verified_by_admin?: boolean
+          youth_profile_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "youth_training_youth_profile_id_fkey"
+            columns: ["youth_profile_id"]
+            isOneToOne: false
+            referencedRelation: "youth_profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       approved_providers_public: {
@@ -665,6 +1046,66 @@ export type Database = {
         }
         Relationships: []
       }
+      youth_opportunities_public: {
+        Row: {
+          category:
+            | Database["public"]["Enums"]["youth_opportunity_category"]
+            | null
+          closing_date: string | null
+          created_at: string | null
+          description: string | null
+          end_date: string | null
+          id: string | null
+          linked_programme: string | null
+          max_age: number | null
+          min_age: number | null
+          opportunity_type: string | null
+          organisation_name: string | null
+          prohibited_for_minors: boolean | null
+          start_date: string | null
+          title: string | null
+          town: string | null
+        }
+        Insert: {
+          category?:
+            | Database["public"]["Enums"]["youth_opportunity_category"]
+            | null
+          closing_date?: string | null
+          created_at?: string | null
+          description?: string | null
+          end_date?: string | null
+          id?: string | null
+          linked_programme?: string | null
+          max_age?: number | null
+          min_age?: number | null
+          opportunity_type?: string | null
+          organisation_name?: string | null
+          prohibited_for_minors?: boolean | null
+          start_date?: string | null
+          title?: string | null
+          town?: string | null
+        }
+        Update: {
+          category?:
+            | Database["public"]["Enums"]["youth_opportunity_category"]
+            | null
+          closing_date?: string | null
+          created_at?: string | null
+          description?: string | null
+          end_date?: string | null
+          id?: string | null
+          linked_programme?: string | null
+          max_age?: number | null
+          min_age?: number | null
+          opportunity_type?: string | null
+          organisation_name?: string | null
+          prohibited_for_minors?: boolean | null
+          start_date?: string | null
+          title?: string | null
+          town?: string | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
       has_role: {
@@ -674,6 +1115,7 @@ export type Database = {
         }
         Returns: boolean
       }
+      youth_age_group: { Args: { _dob: string }; Returns: string }
     }
     Enums: {
       app_role: "admin" | "user"
@@ -722,6 +1164,29 @@ export type Database = {
         | "within_20km"
         | "within_50km"
         | "overberg_wide"
+      youth_application_status:
+        | "interested"
+        | "applied"
+        | "shortlisted"
+        | "placed"
+        | "completed"
+        | "withdrawn"
+      youth_badge_key:
+        | "community_volunteer"
+        | "first_job_completed"
+        | "reliable_worker"
+        | "environmental_champion"
+        | "hospitality_helper"
+        | "digital_skills_learner"
+        | "community_leader"
+      youth_opportunity_category:
+        | "paid"
+        | "volunteer"
+        | "training"
+        | "internship"
+        | "community_service"
+      youth_opportunity_status: "pending" | "approved" | "rejected" | "closed"
+      youth_status: "pending" | "approved" | "on_hold" | "rejected"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -899,6 +1364,32 @@ export const Constants = {
         "within_50km",
         "overberg_wide",
       ],
+      youth_application_status: [
+        "interested",
+        "applied",
+        "shortlisted",
+        "placed",
+        "completed",
+        "withdrawn",
+      ],
+      youth_badge_key: [
+        "community_volunteer",
+        "first_job_completed",
+        "reliable_worker",
+        "environmental_champion",
+        "hospitality_helper",
+        "digital_skills_learner",
+        "community_leader",
+      ],
+      youth_opportunity_category: [
+        "paid",
+        "volunteer",
+        "training",
+        "internship",
+        "community_service",
+      ],
+      youth_opportunity_status: ["pending", "approved", "rejected", "closed"],
+      youth_status: ["pending", "approved", "on_hold", "rejected"],
     },
   },
 } as const
