@@ -8,7 +8,6 @@ const NAV = [
   { to: "/find-help", label: "Find Help" },
   { to: "/register-provider", label: "Register" },
   { to: "/request-support", label: "Request Support" },
-  { to: "/youth", label: "Youth Hub" },
   { to: "/how-it-works", label: "How it works" },
   { to: "/donate", label: "Donate" },
 ];
@@ -58,6 +57,13 @@ export function Header() {
               {n.label}
             </Link>
           ))}
+          <Link
+            to="/youth"
+            className="px-4 py-2 rounded-full bg-brand-primary text-primary-foreground text-sm font-medium hover:brightness-110 transition"
+            activeProps={{ className: "px-4 py-2 rounded-full bg-brand-primary text-primary-foreground text-sm font-medium brightness-110" }}
+          >
+            Youth Hub
+          </Link>
         </nav>
 
         <div className="flex items-center gap-2">
@@ -100,6 +106,14 @@ export function Header() {
                 {n.label}
               </Link>
             ))}
+            <Link
+              to="/youth"
+              onClick={() => setOpen(false)}
+              className="mt-1 px-3 py-2.5 rounded-lg text-center bg-brand-primary text-primary-foreground font-medium hover:brightness-110"
+              activeProps={{ className: "mt-1 px-3 py-2.5 rounded-lg text-center bg-brand-primary text-primary-foreground font-medium brightness-110" }}
+            >
+              Youth Hub
+            </Link>
             {signedIn && (
               <Link
                 to="/admin"
