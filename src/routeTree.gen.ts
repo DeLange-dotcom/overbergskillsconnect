@@ -15,7 +15,11 @@ import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as HowItWorksRouteImport } from './routes/how-it-works'
 import { Route as FindHelpRouteImport } from './routes/find-help'
 import { Route as DonateRouteImport } from './routes/donate'
+import { Route as AuthRouteImport } from './routes/auth'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin/index'
+import { Route as AuthenticatedAdminProvidersIdRouteImport } from './routes/_authenticated/admin/providers/$id'
 
 const RequestSupportRoute = RequestSupportRouteImport.update({
   id: '/request-support',
@@ -47,72 +51,114 @@ const DonateRoute = DonateRouteImport.update({
   path: '/donate',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedAdminIndexRoute = AuthenticatedAdminIndexRouteImport.update({
+  id: '/admin/',
+  path: '/admin/',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedAdminProvidersIdRoute =
+  AuthenticatedAdminProvidersIdRouteImport.update({
+    id: '/admin/providers/$id',
+    path: '/admin/providers/$id',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
   '/donate': typeof DonateRoute
   '/find-help': typeof FindHelpRoute
   '/how-it-works': typeof HowItWorksRoute
   '/privacy': typeof PrivacyRoute
   '/register-provider': typeof RegisterProviderRoute
   '/request-support': typeof RequestSupportRoute
+  '/admin/': typeof AuthenticatedAdminIndexRoute
+  '/admin/providers/$id': typeof AuthenticatedAdminProvidersIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
   '/donate': typeof DonateRoute
   '/find-help': typeof FindHelpRoute
   '/how-it-works': typeof HowItWorksRoute
   '/privacy': typeof PrivacyRoute
   '/register-provider': typeof RegisterProviderRoute
   '/request-support': typeof RequestSupportRoute
+  '/admin': typeof AuthenticatedAdminIndexRoute
+  '/admin/providers/$id': typeof AuthenticatedAdminProvidersIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
+  '/auth': typeof AuthRoute
   '/donate': typeof DonateRoute
   '/find-help': typeof FindHelpRoute
   '/how-it-works': typeof HowItWorksRoute
   '/privacy': typeof PrivacyRoute
   '/register-provider': typeof RegisterProviderRoute
   '/request-support': typeof RequestSupportRoute
+  '/_authenticated/admin/': typeof AuthenticatedAdminIndexRoute
+  '/_authenticated/admin/providers/$id': typeof AuthenticatedAdminProvidersIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/auth'
     | '/donate'
     | '/find-help'
     | '/how-it-works'
     | '/privacy'
     | '/register-provider'
     | '/request-support'
+    | '/admin/'
+    | '/admin/providers/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/auth'
     | '/donate'
     | '/find-help'
     | '/how-it-works'
     | '/privacy'
     | '/register-provider'
     | '/request-support'
+    | '/admin'
+    | '/admin/providers/$id'
   id:
     | '__root__'
     | '/'
+    | '/_authenticated'
+    | '/auth'
     | '/donate'
     | '/find-help'
     | '/how-it-works'
     | '/privacy'
     | '/register-provider'
     | '/request-support'
+    | '/_authenticated/admin/'
+    | '/_authenticated/admin/providers/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
+  AuthRoute: typeof AuthRoute
   DonateRoute: typeof DonateRoute
   FindHelpRoute: typeof FindHelpRoute
   HowItWorksRoute: typeof HowItWorksRoute
@@ -165,6 +211,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DonateRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -172,11 +232,40 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/admin/': {
+      id: '/_authenticated/admin/'
+      path: '/admin'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AuthenticatedAdminIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/admin/providers/$id': {
+      id: '/_authenticated/admin/providers/$id'
+      path: '/admin/providers/$id'
+      fullPath: '/admin/providers/$id'
+      preLoaderRoute: typeof AuthenticatedAdminProvidersIdRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
   }
 }
 
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedAdminIndexRoute: typeof AuthenticatedAdminIndexRoute
+  AuthenticatedAdminProvidersIdRoute: typeof AuthenticatedAdminProvidersIdRoute
+}
+
+const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedAdminIndexRoute: AuthenticatedAdminIndexRoute,
+  AuthenticatedAdminProvidersIdRoute: AuthenticatedAdminProvidersIdRoute,
+}
+
+const AuthenticatedRouteRouteWithChildren =
+  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
+  AuthRoute: AuthRoute,
   DonateRoute: DonateRoute,
   FindHelpRoute: FindHelpRoute,
   HowItWorksRoute: HowItWorksRoute,
