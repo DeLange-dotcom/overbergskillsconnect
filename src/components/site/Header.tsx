@@ -99,7 +99,7 @@ export function Header() {
       </div>
 
       {open && (
-        <div className="lg:hidden border-t border-brand-dark/5 bg-brand-page">
+        <div className="xl:hidden border-t border-brand-dark/5 bg-brand-page">
           <nav className="px-4 py-4 flex flex-col gap-2">
             {NAV.map((n) => (
               <Link
