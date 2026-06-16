@@ -230,7 +230,7 @@ function Field({ label, name, type = "text", required, error }: { label: string;
 }
 function CheckGrid({ name, options, error, cols = 3 }: { name: string; options: readonly string[]; error?: string; cols?: number }) {
   return <div>
-    <div className={``grid grid-cols-2 gap-2 ${cols === 2 ? "sm:grid-cols-2" : "sm:grid-cols-3"}``}>
+    <div className={`grid grid-cols-2 gap-2 ${cols === 2 ? "sm:grid-cols-2" : "sm:grid-cols-3"}`}>
       {options.map((o) => (
         <label key={o} className="flex items-center gap-2 px-3 py-2 rounded-lg border border-brand-dark/10 hover:bg-brand-soft cursor-pointer text-sm">
           <input type="checkbox" name={name} value={o} className="accent-brand-primary" />{o}
