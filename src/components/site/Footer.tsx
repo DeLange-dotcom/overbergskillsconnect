@@ -30,6 +30,7 @@ export function Footer() {
           <div className="font-semibold mb-3 text-brand-dark">Information</div>
           <ul className="space-y-2 text-brand-dark/70">
             <li><Link to="/how-it-works" className="hover:text-brand-primary">How it works</Link></li>
+            <li><Link to="/terms" className="hover:text-brand-primary">Terms &amp; Disclaimer</Link></li>
             <li><Link to="/privacy" className="hover:text-brand-primary">Privacy notice (POPIA)</Link></li>
             <li>
               <a href={waLink} target="_blank" rel="noopener noreferrer" className="hover:text-brand-primary">
