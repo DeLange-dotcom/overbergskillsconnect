@@ -33,6 +33,7 @@ const schema = z.object({
   full_name: z.string().trim().min(2).max(120),
   id_passport_number: z.string().trim().min(4).max(40),
   nationality: z.string().trim().min(2).max(60),
+  work_permit: z.enum(["yes", "no", "na"]).optional(),
   date_of_birth: z.string().min(1, "Date of birth is required"),
   mobile_number: z.string().trim().min(7).max(20),
   whatsapp_number: z.string().trim().max(20).optional().or(z.literal("")),
@@ -64,7 +65,19 @@ const schema = z.object({
   accept_terms: z.literal(true, {
     errorMap: () => ({ message: "You must accept the Terms & Disclaimer to continue." }),
   }),
+}).superRefine((data, ctx) => {
+  const isSA = /south\s*afric/i.test(data.nationality.trim());
+  if (!isSA) {
+    if (!data.work_permit || data.work_permit === "na") {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ["work_permit"],
+        message: "Please confirm whether you hold a valid South African work permit.",
+      });
+    }
+  }
 });
+
 
 function RegisterProvider() {
   const [submitting, setSubmitting] = useState(false);
