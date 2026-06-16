@@ -39,7 +39,7 @@ function AuthPage() {
       if (mode === "signin") {
         const { error } = await supabase.auth.signInWithPassword({ email, password });
         if (error) throw error;
-      } else {
+      } else if (mode === "signup") {
         const { error } = await supabase.auth.signUp({
           email,
           password,
@@ -47,13 +47,21 @@ function AuthPage() {
         });
         if (error) throw error;
         toast.success("Check your email to confirm your account.");
+      } else {
+        const { error } = await supabase.auth.resetPasswordForEmail(email, {
+          redirectTo: window.location.origin + "/reset-password",
+        });
+        if (error) throw error;
+        setResetSent(true);
+        toast.success("Password reset email sent. Check your inbox.");
       }
     } catch (err) {
-      toast.error(err instanceof Error ? err.message : "Sign-in failed");
+      toast.error(err instanceof Error ? err.message : "Request failed");
     } finally {
       setBusy(false);
     }
   }
+
 
   async function google() {
     setBusy(true);
