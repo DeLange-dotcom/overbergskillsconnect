@@ -86,6 +86,14 @@ function Home() {
               variant="soft"
             />
             <CardCta
+              to="/youth"
+              tag="Ages 15–25"
+              tagColor="text-brand-primary"
+              title="Youth Opportunities Hub"
+              icon={<UserPlus className="size-5" />}
+              variant="soft"
+            />
+            <CardCta
               to="/donate"
               tag="Support Us"
               tagColor="text-brand-accent"
