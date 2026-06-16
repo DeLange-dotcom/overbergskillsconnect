@@ -50,8 +50,8 @@ export function Header() {
             <Link
               key={n.to}
               to={n.to}
-              className="text-brand-dark/70 hover:text-brand-primary transition-colors"
-              activeProps={{ className: "text-brand-primary font-semibold" }}
+              className="text-brand-dark/70 hover:text-brand-primary transition-colors whitespace-nowrap"
+              activeProps={{ className: "text-brand-primary font-semibold whitespace-nowrap" }}
               activeOptions={{ exact: n.to === "/" }}
             >
               {n.label}
