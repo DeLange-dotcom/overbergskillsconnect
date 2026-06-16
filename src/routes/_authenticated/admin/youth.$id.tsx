@@ -172,6 +172,8 @@ function AdminYouthDetail() {
             ))}
           </div>
         </section>
+
+        <AdminPccPanel table="youth_profiles" id={id} />
       </div>
     </SiteLayout>
   );
