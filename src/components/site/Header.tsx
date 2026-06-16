@@ -100,7 +100,7 @@ export function Header() {
 
       {open && (
         <div className="lg:hidden border-t border-brand-dark/5 bg-brand-page">
-          <nav className="px-4 py-3 flex flex-col gap-1">
+          <nav className="px-4 py-4 flex flex-col gap-2">
             {NAV.map((n) => (
               <Link
                 key={n.to}
@@ -113,19 +113,20 @@ export function Header() {
                 {n.label}
               </Link>
             ))}
+            <div className="border-t border-brand-dark/10 my-1" />
             <Link
               to="/youth"
               onClick={() => setOpen(false)}
-              className="mt-1 px-3 py-2.5 rounded-lg text-center bg-brand-primary text-primary-foreground font-medium hover:brightness-110"
-              activeProps={{ className: "mt-1 px-3 py-2.5 rounded-lg text-center bg-brand-primary text-primary-foreground font-medium brightness-110" }}
+              className="px-3 py-3 rounded-lg text-center bg-brand-primary text-primary-foreground font-medium hover:brightness-110"
+              activeProps={{ className: "px-3 py-3 rounded-lg text-center bg-brand-primary text-primary-foreground font-medium brightness-110" }}
             >
               Youth Hub
             </Link>
             <Link
               to="/apprenticeships"
               onClick={() => setOpen(false)}
-              className="mt-1 px-3 py-2.5 rounded-lg text-center bg-brand-primary text-primary-foreground font-medium hover:brightness-110"
-              activeProps={{ className: "mt-1 px-3 py-2.5 rounded-lg text-center bg-brand-primary text-primary-foreground font-medium brightness-110" }}
+              className="px-3 py-3 rounded-lg text-center bg-brand-primary text-primary-foreground font-medium hover:brightness-110"
+              activeProps={{ className: "px-3 py-3 rounded-lg text-center bg-brand-primary text-primary-foreground font-medium brightness-110" }}
             >
               Apprenticeships
             </Link>
