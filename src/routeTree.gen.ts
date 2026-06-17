@@ -33,6 +33,7 @@ import { Route as ApprenticeshipsMentorsRouteImport } from './routes/apprentices
 import { Route as ApprenticeshipsImpactRouteImport } from './routes/apprenticeships.impact'
 import { Route as ApprenticeshipsBecomeMentorRouteImport } from './routes/apprenticeships.become-mentor'
 import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin/index'
+import { Route as DirectoryTypeIdRouteImport } from './routes/directory.$type.$id'
 import { Route as AuthenticatedYouthPortfolioRouteImport } from './routes/_authenticated/youth.portfolio'
 import { Route as AuthenticatedAdminYouthOpportunitiesRouteImport } from './routes/_authenticated/admin/youth-opportunities'
 import { Route as AuthenticatedAdminApprenticeshipsRouteImport } from './routes/_authenticated/admin/apprenticeships'
@@ -164,6 +165,11 @@ const AuthenticatedAdminIndexRoute = AuthenticatedAdminIndexRouteImport.update({
   path: '/admin/',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const DirectoryTypeIdRoute = DirectoryTypeIdRouteImport.update({
+  id: '/$type/$id',
+  path: '/$type/$id',
+  getParentRoute: () => DirectoryRoute,
+} as any)
 const AuthenticatedYouthPortfolioRoute =
   AuthenticatedYouthPortfolioRouteImport.update({
     id: '/youth/portfolio',
@@ -211,7 +217,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/apprenticeships': typeof ApprenticeshipsRouteWithChildren
   '/auth': typeof AuthRoute
-  '/directory': typeof DirectoryRoute
+  '/directory': typeof DirectoryRouteWithChildren
   '/donate': typeof DonateRoute
   '/find-help': typeof FindHelpRoute
   '/how-it-works': typeof HowItWorksRoute
@@ -233,6 +239,7 @@ export interface FileRoutesByFullPath {
   '/admin/apprenticeships': typeof AuthenticatedAdminApprenticeshipsRoute
   '/admin/youth-opportunities': typeof AuthenticatedAdminYouthOpportunitiesRoute
   '/youth/portfolio': typeof AuthenticatedYouthPortfolioRoute
+  '/directory/$type/$id': typeof DirectoryTypeIdRoute
   '/admin/': typeof AuthenticatedAdminIndexRoute
   '/admin/apprentices/$id': typeof AuthenticatedAdminApprenticesIdRoute
   '/admin/providers/$id': typeof AuthenticatedAdminProvidersIdRoute
@@ -243,7 +250,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/apprenticeships': typeof ApprenticeshipsRouteWithChildren
   '/auth': typeof AuthRoute
-  '/directory': typeof DirectoryRoute
+  '/directory': typeof DirectoryRouteWithChildren
   '/donate': typeof DonateRoute
   '/find-help': typeof FindHelpRoute
   '/how-it-works': typeof HowItWorksRoute
@@ -265,6 +272,7 @@ export interface FileRoutesByTo {
   '/admin/apprenticeships': typeof AuthenticatedAdminApprenticeshipsRoute
   '/admin/youth-opportunities': typeof AuthenticatedAdminYouthOpportunitiesRoute
   '/youth/portfolio': typeof AuthenticatedYouthPortfolioRoute
+  '/directory/$type/$id': typeof DirectoryTypeIdRoute
   '/admin': typeof AuthenticatedAdminIndexRoute
   '/admin/apprentices/$id': typeof AuthenticatedAdminApprenticesIdRoute
   '/admin/providers/$id': typeof AuthenticatedAdminProvidersIdRoute
@@ -277,7 +285,7 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/apprenticeships': typeof ApprenticeshipsRouteWithChildren
   '/auth': typeof AuthRoute
-  '/directory': typeof DirectoryRoute
+  '/directory': typeof DirectoryRouteWithChildren
   '/donate': typeof DonateRoute
   '/find-help': typeof FindHelpRoute
   '/how-it-works': typeof HowItWorksRoute
@@ -299,6 +307,7 @@ export interface FileRoutesById {
   '/_authenticated/admin/apprenticeships': typeof AuthenticatedAdminApprenticeshipsRoute
   '/_authenticated/admin/youth-opportunities': typeof AuthenticatedAdminYouthOpportunitiesRoute
   '/_authenticated/youth/portfolio': typeof AuthenticatedYouthPortfolioRoute
+  '/directory/$type/$id': typeof DirectoryTypeIdRoute
   '/_authenticated/admin/': typeof AuthenticatedAdminIndexRoute
   '/_authenticated/admin/apprentices/$id': typeof AuthenticatedAdminApprenticesIdRoute
   '/_authenticated/admin/providers/$id': typeof AuthenticatedAdminProvidersIdRoute
@@ -333,6 +342,7 @@ export interface FileRouteTypes {
     | '/admin/apprenticeships'
     | '/admin/youth-opportunities'
     | '/youth/portfolio'
+    | '/directory/$type/$id'
     | '/admin/'
     | '/admin/apprentices/$id'
     | '/admin/providers/$id'
@@ -365,6 +375,7 @@ export interface FileRouteTypes {
     | '/admin/apprenticeships'
     | '/admin/youth-opportunities'
     | '/youth/portfolio'
+    | '/directory/$type/$id'
     | '/admin'
     | '/admin/apprentices/$id'
     | '/admin/providers/$id'
@@ -398,6 +409,7 @@ export interface FileRouteTypes {
     | '/_authenticated/admin/apprenticeships'
     | '/_authenticated/admin/youth-opportunities'
     | '/_authenticated/youth/portfolio'
+    | '/directory/$type/$id'
     | '/_authenticated/admin/'
     | '/_authenticated/admin/apprentices/$id'
     | '/_authenticated/admin/providers/$id'
@@ -410,7 +422,7 @@ export interface RootRouteChildren {
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   ApprenticeshipsRoute: typeof ApprenticeshipsRouteWithChildren
   AuthRoute: typeof AuthRoute
-  DirectoryRoute: typeof DirectoryRoute
+  DirectoryRoute: typeof DirectoryRouteWithChildren
   DonateRoute: typeof DonateRoute
   FindHelpRoute: typeof FindHelpRoute
   HowItWorksRoute: typeof HowItWorksRoute
@@ -592,6 +604,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/directory/$type/$id': {
+      id: '/directory/$type/$id'
+      path: '/$type/$id'
+      fullPath: '/directory/$type/$id'
+      preLoaderRoute: typeof DirectoryTypeIdRouteImport
+      parentRoute: typeof DirectoryRoute
+    }
     '/_authenticated/youth/portfolio': {
       id: '/_authenticated/youth/portfolio'
       path: '/youth/portfolio'
@@ -694,6 +713,18 @@ const ApprenticeshipsRouteWithChildren = ApprenticeshipsRoute._addFileChildren(
   ApprenticeshipsRouteChildren,
 )
 
+interface DirectoryRouteChildren {
+  DirectoryTypeIdRoute: typeof DirectoryTypeIdRoute
+}
+
+const DirectoryRouteChildren: DirectoryRouteChildren = {
+  DirectoryTypeIdRoute: DirectoryTypeIdRoute,
+}
+
+const DirectoryRouteWithChildren = DirectoryRoute._addFileChildren(
+  DirectoryRouteChildren,
+)
+
 interface YouthRouteChildren {
   YouthOpportunitiesRoute: typeof YouthOpportunitiesRoute
   YouthPostOpportunityRoute: typeof YouthPostOpportunityRoute
@@ -713,7 +744,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   ApprenticeshipsRoute: ApprenticeshipsRouteWithChildren,
   AuthRoute: AuthRoute,
-  DirectoryRoute: DirectoryRoute,
+  DirectoryRoute: DirectoryRouteWithChildren,
   DonateRoute: DonateRoute,
   FindHelpRoute: FindHelpRoute,
   HowItWorksRoute: HowItWorksRoute,

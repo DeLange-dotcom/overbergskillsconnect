@@ -1,5 +1,5 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { HineniDisclaimer } from "@/components/site/HineniDisclaimer";
@@ -49,11 +49,11 @@ function ProfilePage() {
   const [showContact, setShowContact] = useState(false);
   const [showReport, setShowReport] = useState(false);
 
-  const tableMap = {
+  const tableMap: Record<ApplicantType, "service_providers" | "apprentices" | "youth_profiles"> = {
     service_provider: "service_providers",
     apprentice: "apprentices",
     youth: "youth_profiles",
-  } as const;
+  };
 
   const { data: profile, isLoading } = useQuery({
     queryKey: ["directory_profile", type, id],
