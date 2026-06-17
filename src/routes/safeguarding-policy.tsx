@@ -44,12 +44,6 @@ function SafeguardingPolicy() {
         </p>
 
         <div className="flex flex-wrap gap-2 mb-10 print:hidden">
-          <a
-            href={`mailto:${SAFEGUARDING_CONTACT_EMAIL}?subject=Safeguarding%20concern`}
-            className="px-4 py-2 rounded-xl bg-brand-primary text-white text-sm font-medium hover:brightness-110 inline-flex items-center gap-2"
-          >
-            Report a concern
-          </a>
           <button
             type="button"
             onClick={() => window.print()}
