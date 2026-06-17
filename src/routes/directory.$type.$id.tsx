@@ -45,7 +45,7 @@ export const Route = createFileRoute("/directory/$type/$id")({
 });
 
 function ProfilePage() {
-  const { type, id } = Route.useParams();
+  const { type, id } = Route.useParams() as { type: ApplicantType; id: string };
   const [showContact, setShowContact] = useState(false);
   const [showReport, setShowReport] = useState(false);
 
