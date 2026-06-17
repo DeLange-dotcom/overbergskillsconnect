@@ -132,10 +132,26 @@ function Mentors() {
                   {m.years_experience ? `${m.years_experience}+ years experience` : null}
                   {m.formats.length > 0 && <> · {m.formats.join(", ")}</>}
                 </div>
-                <Link to="/request-support" className="text-sm text-brand-primary font-medium hover:underline">
-                  Request introduction →
-                </Link>
+                <div className="flex items-center justify-between gap-2">
+                  <span className="inline-flex items-center gap-1 text-[10px] uppercase tracking-wide px-2 py-1 rounded-full bg-emerald-50 text-emerald-700 font-semibold">
+                    <ShieldCheck className="size-3" /> Vetted by Hineni
+                  </span>
+                  <Link
+                    to="/request-mentorship/$mentorId"
+                    params={{ mentorId: m.id }}
+                    className="text-sm text-brand-primary font-medium hover:underline"
+                  >
+                    Request mentorship →
+                  </Link>
+                </div>
               </article>
+            ))}
+          </div>
+        )}
+      </div>
+    </SiteLayout>
+  );
+}
             ))}
           </div>
         )}
