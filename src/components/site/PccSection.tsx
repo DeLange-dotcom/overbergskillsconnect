@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { Info, ShieldCheck } from "lucide-react";
 
+export type PccStatus = "" | "have" | "applied" | "none" | "need_help";
+
 /**
  * Police Clearance Certificate (PCC) registration fieldset.
  *
