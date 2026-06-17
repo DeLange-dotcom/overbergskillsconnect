@@ -3,7 +3,7 @@ import { SiteLayout } from "@/components/site/SiteLayout";
 import { LearningPathway } from "@/components/site/LearningPathway";
 import { Search, HandHeart, Users, Sparkles, ArrowRight, Award } from "lucide-react";
 
-export const Route = createFileRoute("/apprenticeships")({
+export const Route = createFileRoute("/apprenticeships/")({
   head: () => ({
     meta: [
       { title: "Apprenticeships & Mentorships — Hineni Learning City" },
