@@ -2,39 +2,44 @@
 
 export const YOUTH_INTERESTS = [
   { value: "gardening", label: "Gardening" },
-  { value: "conservation", label: "Conservation" },
-  { value: "tourism", label: "Tourism" },
+  { value: "agriculture", label: "Agriculture / Farming" },
+  { value: "animal_care", label: "Animal care" },
+  { value: "child_care", label: "Child care" },
+  { value: "elderly_care", label: "Elderly care" },
   { value: "hospitality", label: "Hospitality" },
-  { value: "administration", label: "Administration" },
-  { value: "childcare", label: "Childcare" },
-  { value: "elderly_support", label: "Elderly support" },
   { value: "retail", label: "Retail" },
-  { value: "events", label: "Events" },
-  { value: "technology", label: "Technology" },
+  { value: "administration", label: "Administration" },
+  { value: "technology", label: "Computers & Technology" },
   { value: "social_media", label: "Social media" },
   { value: "construction", label: "Construction" },
-  { value: "farming", label: "Farming" },
-  { value: "arts_culture", label: "Arts and culture" },
-  { value: "environment", label: "Environmental projects" },
+  { value: "painting", label: "Painting & decorating" },
+  { value: "cleaning", label: "Cleaning" },
+  { value: "mechanical", label: "Mechanical" },
+  { value: "electrical", label: "Electrical" },
+  { value: "creative_arts", label: "Creative arts" },
+  { value: "events_tourism", label: "Events & Tourism" },
   { value: "other", label: "Other" },
 ] as const;
 
 export const YOUTH_OPPORTUNITY_TYPES = [
-  { value: "school_holiday", label: "School holiday work" },
-  { value: "weekend", label: "Weekend work" },
-  { value: "casual", label: "Casual work" },
   { value: "volunteer", label: "Volunteer" },
-  { value: "job_shadow", label: "Job shadowing" },
+  { value: "casual", label: "Casual work" },
+  { value: "micro_job", label: "Micro job" },
+  { value: "holiday", label: "Holiday work" },
+  { value: "part_time", label: "Part-time employment" },
+  { value: "full_time", label: "Full-time employment" },
   { value: "apprenticeship", label: "Apprenticeship" },
-  { value: "learnership", label: "Learnership" },
+  { value: "internship", label: "Internship" },
+  { value: "training", label: "Training programme" },
   { value: "mentorship", label: "Mentorship" },
-  { value: "training", label: "Skills training" },
 ] as const;
 
 export const YOUTH_AVAILABILITY = [
   { value: "holidays", label: "School holidays only" },
   { value: "weekends", label: "Weekends" },
-  { value: "after_school", label: "Afternoons after school" },
+  { value: "after_school", label: "After school" },
+  { value: "part_time", label: "Part-time" },
+  { value: "full_time", label: "Full-time" },
   { value: "flexible", label: "Flexible" },
 ] as const;
 
@@ -67,6 +72,68 @@ export const YOUTH_OPPORTUNITY_CATEGORIES = [
   { value: "community_service", label: "Community service" },
 ] as const;
 
+export const YOUTH_LOCATIONS = [
+  { value: "Napier", label: "Napier" },
+  { value: "Bredasdorp", label: "Bredasdorp" },
+  { value: "Caledon", label: "Caledon" },
+  { value: "Hermanus", label: "Hermanus" },
+  { value: "Other", label: "Other" },
+] as const;
+
+export const YOUTH_PROVIDER_CATEGORIES = [
+  { value: "agriculture", label: "Agriculture" },
+  { value: "hospitality", label: "Hospitality" },
+  { value: "retail", label: "Retail" },
+  { value: "administration", label: "Administration" },
+  { value: "trades", label: "Trades" },
+  { value: "technology", label: "Technology" },
+  { value: "care_services", label: "Care services" },
+  { value: "tourism", label: "Tourism" },
+  { value: "creative", label: "Creative industries" },
+  { value: "community", label: "Community projects" },
+] as const;
+
+export const YOUTH_COMPENSATION_TYPES = [
+  { value: "volunteer", label: "Volunteer (unpaid)" },
+  { value: "hourly", label: "Hourly rate" },
+  { value: "daily", label: "Daily rate" },
+  { value: "fixed", label: "Fixed amount" },
+  { value: "monthly_allowance", label: "Monthly allowance" },
+] as const;
+
+export const PROVIDER_TYPES = [
+  { value: "business", label: "Business" },
+  { value: "farm", label: "Farm" },
+  { value: "school", label: "School" },
+  { value: "ngo", label: "NGO / NPO" },
+  { value: "church", label: "Church / Faith organisation" },
+  { value: "community", label: "Community organisation" },
+  { value: "municipal", label: "Municipal department" },
+  { value: "government", label: "Government institution" },
+  { value: "private_individual", label: "Private individual (18+ only)" },
+] as const;
+
+export const VERIFICATION_DOC_TYPES = [
+  { value: "cipc", label: "CIPC Registration" },
+  { value: "npc", label: "NPC Registration" },
+  { value: "school", label: "School Registration" },
+  { value: "municipal", label: "Municipal Verification" },
+  { value: "church", label: "Church Letter" },
+  { value: "community", label: "Community Organisation Letter" },
+  { value: "id_document", label: "ID Document (Private individual)" },
+] as const;
+
+export const SAFEGUARDING_FLAGS = [
+  { key: "involves_children", label: "Working with children" },
+  { key: "involves_vulnerable_adults", label: "Working with vulnerable adults" },
+  { key: "involves_home_visits", label: "Home visits" },
+  { key: "involves_transport", label: "Transporting young people" },
+  { key: "involves_overnight", label: "Overnight stays" },
+  { key: "involves_machinery", label: "Use of machinery" },
+  { key: "involves_chemicals", label: "Agricultural chemicals" },
+  { key: "involves_heights", label: "Working at heights" },
+] as const;
+
 export const YOUTH_BADGES = [
   { key: "community_volunteer", label: "Community Volunteer", desc: "Volunteered hours in the community." },
   { key: "first_job_completed", label: "First Job Completed", desc: "Completed a first paid opportunity." },
@@ -89,7 +156,7 @@ export const PATHWAY_STAGES = [
   "Community Leadership",
 ] as const;
 
-export function youthAgeGroupFromDob(dob: string | null | undefined): "15-17" | "18-25" | null {
+export function youthAgeFromDob(dob: string | null | undefined): number | null {
   if (!dob) return null;
   const d = new Date(dob);
   if (isNaN(d.getTime())) return null;
@@ -97,6 +164,12 @@ export function youthAgeGroupFromDob(dob: string | null | undefined): "15-17" | 
   let age = now.getFullYear() - d.getFullYear();
   const m = now.getMonth() - d.getMonth();
   if (m < 0 || (m === 0 && now.getDate() < d.getDate())) age--;
+  return age;
+}
+
+export function youthAgeGroupFromDob(dob: string | null | undefined): "15-17" | "18-25" | null {
+  const age = youthAgeFromDob(dob);
+  if (age == null) return null;
   if (age >= 15 && age <= 17) return "15-17";
   if (age >= 18 && age <= 25) return "18-25";
   return null;
