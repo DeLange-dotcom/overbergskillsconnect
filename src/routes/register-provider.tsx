@@ -84,11 +84,18 @@ function RegisterProvider() {
   const [submitting, setSubmitting] = useState(false);
   const [done, setDone] = useState<{ code: string } | null>(null);
   const [errors, setErrors] = useState<Record<string, string>>({});
-  const [nationality, setNationality] = useState("");
+  const [nationalityChoice, setNationalityChoice] = useState<"" | "south_african" | "other">("");
+  const [nationalityOther, setNationalityOther] = useState("");
+  const nationality =
+    nationalityChoice === "south_african"
+      ? "South African"
+      : nationalityChoice === "other"
+        ? nationalityOther
+        : "";
   const [workPermit, setWorkPermit] = useState<"yes" | "no" | "">("");
 
-  const isSouthAfrican = /south\s*afric/i.test(nationality.trim());
-  const isForeign = nationality.trim().length >= 2 && !isSouthAfrican;
+  const isSouthAfrican = nationalityChoice === "south_african";
+  const isForeign = nationalityChoice === "other";
   const terminated = isForeign && workPermit === "no";
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
