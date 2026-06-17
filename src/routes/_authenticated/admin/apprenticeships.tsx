@@ -11,7 +11,7 @@ export const Route = createFileRoute("/_authenticated/admin/apprenticeships")({
 type Row = { id: string; created_at: string; [k: string]: unknown };
 
 function AdminApp() {
-  const [tab, setTab] = useState<"apprentices" | "providers" | "opportunities" | "mentors">("apprentices");
+  const [tab, setTab] = useState<"apprentices" | "providers" | "opportunities" | "mentors" | "mentorship_requests" | "placements">("apprentices");
   const [rows, setRows] = useState<Row[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -22,6 +22,8 @@ function AdminApp() {
         tab === "apprentices" ? "apprentices"
         : tab === "providers" ? "apprenticeship_providers"
         : tab === "opportunities" ? "apprenticeship_opportunities"
+        : tab === "mentorship_requests" ? "mentorship_requests"
+        : tab === "placements" ? "placements"
         : "mentors";
       const { data } = await supabase.from(table as never).select("*").order("created_at", { ascending: false }).limit(100);
       setRows((data as Row[] | null) ?? []);
