@@ -142,9 +142,9 @@ function Option({
   onChange,
   label,
 }: {
-  value: "have" | "applied" | "none";
+  value: Exclude<PccStatus, "">;
   current: string;
-  onChange: (v: "have" | "applied" | "none") => void;
+  onChange: (v: Exclude<PccStatus, "">) => void;
   label: string;
 }) {
   const selected = current === value;
