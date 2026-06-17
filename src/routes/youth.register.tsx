@@ -283,6 +283,8 @@ function RegisterYouth() {
         <form onSubmit={handleSubmit} className="space-y-10">
           <Fieldset title="About you">
             <Grid>
+              <Field label="First name" name="first_name" />
+              <Field label="Last name" name="last_name" />
               <Field label="Full name" name="full_name" required error={errors.full_name} />
               <Field
                 label="Date of birth"
@@ -292,30 +294,69 @@ function RegisterYouth() {
                 error={errors.dob}
                 onChange={(e) => setDob(e.target.value)}
               />
+              <div>
+                <Label>Gender (optional)</Label>
+                <select name="gender" defaultValue="" className="w-full px-4 py-3 border border-brand-dark/10 rounded-xl bg-white">
+                  <option value="">Prefer not to say</option>
+                  <option value="female">Female</option>
+                  <option value="male">Male</option>
+                  <option value="non_binary">Non-binary</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+              <Field label="ID number (optional for under-18s)" name="id_number" />
               <Field label="Town" name="town" required error={errors.town} />
               <Field label="Mobile / WhatsApp" name="mobile_number" type="tel" />
               <Field label="Email (optional)" name="email" type="email" />
-              <div>
-                <Label>Education level</Label>
-                <select
-                  name="education_level"
-                  className="w-full px-4 py-3 border border-brand-dark/10 rounded-xl bg-white"
-                  defaultValue=""
-                >
-                  <option value="">Select…</option>
-                  {YOUTH_EDUCATION_LEVELS.map((e) => (
-                    <option key={e} value={e}>{e}</option>
-                  ))}
-                </select>
-              </div>
-              <Field label="School / college" name="school" />
             </Grid>
+            <div className="mt-4">
+              <Label>Physical address</Label>
+              <textarea name="physical_address" rows={2} className="w-full px-4 py-3 border border-brand-dark/10 rounded-xl bg-white" />
+            </div>
             {ageGroup && (
               <p className="text-xs mt-3 text-brand-primary">
                 Detected age group: <strong>{ageGroup}</strong>
                 {isMinor && " — parent/guardian consent required below."}
               </p>
             )}
+          </Fieldset>
+
+          <Fieldset title="Education">
+            <Grid>
+              <div>
+                <Label>Currently attending school?</Label>
+                <label className="flex items-center gap-2"><input type="checkbox" name="currently_attending_school" className="accent-brand-primary" /> Yes</label>
+              </div>
+              <Field label="School / college name" name="school" />
+              <div>
+                <Label>Highest grade / level completed</Label>
+                <select name="education_level" className="w-full px-4 py-3 border border-brand-dark/10 rounded-xl bg-white" defaultValue="">
+                  <option value="">Select…</option>
+                  {YOUTH_EDUCATION_LEVELS.map((e) => (<option key={e} value={e}>{e}</option>))}
+                </select>
+              </div>
+              <div>
+                <Label>Matric completed?</Label>
+                <label className="flex items-center gap-2"><input type="checkbox" name="matric_completed" className="accent-brand-primary" /> Yes</label>
+              </div>
+              <Field label="Further education / training institution (optional)" name="further_education" />
+            </Grid>
+          </Fieldset>
+
+          <Fieldset title="Documents (optional)">
+            <p className="text-sm text-brand-dark/65 mb-3">
+              You can upload now or later. Files are stored privately and only shared with Hineni reviewers.
+            </p>
+            <Grid>
+              <div>
+                <Label>ID document or birth certificate</Label>
+                <input name="id_document" type="file" accept=".pdf,image/*" className="w-full text-sm" />
+              </div>
+              <div>
+                <Label>CV (optional)</Label>
+                <input name="cv_document" type="file" accept=".pdf,.doc,.docx,image/*" className="w-full text-sm" />
+              </div>
+            </Grid>
           </Fieldset>
 
           {isMinor && (
@@ -326,13 +367,31 @@ function RegisterYouth() {
                 <Field label="Phone" name="guardian_phone" type="tel" required error={errors.guardian_phone} />
                 <Field label="Email (optional)" name="guardian_email" type="email" />
               </Grid>
+
+              <div className="mt-5">
+                <Label>How will the parent / guardian provide consent? <span className="text-destructive">*</span></Label>
+                <div className="grid sm:grid-cols-2 gap-2 mt-1">
+                  <label className="flex items-start gap-2 px-3 py-3 rounded-lg border border-brand-dark/10 text-sm cursor-pointer">
+                    <input type="radio" name="parent_consent_method" value="digital" className="mt-1 accent-brand-primary" />
+                    <span><strong>Digital consent</strong> — parent receives a secure link by email and signs online.</span>
+                  </label>
+                  <label className="flex items-start gap-2 px-3 py-3 rounded-lg border border-brand-dark/10 text-sm cursor-pointer">
+                    <input type="radio" name="parent_consent_method" value="uploaded" className="mt-1 accent-brand-primary" />
+                    <span><strong>Downloadable form</strong> — print, sign, and upload below.</span>
+                  </label>
+                </div>
+                {errors.parent_consent_method && <p className="text-xs text-destructive mt-1">{errors.parent_consent_method}</p>}
+                <div className="mt-3">
+                  <Label>If uploading, attach the signed consent form</Label>
+                  <input name="parent_consent_upload" type="file" accept=".pdf,image/*" className="w-full text-sm" />
+                </div>
+              </div>
+
               <label className="flex items-start gap-2 mt-4 text-sm">
                 <input type="checkbox" name="guardian_consent_given" className="mt-1 accent-brand-primary" />
                 <span>
                   I am the parent or legal guardian and I consent to this young person registering
-                  with Hineni, being contacted about suitable opportunities, and being introduced
-                  to vetted organisations. I understand minors will not be matched to hazardous
-                  work or work prohibited under South African labour law.
+                  with Hineni. (You will also confirm via the digital or uploaded consent form above.)
                 </span>
               </label>
               {errors.guardian_consent_given && (
