@@ -3,7 +3,7 @@ import { SiteLayout } from "@/components/site/SiteLayout";
 import { PathwayTracker } from "@/components/site/PathwayTracker";
 import { GraduationCap, Sprout, Briefcase, Award, Shield, Users } from "lucide-react";
 
-export const Route = createFileRoute("/youth")({
+export const Route = createFileRoute("/youth/")({
   head: () => ({
     meta: [
       { title: "Youth Opportunities Hub — Hineni" },
