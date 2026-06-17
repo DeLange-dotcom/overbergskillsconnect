@@ -70,6 +70,7 @@ export type Database = {
         Row: {
           availability: string[]
           career_interests: string[]
+          category: string | null
           certificates: string | null
           contact_number: string | null
           created_at: string
@@ -83,6 +84,10 @@ export type Database = {
           id: string
           identity_verified: boolean
           interview_completed: boolean
+          is_archived: boolean
+          is_published: boolean
+          is_suspended: boolean
+          languages: string[]
           opportunity_types: string[]
           pcc_admin_notes: string | null
           pcc_certificate_path: string | null
@@ -95,9 +100,11 @@ export type Database = {
           pcc_verified_by: string | null
           pcc_wants_assistance: boolean
           physical_address: string | null
+          profile_photo_url: string | null
           qualifications: string | null
           reference_code: string
           references_checked: boolean
+          short_bio: string | null
           skills_to_learn: string | null
           status: Database["public"]["Enums"]["apprentice_status"]
           terms_accepted_at: string | null
@@ -109,10 +116,13 @@ export type Database = {
           verification_level: Database["public"]["Enums"]["verification_level"]
           whatsapp_number: string | null
           why_interested: string | null
+          work_permit_required: boolean
+          work_permit_verified: boolean
         }
         Insert: {
           availability?: string[]
           career_interests?: string[]
+          category?: string | null
           certificates?: string | null
           contact_number?: string | null
           created_at?: string
@@ -126,6 +136,10 @@ export type Database = {
           id?: string
           identity_verified?: boolean
           interview_completed?: boolean
+          is_archived?: boolean
+          is_published?: boolean
+          is_suspended?: boolean
+          languages?: string[]
           opportunity_types?: string[]
           pcc_admin_notes?: string | null
           pcc_certificate_path?: string | null
@@ -138,9 +152,11 @@ export type Database = {
           pcc_verified_by?: string | null
           pcc_wants_assistance?: boolean
           physical_address?: string | null
+          profile_photo_url?: string | null
           qualifications?: string | null
           reference_code?: string
           references_checked?: boolean
+          short_bio?: string | null
           skills_to_learn?: string | null
           status?: Database["public"]["Enums"]["apprentice_status"]
           terms_accepted_at?: string | null
@@ -152,10 +168,13 @@ export type Database = {
           verification_level?: Database["public"]["Enums"]["verification_level"]
           whatsapp_number?: string | null
           why_interested?: string | null
+          work_permit_required?: boolean
+          work_permit_verified?: boolean
         }
         Update: {
           availability?: string[]
           career_interests?: string[]
+          category?: string | null
           certificates?: string | null
           contact_number?: string | null
           created_at?: string
@@ -169,6 +188,10 @@ export type Database = {
           id?: string
           identity_verified?: boolean
           interview_completed?: boolean
+          is_archived?: boolean
+          is_published?: boolean
+          is_suspended?: boolean
+          languages?: string[]
           opportunity_types?: string[]
           pcc_admin_notes?: string | null
           pcc_certificate_path?: string | null
@@ -181,9 +204,11 @@ export type Database = {
           pcc_verified_by?: string | null
           pcc_wants_assistance?: boolean
           physical_address?: string | null
+          profile_photo_url?: string | null
           qualifications?: string | null
           reference_code?: string
           references_checked?: boolean
+          short_bio?: string | null
           skills_to_learn?: string | null
           status?: Database["public"]["Enums"]["apprentice_status"]
           terms_accepted_at?: string | null
@@ -195,6 +220,8 @@ export type Database = {
           verification_level?: Database["public"]["Enums"]["verification_level"]
           whatsapp_number?: string | null
           why_interested?: string | null
+          work_permit_required?: boolean
+          work_permit_verified?: boolean
         }
         Relationships: []
       }
@@ -734,6 +761,7 @@ export type Database = {
           admin_notes: string | null
           application_code: string
           available_immediately: boolean
+          category: string | null
           consent_background_checks: boolean
           consent_no_guarantee: boolean
           consent_reference_checks: boolean
@@ -752,6 +780,10 @@ export type Database = {
           id_passport_number: string
           identity_verified: boolean
           interview_completed: boolean
+          is_archived: boolean
+          is_published: boolean
+          is_suspended: boolean
+          languages: string[]
           looking_for: Database["public"]["Enums"]["availability_type"][]
           max_travel: Database["public"]["Enums"]["travel_distance"]
           mobile_number: string
@@ -769,9 +801,11 @@ export type Database = {
           pcc_wants_assistance: boolean
           physical_address: string
           previous_employer: string | null
+          profile_photo_url: string | null
           references_checked: boolean
           rejection_reason: string | null
           services: Database["public"]["Enums"]["service_category"][]
+          short_bio: string | null
           skills_summary: string
           status: Database["public"]["Enums"]["provider_status"]
           terms_accepted_at: string | null
@@ -782,12 +816,15 @@ export type Database = {
           user_id: string | null
           verification_level: Database["public"]["Enums"]["verification_level"]
           whatsapp_number: string | null
+          work_permit_required: boolean
+          work_permit_verified: boolean
           years_experience: number | null
         }
         Insert: {
           admin_notes?: string | null
           application_code?: string
           available_immediately?: boolean
+          category?: string | null
           consent_background_checks?: boolean
           consent_no_guarantee?: boolean
           consent_reference_checks?: boolean
@@ -806,6 +843,10 @@ export type Database = {
           id_passport_number: string
           identity_verified?: boolean
           interview_completed?: boolean
+          is_archived?: boolean
+          is_published?: boolean
+          is_suspended?: boolean
+          languages?: string[]
           looking_for?: Database["public"]["Enums"]["availability_type"][]
           max_travel?: Database["public"]["Enums"]["travel_distance"]
           mobile_number: string
@@ -823,9 +864,11 @@ export type Database = {
           pcc_wants_assistance?: boolean
           physical_address: string
           previous_employer?: string | null
+          profile_photo_url?: string | null
           references_checked?: boolean
           rejection_reason?: string | null
           services?: Database["public"]["Enums"]["service_category"][]
+          short_bio?: string | null
           skills_summary: string
           status?: Database["public"]["Enums"]["provider_status"]
           terms_accepted_at?: string | null
@@ -836,12 +879,15 @@ export type Database = {
           user_id?: string | null
           verification_level?: Database["public"]["Enums"]["verification_level"]
           whatsapp_number?: string | null
+          work_permit_required?: boolean
+          work_permit_verified?: boolean
           years_experience?: number | null
         }
         Update: {
           admin_notes?: string | null
           application_code?: string
           available_immediately?: boolean
+          category?: string | null
           consent_background_checks?: boolean
           consent_no_guarantee?: boolean
           consent_reference_checks?: boolean
@@ -860,6 +906,10 @@ export type Database = {
           id_passport_number?: string
           identity_verified?: boolean
           interview_completed?: boolean
+          is_archived?: boolean
+          is_published?: boolean
+          is_suspended?: boolean
+          languages?: string[]
           looking_for?: Database["public"]["Enums"]["availability_type"][]
           max_travel?: Database["public"]["Enums"]["travel_distance"]
           mobile_number?: string
@@ -877,9 +927,11 @@ export type Database = {
           pcc_wants_assistance?: boolean
           physical_address?: string
           previous_employer?: string | null
+          profile_photo_url?: string | null
           references_checked?: boolean
           rejection_reason?: string | null
           services?: Database["public"]["Enums"]["service_category"][]
+          short_bio?: string | null
           skills_summary?: string
           status?: Database["public"]["Enums"]["provider_status"]
           terms_accepted_at?: string | null
@@ -890,6 +942,8 @@ export type Database = {
           user_id?: string | null
           verification_level?: Database["public"]["Enums"]["verification_level"]
           whatsapp_number?: string | null
+          work_permit_required?: boolean
+          work_permit_verified?: boolean
           years_experience?: number | null
         }
         Relationships: []
@@ -1250,6 +1304,7 @@ export type Database = {
           age_group: string | null
           application_code: string
           availability: string[]
+          category: string | null
           created_at: string
           dob: string
           education_level: string | null
@@ -1267,6 +1322,9 @@ export type Database = {
           identity_verified: boolean
           interests: string[]
           interview_completed: boolean
+          is_archived: boolean
+          is_published: boolean
+          is_suspended: boolean
           languages: string[]
           learning_city_interest: boolean
           mentor_match_opt_in: boolean
@@ -1283,8 +1341,10 @@ export type Database = {
           pcc_verified_at: string | null
           pcc_verified_by: string | null
           pcc_wants_assistance: boolean
+          profile_photo_url: string | null
           references_checked: boolean
           school: string | null
+          short_bio: string | null
           skills: string[]
           status: Database["public"]["Enums"]["youth_status"]
           terms_accepted_at: string | null
@@ -1293,11 +1353,14 @@ export type Database = {
           updated_at: string
           user_id: string | null
           verification_level: Database["public"]["Enums"]["verification_level"]
+          work_permit_required: boolean
+          work_permit_verified: boolean
         }
         Insert: {
           age_group?: string | null
           application_code?: string
           availability?: string[]
+          category?: string | null
           created_at?: string
           dob: string
           education_level?: string | null
@@ -1315,6 +1378,9 @@ export type Database = {
           identity_verified?: boolean
           interests?: string[]
           interview_completed?: boolean
+          is_archived?: boolean
+          is_published?: boolean
+          is_suspended?: boolean
           languages?: string[]
           learning_city_interest?: boolean
           mentor_match_opt_in?: boolean
@@ -1331,8 +1397,10 @@ export type Database = {
           pcc_verified_at?: string | null
           pcc_verified_by?: string | null
           pcc_wants_assistance?: boolean
+          profile_photo_url?: string | null
           references_checked?: boolean
           school?: string | null
+          short_bio?: string | null
           skills?: string[]
           status?: Database["public"]["Enums"]["youth_status"]
           terms_accepted_at?: string | null
@@ -1341,11 +1409,14 @@ export type Database = {
           updated_at?: string
           user_id?: string | null
           verification_level?: Database["public"]["Enums"]["verification_level"]
+          work_permit_required?: boolean
+          work_permit_verified?: boolean
         }
         Update: {
           age_group?: string | null
           application_code?: string
           availability?: string[]
+          category?: string | null
           created_at?: string
           dob?: string
           education_level?: string | null
@@ -1363,6 +1434,9 @@ export type Database = {
           identity_verified?: boolean
           interests?: string[]
           interview_completed?: boolean
+          is_archived?: boolean
+          is_published?: boolean
+          is_suspended?: boolean
           languages?: string[]
           learning_city_interest?: boolean
           mentor_match_opt_in?: boolean
@@ -1379,8 +1453,10 @@ export type Database = {
           pcc_verified_at?: string | null
           pcc_verified_by?: string | null
           pcc_wants_assistance?: boolean
+          profile_photo_url?: string | null
           references_checked?: boolean
           school?: string | null
+          short_bio?: string | null
           skills?: string[]
           status?: Database["public"]["Enums"]["youth_status"]
           terms_accepted_at?: string | null
@@ -1389,6 +1465,8 @@ export type Database = {
           updated_at?: string
           user_id?: string | null
           verification_level?: Database["public"]["Enums"]["verification_level"]
+          work_permit_required?: boolean
+          work_permit_verified?: boolean
         }
         Relationships: []
       }
@@ -1595,6 +1673,24 @@ export type Database = {
           skills_summary?: string | null
           town?: string | null
           typical_hours?: string[] | null
+        }
+        Relationships: []
+      }
+      directory_profiles: {
+        Row: {
+          applicant_type: string | null
+          area: string | null
+          availability: string[] | null
+          available_now: boolean | null
+          category: string | null
+          created_at: string | null
+          first_name: string | null
+          id: string | null
+          languages: string[] | null
+          profile_photo_url: string | null
+          short_bio: string | null
+          skills: string[] | null
+          verification_level: string | null
         }
         Relationships: []
       }
