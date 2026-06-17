@@ -26,6 +26,7 @@ import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as YouthIndexRouteImport } from './routes/youth.index'
 import { Route as RequestMentorshipIndexRouteImport } from './routes/request-mentorship.index'
+import { Route as ApprenticeshipsIndexRouteImport } from './routes/apprenticeships.index'
 import { Route as YouthRegisterRouteImport } from './routes/youth.register'
 import { Route as YouthPostOpportunityRouteImport } from './routes/youth.post-opportunity'
 import { Route as YouthOpportunitiesRouteImport } from './routes/youth.opportunities'
@@ -133,6 +134,11 @@ const RequestMentorshipIndexRoute = RequestMentorshipIndexRouteImport.update({
   id: '/request-mentorship/',
   path: '/request-mentorship/',
   getParentRoute: () => rootRouteImport,
+} as any)
+const ApprenticeshipsIndexRoute = ApprenticeshipsIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => ApprenticeshipsRoute,
 } as any)
 const YouthRegisterRoute = YouthRegisterRouteImport.update({
   id: '/register',
@@ -289,6 +295,7 @@ export interface FileRoutesByFullPath {
   '/youth/opportunities': typeof YouthOpportunitiesRoute
   '/youth/post-opportunity': typeof YouthPostOpportunityRoute
   '/youth/register': typeof YouthRegisterRoute
+  '/apprenticeships/': typeof ApprenticeshipsIndexRoute
   '/request-mentorship/': typeof RequestMentorshipIndexRoute
   '/youth/': typeof YouthIndexRoute
   '/admin/apprenticeships': typeof AuthenticatedAdminApprenticeshipsRoute
@@ -305,7 +312,6 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/apprenticeships': typeof ApprenticeshipsRouteWithChildren
   '/auth': typeof AuthRoute
   '/directory': typeof DirectoryRouteWithChildren
   '/donate': typeof DonateRoute
@@ -329,6 +335,7 @@ export interface FileRoutesByTo {
   '/youth/opportunities': typeof YouthOpportunitiesRoute
   '/youth/post-opportunity': typeof YouthPostOpportunityRoute
   '/youth/register': typeof YouthRegisterRoute
+  '/apprenticeships': typeof ApprenticeshipsIndexRoute
   '/request-mentorship': typeof RequestMentorshipIndexRoute
   '/youth': typeof YouthIndexRoute
   '/admin/apprenticeships': typeof AuthenticatedAdminApprenticeshipsRoute
@@ -372,6 +379,7 @@ export interface FileRoutesById {
   '/youth/opportunities': typeof YouthOpportunitiesRoute
   '/youth/post-opportunity': typeof YouthPostOpportunityRoute
   '/youth/register': typeof YouthRegisterRoute
+  '/apprenticeships/': typeof ApprenticeshipsIndexRoute
   '/request-mentorship/': typeof RequestMentorshipIndexRoute
   '/youth/': typeof YouthIndexRoute
   '/_authenticated/admin/apprenticeships': typeof AuthenticatedAdminApprenticeshipsRoute
@@ -415,6 +423,7 @@ export interface FileRouteTypes {
     | '/youth/opportunities'
     | '/youth/post-opportunity'
     | '/youth/register'
+    | '/apprenticeships/'
     | '/request-mentorship/'
     | '/youth/'
     | '/admin/apprenticeships'
@@ -431,7 +440,6 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/apprenticeships'
     | '/auth'
     | '/directory'
     | '/donate'
@@ -455,6 +463,7 @@ export interface FileRouteTypes {
     | '/youth/opportunities'
     | '/youth/post-opportunity'
     | '/youth/register'
+    | '/apprenticeships'
     | '/request-mentorship'
     | '/youth'
     | '/admin/apprenticeships'
@@ -497,6 +506,7 @@ export interface FileRouteTypes {
     | '/youth/opportunities'
     | '/youth/post-opportunity'
     | '/youth/register'
+    | '/apprenticeships/'
     | '/request-mentorship/'
     | '/youth/'
     | '/_authenticated/admin/apprenticeships'
@@ -655,6 +665,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/request-mentorship/'
       preLoaderRoute: typeof RequestMentorshipIndexRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/apprenticeships/': {
+      id: '/apprenticeships/'
+      path: '/'
+      fullPath: '/apprenticeships/'
+      preLoaderRoute: typeof ApprenticeshipsIndexRouteImport
+      parentRoute: typeof ApprenticeshipsRoute
     }
     '/youth/register': {
       id: '/youth/register'
@@ -854,6 +871,7 @@ interface ApprenticeshipsRouteChildren {
   ApprenticeshipsOpportunitiesRoute: typeof ApprenticeshipsOpportunitiesRoute
   ApprenticeshipsRegisterApprenticeRoute: typeof ApprenticeshipsRegisterApprenticeRoute
   ApprenticeshipsRegisterProviderRoute: typeof ApprenticeshipsRegisterProviderRoute
+  ApprenticeshipsIndexRoute: typeof ApprenticeshipsIndexRoute
 }
 
 const ApprenticeshipsRouteChildren: ApprenticeshipsRouteChildren = {
@@ -864,6 +882,7 @@ const ApprenticeshipsRouteChildren: ApprenticeshipsRouteChildren = {
   ApprenticeshipsRegisterApprenticeRoute:
     ApprenticeshipsRegisterApprenticeRoute,
   ApprenticeshipsRegisterProviderRoute: ApprenticeshipsRegisterProviderRoute,
+  ApprenticeshipsIndexRoute: ApprenticeshipsIndexRoute,
 }
 
 const ApprenticeshipsRouteWithChildren = ApprenticeshipsRoute._addFileChildren(
