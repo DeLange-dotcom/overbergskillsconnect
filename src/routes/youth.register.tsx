@@ -33,10 +33,18 @@ export const Route = createFileRoute("/youth/register")({
 
 const baseSchema = z.object({
   full_name: z.string().trim().min(2).max(120),
+  first_name: z.string().trim().max(60).optional().or(z.literal("")),
+  last_name: z.string().trim().max(60).optional().or(z.literal("")),
+  gender: z.string().trim().max(30).optional().or(z.literal("")),
+  id_number: z.string().trim().max(30).optional().or(z.literal("")),
   dob: z.string().min(1, "Date of birth is required"),
   town: z.string().trim().min(2).max(60),
+  physical_address: z.string().trim().max(300).optional().or(z.literal("")),
   school: z.string().trim().max(120).optional().or(z.literal("")),
   education_level: z.string().trim().max(60).optional().or(z.literal("")),
+  currently_attending_school: z.boolean(),
+  matric_completed: z.boolean(),
+  further_education: z.string().trim().max(120).optional().or(z.literal("")),
   mobile_number: z.string().trim().max(20).optional().or(z.literal("")),
   email: z.string().trim().email().optional().or(z.literal("")),
   emergency_contact_name: z.string().trim().min(2).max(120),
@@ -54,6 +62,9 @@ const baseSchema = z.object({
   guardian_phone: z.string().trim().max(20).optional().or(z.literal("")),
   guardian_email: z.string().trim().max(120).optional().or(z.literal("")),
   guardian_consent_given: z.boolean(),
+  parent_consent_method: z.enum(["digital", "uploaded"]).optional(),
+  applicant_declaration: z.literal(true, { errorMap: () => ({ message: "You must confirm the applicant declaration." }) }),
+  liability_accepted: z.literal(true, { errorMap: () => ({ message: "You must accept the platform disclaimer." }) }),
   accept_terms: z.literal(true, {
     errorMap: () => ({ message: "You must accept the Terms & Disclaimer." }),
   }),
