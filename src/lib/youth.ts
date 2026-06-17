@@ -28,7 +28,6 @@ export const YOUTH_OPPORTUNITY_TYPES = [
   { value: "holiday", label: "Holiday work" },
   { value: "part_time", label: "Part-time employment" },
   { value: "full_time", label: "Full-time employment" },
-  { value: "apprenticeship", label: "Apprenticeship" },
   { value: "internship", label: "Internship" },
   { value: "training", label: "Training programme" },
   { value: "mentorship", label: "Mentorship" },
