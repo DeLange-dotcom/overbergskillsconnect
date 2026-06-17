@@ -1772,7 +1772,7 @@ export type Database = {
       mentor_status: "pending" | "approved" | "active" | "inactive"
       opportunity_status: "open" | "reviewing" | "filled" | "closed"
       payment_status: "pending" | "succeeded" | "failed" | "refunded"
-      pcc_status: "have" | "applied" | "none"
+      pcc_status: "have" | "applied" | "none" | "need_help"
       provider_app_status: "pending" | "approved" | "rejected"
       provider_status:
         | "pending_review"
@@ -1995,7 +1995,7 @@ export const Constants = {
       mentor_status: ["pending", "approved", "active", "inactive"],
       opportunity_status: ["open", "reviewing", "filled", "closed"],
       payment_status: ["pending", "succeeded", "failed", "refunded"],
-      pcc_status: ["have", "applied", "none"],
+      pcc_status: ["have", "applied", "none", "need_help"],
       provider_app_status: ["pending", "approved", "rejected"],
       provider_status: [
         "pending_review",
