@@ -93,8 +93,11 @@ function Opportunities() {
               <article key={o.id} className="bg-white rounded-2xl p-5 border border-brand-dark/10">
                 <div className="flex items-start gap-3 mb-2">
                   <Briefcase className="size-5 text-brand-primary mt-1" />
-                  <div>
-                    <h2 className="font-heading text-lg font-semibold">{o.title}</h2>
+                  <div className="flex-1">
+                    <div className="flex items-center justify-between gap-2">
+                      <h2 className="font-heading text-lg font-semibold">{o.title}</h2>
+                      <VettedBadge />
+                    </div>
                     <div className="text-xs text-brand-dark/60">{o.industry}</div>
                   </div>
                 </div>
