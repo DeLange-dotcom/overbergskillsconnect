@@ -733,6 +733,57 @@ export type Database = {
         }
         Relationships: []
       }
+      mentors_interest: {
+        Row: {
+          admin_notes: string | null
+          availability: string[] | null
+          created_at: string
+          email: string
+          full_name: string
+          id: string
+          industry_experience: string | null
+          mobile: string | null
+          mode: string | null
+          motivation: string | null
+          skills: string[] | null
+          status: string
+          town: string | null
+          updated_at: string
+        }
+        Insert: {
+          admin_notes?: string | null
+          availability?: string[] | null
+          created_at?: string
+          email: string
+          full_name: string
+          id?: string
+          industry_experience?: string | null
+          mobile?: string | null
+          mode?: string | null
+          motivation?: string | null
+          skills?: string[] | null
+          status?: string
+          town?: string | null
+          updated_at?: string
+        }
+        Update: {
+          admin_notes?: string | null
+          availability?: string[] | null
+          created_at?: string
+          email?: string
+          full_name?: string
+          id?: string
+          industry_experience?: string | null
+          mobile?: string | null
+          mode?: string | null
+          motivation?: string | null
+          skills?: string[] | null
+          status?: string
+          town?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       provider_documents: {
         Row: {
           document_type: string
@@ -1293,6 +1344,9 @@ export type Database = {
           id: string
           notes: string | null
           opportunity_id: string | null
+          outcome: string | null
+          outcome_notes: string | null
+          outcome_updated_at: string | null
           status: Database["public"]["Enums"]["youth_application_status"]
           updated_at: string
           youth_profile_id: string
@@ -1304,6 +1358,9 @@ export type Database = {
           id?: string
           notes?: string | null
           opportunity_id?: string | null
+          outcome?: string | null
+          outcome_notes?: string | null
+          outcome_updated_at?: string | null
           status?: Database["public"]["Enums"]["youth_application_status"]
           updated_at?: string
           youth_profile_id: string
@@ -1315,6 +1372,9 @@ export type Database = {
           id?: string
           notes?: string | null
           opportunity_id?: string | null
+          outcome?: string | null
+          outcome_notes?: string | null
+          outcome_updated_at?: string | null
           status?: Database["public"]["Enums"]["youth_application_status"]
           updated_at?: string
           youth_profile_id?: string
@@ -1384,101 +1444,176 @@ export type Database = {
           category: Database["public"]["Enums"]["youth_opportunity_category"]
           child_safe_reviewed: boolean
           closing_date: string | null
+          compensation_amount: number | null
+          compensation_type: string | null
           contact_email: string | null
           contact_name: string | null
           contact_phone: string | null
+          contact_position: string | null
           created_at: string
           description: string
           end_date: string | null
+          experience_required: string | null
           hazardous_flag: boolean
           id: string
+          involves_chemicals: boolean | null
+          involves_children: boolean | null
+          involves_heights: boolean | null
+          involves_home_visits: boolean | null
+          involves_machinery: boolean | null
+          involves_overnight: boolean | null
+          involves_transport: boolean | null
+          involves_vulnerable_adults: boolean | null
           linked_programme: string | null
           max_age: number
           min_age: number
           opportunity_type: string
           organisation_name: string
+          positions_available: number | null
           posted_by_user_id: string | null
+          private_individual_address: string | null
+          private_individual_id_url: string | null
+          private_individual_phone_verified: boolean | null
           prohibited_for_minors: boolean
+          provider_type: string | null
+          requires_manual_review: boolean | null
+          skills_required: string[] | null
           start_date: string | null
           status: Database["public"]["Enums"]["youth_opportunity_status"]
           title: string
           town: string
           updated_at: string
+          verification_doc_type: string | null
+          verification_doc_url: string | null
+          website: string | null
         }
         Insert: {
           approval_notes?: string | null
           category: Database["public"]["Enums"]["youth_opportunity_category"]
           child_safe_reviewed?: boolean
           closing_date?: string | null
+          compensation_amount?: number | null
+          compensation_type?: string | null
           contact_email?: string | null
           contact_name?: string | null
           contact_phone?: string | null
+          contact_position?: string | null
           created_at?: string
           description: string
           end_date?: string | null
+          experience_required?: string | null
           hazardous_flag?: boolean
           id?: string
+          involves_chemicals?: boolean | null
+          involves_children?: boolean | null
+          involves_heights?: boolean | null
+          involves_home_visits?: boolean | null
+          involves_machinery?: boolean | null
+          involves_overnight?: boolean | null
+          involves_transport?: boolean | null
+          involves_vulnerable_adults?: boolean | null
           linked_programme?: string | null
           max_age?: number
           min_age?: number
           opportunity_type: string
           organisation_name: string
+          positions_available?: number | null
           posted_by_user_id?: string | null
+          private_individual_address?: string | null
+          private_individual_id_url?: string | null
+          private_individual_phone_verified?: boolean | null
           prohibited_for_minors?: boolean
+          provider_type?: string | null
+          requires_manual_review?: boolean | null
+          skills_required?: string[] | null
           start_date?: string | null
           status?: Database["public"]["Enums"]["youth_opportunity_status"]
           title: string
           town: string
           updated_at?: string
+          verification_doc_type?: string | null
+          verification_doc_url?: string | null
+          website?: string | null
         }
         Update: {
           approval_notes?: string | null
           category?: Database["public"]["Enums"]["youth_opportunity_category"]
           child_safe_reviewed?: boolean
           closing_date?: string | null
+          compensation_amount?: number | null
+          compensation_type?: string | null
           contact_email?: string | null
           contact_name?: string | null
           contact_phone?: string | null
+          contact_position?: string | null
           created_at?: string
           description?: string
           end_date?: string | null
+          experience_required?: string | null
           hazardous_flag?: boolean
           id?: string
+          involves_chemicals?: boolean | null
+          involves_children?: boolean | null
+          involves_heights?: boolean | null
+          involves_home_visits?: boolean | null
+          involves_machinery?: boolean | null
+          involves_overnight?: boolean | null
+          involves_transport?: boolean | null
+          involves_vulnerable_adults?: boolean | null
           linked_programme?: string | null
           max_age?: number
           min_age?: number
           opportunity_type?: string
           organisation_name?: string
+          positions_available?: number | null
           posted_by_user_id?: string | null
+          private_individual_address?: string | null
+          private_individual_id_url?: string | null
+          private_individual_phone_verified?: boolean | null
           prohibited_for_minors?: boolean
+          provider_type?: string | null
+          requires_manual_review?: boolean | null
+          skills_required?: string[] | null
           start_date?: string | null
           status?: Database["public"]["Enums"]["youth_opportunity_status"]
           title?: string
           town?: string
           updated_at?: string
+          verification_doc_type?: string | null
+          verification_doc_url?: string | null
+          website?: string | null
         }
         Relationships: []
       }
       youth_profiles: {
         Row: {
           age_group: string | null
+          applicant_declaration: boolean
           application_code: string
           availability: string[]
           category: string | null
           created_at: string
+          currently_attending_school: boolean | null
+          cv_url: string | null
           dob: string
           education_level: string | null
           email: string | null
           emergency_contact_name: string | null
           emergency_contact_phone: string | null
+          first_name: string | null
           full_name: string
+          further_education: string | null
+          gender: string | null
           guardian_consent_at: string | null
           guardian_consent_given: boolean
           guardian_email: string | null
           guardian_name: string | null
           guardian_phone: string | null
           guardian_relationship: string | null
+          highest_grade: string | null
           id: string
+          id_document_url: string | null
+          id_number: string | null
           identity_verified: boolean
           interests: string[]
           interview_completed: boolean
@@ -1486,13 +1621,28 @@ export type Database = {
           is_published: boolean
           is_suspended: boolean
           languages: string[]
+          last_name: string | null
           learning_city_interest: boolean
+          liability_accepted: boolean
+          matric_completed: boolean | null
           mentor_match_opt_in: boolean
           mobile_number: string | null
           notes_admin: string | null
           opportunity_types: string[]
+          parent_consent_form_url: string | null
+          parent_consent_method: string | null
+          parent_consent_signature: string | null
+          parent_consent_signed_at: string | null
+          parent_consent_status: string
+          parent_consent_token: string | null
+          parent_declaration: boolean
+          parent_email: string | null
+          parent_full_name: string | null
+          parent_mobile: string | null
+          parent_relationship: string | null
           pcc_admin_notes: string | null
           pcc_certificate_path: string | null
+          pcc_document_url: string | null
           pcc_expiry_review_date: string | null
           pcc_issue_date: string | null
           pcc_number: string | null
@@ -1501,9 +1651,11 @@ export type Database = {
           pcc_verified_at: string | null
           pcc_verified_by: string | null
           pcc_wants_assistance: boolean
+          physical_address: string | null
           profile_photo_url: string | null
           references_checked: boolean
           school: string | null
+          school_name: string | null
           short_bio: string | null
           skills: string[]
           status: Database["public"]["Enums"]["youth_status"]
@@ -1518,23 +1670,32 @@ export type Database = {
         }
         Insert: {
           age_group?: string | null
+          applicant_declaration?: boolean
           application_code?: string
           availability?: string[]
           category?: string | null
           created_at?: string
+          currently_attending_school?: boolean | null
+          cv_url?: string | null
           dob: string
           education_level?: string | null
           email?: string | null
           emergency_contact_name?: string | null
           emergency_contact_phone?: string | null
+          first_name?: string | null
           full_name: string
+          further_education?: string | null
+          gender?: string | null
           guardian_consent_at?: string | null
           guardian_consent_given?: boolean
           guardian_email?: string | null
           guardian_name?: string | null
           guardian_phone?: string | null
           guardian_relationship?: string | null
+          highest_grade?: string | null
           id?: string
+          id_document_url?: string | null
+          id_number?: string | null
           identity_verified?: boolean
           interests?: string[]
           interview_completed?: boolean
@@ -1542,13 +1703,28 @@ export type Database = {
           is_published?: boolean
           is_suspended?: boolean
           languages?: string[]
+          last_name?: string | null
           learning_city_interest?: boolean
+          liability_accepted?: boolean
+          matric_completed?: boolean | null
           mentor_match_opt_in?: boolean
           mobile_number?: string | null
           notes_admin?: string | null
           opportunity_types?: string[]
+          parent_consent_form_url?: string | null
+          parent_consent_method?: string | null
+          parent_consent_signature?: string | null
+          parent_consent_signed_at?: string | null
+          parent_consent_status?: string
+          parent_consent_token?: string | null
+          parent_declaration?: boolean
+          parent_email?: string | null
+          parent_full_name?: string | null
+          parent_mobile?: string | null
+          parent_relationship?: string | null
           pcc_admin_notes?: string | null
           pcc_certificate_path?: string | null
+          pcc_document_url?: string | null
           pcc_expiry_review_date?: string | null
           pcc_issue_date?: string | null
           pcc_number?: string | null
@@ -1557,9 +1733,11 @@ export type Database = {
           pcc_verified_at?: string | null
           pcc_verified_by?: string | null
           pcc_wants_assistance?: boolean
+          physical_address?: string | null
           profile_photo_url?: string | null
           references_checked?: boolean
           school?: string | null
+          school_name?: string | null
           short_bio?: string | null
           skills?: string[]
           status?: Database["public"]["Enums"]["youth_status"]
@@ -1574,23 +1752,32 @@ export type Database = {
         }
         Update: {
           age_group?: string | null
+          applicant_declaration?: boolean
           application_code?: string
           availability?: string[]
           category?: string | null
           created_at?: string
+          currently_attending_school?: boolean | null
+          cv_url?: string | null
           dob?: string
           education_level?: string | null
           email?: string | null
           emergency_contact_name?: string | null
           emergency_contact_phone?: string | null
+          first_name?: string | null
           full_name?: string
+          further_education?: string | null
+          gender?: string | null
           guardian_consent_at?: string | null
           guardian_consent_given?: boolean
           guardian_email?: string | null
           guardian_name?: string | null
           guardian_phone?: string | null
           guardian_relationship?: string | null
+          highest_grade?: string | null
           id?: string
+          id_document_url?: string | null
+          id_number?: string | null
           identity_verified?: boolean
           interests?: string[]
           interview_completed?: boolean
@@ -1598,13 +1785,28 @@ export type Database = {
           is_published?: boolean
           is_suspended?: boolean
           languages?: string[]
+          last_name?: string | null
           learning_city_interest?: boolean
+          liability_accepted?: boolean
+          matric_completed?: boolean | null
           mentor_match_opt_in?: boolean
           mobile_number?: string | null
           notes_admin?: string | null
           opportunity_types?: string[]
+          parent_consent_form_url?: string | null
+          parent_consent_method?: string | null
+          parent_consent_signature?: string | null
+          parent_consent_signed_at?: string | null
+          parent_consent_status?: string
+          parent_consent_token?: string | null
+          parent_declaration?: boolean
+          parent_email?: string | null
+          parent_full_name?: string | null
+          parent_mobile?: string | null
+          parent_relationship?: string | null
           pcc_admin_notes?: string | null
           pcc_certificate_path?: string | null
+          pcc_document_url?: string | null
           pcc_expiry_review_date?: string | null
           pcc_issue_date?: string | null
           pcc_number?: string | null
@@ -1613,9 +1815,11 @@ export type Database = {
           pcc_verified_at?: string | null
           pcc_verified_by?: string | null
           pcc_wants_assistance?: boolean
+          physical_address?: string | null
           profile_photo_url?: string | null
           references_checked?: boolean
           school?: string | null
+          school_name?: string | null
           short_bio?: string | null
           skills?: string[]
           status?: Database["public"]["Enums"]["youth_status"]
@@ -2019,6 +2223,16 @@ export type Database = {
           id: string
         }[]
       }
+      lookup_parent_consent: {
+        Args: { _token: string }
+        Returns: {
+          applicant_first_name: string
+          applicant_full_name: string
+          parent_consent_signed_at: string
+          parent_consent_status: string
+          parent_full_name: string
+        }[]
+      }
       submit_feedback: {
         Args: {
           _comment: string
@@ -2028,6 +2242,17 @@ export type Database = {
           _reliability: number
           _token: string
           _would_recommend: boolean
+        }
+        Returns: string
+      }
+      submit_parent_consent: {
+        Args: {
+          _email: string
+          _parent_name: string
+          _phone: string
+          _relationship: string
+          _signature: string
+          _token: string
         }
         Returns: string
       }
@@ -2125,8 +2350,22 @@ export type Database = {
         | "training"
         | "internship"
         | "community_service"
-      youth_opportunity_status: "pending" | "approved" | "rejected" | "closed"
-      youth_status: "pending" | "approved" | "on_hold" | "rejected"
+      youth_opportunity_status:
+        | "pending"
+        | "approved"
+        | "rejected"
+        | "closed"
+        | "draft"
+        | "pending_verification"
+        | "pending_safeguarding_review"
+        | "archived"
+      youth_status:
+        | "pending"
+        | "approved"
+        | "on_hold"
+        | "rejected"
+        | "awaiting_parent_consent"
+        | "suspended"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -2355,8 +2594,24 @@ export const Constants = {
         "internship",
         "community_service",
       ],
-      youth_opportunity_status: ["pending", "approved", "rejected", "closed"],
-      youth_status: ["pending", "approved", "on_hold", "rejected"],
+      youth_opportunity_status: [
+        "pending",
+        "approved",
+        "rejected",
+        "closed",
+        "draft",
+        "pending_verification",
+        "pending_safeguarding_review",
+        "archived",
+      ],
+      youth_status: [
+        "pending",
+        "approved",
+        "on_hold",
+        "rejected",
+        "awaiting_parent_consent",
+        "suspended",
+      ],
     },
   },
 } as const

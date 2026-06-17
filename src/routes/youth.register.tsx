@@ -33,10 +33,18 @@ export const Route = createFileRoute("/youth/register")({
 
 const baseSchema = z.object({
   full_name: z.string().trim().min(2).max(120),
+  first_name: z.string().trim().max(60).optional().or(z.literal("")),
+  last_name: z.string().trim().max(60).optional().or(z.literal("")),
+  gender: z.string().trim().max(30).optional().or(z.literal("")),
+  id_number: z.string().trim().max(30).optional().or(z.literal("")),
   dob: z.string().min(1, "Date of birth is required"),
   town: z.string().trim().min(2).max(60),
+  physical_address: z.string().trim().max(300).optional().or(z.literal("")),
   school: z.string().trim().max(120).optional().or(z.literal("")),
   education_level: z.string().trim().max(60).optional().or(z.literal("")),
+  currently_attending_school: z.boolean(),
+  matric_completed: z.boolean(),
+  further_education: z.string().trim().max(120).optional().or(z.literal("")),
   mobile_number: z.string().trim().max(20).optional().or(z.literal("")),
   email: z.string().trim().email().optional().or(z.literal("")),
   emergency_contact_name: z.string().trim().min(2).max(120),
@@ -54,6 +62,9 @@ const baseSchema = z.object({
   guardian_phone: z.string().trim().max(20).optional().or(z.literal("")),
   guardian_email: z.string().trim().max(120).optional().or(z.literal("")),
   guardian_consent_given: z.boolean(),
+  parent_consent_method: z.enum(["digital", "uploaded"]).optional(),
+  applicant_declaration: z.literal(true, { errorMap: () => ({ message: "You must confirm the applicant declaration." }) }),
+  liability_accepted: z.literal(true, { errorMap: () => ({ message: "You must accept the platform disclaimer." }) }),
   accept_terms: z.literal(true, {
     errorMap: () => ({ message: "You must accept the Terms & Disclaimer." }),
   }),
@@ -76,10 +87,18 @@ function RegisterYouth() {
     const fd = new FormData(e.currentTarget);
     const raw = {
       full_name: fd.get("full_name") as string,
+      first_name: fd.get("first_name") as string,
+      last_name: fd.get("last_name") as string,
+      gender: fd.get("gender") as string,
+      id_number: fd.get("id_number") as string,
       dob: fd.get("dob") as string,
       town: fd.get("town") as string,
+      physical_address: fd.get("physical_address") as string,
       school: fd.get("school") as string,
       education_level: fd.get("education_level") as string,
+      currently_attending_school: fd.get("currently_attending_school") === "on",
+      matric_completed: fd.get("matric_completed") === "on",
+      further_education: fd.get("further_education") as string,
       mobile_number: fd.get("mobile_number") as string,
       email: fd.get("email") as string,
       emergency_contact_name: fd.get("emergency_contact_name") as string,
@@ -96,6 +115,9 @@ function RegisterYouth() {
       guardian_phone: fd.get("guardian_phone") as string,
       guardian_email: fd.get("guardian_email") as string,
       guardian_consent_given: fd.get("guardian_consent_given") === "on",
+      parent_consent_method: (fd.get("parent_consent_method") as "digital" | "uploaded") || undefined,
+      applicant_declaration: fd.get("applicant_declaration") === "on",
+      liability_accepted: fd.get("liability_accepted") === "on",
       accept_terms: fd.get("accept_terms") === "on",
     };
 
@@ -131,24 +153,45 @@ function RegisterYouth() {
       if (!d.guardian_name) guardianErrs.guardian_name = "Required for under-18s";
       if (!d.guardian_relationship) guardianErrs.guardian_relationship = "Required";
       if (!d.guardian_phone) guardianErrs.guardian_phone = "Required";
-      if (!d.guardian_consent_given)
-        guardianErrs.guardian_consent_given = "Parent/guardian consent is required.";
+      if (!d.parent_consent_method) guardianErrs.parent_consent_method = "Choose a consent method.";
       if (Object.keys(guardianErrs).length) {
         setErrors(guardianErrs);
         setSubmitting(false);
-        toast.error("Parent or guardian consent is required.");
+        toast.error("Parent or guardian details are required.");
         return;
       }
     }
+
+    // Optional file uploads
+    async function up(file: File | null, prefix: string): Promise<string | null> {
+      if (!file || !file.size) return null;
+      const path = `${prefix}/${crypto.randomUUID()}-${file.name}`;
+      const { error } = await supabase.storage.from("provider-documents").upload(path, file);
+      if (error) { toast.error("Upload failed: " + error.message); return null; }
+      return path;
+    }
+    const id_document_url = await up(fd.get("id_document") as File, "youth-id");
+    const cv_url = await up(fd.get("cv_document") as File, "youth-cv");
+    const parent_consent_form_url = d.parent_consent_method === "uploaded"
+      ? await up(fd.get("parent_consent_upload") as File, "parent-consent") : null;
 
     const { data, error } = await supabase
       .from("youth_profiles")
       .insert({
         full_name: d.full_name,
+        first_name: d.first_name || null,
+        last_name: d.last_name || null,
+        gender: d.gender || null,
+        id_number: d.id_number || null,
         dob: d.dob,
         town: d.town,
+        physical_address: d.physical_address || null,
         school: d.school || null,
+        school_name: d.school || null,
         education_level: d.education_level || null,
+        currently_attending_school: d.currently_attending_school,
+        matric_completed: d.matric_completed,
+        further_education: d.further_education || null,
         mobile_number: d.mobile_number || null,
         email: d.email || null,
         emergency_contact_name: d.emergency_contact_name,
@@ -164,16 +207,26 @@ function RegisterYouth() {
         guardian_relationship: d.guardian_relationship || null,
         guardian_phone: d.guardian_phone || null,
         guardian_email: d.guardian_email || null,
+        parent_full_name: d.guardian_name || null,
+        parent_relationship: d.guardian_relationship || null,
+        parent_mobile: d.guardian_phone || null,
+        parent_email: d.guardian_email || null,
+        parent_consent_method: d.parent_consent_method ?? null,
         guardian_consent_given: d.guardian_consent_given,
         guardian_consent_at: d.guardian_consent_given ? new Date().toISOString() : null,
+        id_document_url,
+        cv_url,
+        parent_consent_form_url,
+        applicant_declaration: d.applicant_declaration,
+        liability_accepted: d.liability_accepted,
         terms_accepted_at: new Date().toISOString(),
         terms_version_accepted: TERMS_VERSION,
         pcc_status: pcc.pcc_status,
         pcc_issue_date: pcc.pcc_issue_date,
         pcc_number: pcc.pcc_number,
         pcc_wants_assistance: pcc.pcc_wants_assistance,
-      })
-      .select("id, application_code")
+      } as never)
+      .select("id, application_code, parent_consent_token, status")
       .single();
 
     if (error || !data) {
@@ -185,10 +238,10 @@ function RegisterYouth() {
     await recordTermsAcceptance({
       context: "provider_registration",
       referenceTable: "youth_profiles",
-      referenceId: data.id,
+      referenceId: (data as { id: string }).id,
     });
 
-    setDone({ code: data.application_code });
+    setDone({ code: (data as { application_code: string }).application_code });
     setSubmitting(false);
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
@@ -230,6 +283,8 @@ function RegisterYouth() {
         <form onSubmit={handleSubmit} className="space-y-10">
           <Fieldset title="About you">
             <Grid>
+              <Field label="First name" name="first_name" />
+              <Field label="Last name" name="last_name" />
               <Field label="Full name" name="full_name" required error={errors.full_name} />
               <Field
                 label="Date of birth"
@@ -239,30 +294,69 @@ function RegisterYouth() {
                 error={errors.dob}
                 onChange={(e) => setDob(e.target.value)}
               />
+              <div>
+                <Label>Gender (optional)</Label>
+                <select name="gender" defaultValue="" className="w-full px-4 py-3 border border-brand-dark/10 rounded-xl bg-white">
+                  <option value="">Prefer not to say</option>
+                  <option value="female">Female</option>
+                  <option value="male">Male</option>
+                  <option value="non_binary">Non-binary</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+              <Field label="ID number (optional for under-18s)" name="id_number" />
               <Field label="Town" name="town" required error={errors.town} />
               <Field label="Mobile / WhatsApp" name="mobile_number" type="tel" />
               <Field label="Email (optional)" name="email" type="email" />
-              <div>
-                <Label>Education level</Label>
-                <select
-                  name="education_level"
-                  className="w-full px-4 py-3 border border-brand-dark/10 rounded-xl bg-white"
-                  defaultValue=""
-                >
-                  <option value="">Select…</option>
-                  {YOUTH_EDUCATION_LEVELS.map((e) => (
-                    <option key={e} value={e}>{e}</option>
-                  ))}
-                </select>
-              </div>
-              <Field label="School / college" name="school" />
             </Grid>
+            <div className="mt-4">
+              <Label>Physical address</Label>
+              <textarea name="physical_address" rows={2} className="w-full px-4 py-3 border border-brand-dark/10 rounded-xl bg-white" />
+            </div>
             {ageGroup && (
               <p className="text-xs mt-3 text-brand-primary">
                 Detected age group: <strong>{ageGroup}</strong>
                 {isMinor && " — parent/guardian consent required below."}
               </p>
             )}
+          </Fieldset>
+
+          <Fieldset title="Education">
+            <Grid>
+              <div>
+                <Label>Currently attending school?</Label>
+                <label className="flex items-center gap-2"><input type="checkbox" name="currently_attending_school" className="accent-brand-primary" /> Yes</label>
+              </div>
+              <Field label="School / college name" name="school" />
+              <div>
+                <Label>Highest grade / level completed</Label>
+                <select name="education_level" className="w-full px-4 py-3 border border-brand-dark/10 rounded-xl bg-white" defaultValue="">
+                  <option value="">Select…</option>
+                  {YOUTH_EDUCATION_LEVELS.map((e) => (<option key={e} value={e}>{e}</option>))}
+                </select>
+              </div>
+              <div>
+                <Label>Matric completed?</Label>
+                <label className="flex items-center gap-2"><input type="checkbox" name="matric_completed" className="accent-brand-primary" /> Yes</label>
+              </div>
+              <Field label="Further education / training institution (optional)" name="further_education" />
+            </Grid>
+          </Fieldset>
+
+          <Fieldset title="Documents (optional)">
+            <p className="text-sm text-brand-dark/65 mb-3">
+              You can upload now or later. Files are stored privately and only shared with Hineni reviewers.
+            </p>
+            <Grid>
+              <div>
+                <Label>ID document or birth certificate</Label>
+                <input name="id_document" type="file" accept=".pdf,image/*" className="w-full text-sm" />
+              </div>
+              <div>
+                <Label>CV (optional)</Label>
+                <input name="cv_document" type="file" accept=".pdf,.doc,.docx,image/*" className="w-full text-sm" />
+              </div>
+            </Grid>
           </Fieldset>
 
           {isMinor && (
@@ -273,13 +367,31 @@ function RegisterYouth() {
                 <Field label="Phone" name="guardian_phone" type="tel" required error={errors.guardian_phone} />
                 <Field label="Email (optional)" name="guardian_email" type="email" />
               </Grid>
+
+              <div className="mt-5">
+                <Label>How will the parent / guardian provide consent? <span className="text-destructive">*</span></Label>
+                <div className="grid sm:grid-cols-2 gap-2 mt-1">
+                  <label className="flex items-start gap-2 px-3 py-3 rounded-lg border border-brand-dark/10 text-sm cursor-pointer">
+                    <input type="radio" name="parent_consent_method" value="digital" className="mt-1 accent-brand-primary" />
+                    <span><strong>Digital consent</strong> — parent receives a secure link by email and signs online.</span>
+                  </label>
+                  <label className="flex items-start gap-2 px-3 py-3 rounded-lg border border-brand-dark/10 text-sm cursor-pointer">
+                    <input type="radio" name="parent_consent_method" value="uploaded" className="mt-1 accent-brand-primary" />
+                    <span><strong>Downloadable form</strong> — print, sign, and upload below.</span>
+                  </label>
+                </div>
+                {errors.parent_consent_method && <p className="text-xs text-destructive mt-1">{errors.parent_consent_method}</p>}
+                <div className="mt-3">
+                  <Label>If uploading, attach the signed consent form</Label>
+                  <input name="parent_consent_upload" type="file" accept=".pdf,image/*" className="w-full text-sm" />
+                </div>
+              </div>
+
               <label className="flex items-start gap-2 mt-4 text-sm">
                 <input type="checkbox" name="guardian_consent_given" className="mt-1 accent-brand-primary" />
                 <span>
                   I am the parent or legal guardian and I consent to this young person registering
-                  with Hineni, being contacted about suitable opportunities, and being introduced
-                  to vetted organisations. I understand minors will not be matched to hazardous
-                  work or work prohibited under South African labour law.
+                  with Hineni. (You will also confirm via the digital or uploaded consent form above.)
                 </span>
               </label>
               {errors.guardian_consent_given && (
@@ -360,6 +472,23 @@ function RegisterYouth() {
           </Fieldset>
 
           <PccSection errors={errors} />
+
+          <Fieldset title="Declarations (required)">
+            <label className="flex items-start gap-2 text-sm mb-3">
+              <input type="checkbox" name="applicant_declaration" className="mt-1 accent-brand-primary" />
+              <span>I confirm that the information supplied is accurate and complete.</span>
+            </label>
+            {errors.applicant_declaration && <p className="text-xs text-destructive mb-2">{errors.applicant_declaration}</p>}
+            <label className="flex items-start gap-2 text-sm">
+              <input type="checkbox" name="liability_accepted" className="mt-1 accent-brand-primary" />
+              <span>
+                I understand that Hineni acts solely as a facilitator of opportunities and cannot
+                guarantee placements, employment outcomes, conduct of participants or opportunity
+                providers. I agree to the platform terms and conditions.
+              </span>
+            </label>
+            {errors.liability_accepted && <p className="text-xs text-destructive mt-1">{errors.liability_accepted}</p>}
+          </Fieldset>
 
           <Fieldset title="Terms & Disclaimer (required)">
             <TermsAcceptance name="accept_terms" error={errors.accept_terms} />

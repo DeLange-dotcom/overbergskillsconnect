@@ -93,6 +93,26 @@ function YouthHub() {
             partnerships as they roll out.
           </Promise>
         </div>
+
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 mt-8">
+          <Link
+            to="/mentors/interest"
+            className="block bg-white rounded-2xl p-6 border border-brand-dark/10 hover:border-brand-primary/40 transition"
+          >
+            <div className="flex items-start gap-4">
+              <div className="size-12 rounded-full bg-brand-accent/10 text-brand-accent grid place-items-center shrink-0">
+                <Users className="size-6" />
+              </div>
+              <div>
+                <div className="text-[10px] uppercase tracking-widest text-brand-accent font-semibold mb-1">Coming soon</div>
+                <h3 className="font-heading text-lg font-semibold mb-1">Become a mentor</h3>
+                <p className="text-sm text-brand-dark/70">
+                  Share your skills and experience with the next generation. Register your interest →
+                </p>
+              </div>
+            </div>
+          </Link>
+        </div>
       </section>
     </SiteLayout>
   );

@@ -1,74 +1,163 @@
-# Post-Approval Workflow Plan
+# Hineni Youth Opportunities Hub — Enhancement Plan
 
-This is a large, multi-part build. I'll ship it in **4 phases** so we can review and adjust as we go. Each phase ends in a usable state.
+This plan delivers three connected workflows: (1) a richer multi-step youth registration with parent consent for under-18s, (2) a searchable Opportunity Board fed only by approved posts, and (3) a comprehensive "Post an Opportunity" form with safeguarding review. A Mentor placeholder is added for the future pathway.
 
----
-
-## Phase 1 — Public Profiles & Directory (Steps 4–5)
-
-**Database**
-- Add to `service_providers`, `apprentices`, `youth_profiles`:
-  - `is_published` (bool, auto `true` when admin approves)
-  - `is_suspended`, `is_archived` (bool, default false)
-  - `work_permit_verified` (bool) + extend Gold rule to require it where applicable
-  - `short_bio`, `languages` (text[]), `category` (enum)
-  - `profile_photo_url` (re-use existing if present)
-- View `public.directory_profiles` unioning the 3 tables, exposing only safe columns. `TO anon` SELECT policy, filtered to `is_published AND NOT is_suspended AND NOT is_archived`.
-- Update verification trigger: Gold now needs PCC **and** work-permit (when role requires it).
-
-**Frontend**
-- New route `/directory` — search + filters (category, location, availability, verification level, languages, skills).
-- New route `/directory/$id` — public profile page with verification badge, bio, photo, "Request Contact" button.
-- `VerificationBadge` shown on every card + profile page.
-- Persistent disclaimer banner in footer + on profile pages.
-
-## Phase 2 — Contact Request System (Steps 6–7)
-
-**Database**
-- Extend existing `contact_requests`: `visitor_name`, `visitor_email`, `visitor_phone`, `reason`, `applicant_type`, `applicant_id`, `category`, `status` (`new` | `contact_shared` | `closed`), `disclaimer_accepted_at`.
-
-**Backend**
-- Public server route `/api/public/contact-request` (no auth) — validates with Zod, inserts row, then sends 2 emails via Lovable Emails:
-  1. To visitor → applicant's contact details
-  2. To applicant → visitor's contact details
-- Set status to `contact_shared` after emails enqueue.
-- Requires Lovable Emails infrastructure + 2 new templates (`contact-applicant-details`, `contact-visitor-details`). I'll set up email infra in this phase.
-
-**Frontend**
-- `RequestContactDialog` with form + disclaimer checkbox, posts to the route above.
-
-## Phase 3 — Admin Dashboard & Suspension (Steps 8, 10)
-
-**Frontend**
-- New `/admin` dashboard index with 5 sections (counts + drill-in tables):
-  - Pending Applications (Awaiting Review / References / PCC / Work Permit)
-  - Approved Applicants (Bronze / Silver / Gold)
-  - Contact Requests
-  - PCC Assistance Requests (filter on existing `pcc_wants_assistance`)
-  - Safety Reports
-- New `safety_reports` table (applicant ref, complaint_type, description, resolution_status, admin notes).
-- On each applicant admin page: Suspend / Archive / Reinstate buttons (admin only via RLS + `has_role`).
-
-## Phase 4 — Feedback & Reputation (Step 9)
-
-**Database**
-- `feedback_requests` (contact_request_id, scheduled_for, sent_at, token, completed_at)
-- `feedback_responses` (engaged enum, reliability/communication/punctuality 1–5, would_recommend bool, comment)
-- pg_cron job (every hour) → finds contact_requests >= 30 days old without a feedback_request, enqueues email with unique token.
-- Computed view: per-applicant review count, avg rating, recommendation %.
-
-**Frontend**
-- Public `/feedback/$token` route — form.
-- Reviews section on public profile page.
-- New email template `feedback-request`.
+Hineni's role is reinforced throughout as **facilitator only** — not an employment agency.
 
 ---
 
-## Notes
-- Hineni's "introductions only" disclaimer will appear on the directory, profile pages, contact dialog, and emails.
-- All public reads go through narrow `TO anon` policies and projected views — no PII leaks.
-- Lovable Emails (built-in) used throughout; no third-party provider needed.
+## 1. Database changes (single migration)
+
+### `youth_profiles` — extend
+Add columns the new registration captures:
+- `first_name`, `last_name`, `gender`, `id_number`
+- `currently_attending_school` (bool), `school_name`, `highest_grade`, `matric_completed` (bool), `further_education`
+- `availability` (text[]) — multi
+- `id_document_url`, `cv_url`, `pcc_url`, `parent_consent_form_url`
+- `parent_full_name`, `parent_relationship`, `parent_mobile`, `parent_email`, `emergency_contact`
+- `parent_consent_status` (enum: `not_required` | `pending` | `digital_signed` | `uploaded` | `approved`)
+- `parent_consent_token` (uuid, unique) — secure link
+- `parent_consent_signed_at`, `parent_consent_signature` (text)
+- `applicant_declaration` (bool), `parent_declaration` (bool), `liability_accepted` (bool)
+- Extend `status` enum / check to allow `pending_review`, `awaiting_parent_consent`, `approved`, `rejected`, `suspended`
+
+### `youth_opportunities` — extend
+- `provider_type` (enum)
+- `position`, `website`
+- `verification_doc_type`, `verification_doc_url`
+- `positions_available` (int)
+- `compensation_type` (enum), `compensation_amount` (numeric), `compensation_currency` default `ZAR`
+- `skills_required` (text[]), `experience_required`
+- Safeguarding flags: `involves_children`, `involves_vulnerable_adults`, `involves_home_visits`, `involves_transport`, `involves_overnight`, `involves_machinery`, `involves_chemicals`, `involves_heights`
+- `requires_manual_review` (bool, auto-set by trigger when any flag true)
+- `private_individual_id_url`, `private_individual_phone_verified`, `private_individual_address`
+- Extend `status` to: `draft`, `pending_verification`, `pending_safeguarding_review`, `approved`, `rejected`, `archived`
+
+### `youth_applications` — extend
+- `outcome` (enum: `applied`, `interview_scheduled`, `accepted`, `declined`, `completed`)
+- `outcome_updated_at`, `outcome_notes`
+
+### New: `mentors_interest` (placeholder)
+- `full_name`, `email`, `mobile`, `skills` (text[]), `industry_experience`, `availability` (text[]), `mode` (`in_person` | `online` | `both`), `status` (`pending` | `approved` | `rejected`)
+- Standard RLS: anyone can insert, only admins read/update.
+
+### Triggers
+- Auto-set `youth_profiles.parent_consent_status = 'pending'` and `status = 'awaiting_parent_consent'` when DOB < 18 at insert.
+- Auto-set `youth_opportunities.requires_manual_review = true` when any safeguarding flag is true or `provider_type = 'private_individual'`.
+- Auto-enforce: applications from minors (15-17) cannot be inserted against opportunities where `provider_type = 'private_individual'`.
+
+### RPCs
+- `submit_parent_consent(_token, _name, _relationship, _signature, _phone, _email)` — security definer, marks consent signed & flips profile status to `pending_review`.
+- `lookup_parent_consent(_token)` — returns applicant first name + status.
+
+### Storage
+- New private bucket `youth-documents` for ID / CV / PCC / parent consent uploads.
+- New private bucket `opportunity-documents` for verification docs and private-individual ID.
+
+### Grants
+Standard GRANTs to `anon` (insert registration / opportunity / mentor interest), `authenticated`, `service_role` per project convention.
 
 ---
 
-**Ready to start with Phase 1?** Or would you like me to adjust scope/order first (e.g. skip feedback for now, or do contact requests before the public directory)?
+## 2. Frontend — Youth Registration (`/youth/register`)
+
+Rebuild as 8-step wizard with progress indicator. Steps match spec sections:
+
+1. Personal Details (auto-calc age from DOB)
+2. Education
+3. Skills & Interests (extended list per spec)
+4. Availability (multi-select)
+5. Documents (uploads to `youth-documents`)
+6. Parent / Guardian — **only renders if age < 18**
+7. Parent Consent method — **only if under 18**: choose Digital (email link auto-sent) OR Downloadable PDF
+8. Declarations (applicant + parent if minor + liability)
+
+On submit:
+- Insert into `youth_profiles`.
+- If under 18 + digital consent chosen → server fn emails parent (using existing Lovable email infra if configured; otherwise queue & display "Parent will receive email shortly"). Generate `parent_consent_token`.
+- If under 18 + downloadable chosen → show PDF download link + upload field on a follow-up screen.
+- Status display screen: "Awaiting Parent Consent" / "Pending Review".
+
+New public route: `/youth/parent-consent/$token` — parent lookup + sign form (digital signature = typed full name + checkbox + timestamp).
+
+Downloadable PDF: simple `public/parent-consent-form.pdf` placeholder generated at build (static doc with fields).
+
+---
+
+## 3. Frontend — Opportunity Board (`/youth/opportunities`)
+
+Replace existing filters with the full spec:
+- Opportunity Type (10 options)
+- Age Group (15-17 / 18-25 — filters by overlap with min/max age)
+- Location (Napier, Bredasdorp, Caledon, Hermanus, Other)
+- Category (10 options)
+- Compensation Type
+
+Cards show: title, organisation, location, type, age range, closing date, compensation type.
+
+"Apply" CTA:
+- If signed-in + approved youth → insert into `youth_applications`.
+- Else → redirect to `/youth/register` with `?returnTo=` param.
+
+Update home/youth landing page: replace "Browse Opportunities" button to point at the board (already does — confirm wiring).
+
+---
+
+## 4. Frontend — Post an Opportunity (`/youth/post-opportunity`)
+
+Rebuild as sectioned form:
+1. Provider Type (9 options incl. Private Individual)
+2. Organisation Details
+3. Verification Documents (upload — required, at least one)
+4. Opportunity Details
+5. Opportunity Type (with inline definitions for Casual / Micro Job)
+6. Eligibility (min/max age, skills, experience)
+7. Safeguarding checklist (8 flags) — any checked = banner "This opportunity will require manual safeguarding review"
+8. Compensation
+9. If Private Individual: extra ID upload + phone + address + notice "applicants aged 18-25 only" (forces min_age ≥ 18)
+
+On submit: status set to `pending_verification` (or `pending_safeguarding_review` if any flag true).
+
+---
+
+## 5. Admin
+
+Extend `/admin` youth + opportunities lists to surface the new statuses and a safeguarding-review queue. Allow admins to:
+- Approve / reject / suspend youth profiles
+- Approve / reject opportunities
+- Update application outcomes (also exposed to providers later — out of scope for this pass; admin-only now)
+
+---
+
+## 6. Mentor placeholder
+
+- Card on Youth Hub: "Become a Mentor — coming soon. Register your interest."
+- Public form at `/mentors/interest` → inserts into `mentors_interest`.
+- Admin list view of submissions.
+
+---
+
+## 7. Disclaimer
+
+Render the existing `HineniDisclaimer` component on registration, opportunity board, posting form, and parent consent page.
+
+---
+
+## Technical notes (for engineers)
+
+- Server fn `sendParentConsentEmail` (createServerFn) — uses existing email infra if scaffolded, otherwise no-op + log so build doesn't fail.
+- Public route `/youth/parent-consent/$token` — SSR-safe; calls RPC `lookup_parent_consent`.
+- File uploads via `supabase.storage` from the browser to private buckets; store returned paths.
+- Age computed client-side AND enforced server-side via trigger.
+- Minor → private-individual application block enforced via trigger raising `exception`.
+- All new tables/cols ship with GRANTs + RLS in one migration.
+
+---
+
+## Out of scope (call out for the user)
+
+- Real email delivery for parent consent requires the email-infrastructure setup tool to be run first; this plan wires the call site but will degrade gracefully if email isn't configured yet. I'll flag this on completion.
+- Provider self-service application outcome updates (spec mentions it) — added DB column + admin UI now; provider-side UI in a follow-up.
+- Phone verification for Private Individuals — DB flag added, real OTP integration is a follow-up (manual admin verification for now).
+
+Reply "go" to build, or tell me what to adjust.
