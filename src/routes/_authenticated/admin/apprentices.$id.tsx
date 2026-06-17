@@ -4,6 +4,7 @@ import { SiteLayout } from "@/components/site/SiteLayout";
 import { supabase } from "@/integrations/supabase/client";
 import { AdminPccPanel } from "@/components/site/AdminPccPanel";
 import { VerificationBadge } from "@/components/site/VerificationBadge";
+import { ProfileLifecyclePanel } from "@/components/site/ProfileLifecyclePanel";
 import { ArrowLeft, Loader2 } from "lucide-react";
 
 export const Route = createFileRoute("/_authenticated/admin/apprentices/$id")({
@@ -73,6 +74,17 @@ function ApprenticeDetail() {
             />
           </div>
         </header>
+
+        <ProfileLifecyclePanel
+          table="apprentices"
+          id={id}
+          initial={{
+            is_published: !!(a as { is_published?: boolean }).is_published,
+            is_suspended: !!(a as { is_suspended?: boolean }).is_suspended,
+            is_archived: !!(a as { is_archived?: boolean }).is_archived,
+          }}
+        />
+
 
         <div className="grid lg:grid-cols-3 gap-6">
           <div className="lg:col-span-2 space-y-6">
