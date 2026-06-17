@@ -29,6 +29,7 @@ import { Route as RequestMentorshipIndexRouteImport } from './routes/request-men
 import { Route as YouthRegisterRouteImport } from './routes/youth.register'
 import { Route as YouthPostOpportunityRouteImport } from './routes/youth.post-opportunity'
 import { Route as YouthOpportunitiesRouteImport } from './routes/youth.opportunities'
+import { Route as RequestMentorshipMentorIdRouteImport } from './routes/request-mentorship.$mentorId'
 import { Route as MentorsInterestRouteImport } from './routes/mentors.interest'
 import { Route as FeedbackTokenRouteImport } from './routes/feedback.$token'
 import { Route as ApprenticeshipsRegisterProviderRouteImport } from './routes/apprenticeships.register-provider'
@@ -148,6 +149,12 @@ const YouthOpportunitiesRoute = YouthOpportunitiesRouteImport.update({
   path: '/opportunities',
   getParentRoute: () => YouthRoute,
 } as any)
+const RequestMentorshipMentorIdRoute =
+  RequestMentorshipMentorIdRouteImport.update({
+    id: '/request-mentorship/$mentorId',
+    path: '/request-mentorship/$mentorId',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const MentorsInterestRoute = MentorsInterestRouteImport.update({
   id: '/mentors/interest',
   path: '/mentors/interest',
@@ -278,6 +285,7 @@ export interface FileRoutesByFullPath {
   '/apprenticeships/register-provider': typeof ApprenticeshipsRegisterProviderRoute
   '/feedback/$token': typeof FeedbackTokenRoute
   '/mentors/interest': typeof MentorsInterestRoute
+  '/request-mentorship/$mentorId': typeof RequestMentorshipMentorIdRoute
   '/youth/opportunities': typeof YouthOpportunitiesRoute
   '/youth/post-opportunity': typeof YouthPostOpportunityRoute
   '/youth/register': typeof YouthRegisterRoute
@@ -317,6 +325,7 @@ export interface FileRoutesByTo {
   '/apprenticeships/register-provider': typeof ApprenticeshipsRegisterProviderRoute
   '/feedback/$token': typeof FeedbackTokenRoute
   '/mentors/interest': typeof MentorsInterestRoute
+  '/request-mentorship/$mentorId': typeof RequestMentorshipMentorIdRoute
   '/youth/opportunities': typeof YouthOpportunitiesRoute
   '/youth/post-opportunity': typeof YouthPostOpportunityRoute
   '/youth/register': typeof YouthRegisterRoute
@@ -359,6 +368,7 @@ export interface FileRoutesById {
   '/apprenticeships/register-provider': typeof ApprenticeshipsRegisterProviderRoute
   '/feedback/$token': typeof FeedbackTokenRoute
   '/mentors/interest': typeof MentorsInterestRoute
+  '/request-mentorship/$mentorId': typeof RequestMentorshipMentorIdRoute
   '/youth/opportunities': typeof YouthOpportunitiesRoute
   '/youth/post-opportunity': typeof YouthPostOpportunityRoute
   '/youth/register': typeof YouthRegisterRoute
@@ -401,6 +411,7 @@ export interface FileRouteTypes {
     | '/apprenticeships/register-provider'
     | '/feedback/$token'
     | '/mentors/interest'
+    | '/request-mentorship/$mentorId'
     | '/youth/opportunities'
     | '/youth/post-opportunity'
     | '/youth/register'
@@ -440,6 +451,7 @@ export interface FileRouteTypes {
     | '/apprenticeships/register-provider'
     | '/feedback/$token'
     | '/mentors/interest'
+    | '/request-mentorship/$mentorId'
     | '/youth/opportunities'
     | '/youth/post-opportunity'
     | '/youth/register'
@@ -481,6 +493,7 @@ export interface FileRouteTypes {
     | '/apprenticeships/register-provider'
     | '/feedback/$token'
     | '/mentors/interest'
+    | '/request-mentorship/$mentorId'
     | '/youth/opportunities'
     | '/youth/post-opportunity'
     | '/youth/register'
@@ -517,6 +530,7 @@ export interface RootRouteChildren {
   YouthRoute: typeof YouthRouteWithChildren
   FeedbackTokenRoute: typeof FeedbackTokenRoute
   MentorsInterestRoute: typeof MentorsInterestRoute
+  RequestMentorshipMentorIdRoute: typeof RequestMentorshipMentorIdRoute
   RequestMentorshipIndexRoute: typeof RequestMentorshipIndexRoute
   ApiPublicContactRequestRoute: typeof ApiPublicContactRequestRoute
 }
@@ -662,6 +676,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/youth/opportunities'
       preLoaderRoute: typeof YouthOpportunitiesRouteImport
       parentRoute: typeof YouthRoute
+    }
+    '/request-mentorship/$mentorId': {
+      id: '/request-mentorship/$mentorId'
+      path: '/request-mentorship/$mentorId'
+      fullPath: '/request-mentorship/$mentorId'
+      preLoaderRoute: typeof RequestMentorshipMentorIdRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/mentors/interest': {
       id: '/mentors/interest'
@@ -897,6 +918,7 @@ const rootRouteChildren: RootRouteChildren = {
   YouthRoute: YouthRouteWithChildren,
   FeedbackTokenRoute: FeedbackTokenRoute,
   MentorsInterestRoute: MentorsInterestRoute,
+  RequestMentorshipMentorIdRoute: RequestMentorshipMentorIdRoute,
   RequestMentorshipIndexRoute: RequestMentorshipIndexRoute,
   ApiPublicContactRequestRoute: ApiPublicContactRequestRoute,
 }
