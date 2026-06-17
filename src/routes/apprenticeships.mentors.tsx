@@ -2,8 +2,8 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { supabase } from "@/integrations/supabase/client";
-import { Award, MapPin, Loader2 } from "lucide-react";
-import { MENTOR_CATEGORIES } from "@/lib/apprenticeships";
+import { Award, MapPin, Loader2, ShieldCheck } from "lucide-react";
+import { MENTOR_CATEGORIES, MENTOR_FORMATS } from "@/lib/apprenticeships";
 
 export const Route = createFileRoute("/apprenticeships/mentors")({
   head: () => ({
