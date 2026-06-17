@@ -411,51 +411,63 @@ export type Database = {
           contact_number: string
           contact_person: string
           created_at: string
+          disclaimer_accepted_at: string | null
           email: string
           id: string
           organisation_name: string
           physical_address: string | null
           provider_type: string
+          safeguarding_acknowledged_at: string | null
+          safeguarding_policy_version: string | null
           status: Database["public"]["Enums"]["provider_app_status"]
           terms_accepted_at: string | null
           terms_version: string | null
           town: string
           updated_at: string
           user_id: string | null
+          verification_doc_path: string | null
           website: string | null
         }
         Insert: {
           contact_number: string
           contact_person: string
           created_at?: string
+          disclaimer_accepted_at?: string | null
           email: string
           id?: string
           organisation_name: string
           physical_address?: string | null
           provider_type: string
+          safeguarding_acknowledged_at?: string | null
+          safeguarding_policy_version?: string | null
           status?: Database["public"]["Enums"]["provider_app_status"]
           terms_accepted_at?: string | null
           terms_version?: string | null
           town: string
           updated_at?: string
           user_id?: string | null
+          verification_doc_path?: string | null
           website?: string | null
         }
         Update: {
           contact_number?: string
           contact_person?: string
           created_at?: string
+          disclaimer_accepted_at?: string | null
           email?: string
           id?: string
           organisation_name?: string
           physical_address?: string | null
           provider_type?: string
+          safeguarding_acknowledged_at?: string | null
+          safeguarding_policy_version?: string | null
           status?: Database["public"]["Enums"]["provider_app_status"]
           terms_accepted_at?: string | null
           terms_version?: string | null
           town?: string
           updated_at?: string
           user_id?: string | null
+          verification_doc_path?: string | null
           website?: string | null
         }
         Relationships: []
