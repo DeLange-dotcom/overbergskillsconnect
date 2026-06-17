@@ -89,7 +89,7 @@ export function PccSection({ errors = {} }: { errors?: Record<string, string> })
         </div>
       )}
 
-      {(status === "applied" || status === "none") && (
+      {(status === "applied" || status === "none" || status === "need_help") && (
         <div className="mt-5 space-y-4">
           <div className="rounded-xl border border-brand-dark/10 bg-brand-soft/40 p-4 text-sm text-brand-dark/80 flex gap-3">
             <Info className="size-5 text-brand-primary shrink-0 mt-0.5" />
@@ -115,6 +115,7 @@ export function PccSection({ errors = {} }: { errors?: Record<string, string> })
             <input
               type="checkbox"
               name="pcc_wants_assistance"
+              defaultChecked={status === "need_help"}
               className="mt-1 accent-brand-primary"
             />
             <span className="text-sm">
