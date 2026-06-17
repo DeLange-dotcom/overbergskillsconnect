@@ -66,6 +66,41 @@ export type Database = {
           },
         ]
       }
+      apprentice_skills: {
+        Row: {
+          apprentice_id: string
+          created_at: string
+          id: string
+          level: string | null
+          skill: string
+          updated_at: string
+        }
+        Insert: {
+          apprentice_id: string
+          created_at?: string
+          id?: string
+          level?: string | null
+          skill: string
+          updated_at?: string
+        }
+        Update: {
+          apprentice_id?: string
+          created_at?: string
+          id?: string
+          level?: string | null
+          skill?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "apprentice_skills_apprentice_id_fkey"
+            columns: ["apprentice_id"]
+            isOneToOne: false
+            referencedRelation: "apprentices"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       apprentices: {
         Row: {
           availability: string[]
@@ -74,10 +109,15 @@ export type Database = {
           certificates: string | null
           contact_number: string | null
           created_at: string
+          cv_path: string | null
           cv_url: string | null
+          disclaimer_accepted_at: string | null
           dob: string
           drivers_licence: boolean | null
           email: string | null
+          emergency_contact_name: string | null
+          emergency_contact_phone: string | null
+          emergency_contact_relationship: string | null
           full_name: string
           further_education: string | null
           highest_grade: string | null
@@ -88,7 +128,14 @@ export type Database = {
           is_published: boolean
           is_suspended: boolean
           languages: string[]
+          location_pref: string | null
+          nationality: string | null
           opportunity_types: string[]
+          parent_consent_uploaded_path: string | null
+          parent_email: string | null
+          parent_full_name: string | null
+          parent_phone: string | null
+          parent_relationship: string | null
           pcc_admin_notes: string | null
           pcc_certificate_path: string | null
           pcc_expiry_review_date: string | null
@@ -104,6 +151,8 @@ export type Database = {
           qualifications: string | null
           reference_code: string
           references_checked: boolean
+          safeguarding_acknowledged_at: string | null
+          safeguarding_policy_version: string | null
           short_bio: string | null
           skills_to_learn: string | null
           status: Database["public"]["Enums"]["apprentice_status"]
@@ -116,7 +165,9 @@ export type Database = {
           verification_level: Database["public"]["Enums"]["verification_level"]
           whatsapp_number: string | null
           why_interested: string | null
+          willing_to_relocate: boolean | null
           work_permit_required: boolean
+          work_permit_status: string | null
           work_permit_verified: boolean
         }
         Insert: {
@@ -126,10 +177,15 @@ export type Database = {
           certificates?: string | null
           contact_number?: string | null
           created_at?: string
+          cv_path?: string | null
           cv_url?: string | null
+          disclaimer_accepted_at?: string | null
           dob: string
           drivers_licence?: boolean | null
           email?: string | null
+          emergency_contact_name?: string | null
+          emergency_contact_phone?: string | null
+          emergency_contact_relationship?: string | null
           full_name: string
           further_education?: string | null
           highest_grade?: string | null
@@ -140,7 +196,14 @@ export type Database = {
           is_published?: boolean
           is_suspended?: boolean
           languages?: string[]
+          location_pref?: string | null
+          nationality?: string | null
           opportunity_types?: string[]
+          parent_consent_uploaded_path?: string | null
+          parent_email?: string | null
+          parent_full_name?: string | null
+          parent_phone?: string | null
+          parent_relationship?: string | null
           pcc_admin_notes?: string | null
           pcc_certificate_path?: string | null
           pcc_expiry_review_date?: string | null
@@ -156,6 +219,8 @@ export type Database = {
           qualifications?: string | null
           reference_code?: string
           references_checked?: boolean
+          safeguarding_acknowledged_at?: string | null
+          safeguarding_policy_version?: string | null
           short_bio?: string | null
           skills_to_learn?: string | null
           status?: Database["public"]["Enums"]["apprentice_status"]
@@ -168,7 +233,9 @@ export type Database = {
           verification_level?: Database["public"]["Enums"]["verification_level"]
           whatsapp_number?: string | null
           why_interested?: string | null
+          willing_to_relocate?: boolean | null
           work_permit_required?: boolean
+          work_permit_status?: string | null
           work_permit_verified?: boolean
         }
         Update: {
@@ -178,10 +245,15 @@ export type Database = {
           certificates?: string | null
           contact_number?: string | null
           created_at?: string
+          cv_path?: string | null
           cv_url?: string | null
+          disclaimer_accepted_at?: string | null
           dob?: string
           drivers_licence?: boolean | null
           email?: string | null
+          emergency_contact_name?: string | null
+          emergency_contact_phone?: string | null
+          emergency_contact_relationship?: string | null
           full_name?: string
           further_education?: string | null
           highest_grade?: string | null
@@ -192,7 +264,14 @@ export type Database = {
           is_published?: boolean
           is_suspended?: boolean
           languages?: string[]
+          location_pref?: string | null
+          nationality?: string | null
           opportunity_types?: string[]
+          parent_consent_uploaded_path?: string | null
+          parent_email?: string | null
+          parent_full_name?: string | null
+          parent_phone?: string | null
+          parent_relationship?: string | null
           pcc_admin_notes?: string | null
           pcc_certificate_path?: string | null
           pcc_expiry_review_date?: string | null
@@ -208,6 +287,8 @@ export type Database = {
           qualifications?: string | null
           reference_code?: string
           references_checked?: boolean
+          safeguarding_acknowledged_at?: string | null
+          safeguarding_policy_version?: string | null
           short_bio?: string | null
           skills_to_learn?: string | null
           status?: Database["public"]["Enums"]["apprentice_status"]
@@ -220,24 +301,33 @@ export type Database = {
           verification_level?: Database["public"]["Enums"]["verification_level"]
           whatsapp_number?: string | null
           why_interested?: string | null
+          willing_to_relocate?: boolean | null
           work_permit_required?: boolean
+          work_permit_status?: string | null
           work_permit_verified?: boolean
         }
         Relationships: []
       }
       apprenticeship_opportunities: {
         Row: {
+          age_max: number | null
+          age_min: number | null
           approved: boolean
+          compensation_amount: number | null
+          compensation_type: string | null
           created_at: string
           description: string | null
           duration: string | null
+          hours_per_week: number | null
           id: string
           industry: string
+          is_published: boolean | null
           min_age: number | null
           paid: boolean
           placements_available: number
           preferred_qualifications: string | null
           provider_id: string
+          remote_available: boolean | null
           safety_requirements: string | null
           skills_offered: string[]
           start_date: string | null
@@ -249,17 +339,24 @@ export type Database = {
           updated_at: string
         }
         Insert: {
+          age_max?: number | null
+          age_min?: number | null
           approved?: boolean
+          compensation_amount?: number | null
+          compensation_type?: string | null
           created_at?: string
           description?: string | null
           duration?: string | null
+          hours_per_week?: number | null
           id?: string
           industry: string
+          is_published?: boolean | null
           min_age?: number | null
           paid?: boolean
           placements_available?: number
           preferred_qualifications?: string | null
           provider_id: string
+          remote_available?: boolean | null
           safety_requirements?: string | null
           skills_offered?: string[]
           start_date?: string | null
@@ -271,17 +368,24 @@ export type Database = {
           updated_at?: string
         }
         Update: {
+          age_max?: number | null
+          age_min?: number | null
           approved?: boolean
+          compensation_amount?: number | null
+          compensation_type?: string | null
           created_at?: string
           description?: string | null
           duration?: string | null
+          hours_per_week?: number | null
           id?: string
           industry?: string
+          is_published?: boolean | null
           min_age?: number | null
           paid?: boolean
           placements_available?: number
           preferred_qualifications?: string | null
           provider_id?: string
+          remote_available?: boolean | null
           safety_requirements?: string | null
           skills_offered?: string[]
           start_date?: string | null
@@ -783,6 +887,211 @@ export type Database = {
           updated_at?: string
         }
         Relationships: []
+      }
+      mentorship_requests: {
+        Row: {
+          admin_notes: string | null
+          assigned_mentor_id: string | null
+          career_interests: string[]
+          created_at: string
+          disclaimer_accepted_at: string | null
+          email: string
+          full_name: string
+          goals: string | null
+          id: string
+          mobile: string | null
+          preferred_frequency: string | null
+          preferred_mentor_id: string | null
+          preferred_method: string | null
+          safeguarding_acknowledged_at: string | null
+          safeguarding_policy_version: string | null
+          status: string
+          updated_at: string
+          user_id: string | null
+        }
+        Insert: {
+          admin_notes?: string | null
+          assigned_mentor_id?: string | null
+          career_interests?: string[]
+          created_at?: string
+          disclaimer_accepted_at?: string | null
+          email: string
+          full_name: string
+          goals?: string | null
+          id?: string
+          mobile?: string | null
+          preferred_frequency?: string | null
+          preferred_mentor_id?: string | null
+          preferred_method?: string | null
+          safeguarding_acknowledged_at?: string | null
+          safeguarding_policy_version?: string | null
+          status?: string
+          updated_at?: string
+          user_id?: string | null
+        }
+        Update: {
+          admin_notes?: string | null
+          assigned_mentor_id?: string | null
+          career_interests?: string[]
+          created_at?: string
+          disclaimer_accepted_at?: string | null
+          email?: string
+          full_name?: string
+          goals?: string | null
+          id?: string
+          mobile?: string | null
+          preferred_frequency?: string | null
+          preferred_mentor_id?: string | null
+          preferred_method?: string | null
+          safeguarding_acknowledged_at?: string | null
+          safeguarding_policy_version?: string | null
+          status?: string
+          updated_at?: string
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "mentorship_requests_assigned_mentor_id_fkey"
+            columns: ["assigned_mentor_id"]
+            isOneToOne: false
+            referencedRelation: "mentors"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "mentorship_requests_assigned_mentor_id_fkey"
+            columns: ["assigned_mentor_id"]
+            isOneToOne: false
+            referencedRelation: "mentors_public"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "mentorship_requests_preferred_mentor_id_fkey"
+            columns: ["preferred_mentor_id"]
+            isOneToOne: false
+            referencedRelation: "mentors"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "mentorship_requests_preferred_mentor_id_fkey"
+            columns: ["preferred_mentor_id"]
+            isOneToOne: false
+            referencedRelation: "mentors_public"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      opportunity_skills: {
+        Row: {
+          created_at: string
+          id: string
+          opportunity_id: string
+          required: boolean
+          skill: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          opportunity_id: string
+          required?: boolean
+          skill: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          opportunity_id?: string
+          required?: boolean
+          skill?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "opportunity_skills_opportunity_id_fkey"
+            columns: ["opportunity_id"]
+            isOneToOne: false
+            referencedRelation: "apprenticeship_opportunities"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "opportunity_skills_opportunity_id_fkey"
+            columns: ["opportunity_id"]
+            isOneToOne: false
+            referencedRelation: "apprenticeship_opportunities_public"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      placements: {
+        Row: {
+          apprentice_id: string
+          created_at: string
+          ended_at: string | null
+          id: string
+          notes: string | null
+          opportunity_id: string
+          outcome: string | null
+          provider_id: string | null
+          started_at: string | null
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          apprentice_id: string
+          created_at?: string
+          ended_at?: string | null
+          id?: string
+          notes?: string | null
+          opportunity_id: string
+          outcome?: string | null
+          provider_id?: string | null
+          started_at?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          apprentice_id?: string
+          created_at?: string
+          ended_at?: string | null
+          id?: string
+          notes?: string | null
+          opportunity_id?: string
+          outcome?: string | null
+          provider_id?: string | null
+          started_at?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "placements_apprentice_id_fkey"
+            columns: ["apprentice_id"]
+            isOneToOne: false
+            referencedRelation: "apprentices"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "placements_opportunity_id_fkey"
+            columns: ["opportunity_id"]
+            isOneToOne: false
+            referencedRelation: "apprenticeship_opportunities"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "placements_opportunity_id_fkey"
+            columns: ["opportunity_id"]
+            isOneToOne: false
+            referencedRelation: "apprenticeship_opportunities_public"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "placements_provider_id_fkey"
+            columns: ["provider_id"]
+            isOneToOne: false
+            referencedRelation: "apprenticeship_providers"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       provider_documents: {
         Row: {
