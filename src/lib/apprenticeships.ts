@@ -19,7 +19,19 @@ export const AVAILABILITY = [
 
 export const PROVIDER_TYPES = [
   "Business","Farm","Tradesperson","Artisan","NPO","Community Organisation",
-  "Government Programme","Educational Institution",
+  "Government Programme","Educational Institution","Individual / Household",
+] as const;
+
+export const COMPENSATION_TYPES = [
+  "Unpaid","Stipend","Minimum wage","Negotiable",
+] as const;
+
+export const NATIONALITIES = [
+  "South African","SADC (work permit)","Other (work permit)","Refugee / Asylum seeker",
+] as const;
+
+export const WORK_PERMIT_STATUSES = [
+  "Not required","Valid work permit","Pending","Not yet applied",
 ] as const;
 
 export const MENTOR_CATEGORIES = [

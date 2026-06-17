@@ -2,18 +2,27 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { z } from "zod";
 import { toast } from "sonner";
-import { CheckCircle2, Loader2 } from "lucide-react";
+import { CheckCircle2, Loader2, Upload } from "lucide-react";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { TermsAcceptance } from "@/components/site/TermsAcceptance";
+import {
+  SafeguardingAcknowledgement,
+  emptyAckState,
+  isAckComplete,
+  type SafeguardingAckState,
+} from "@/components/site/SafeguardingAcknowledgement";
+import { LegalDisclaimer } from "@/components/site/LegalDisclaimer";
 import { supabase } from "@/integrations/supabase/client";
 import { TERMS_VERSION, recordTermsAcceptance } from "@/lib/terms";
-import { PROVIDER_TYPES } from "@/lib/apprenticeships";
+import { PROVIDER_TYPES, COMPENSATION_TYPES } from "@/lib/apprenticeships";
+import { SAFEGUARDING_POLICY_VERSION } from "@/lib/safeguarding";
+import { uploadApprenticeshipDoc } from "@/lib/uploadDoc";
 
 export const Route = createFileRoute("/apprenticeships/register-provider")({
   head: () => ({
     meta: [
       { title: "Offer an Apprenticeship — Hineni" },
-      { name: "description", content: "Businesses, farms, NPOs and artisans: list an apprenticeship, internship or work-experience opportunity." },
+      { name: "description", content: "Businesses, farms, NPOs, artisans and households: list an apprenticeship, internship or work-experience opportunity." },
     ],
   }),
   component: Page,
@@ -34,10 +43,14 @@ const schema = z.object({
   skills_offered: z.string().trim().max(500),
   placements_available: z.coerce.number().int().min(1).max(99),
   paid: z.boolean(),
+  compensation_type: z.string().optional(),
   stipend_amount: z.string().optional(),
+  hours_per_week: z.string().optional(),
   duration: z.string().trim().max(80).optional().or(z.literal("")),
   start_date: z.string().optional(),
-  min_age: z.string().optional(),
+  age_min: z.string().optional(),
+  age_max: z.string().optional(),
+  remote_available: z.boolean(),
   preferred_qualifications: z.string().trim().max(300).optional().or(z.literal("")),
   transport_requirements: z.string().trim().max(300).optional().or(z.literal("")),
   safety_requirements: z.string().trim().max(500).optional().or(z.literal("")),
@@ -48,6 +61,9 @@ function Page() {
   const [submitting, setSubmitting] = useState(false);
   const [done, setDone] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [ack, setAck] = useState<SafeguardingAckState>(emptyAckState());
+  const [disclaimer, setDisclaimer] = useState(false);
+  const [verifFile, setVerifFile] = useState<File | null>(null);
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -55,17 +71,34 @@ function Page() {
     setSubmitting(true);
     const fd = new FormData(e.currentTarget);
     const raw = Object.fromEntries(fd.entries()) as Record<string, string>;
-    const data = { ...raw, paid: fd.get("paid") === "on", accept_terms: fd.get("accept_terms") === "on" };
+    const data = {
+      ...raw,
+      paid: fd.get("paid") === "on",
+      remote_available: fd.get("remote_available") === "on",
+      accept_terms: fd.get("accept_terms") === "on",
+    };
     const parsed = schema.safeParse(data);
-    if (!parsed.success) {
-      const errs: Record<string, string> = {};
-      parsed.error.issues.forEach((i) => (errs[i.path.join(".")] = i.message));
+    const extra: Record<string, string> = {};
+    if (!isAckComplete(ack)) extra.safeguarding = "Please tick all safeguarding acknowledgements.";
+    if (!disclaimer) extra.disclaimer = "Please accept the disclaimer.";
+    if (!parsed.success || Object.keys(extra).length) {
+      const errs: Record<string, string> = { ...extra };
+      if (!parsed.success) parsed.error.issues.forEach((i) => (errs[i.path.join(".")] = i.message));
       setErrors(errs); setSubmitting(false);
       toast.error("Please fix the highlighted fields.");
       window.scrollTo({ top: 0, behavior: "smooth" });
       return;
     }
     const d = parsed.data;
+
+    let verification_path: string | null = null;
+    if (verifFile) {
+      const r = await uploadApprenticeshipDoc(verifFile, "verification");
+      if ("path" in r) verification_path = r.path;
+      else toast.message("Verification document not attached", { description: r.error });
+    }
+
+    const now = new Date().toISOString();
     const { data: prov, error: pErr } = await supabase.from("apprenticeship_providers").insert({
       provider_type: d.provider_type,
       organisation_name: d.organisation_name,
@@ -75,8 +108,12 @@ function Page() {
       website: d.website || null,
       physical_address: d.physical_address || null,
       town: d.town,
-      terms_accepted_at: new Date().toISOString(),
+      verification_doc_path: verification_path,
+      terms_accepted_at: now,
       terms_version: TERMS_VERSION,
+      safeguarding_acknowledged_at: now,
+      safeguarding_policy_version: SAFEGUARDING_POLICY_VERSION,
+      disclaimer_accepted_at: now,
     }).select("id").single();
     if (pErr || !prov) { toast.error(pErr?.message ?? "Could not submit."); setSubmitting(false); return; }
 
@@ -87,10 +124,14 @@ function Page() {
       skills_offered: d.skills_offered.split(",").map((s) => s.trim()).filter(Boolean),
       placements_available: d.placements_available,
       paid: d.paid,
+      compensation_type: d.compensation_type || null,
       stipend_amount: d.stipend_amount ? Number(d.stipend_amount) : null,
+      hours_per_week: d.hours_per_week ? Number(d.hours_per_week) : null,
       duration: d.duration || null,
       start_date: d.start_date || null,
-      min_age: d.min_age ? Number(d.min_age) : null,
+      age_min: d.age_min ? Number(d.age_min) : null,
+      age_max: d.age_max ? Number(d.age_max) : null,
+      remote_available: d.remote_available,
       preferred_qualifications: d.preferred_qualifications || null,
       transport_requirements: d.transport_requirements || null,
       safety_requirements: d.safety_requirements || null,
@@ -99,6 +140,7 @@ function Page() {
     if (oErr) { toast.error(oErr.message); setSubmitting(false); return; }
 
     await recordTermsAcceptance({ context: "provider_registration", referenceTable: "apprenticeship_providers", referenceId: prov.id });
+
     setDone(true); setSubmitting(false); window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
@@ -132,7 +174,7 @@ function Page() {
                 </select>
                 {errors.provider_type && <p className="text-xs text-destructive mt-1">{errors.provider_type}</p>}
               </div>
-              <Field label="Organisation name" name="organisation_name" required error={errors.organisation_name} />
+              <Field label="Organisation / household name" name="organisation_name" required error={errors.organisation_name} />
               <Field label="Contact person" name="contact_person" required error={errors.contact_person} />
               <Field label="Contact number" name="contact_number" type="tel" required error={errors.contact_number} />
               <Field label="Email" name="email" type="email" required error={errors.email} />
@@ -141,6 +183,20 @@ function Page() {
             </Grid>
             <div className="mt-4"><Label>Physical address</Label>
               <input name="physical_address" className="w-full px-4 py-3 border border-brand-dark/10 rounded-xl bg-white" /></div>
+            <div className="mt-4">
+              <Label>Verification document (registration certificate, ID copy, etc.)</Label>
+              <label className="inline-flex items-center gap-2 px-3 py-2 rounded-lg border border-brand-dark/10 cursor-pointer hover:bg-brand-soft text-sm">
+                <Upload className="size-4" />
+                <span>{verifFile ? verifFile.name : "Choose file"}</span>
+                <input
+                  type="file"
+                  accept="application/pdf,image/*"
+                  className="hidden"
+                  onChange={(e) => setVerifFile(e.target.files?.[0] ?? null)}
+                />
+              </label>
+              <p className="text-xs text-brand-dark/55 mt-1">Required for individuals / households. Sign in to attach now, or our team will request it.</p>
+            </div>
           </Fieldset>
 
           <Fieldset title="The opportunity">
@@ -150,15 +206,27 @@ function Page() {
               <Field label="Number of placements" name="placements_available" type="number" required error={errors.placements_available} />
               <Field label="Duration (e.g. 6 months)" name="duration" />
               <Field label="Start date" name="start_date" type="date" />
-              <Field label="Minimum age" name="min_age" type="number" />
+              <Field label="Hours per week" name="hours_per_week" type="number" />
+              <Field label="Minimum age" name="age_min" type="number" />
+              <Field label="Maximum age" name="age_max" type="number" />
             </Grid>
             <div className="mt-4"><Label>Description</Label>
               <textarea name="description" rows={3} className="w-full px-4 py-3 border border-brand-dark/10 rounded-xl bg-white" /></div>
             <div className="mt-4"><Label>Skills offered (comma-separated)</Label>
               <input name="skills_offered" className="w-full px-4 py-3 border border-brand-dark/10 rounded-xl bg-white" /></div>
-            <div className="flex items-center gap-3 mt-4">
-              <label className="flex items-center gap-2 text-sm"><input type="checkbox" name="paid" className="accent-brand-primary" /> Paid</label>
+            <Grid>
+              <div className="mt-4">
+                <Label>Compensation type</Label>
+                <select name="compensation_type" defaultValue="" className="w-full px-4 py-3 border border-brand-dark/10 rounded-xl bg-white">
+                  <option value="">Select…</option>
+                  {COMPENSATION_TYPES.map((t) => <option key={t} value={t}>{t}</option>)}
+                </select>
+              </div>
               <Field label="Stipend amount (R, optional)" name="stipend_amount" type="number" />
+            </Grid>
+            <div className="flex flex-wrap items-center gap-4 mt-4 text-sm">
+              <label className="flex items-center gap-2"><input type="checkbox" name="paid" className="accent-brand-primary" /> Paid placement</label>
+              <label className="flex items-center gap-2"><input type="checkbox" name="remote_available" className="accent-brand-primary" /> Remote / hybrid available</label>
             </div>
             <div className="mt-4"><Label>Preferred qualifications</Label>
               <input name="preferred_qualifications" className="w-full px-4 py-3 border border-brand-dark/10 rounded-xl bg-white" /></div>
@@ -166,6 +234,13 @@ function Page() {
               <input name="transport_requirements" className="w-full px-4 py-3 border border-brand-dark/10 rounded-xl bg-white" /></div>
             <div className="mt-4"><Label>Health & safety requirements</Label>
               <textarea name="safety_requirements" rows={2} className="w-full px-4 py-3 border border-brand-dark/10 rounded-xl bg-white" /></div>
+          </Fieldset>
+
+          <Fieldset title="Safeguarding & disclaimer (required)">
+            <SafeguardingAcknowledgement value={ack} onChange={setAck} error={errors.safeguarding} />
+            <div className="mt-4">
+              <LegalDisclaimer checked={disclaimer} onChange={setDisclaimer} error={errors.disclaimer} />
+            </div>
           </Fieldset>
 
           <Fieldset title="Terms & Disclaimer (required)">
