@@ -312,18 +312,33 @@ function RegisterProvider() {
                 required
                 error={errors.id_passport_number}
               />
-              <div>
+              <div className="sm:col-span-2">
                 <Label>
                   Nationality<span className="text-destructive">*</span>
                 </Label>
-                <input
-                  name="nationality"
-                  type="text"
-                  value={nationality}
-                  onChange={(e) => setNationality(e.target.value)}
-                  placeholder="e.g. South African"
+                <select
+                  value={nationalityChoice}
+                  onChange={(e) => {
+                    setNationalityChoice(e.target.value as "" | "south_african" | "other");
+                    setWorkPermit("");
+                  }}
                   className="w-full px-4 py-3 border border-brand-dark/10 rounded-xl bg-white focus:outline-none focus:border-brand-primary"
-                />
+                >
+                  <option value="">Select…</option>
+                  <option value="south_african">South African</option>
+                  <option value="other">Other</option>
+                </select>
+                {nationalityChoice === "other" && (
+                  <input
+                    type="text"
+                    value={nationalityOther}
+                    onChange={(e) => setNationalityOther(e.target.value)}
+                    placeholder="Please specify your nationality"
+                    className="mt-2 w-full px-4 py-3 border border-brand-dark/10 rounded-xl bg-white focus:outline-none focus:border-brand-primary"
+                  />
+                )}
+                {/* Hidden field so FormData includes the resolved nationality */}
+                <input type="hidden" name="nationality" value={nationality} />
                 {errors.nationality && (
                   <p className="text-xs text-destructive mt-1">{errors.nationality}</p>
                 )}
