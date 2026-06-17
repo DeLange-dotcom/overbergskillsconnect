@@ -18,7 +18,7 @@ export const Route = createFileRoute("/safeguarding-policy")({
       },
     ],
   }),
-  component: SafeguardingPolicy;
+  component: SafeguardingPolicy,
 });
 
 function SafeguardingPolicy() {

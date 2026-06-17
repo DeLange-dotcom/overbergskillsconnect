@@ -39,6 +39,7 @@ export function Footer() {
             <li><Link to="/how-it-works" className="hover:text-brand-primary">How it works</Link></li>
             <li><Link to="/terms" className="hover:text-brand-primary">Terms &amp; Disclaimer</Link></li>
             <li><Link to="/privacy" className="hover:text-brand-primary">Privacy notice (POPIA)</Link></li>
+            <li><Link to="/safeguarding-policy" className="hover:text-brand-primary">Safeguarding policy</Link></li>
             <li>
               <a href={waLink} target="_blank" rel="noopener noreferrer" className="hover:text-brand-primary">
                 Share on WhatsApp
