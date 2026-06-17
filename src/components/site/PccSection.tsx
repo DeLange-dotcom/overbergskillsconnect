@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { Info, ShieldCheck } from "lucide-react";
 
+export type PccStatus = "" | "have" | "applied" | "none" | "need_help";
+
 /**
  * Police Clearance Certificate (PCC) registration fieldset.
  *
@@ -14,7 +16,7 @@ import { Info, ShieldCheck } from "lucide-react";
  *  - pcc_wants_assistance ('on' when checked, only relevant if status !== 'have')
  */
 export function PccSection({ errors = {} }: { errors?: Record<string, string> }) {
-  const [status, setStatus] = useState<"" | "have" | "applied" | "none">("");
+  const [status, setStatus] = useState<PccStatus>("");
 
   return (
     <fieldset className="bg-white rounded-2xl border border-brand-dark/10 p-5 sm:p-6">
@@ -46,6 +48,12 @@ export function PccSection({ errors = {} }: { errors?: Record<string, string> })
           current={status}
           onChange={setStatus}
           label="I do not currently have a Police Clearance Certificate"
+        />
+        <Option
+          value="need_help"
+          current={status}
+          onChange={setStatus}
+          label="I need help with paying for a Police Clearance Certificate"
         />
       </div>
       {errors.pcc_status && (
@@ -81,7 +89,7 @@ export function PccSection({ errors = {} }: { errors?: Record<string, string> })
         </div>
       )}
 
-      {(status === "applied" || status === "none") && (
+      {(status === "applied" || status === "none" || status === "need_help") && (
         <div className="mt-5 space-y-4">
           <div className="rounded-xl border border-brand-dark/10 bg-brand-soft/40 p-4 text-sm text-brand-dark/80 flex gap-3">
             <Info className="size-5 text-brand-primary shrink-0 mt-0.5" />
@@ -107,6 +115,7 @@ export function PccSection({ errors = {} }: { errors?: Record<string, string> })
             <input
               type="checkbox"
               name="pcc_wants_assistance"
+              defaultChecked={status === "need_help"}
               className="mt-1 accent-brand-primary"
             />
             <span className="text-sm">
@@ -134,9 +143,9 @@ function Option({
   onChange,
   label,
 }: {
-  value: "have" | "applied" | "none";
+  value: Exclude<PccStatus, "">;
   current: string;
-  onChange: (v: "have" | "applied" | "none") => void;
+  onChange: (v: Exclude<PccStatus, "">) => void;
   label: string;
 }) {
   const selected = current === value;
@@ -171,14 +180,16 @@ function Label({ children }: { children: React.ReactNode }) {
  * Returns null when status is missing (validation responsibility of the caller).
  */
 export function readPccFromForm(fd: FormData): {
-  pcc_status: "have" | "applied" | "none" | null;
+  pcc_status: Exclude<PccStatus, ""> | null;
   pcc_issue_date: string | null;
   pcc_number: string | null;
   pcc_wants_assistance: boolean;
 } {
   const status = (fd.get("pcc_status") as string) || "";
   const validStatus =
-    status === "have" || status === "applied" || status === "none" ? status : null;
+    status === "have" || status === "applied" || status === "none" || status === "need_help"
+      ? status
+      : null;
   return {
     pcc_status: validStatus,
     pcc_issue_date:
