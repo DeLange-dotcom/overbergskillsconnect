@@ -75,7 +75,7 @@ function Mentors() {
           </Link>
         </div>
 
-        <div className="grid sm:grid-cols-2 gap-3 mb-6">
+        <div className="grid sm:grid-cols-3 gap-3 mb-6">
           <input
             value={q}
             onChange={(e) => setQ(e.target.value)}
@@ -89,6 +89,14 @@ function Mentors() {
           >
             <option value="">All categories</option>
             {MENTOR_CATEGORIES.map((c) => <option key={c} value={c}>{c}</option>)}
+          </select>
+          <select
+            value={fmt}
+            onChange={(e) => setFmt(e.target.value)}
+            className="px-4 py-3 border border-brand-dark/10 rounded-xl bg-white"
+          >
+            <option value="">All formats</option>
+            {MENTOR_FORMATS.map((c) => <option key={c} value={c}>{c}</option>)}
           </select>
         </div>
 
