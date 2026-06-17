@@ -180,14 +180,16 @@ function Label({ children }: { children: React.ReactNode }) {
  * Returns null when status is missing (validation responsibility of the caller).
  */
 export function readPccFromForm(fd: FormData): {
-  pcc_status: "have" | "applied" | "none" | null;
+  pcc_status: Exclude<PccStatus, ""> | null;
   pcc_issue_date: string | null;
   pcc_number: string | null;
   pcc_wants_assistance: boolean;
 } {
   const status = (fd.get("pcc_status") as string) || "";
   const validStatus =
-    status === "have" || status === "applied" || status === "none" ? status : null;
+    status === "have" || status === "applied" || status === "none" || status === "need_help"
+      ? status
+      : null;
   return {
     pcc_status: validStatus,
     pcc_issue_date:
