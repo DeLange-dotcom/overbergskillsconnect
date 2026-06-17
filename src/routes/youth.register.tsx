@@ -87,10 +87,18 @@ function RegisterYouth() {
     const fd = new FormData(e.currentTarget);
     const raw = {
       full_name: fd.get("full_name") as string,
+      first_name: fd.get("first_name") as string,
+      last_name: fd.get("last_name") as string,
+      gender: fd.get("gender") as string,
+      id_number: fd.get("id_number") as string,
       dob: fd.get("dob") as string,
       town: fd.get("town") as string,
+      physical_address: fd.get("physical_address") as string,
       school: fd.get("school") as string,
       education_level: fd.get("education_level") as string,
+      currently_attending_school: fd.get("currently_attending_school") === "on",
+      matric_completed: fd.get("matric_completed") === "on",
+      further_education: fd.get("further_education") as string,
       mobile_number: fd.get("mobile_number") as string,
       email: fd.get("email") as string,
       emergency_contact_name: fd.get("emergency_contact_name") as string,
@@ -107,6 +115,9 @@ function RegisterYouth() {
       guardian_phone: fd.get("guardian_phone") as string,
       guardian_email: fd.get("guardian_email") as string,
       guardian_consent_given: fd.get("guardian_consent_given") === "on",
+      parent_consent_method: (fd.get("parent_consent_method") as "digital" | "uploaded") || undefined,
+      applicant_declaration: fd.get("applicant_declaration") === "on",
+      liability_accepted: fd.get("liability_accepted") === "on",
       accept_terms: fd.get("accept_terms") === "on",
     };
 
@@ -142,24 +153,45 @@ function RegisterYouth() {
       if (!d.guardian_name) guardianErrs.guardian_name = "Required for under-18s";
       if (!d.guardian_relationship) guardianErrs.guardian_relationship = "Required";
       if (!d.guardian_phone) guardianErrs.guardian_phone = "Required";
-      if (!d.guardian_consent_given)
-        guardianErrs.guardian_consent_given = "Parent/guardian consent is required.";
+      if (!d.parent_consent_method) guardianErrs.parent_consent_method = "Choose a consent method.";
       if (Object.keys(guardianErrs).length) {
         setErrors(guardianErrs);
         setSubmitting(false);
-        toast.error("Parent or guardian consent is required.");
+        toast.error("Parent or guardian details are required.");
         return;
       }
     }
+
+    // Optional file uploads
+    async function up(file: File | null, prefix: string): Promise<string | null> {
+      if (!file || !file.size) return null;
+      const path = `${prefix}/${crypto.randomUUID()}-${file.name}`;
+      const { error } = await supabase.storage.from("provider-documents").upload(path, file);
+      if (error) { toast.error("Upload failed: " + error.message); return null; }
+      return path;
+    }
+    const id_document_url = await up(fd.get("id_document") as File, "youth-id");
+    const cv_url = await up(fd.get("cv_document") as File, "youth-cv");
+    const parent_consent_form_url = d.parent_consent_method === "uploaded"
+      ? await up(fd.get("parent_consent_upload") as File, "parent-consent") : null;
 
     const { data, error } = await supabase
       .from("youth_profiles")
       .insert({
         full_name: d.full_name,
+        first_name: d.first_name || null,
+        last_name: d.last_name || null,
+        gender: d.gender || null,
+        id_number: d.id_number || null,
         dob: d.dob,
         town: d.town,
+        physical_address: d.physical_address || null,
         school: d.school || null,
+        school_name: d.school || null,
         education_level: d.education_level || null,
+        currently_attending_school: d.currently_attending_school,
+        matric_completed: d.matric_completed,
+        further_education: d.further_education || null,
         mobile_number: d.mobile_number || null,
         email: d.email || null,
         emergency_contact_name: d.emergency_contact_name,
@@ -175,16 +207,26 @@ function RegisterYouth() {
         guardian_relationship: d.guardian_relationship || null,
         guardian_phone: d.guardian_phone || null,
         guardian_email: d.guardian_email || null,
+        parent_full_name: d.guardian_name || null,
+        parent_relationship: d.guardian_relationship || null,
+        parent_mobile: d.guardian_phone || null,
+        parent_email: d.guardian_email || null,
+        parent_consent_method: d.parent_consent_method ?? null,
         guardian_consent_given: d.guardian_consent_given,
         guardian_consent_at: d.guardian_consent_given ? new Date().toISOString() : null,
+        id_document_url,
+        cv_url,
+        parent_consent_form_url,
+        applicant_declaration: d.applicant_declaration,
+        liability_accepted: d.liability_accepted,
         terms_accepted_at: new Date().toISOString(),
         terms_version_accepted: TERMS_VERSION,
         pcc_status: pcc.pcc_status,
         pcc_issue_date: pcc.pcc_issue_date,
         pcc_number: pcc.pcc_number,
         pcc_wants_assistance: pcc.pcc_wants_assistance,
-      })
-      .select("id, application_code")
+      } as never)
+      .select("id, application_code, parent_consent_token, status")
       .single();
 
     if (error || !data) {
@@ -196,10 +238,10 @@ function RegisterYouth() {
     await recordTermsAcceptance({
       context: "provider_registration",
       referenceTable: "youth_profiles",
-      referenceId: data.id,
+      referenceId: (data as { id: string }).id,
     });
 
-    setDone({ code: data.application_code });
+    setDone({ code: (data as { application_code: string }).application_code });
     setSubmitting(false);
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
