@@ -50,10 +50,10 @@ function AdminApp() {
         </div>
 
         <div className="flex flex-wrap gap-2 mb-6">
-          {(["apprentices","providers","opportunities","mentors"] as const).map((t) => (
+          {(["apprentices","providers","opportunities","mentors","mentorship_requests","placements"] as const).map((t) => (
             <button key={t} onClick={() => setTab(t)}
               className={`px-4 py-2 rounded-full text-sm capitalize ${tab === t ? "bg-brand-primary text-white" : "bg-white border border-brand-dark/10 hover:bg-brand-soft"}`}>
-              {t}
+              {t.replace("_", " ")}
             </button>
           ))}
         </div>
