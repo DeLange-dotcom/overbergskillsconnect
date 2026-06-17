@@ -25,6 +25,7 @@ import { Route as ApprenticeshipsRouteImport } from './routes/apprenticeships'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as YouthIndexRouteImport } from './routes/youth.index'
+import { Route as RequestMentorshipIndexRouteImport } from './routes/request-mentorship.index'
 import { Route as YouthRegisterRouteImport } from './routes/youth.register'
 import { Route as YouthPostOpportunityRouteImport } from './routes/youth.post-opportunity'
 import { Route as YouthOpportunitiesRouteImport } from './routes/youth.opportunities'
@@ -126,6 +127,11 @@ const YouthIndexRoute = YouthIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => YouthRoute,
+} as any)
+const RequestMentorshipIndexRoute = RequestMentorshipIndexRouteImport.update({
+  id: '/request-mentorship/',
+  path: '/request-mentorship/',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const YouthRegisterRoute = YouthRegisterRouteImport.update({
   id: '/register',
@@ -275,6 +281,7 @@ export interface FileRoutesByFullPath {
   '/youth/opportunities': typeof YouthOpportunitiesRoute
   '/youth/post-opportunity': typeof YouthPostOpportunityRoute
   '/youth/register': typeof YouthRegisterRoute
+  '/request-mentorship/': typeof RequestMentorshipIndexRoute
   '/youth/': typeof YouthIndexRoute
   '/admin/apprenticeships': typeof AuthenticatedAdminApprenticeshipsRoute
   '/admin/youth-opportunities': typeof AuthenticatedAdminYouthOpportunitiesRoute
@@ -313,6 +320,7 @@ export interface FileRoutesByTo {
   '/youth/opportunities': typeof YouthOpportunitiesRoute
   '/youth/post-opportunity': typeof YouthPostOpportunityRoute
   '/youth/register': typeof YouthRegisterRoute
+  '/request-mentorship': typeof RequestMentorshipIndexRoute
   '/youth': typeof YouthIndexRoute
   '/admin/apprenticeships': typeof AuthenticatedAdminApprenticeshipsRoute
   '/admin/youth-opportunities': typeof AuthenticatedAdminYouthOpportunitiesRoute
@@ -354,6 +362,7 @@ export interface FileRoutesById {
   '/youth/opportunities': typeof YouthOpportunitiesRoute
   '/youth/post-opportunity': typeof YouthPostOpportunityRoute
   '/youth/register': typeof YouthRegisterRoute
+  '/request-mentorship/': typeof RequestMentorshipIndexRoute
   '/youth/': typeof YouthIndexRoute
   '/_authenticated/admin/apprenticeships': typeof AuthenticatedAdminApprenticeshipsRoute
   '/_authenticated/admin/youth-opportunities': typeof AuthenticatedAdminYouthOpportunitiesRoute
@@ -395,6 +404,7 @@ export interface FileRouteTypes {
     | '/youth/opportunities'
     | '/youth/post-opportunity'
     | '/youth/register'
+    | '/request-mentorship/'
     | '/youth/'
     | '/admin/apprenticeships'
     | '/admin/youth-opportunities'
@@ -433,6 +443,7 @@ export interface FileRouteTypes {
     | '/youth/opportunities'
     | '/youth/post-opportunity'
     | '/youth/register'
+    | '/request-mentorship'
     | '/youth'
     | '/admin/apprenticeships'
     | '/admin/youth-opportunities'
@@ -473,6 +484,7 @@ export interface FileRouteTypes {
     | '/youth/opportunities'
     | '/youth/post-opportunity'
     | '/youth/register'
+    | '/request-mentorship/'
     | '/youth/'
     | '/_authenticated/admin/apprenticeships'
     | '/_authenticated/admin/youth-opportunities'
@@ -505,6 +517,7 @@ export interface RootRouteChildren {
   YouthRoute: typeof YouthRouteWithChildren
   FeedbackTokenRoute: typeof FeedbackTokenRoute
   MentorsInterestRoute: typeof MentorsInterestRoute
+  RequestMentorshipIndexRoute: typeof RequestMentorshipIndexRoute
   ApiPublicContactRequestRoute: typeof ApiPublicContactRequestRoute
 }
 
@@ -621,6 +634,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/youth/'
       preLoaderRoute: typeof YouthIndexRouteImport
       parentRoute: typeof YouthRoute
+    }
+    '/request-mentorship/': {
+      id: '/request-mentorship/'
+      path: '/request-mentorship'
+      fullPath: '/request-mentorship/'
+      preLoaderRoute: typeof RequestMentorshipIndexRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/youth/register': {
       id: '/youth/register'
@@ -877,6 +897,7 @@ const rootRouteChildren: RootRouteChildren = {
   YouthRoute: YouthRouteWithChildren,
   FeedbackTokenRoute: FeedbackTokenRoute,
   MentorsInterestRoute: MentorsInterestRoute,
+  RequestMentorshipIndexRoute: RequestMentorshipIndexRoute,
   ApiPublicContactRequestRoute: ApiPublicContactRequestRoute,
 }
 export const routeTree = rootRouteImport
