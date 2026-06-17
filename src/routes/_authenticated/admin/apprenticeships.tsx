@@ -11,7 +11,7 @@ export const Route = createFileRoute("/_authenticated/admin/apprenticeships")({
 type Row = { id: string; created_at: string; [k: string]: unknown };
 
 function AdminApp() {
-  const [tab, setTab] = useState<"apprentices" | "providers" | "opportunities" | "mentors">("apprentices");
+  const [tab, setTab] = useState<"apprentices" | "providers" | "opportunities" | "mentors" | "mentorship_requests" | "placements">("apprentices");
   const [rows, setRows] = useState<Row[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -22,6 +22,8 @@ function AdminApp() {
         tab === "apprentices" ? "apprentices"
         : tab === "providers" ? "apprenticeship_providers"
         : tab === "opportunities" ? "apprenticeship_opportunities"
+        : tab === "mentorship_requests" ? "mentorship_requests"
+        : tab === "placements" ? "placements"
         : "mentors";
       const { data } = await supabase.from(table as never).select("*").order("created_at", { ascending: false }).limit(100);
       setRows((data as Row[] | null) ?? []);
@@ -48,10 +50,10 @@ function AdminApp() {
         </div>
 
         <div className="flex flex-wrap gap-2 mb-6">
-          {(["apprentices","providers","opportunities","mentors"] as const).map((t) => (
+          {(["apprentices","providers","opportunities","mentors","mentorship_requests","placements"] as const).map((t) => (
             <button key={t} onClick={() => setTab(t)}
               className={`px-4 py-2 rounded-full text-sm capitalize ${tab === t ? "bg-brand-primary text-white" : "bg-white border border-brand-dark/10 hover:bg-brand-soft"}`}>
-              {t}
+              {t.replace("_", " ")}
             </button>
           ))}
         </div>
