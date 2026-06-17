@@ -788,19 +788,34 @@ export type Database = {
           categories: string[]
           contact_number: string
           created_at: string
+          disclaimer_accepted_at: string | null
           email: string
           formats: string[]
           full_name: string
           id: string
           is_knowledge_keeper: boolean
           knowledge_keeper_categories: string[]
+          linkedin_url: string | null
+          pcc_path: string | null
           professional_background: string | null
+          qualifications: string | null
+          reference1_email: string | null
+          reference1_name: string | null
+          reference1_phone: string | null
+          reference1_relationship: string | null
+          reference2_email: string | null
+          reference2_name: string | null
+          reference2_phone: string | null
+          reference2_relationship: string | null
+          safeguarding_acknowledged_at: string | null
+          safeguarding_policy_version: string | null
           status: Database["public"]["Enums"]["mentor_status"]
           terms_accepted_at: string | null
           terms_version: string | null
           town: string | null
           updated_at: string
           user_id: string | null
+          website_url: string | null
           years_experience: number | null
         }
         Insert: {
@@ -810,19 +825,34 @@ export type Database = {
           categories?: string[]
           contact_number: string
           created_at?: string
+          disclaimer_accepted_at?: string | null
           email: string
           formats?: string[]
           full_name: string
           id?: string
           is_knowledge_keeper?: boolean
           knowledge_keeper_categories?: string[]
+          linkedin_url?: string | null
+          pcc_path?: string | null
           professional_background?: string | null
+          qualifications?: string | null
+          reference1_email?: string | null
+          reference1_name?: string | null
+          reference1_phone?: string | null
+          reference1_relationship?: string | null
+          reference2_email?: string | null
+          reference2_name?: string | null
+          reference2_phone?: string | null
+          reference2_relationship?: string | null
+          safeguarding_acknowledged_at?: string | null
+          safeguarding_policy_version?: string | null
           status?: Database["public"]["Enums"]["mentor_status"]
           terms_accepted_at?: string | null
           terms_version?: string | null
           town?: string | null
           updated_at?: string
           user_id?: string | null
+          website_url?: string | null
           years_experience?: number | null
         }
         Update: {
@@ -832,19 +862,34 @@ export type Database = {
           categories?: string[]
           contact_number?: string
           created_at?: string
+          disclaimer_accepted_at?: string | null
           email?: string
           formats?: string[]
           full_name?: string
           id?: string
           is_knowledge_keeper?: boolean
           knowledge_keeper_categories?: string[]
+          linkedin_url?: string | null
+          pcc_path?: string | null
           professional_background?: string | null
+          qualifications?: string | null
+          reference1_email?: string | null
+          reference1_name?: string | null
+          reference1_phone?: string | null
+          reference1_relationship?: string | null
+          reference2_email?: string | null
+          reference2_name?: string | null
+          reference2_phone?: string | null
+          reference2_relationship?: string | null
+          safeguarding_acknowledged_at?: string | null
+          safeguarding_policy_version?: string | null
           status?: Database["public"]["Enums"]["mentor_status"]
           terms_accepted_at?: string | null
           terms_version?: string | null
           town?: string | null
           updated_at?: string
           user_id?: string | null
+          website_url?: string | null
           years_experience?: number | null
         }
         Relationships: []
