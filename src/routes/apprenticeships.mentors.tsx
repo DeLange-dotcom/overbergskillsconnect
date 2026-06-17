@@ -152,10 +152,3 @@ function Mentors() {
     </SiteLayout>
   );
 }
-            ))}
-          </div>
-        )}
-      </div>
-    </SiteLayout>
-  );
-}
