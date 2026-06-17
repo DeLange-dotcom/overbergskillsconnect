@@ -18,6 +18,7 @@ import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as HowItWorksRouteImport } from './routes/how-it-works'
 import { Route as FindHelpRouteImport } from './routes/find-help'
 import { Route as DonateRouteImport } from './routes/donate'
+import { Route as DirectoryRouteImport } from './routes/directory'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as ApprenticeshipsRouteImport } from './routes/apprenticeships'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
@@ -83,6 +84,11 @@ const FindHelpRoute = FindHelpRouteImport.update({
 const DonateRoute = DonateRouteImport.update({
   id: '/donate',
   path: '/donate',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DirectoryRoute = DirectoryRouteImport.update({
+  id: '/directory',
+  path: '/directory',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthRoute = AuthRouteImport.update({
@@ -205,6 +211,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/apprenticeships': typeof ApprenticeshipsRouteWithChildren
   '/auth': typeof AuthRoute
+  '/directory': typeof DirectoryRoute
   '/donate': typeof DonateRoute
   '/find-help': typeof FindHelpRoute
   '/how-it-works': typeof HowItWorksRoute
@@ -236,6 +243,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/apprenticeships': typeof ApprenticeshipsRouteWithChildren
   '/auth': typeof AuthRoute
+  '/directory': typeof DirectoryRoute
   '/donate': typeof DonateRoute
   '/find-help': typeof FindHelpRoute
   '/how-it-works': typeof HowItWorksRoute
@@ -269,6 +277,7 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/apprenticeships': typeof ApprenticeshipsRouteWithChildren
   '/auth': typeof AuthRoute
+  '/directory': typeof DirectoryRoute
   '/donate': typeof DonateRoute
   '/find-help': typeof FindHelpRoute
   '/how-it-works': typeof HowItWorksRoute
@@ -302,6 +311,7 @@ export interface FileRouteTypes {
     | '/'
     | '/apprenticeships'
     | '/auth'
+    | '/directory'
     | '/donate'
     | '/find-help'
     | '/how-it-works'
@@ -333,6 +343,7 @@ export interface FileRouteTypes {
     | '/'
     | '/apprenticeships'
     | '/auth'
+    | '/directory'
     | '/donate'
     | '/find-help'
     | '/how-it-works'
@@ -365,6 +376,7 @@ export interface FileRouteTypes {
     | '/_authenticated'
     | '/apprenticeships'
     | '/auth'
+    | '/directory'
     | '/donate'
     | '/find-help'
     | '/how-it-works'
@@ -398,6 +410,7 @@ export interface RootRouteChildren {
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   ApprenticeshipsRoute: typeof ApprenticeshipsRouteWithChildren
   AuthRoute: typeof AuthRoute
+  DirectoryRoute: typeof DirectoryRoute
   DonateRoute: typeof DonateRoute
   FindHelpRoute: typeof FindHelpRoute
   HowItWorksRoute: typeof HowItWorksRoute
@@ -472,6 +485,13 @@ declare module '@tanstack/react-router' {
       path: '/donate'
       fullPath: '/donate'
       preLoaderRoute: typeof DonateRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/directory': {
+      id: '/directory'
+      path: '/directory'
+      fullPath: '/directory'
+      preLoaderRoute: typeof DirectoryRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/auth': {
@@ -693,6 +713,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   ApprenticeshipsRoute: ApprenticeshipsRouteWithChildren,
   AuthRoute: AuthRoute,
+  DirectoryRoute: DirectoryRoute,
   DonateRoute: DonateRoute,
   FindHelpRoute: FindHelpRoute,
   HowItWorksRoute: HowItWorksRoute,
