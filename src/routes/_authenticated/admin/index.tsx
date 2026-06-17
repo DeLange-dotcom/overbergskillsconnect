@@ -188,6 +188,9 @@ function AdminDashboard() {
           <StatCard icon={<Heart />} label="Donations" value={donations.data?.length ?? 0} />
         </div>
 
+        <DashboardBuckets rows={buckets.data ?? []} contacts={contacts.data ?? []} safety={safety.data ?? []} />
+
+
         <section className="bg-white border border-brand-dark/5 rounded-2xl p-5 mb-8">
           <div className="flex items-center justify-between gap-3 flex-wrap mb-4">
             <h2 className="font-heading text-xl font-semibold">Applicants</h2>
