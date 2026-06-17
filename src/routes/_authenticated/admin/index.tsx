@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { supabase } from "@/integrations/supabase/client";
 import { PROVIDER_STATUS_LABELS, SERVICE_CATEGORIES, categoryLabel } from "@/lib/constants";
-import { LogOut, Users, HelpingHand, MessageCircle, Heart, FileText, Download } from "lucide-react";
+import { LogOut, Users, HelpingHand, MessageCircle, Heart, FileText, Download, ShieldAlert, ShieldCheck, Clock, HelpCircle } from "lucide-react";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/_authenticated/admin/")({
@@ -87,6 +87,36 @@ function AdminDashboard() {
     queryFn: async () => {
       const { data } = await supabase
         .from("donations")
+        .select("*")
+        .order("created_at", { ascending: false })
+        .limit(50);
+      return data ?? [];
+    },
+  });
+
+  // Buckets across all 3 applicant tables for the new dashboard sections.
+  const buckets = useQuery({
+    queryKey: ["admin_buckets"],
+    enabled: isAdmin === true,
+    queryFn: async () => {
+      const sel =
+        "id, full_name, status, verification_level, pcc_status, pcc_wants_assistance, pcc_verified, identity_verified, references_checked, interview_completed, work_permit_required, work_permit_verified, created_at";
+      const [{ data: sp }, { data: ap }, { data: yp }] = await Promise.all([
+        supabase.from("service_providers").select(sel),
+        supabase.from("apprentices").select(sel),
+        supabase.from("youth_profiles").select(sel),
+      ]);
+      const tag = (rows: any[] | null, t: string) => (rows ?? []).map((r) => ({ ...r, _type: t }));
+      return [...tag(sp, "service_provider"), ...tag(ap, "apprentice"), ...tag(yp, "youth")];
+    },
+  });
+
+  const safety = useQuery({
+    queryKey: ["admin_safety"],
+    enabled: isAdmin === true,
+    queryFn: async () => {
+      const { data } = await supabase
+        .from("safety_reports")
         .select("*")
         .order("created_at", { ascending: false })
         .limit(50);
