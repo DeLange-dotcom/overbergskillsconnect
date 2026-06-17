@@ -50,25 +50,26 @@ export const Route = createFileRoute("/api/public/contact-request")({
           );
         }
 
+        const insertPayload: Record<string, unknown> = {
+          applicant_type: parsed.applicant_type,
+          applicant_id: parsed.applicant_id,
+          service_provider_id:
+            parsed.applicant_type === "service_provider" ? parsed.applicant_id : null,
+          requester_name: parsed.visitor_name,
+          requester_email: parsed.visitor_email,
+          requester_contact: parsed.visitor_phone,
+          visitor_phone: parsed.visitor_phone,
+          reason: parsed.reason,
+          message: parsed.reason,
+          category: parsed.category ?? null,
+          status: "contact_shared",
+          disclaimer_accepted_at: new Date().toISOString(),
+          terms_accepted_at: new Date().toISOString(),
+          terms_version_accepted: "v1",
+        };
         const { data: row, error: insertErr } = await supabaseAdmin
           .from("contact_requests")
-          .insert({
-            applicant_type: parsed.applicant_type,
-            applicant_id: parsed.applicant_id,
-            service_provider_id:
-              parsed.applicant_type === "service_provider" ? parsed.applicant_id : null,
-            requester_name: parsed.visitor_name,
-            requester_email: parsed.visitor_email,
-            requester_contact: parsed.visitor_phone,
-            visitor_phone: parsed.visitor_phone,
-            reason: parsed.reason,
-            message: parsed.reason,
-            category: parsed.category ?? null,
-            status: "contact_shared",
-            disclaimer_accepted_at: new Date().toISOString(),
-            terms_accepted_at: new Date().toISOString(),
-            terms_version_accepted: "v1",
-          })
+          .insert(insertPayload as never)
           .select("id")
           .single();
 

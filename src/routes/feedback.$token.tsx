@@ -50,8 +50,8 @@ function FeedbackPage() {
         _reliability: reliability,
         _communication: communication,
         _punctuality: punctuality,
-        _would_recommend: recommend,
-        _comment: comment.trim() || null,
+        _would_recommend: recommend ?? false,
+        _comment: comment.trim() || "",
       });
       if (error) throw error;
     },
