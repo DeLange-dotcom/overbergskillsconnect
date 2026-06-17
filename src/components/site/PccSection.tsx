@@ -16,7 +16,7 @@ export type PccStatus = "" | "have" | "applied" | "none" | "need_help";
  *  - pcc_wants_assistance ('on' when checked, only relevant if status !== 'have')
  */
 export function PccSection({ errors = {} }: { errors?: Record<string, string> }) {
-  const [status, setStatus] = useState<"" | "have" | "applied" | "none">("");
+  const [status, setStatus] = useState<PccStatus>("");
 
   return (
     <fieldset className="bg-white rounded-2xl border border-brand-dark/10 p-5 sm:p-6">
