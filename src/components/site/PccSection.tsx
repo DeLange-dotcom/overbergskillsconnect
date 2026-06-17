@@ -49,6 +49,12 @@ export function PccSection({ errors = {} }: { errors?: Record<string, string> })
           onChange={setStatus}
           label="I do not currently have a Police Clearance Certificate"
         />
+        <Option
+          value="need_help"
+          current={status}
+          onChange={setStatus}
+          label="I need help with paying for a Police Clearance Certificate"
+        />
       </div>
       {errors.pcc_status && (
         <p className="text-xs text-destructive mt-2">{errors.pcc_status}</p>
