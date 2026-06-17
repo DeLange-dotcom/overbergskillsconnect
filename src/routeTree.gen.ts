@@ -9,7 +9,6 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as YouthRouteImport } from './routes/youth'
 import { Route as TermsRouteImport } from './routes/terms'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as RequestSupportRouteImport } from './routes/request-support'
@@ -23,6 +22,7 @@ import { Route as AuthRouteImport } from './routes/auth'
 import { Route as ApprenticeshipsRouteImport } from './routes/apprenticeships'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as YouthIndexRouteImport } from './routes/youth.index'
 import { Route as YouthRegisterRouteImport } from './routes/youth.register'
 import { Route as YouthPostOpportunityRouteImport } from './routes/youth.post-opportunity'
 import { Route as YouthOpportunitiesRouteImport } from './routes/youth.opportunities'
@@ -46,11 +46,6 @@ import { Route as AuthenticatedAdminYouthIdRouteImport } from './routes/_authent
 import { Route as AuthenticatedAdminProvidersIdRouteImport } from './routes/_authenticated/admin/providers/$id'
 import { Route as AuthenticatedAdminApprenticesIdRouteImport } from './routes/_authenticated/admin/apprentices.$id'
 
-const YouthRoute = YouthRouteImport.update({
-  id: '/youth',
-  path: '/youth',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const TermsRoute = TermsRouteImport.update({
   id: '/terms',
   path: '/terms',
@@ -115,20 +110,25 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const YouthIndexRoute = YouthIndexRouteImport.update({
+  id: '/youth/',
+  path: '/youth/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const YouthRegisterRoute = YouthRegisterRouteImport.update({
-  id: '/register',
-  path: '/register',
-  getParentRoute: () => YouthRoute,
+  id: '/youth/register',
+  path: '/youth/register',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const YouthPostOpportunityRoute = YouthPostOpportunityRouteImport.update({
-  id: '/post-opportunity',
-  path: '/post-opportunity',
-  getParentRoute: () => YouthRoute,
+  id: '/youth/post-opportunity',
+  path: '/youth/post-opportunity',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const YouthOpportunitiesRoute = YouthOpportunitiesRouteImport.update({
-  id: '/opportunities',
-  path: '/opportunities',
-  getParentRoute: () => YouthRoute,
+  id: '/youth/opportunities',
+  path: '/youth/opportunities',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const MentorsInterestRoute = MentorsInterestRouteImport.update({
   id: '/mentors/interest',
@@ -180,9 +180,9 @@ const AuthenticatedAdminIndexRoute = AuthenticatedAdminIndexRouteImport.update({
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const YouthParentConsentTokenRoute = YouthParentConsentTokenRouteImport.update({
-  id: '/parent-consent/$token',
-  path: '/parent-consent/$token',
-  getParentRoute: () => YouthRoute,
+  id: '/youth/parent-consent/$token',
+  path: '/youth/parent-consent/$token',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const DirectoryTypeIdRoute = DirectoryTypeIdRouteImport.update({
   id: '/$type/$id',
@@ -250,7 +250,6 @@ export interface FileRoutesByFullPath {
   '/request-support': typeof RequestSupportRoute
   '/reset-password': typeof ResetPasswordRoute
   '/terms': typeof TermsRoute
-  '/youth': typeof YouthRouteWithChildren
   '/apprenticeships/become-mentor': typeof ApprenticeshipsBecomeMentorRoute
   '/apprenticeships/impact': typeof ApprenticeshipsImpactRoute
   '/apprenticeships/mentors': typeof ApprenticeshipsMentorsRoute
@@ -262,6 +261,7 @@ export interface FileRoutesByFullPath {
   '/youth/opportunities': typeof YouthOpportunitiesRoute
   '/youth/post-opportunity': typeof YouthPostOpportunityRoute
   '/youth/register': typeof YouthRegisterRoute
+  '/youth/': typeof YouthIndexRoute
   '/admin/apprenticeships': typeof AuthenticatedAdminApprenticeshipsRoute
   '/admin/youth-opportunities': typeof AuthenticatedAdminYouthOpportunitiesRoute
   '/youth/portfolio': typeof AuthenticatedYouthPortfolioRoute
@@ -287,7 +287,6 @@ export interface FileRoutesByTo {
   '/request-support': typeof RequestSupportRoute
   '/reset-password': typeof ResetPasswordRoute
   '/terms': typeof TermsRoute
-  '/youth': typeof YouthRouteWithChildren
   '/apprenticeships/become-mentor': typeof ApprenticeshipsBecomeMentorRoute
   '/apprenticeships/impact': typeof ApprenticeshipsImpactRoute
   '/apprenticeships/mentors': typeof ApprenticeshipsMentorsRoute
@@ -299,6 +298,7 @@ export interface FileRoutesByTo {
   '/youth/opportunities': typeof YouthOpportunitiesRoute
   '/youth/post-opportunity': typeof YouthPostOpportunityRoute
   '/youth/register': typeof YouthRegisterRoute
+  '/youth': typeof YouthIndexRoute
   '/admin/apprenticeships': typeof AuthenticatedAdminApprenticeshipsRoute
   '/admin/youth-opportunities': typeof AuthenticatedAdminYouthOpportunitiesRoute
   '/youth/portfolio': typeof AuthenticatedYouthPortfolioRoute
@@ -326,7 +326,6 @@ export interface FileRoutesById {
   '/request-support': typeof RequestSupportRoute
   '/reset-password': typeof ResetPasswordRoute
   '/terms': typeof TermsRoute
-  '/youth': typeof YouthRouteWithChildren
   '/apprenticeships/become-mentor': typeof ApprenticeshipsBecomeMentorRoute
   '/apprenticeships/impact': typeof ApprenticeshipsImpactRoute
   '/apprenticeships/mentors': typeof ApprenticeshipsMentorsRoute
@@ -338,6 +337,7 @@ export interface FileRoutesById {
   '/youth/opportunities': typeof YouthOpportunitiesRoute
   '/youth/post-opportunity': typeof YouthPostOpportunityRoute
   '/youth/register': typeof YouthRegisterRoute
+  '/youth/': typeof YouthIndexRoute
   '/_authenticated/admin/apprenticeships': typeof AuthenticatedAdminApprenticeshipsRoute
   '/_authenticated/admin/youth-opportunities': typeof AuthenticatedAdminYouthOpportunitiesRoute
   '/_authenticated/youth/portfolio': typeof AuthenticatedYouthPortfolioRoute
@@ -365,7 +365,6 @@ export interface FileRouteTypes {
     | '/request-support'
     | '/reset-password'
     | '/terms'
-    | '/youth'
     | '/apprenticeships/become-mentor'
     | '/apprenticeships/impact'
     | '/apprenticeships/mentors'
@@ -377,6 +376,7 @@ export interface FileRouteTypes {
     | '/youth/opportunities'
     | '/youth/post-opportunity'
     | '/youth/register'
+    | '/youth/'
     | '/admin/apprenticeships'
     | '/admin/youth-opportunities'
     | '/youth/portfolio'
@@ -402,7 +402,6 @@ export interface FileRouteTypes {
     | '/request-support'
     | '/reset-password'
     | '/terms'
-    | '/youth'
     | '/apprenticeships/become-mentor'
     | '/apprenticeships/impact'
     | '/apprenticeships/mentors'
@@ -414,6 +413,7 @@ export interface FileRouteTypes {
     | '/youth/opportunities'
     | '/youth/post-opportunity'
     | '/youth/register'
+    | '/youth'
     | '/admin/apprenticeships'
     | '/admin/youth-opportunities'
     | '/youth/portfolio'
@@ -440,7 +440,6 @@ export interface FileRouteTypes {
     | '/request-support'
     | '/reset-password'
     | '/terms'
-    | '/youth'
     | '/apprenticeships/become-mentor'
     | '/apprenticeships/impact'
     | '/apprenticeships/mentors'
@@ -452,6 +451,7 @@ export interface FileRouteTypes {
     | '/youth/opportunities'
     | '/youth/post-opportunity'
     | '/youth/register'
+    | '/youth/'
     | '/_authenticated/admin/apprenticeships'
     | '/_authenticated/admin/youth-opportunities'
     | '/_authenticated/youth/portfolio'
@@ -479,21 +479,18 @@ export interface RootRouteChildren {
   RequestSupportRoute: typeof RequestSupportRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
   TermsRoute: typeof TermsRoute
-  YouthRoute: typeof YouthRouteWithChildren
   FeedbackTokenRoute: typeof FeedbackTokenRoute
   MentorsInterestRoute: typeof MentorsInterestRoute
+  YouthOpportunitiesRoute: typeof YouthOpportunitiesRoute
+  YouthPostOpportunityRoute: typeof YouthPostOpportunityRoute
+  YouthRegisterRoute: typeof YouthRegisterRoute
+  YouthIndexRoute: typeof YouthIndexRoute
   ApiPublicContactRequestRoute: typeof ApiPublicContactRequestRoute
+  YouthParentConsentTokenRoute: typeof YouthParentConsentTokenRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/youth': {
-      id: '/youth'
-      path: '/youth'
-      fullPath: '/youth'
-      preLoaderRoute: typeof YouthRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/terms': {
       id: '/terms'
       path: '/terms'
@@ -585,26 +582,33 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/youth/': {
+      id: '/youth/'
+      path: '/youth'
+      fullPath: '/youth/'
+      preLoaderRoute: typeof YouthIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/youth/register': {
       id: '/youth/register'
-      path: '/register'
+      path: '/youth/register'
       fullPath: '/youth/register'
       preLoaderRoute: typeof YouthRegisterRouteImport
-      parentRoute: typeof YouthRoute
+      parentRoute: typeof rootRouteImport
     }
     '/youth/post-opportunity': {
       id: '/youth/post-opportunity'
-      path: '/post-opportunity'
+      path: '/youth/post-opportunity'
       fullPath: '/youth/post-opportunity'
       preLoaderRoute: typeof YouthPostOpportunityRouteImport
-      parentRoute: typeof YouthRoute
+      parentRoute: typeof rootRouteImport
     }
     '/youth/opportunities': {
       id: '/youth/opportunities'
-      path: '/opportunities'
+      path: '/youth/opportunities'
       fullPath: '/youth/opportunities'
       preLoaderRoute: typeof YouthOpportunitiesRouteImport
-      parentRoute: typeof YouthRoute
+      parentRoute: typeof rootRouteImport
     }
     '/mentors/interest': {
       id: '/mentors/interest'
@@ -671,10 +675,10 @@ declare module '@tanstack/react-router' {
     }
     '/youth/parent-consent/$token': {
       id: '/youth/parent-consent/$token'
-      path: '/parent-consent/$token'
+      path: '/youth/parent-consent/$token'
       fullPath: '/youth/parent-consent/$token'
       preLoaderRoute: typeof YouthParentConsentTokenRouteImport
-      parentRoute: typeof YouthRoute
+      parentRoute: typeof rootRouteImport
     }
     '/directory/$type/$id': {
       id: '/directory/$type/$id'
@@ -804,22 +808,6 @@ const DirectoryRouteWithChildren = DirectoryRoute._addFileChildren(
   DirectoryRouteChildren,
 )
 
-interface YouthRouteChildren {
-  YouthOpportunitiesRoute: typeof YouthOpportunitiesRoute
-  YouthPostOpportunityRoute: typeof YouthPostOpportunityRoute
-  YouthRegisterRoute: typeof YouthRegisterRoute
-  YouthParentConsentTokenRoute: typeof YouthParentConsentTokenRoute
-}
-
-const YouthRouteChildren: YouthRouteChildren = {
-  YouthOpportunitiesRoute: YouthOpportunitiesRoute,
-  YouthPostOpportunityRoute: YouthPostOpportunityRoute,
-  YouthRegisterRoute: YouthRegisterRoute,
-  YouthParentConsentTokenRoute: YouthParentConsentTokenRoute,
-}
-
-const YouthRouteWithChildren = YouthRoute._addFileChildren(YouthRouteChildren)
-
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
@@ -834,21 +822,15 @@ const rootRouteChildren: RootRouteChildren = {
   RequestSupportRoute: RequestSupportRoute,
   ResetPasswordRoute: ResetPasswordRoute,
   TermsRoute: TermsRoute,
-  YouthRoute: YouthRouteWithChildren,
   FeedbackTokenRoute: FeedbackTokenRoute,
   MentorsInterestRoute: MentorsInterestRoute,
+  YouthOpportunitiesRoute: YouthOpportunitiesRoute,
+  YouthPostOpportunityRoute: YouthPostOpportunityRoute,
+  YouthRegisterRoute: YouthRegisterRoute,
+  YouthIndexRoute: YouthIndexRoute,
   ApiPublicContactRequestRoute: ApiPublicContactRequestRoute,
+  YouthParentConsentTokenRoute: YouthParentConsentTokenRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
