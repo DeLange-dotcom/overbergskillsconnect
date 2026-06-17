@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as YouthRouteImport } from './routes/youth'
 import { Route as TermsRouteImport } from './routes/terms'
+import { Route as SafeguardingPolicyRouteImport } from './routes/safeguarding-policy'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as RequestSupportRouteImport } from './routes/request-support'
 import { Route as RegisterProviderRouteImport } from './routes/register-provider'
@@ -55,6 +56,11 @@ const YouthRoute = YouthRouteImport.update({
 const TermsRoute = TermsRouteImport.update({
   id: '/terms',
   path: '/terms',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SafeguardingPolicyRoute = SafeguardingPolicyRouteImport.update({
+  id: '/safeguarding-policy',
+  path: '/safeguarding-policy',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ResetPasswordRoute = ResetPasswordRouteImport.update({
@@ -255,6 +261,7 @@ export interface FileRoutesByFullPath {
   '/register-provider': typeof RegisterProviderRoute
   '/request-support': typeof RequestSupportRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/safeguarding-policy': typeof SafeguardingPolicyRoute
   '/terms': typeof TermsRoute
   '/youth': typeof YouthRouteWithChildren
   '/apprenticeships/become-mentor': typeof ApprenticeshipsBecomeMentorRoute
@@ -293,6 +300,7 @@ export interface FileRoutesByTo {
   '/register-provider': typeof RegisterProviderRoute
   '/request-support': typeof RequestSupportRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/safeguarding-policy': typeof SafeguardingPolicyRoute
   '/terms': typeof TermsRoute
   '/apprenticeships/become-mentor': typeof ApprenticeshipsBecomeMentorRoute
   '/apprenticeships/impact': typeof ApprenticeshipsImpactRoute
@@ -332,6 +340,7 @@ export interface FileRoutesById {
   '/register-provider': typeof RegisterProviderRoute
   '/request-support': typeof RequestSupportRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/safeguarding-policy': typeof SafeguardingPolicyRoute
   '/terms': typeof TermsRoute
   '/youth': typeof YouthRouteWithChildren
   '/apprenticeships/become-mentor': typeof ApprenticeshipsBecomeMentorRoute
@@ -372,6 +381,7 @@ export interface FileRouteTypes {
     | '/register-provider'
     | '/request-support'
     | '/reset-password'
+    | '/safeguarding-policy'
     | '/terms'
     | '/youth'
     | '/apprenticeships/become-mentor'
@@ -410,6 +420,7 @@ export interface FileRouteTypes {
     | '/register-provider'
     | '/request-support'
     | '/reset-password'
+    | '/safeguarding-policy'
     | '/terms'
     | '/apprenticeships/become-mentor'
     | '/apprenticeships/impact'
@@ -448,6 +459,7 @@ export interface FileRouteTypes {
     | '/register-provider'
     | '/request-support'
     | '/reset-password'
+    | '/safeguarding-policy'
     | '/terms'
     | '/youth'
     | '/apprenticeships/become-mentor'
@@ -488,6 +500,7 @@ export interface RootRouteChildren {
   RegisterProviderRoute: typeof RegisterProviderRoute
   RequestSupportRoute: typeof RequestSupportRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
+  SafeguardingPolicyRoute: typeof SafeguardingPolicyRoute
   TermsRoute: typeof TermsRoute
   YouthRoute: typeof YouthRouteWithChildren
   FeedbackTokenRoute: typeof FeedbackTokenRoute
@@ -509,6 +522,13 @@ declare module '@tanstack/react-router' {
       path: '/terms'
       fullPath: '/terms'
       preLoaderRoute: typeof TermsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/safeguarding-policy': {
+      id: '/safeguarding-policy'
+      path: '/safeguarding-policy'
+      fullPath: '/safeguarding-policy'
+      preLoaderRoute: typeof SafeguardingPolicyRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/reset-password': {
@@ -852,6 +872,7 @@ const rootRouteChildren: RootRouteChildren = {
   RegisterProviderRoute: RegisterProviderRoute,
   RequestSupportRoute: RequestSupportRoute,
   ResetPasswordRoute: ResetPasswordRoute,
+  SafeguardingPolicyRoute: SafeguardingPolicyRoute,
   TermsRoute: TermsRoute,
   YouthRoute: YouthRouteWithChildren,
   FeedbackTokenRoute: FeedbackTokenRoute,
