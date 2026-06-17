@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { supabase } from "@/integrations/supabase/client";
 import { Briefcase, MapPin, Calendar, Loader2 } from "lucide-react";
+import { VettedBadge } from "@/components/site/VettedBadge";
 
 export const Route = createFileRoute("/apprenticeships/opportunities")({
   head: () => ({
