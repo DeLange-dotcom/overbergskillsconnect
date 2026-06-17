@@ -2,8 +2,8 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { supabase } from "@/integrations/supabase/client";
-import { Award, MapPin, Loader2 } from "lucide-react";
-import { MENTOR_CATEGORIES } from "@/lib/apprenticeships";
+import { Award, MapPin, Loader2, ShieldCheck } from "lucide-react";
+import { MENTOR_CATEGORIES, MENTOR_FORMATS } from "@/lib/apprenticeships";
 
 export const Route = createFileRoute("/apprenticeships/mentors")({
   head: () => ({
@@ -33,6 +33,7 @@ function Mentors() {
   const [items, setItems] = useState<Mentor[]>([]);
   const [loading, setLoading] = useState(true);
   const [cat, setCat] = useState("");
+  const [fmt, setFmt] = useState("");
   const [q, setQ] = useState("");
 
   useEffect(() => {
@@ -48,6 +49,7 @@ function Mentors() {
 
   const filtered = items.filter((m) => {
     if (cat && !m.categories.includes(cat)) return false;
+    if (fmt && !m.formats.includes(fmt)) return false;
     if (q) {
       const s = q.toLowerCase();
       if (
@@ -73,7 +75,7 @@ function Mentors() {
           </Link>
         </div>
 
-        <div className="grid sm:grid-cols-2 gap-3 mb-6">
+        <div className="grid sm:grid-cols-3 gap-3 mb-6">
           <input
             value={q}
             onChange={(e) => setQ(e.target.value)}
@@ -87,6 +89,14 @@ function Mentors() {
           >
             <option value="">All categories</option>
             {MENTOR_CATEGORIES.map((c) => <option key={c} value={c}>{c}</option>)}
+          </select>
+          <select
+            value={fmt}
+            onChange={(e) => setFmt(e.target.value)}
+            className="px-4 py-3 border border-brand-dark/10 rounded-xl bg-white"
+          >
+            <option value="">All formats</option>
+            {MENTOR_FORMATS.map((c) => <option key={c} value={c}>{c}</option>)}
           </select>
         </div>
 
@@ -122,9 +132,18 @@ function Mentors() {
                   {m.years_experience ? `${m.years_experience}+ years experience` : null}
                   {m.formats.length > 0 && <> · {m.formats.join(", ")}</>}
                 </div>
-                <Link to="/request-support" className="text-sm text-brand-primary font-medium hover:underline">
-                  Request introduction →
-                </Link>
+                <div className="flex items-center justify-between gap-2">
+                  <span className="inline-flex items-center gap-1 text-[10px] uppercase tracking-wide px-2 py-1 rounded-full bg-emerald-50 text-emerald-700 font-semibold">
+                    <ShieldCheck className="size-3" /> Vetted by Hineni
+                  </span>
+                  <Link
+                    to="/request-mentorship/$mentorId"
+                    params={{ mentorId: m.id }}
+                    className="text-sm text-brand-primary font-medium hover:underline"
+                  >
+                    Request mentorship →
+                  </Link>
+                </div>
               </article>
             ))}
           </div>
