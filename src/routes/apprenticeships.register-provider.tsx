@@ -108,19 +108,14 @@ function Page() {
       website: d.website || null,
       physical_address: d.physical_address || null,
       town: d.town,
+      verification_doc_path: verification_path,
       terms_accepted_at: now,
       terms_version: TERMS_VERSION,
+      safeguarding_acknowledged_at: now,
+      safeguarding_policy_version: SAFEGUARDING_POLICY_VERSION,
+      disclaimer_accepted_at: now,
     }).select("id").single();
     if (pErr || !prov) { toast.error(pErr?.message ?? "Could not submit."); setSubmitting(false); return; }
-
-    // Optional verification doc → provider_documents
-    if (verification_path) {
-      await supabase.from("provider_documents").insert({
-        provider_id: prov.id,
-        kind: "verification",
-        storage_path: verification_path,
-      });
-    }
 
     const { error: oErr } = await supabase.from("apprenticeship_opportunities").insert({
       provider_id: prov.id,
@@ -145,12 +140,6 @@ function Page() {
     if (oErr) { toast.error(oErr.message); setSubmitting(false); return; }
 
     await recordTermsAcceptance({ context: "provider_registration", referenceTable: "apprenticeship_providers", referenceId: prov.id });
-    // Stamp safeguarding acknowledgement on provider record (best-effort)
-    await supabase.from("apprenticeship_providers").update({
-      safeguarding_acknowledged_at: now,
-      safeguarding_policy_version: SAFEGUARDING_POLICY_VERSION,
-      disclaimer_accepted_at: now,
-    }).eq("id", prov.id);
 
     setDone(true); setSubmitting(false); window.scrollTo({ top: 0, behavior: "smooth" });
   }
