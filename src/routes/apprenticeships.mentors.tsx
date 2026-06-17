@@ -33,6 +33,7 @@ function Mentors() {
   const [items, setItems] = useState<Mentor[]>([]);
   const [loading, setLoading] = useState(true);
   const [cat, setCat] = useState("");
+  const [fmt, setFmt] = useState("");
   const [q, setQ] = useState("");
 
   useEffect(() => {
@@ -48,6 +49,7 @@ function Mentors() {
 
   const filtered = items.filter((m) => {
     if (cat && !m.categories.includes(cat)) return false;
+    if (fmt && !m.formats.includes(fmt)) return false;
     if (q) {
       const s = q.toLowerCase();
       if (
