@@ -1,9 +1,12 @@
+import { useEffect, useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { HINENI_DISCLAIMER } from "@/lib/directory-constants";
 
 export function Footer() {
-  const shareUrl =
-    typeof window !== "undefined" ? window.location.origin : "https://hineni.example";
+  const [shareUrl, setShareUrl] = useState("https://hineni.example");
+  useEffect(() => {
+    setShareUrl(window.location.origin);
+  }, []);
   const waLink = `https://wa.me/?text=${encodeURIComponent(
     `Find or register for trusted local help with Hineni: ${shareUrl}`,
   )}`;
