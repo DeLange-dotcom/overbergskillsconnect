@@ -5,6 +5,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { BadgeChip } from "@/components/site/BadgeChip";
 import { AdminPccPanel } from "@/components/site/AdminPccPanel";
 import { VerificationBadge } from "@/components/site/VerificationBadge";
+import { ProfileLifecyclePanel } from "@/components/site/ProfileLifecyclePanel";
 import { YOUTH_BADGES, YOUTH_INTERESTS, YOUTH_SKILLS, labelFromList } from "@/lib/youth";
 import { toast } from "sonner";
 
@@ -94,6 +95,17 @@ function AdminYouthDetail() {
             />
           </div>
         </header>
+
+        <ProfileLifecyclePanel
+          table="youth_profiles"
+          id={id}
+          initial={{
+            is_published: !!(p as { is_published?: boolean }).is_published,
+            is_suspended: !!(p as { is_suspended?: boolean }).is_suspended,
+            is_archived: !!(p as { is_archived?: boolean }).is_archived,
+          }}
+        />
+
 
         <section className="mb-6 flex flex-wrap gap-2">
           {(["approved", "on_hold", "rejected", "pending"] as const).map((s) => (

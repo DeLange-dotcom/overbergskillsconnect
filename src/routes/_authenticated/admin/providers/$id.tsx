@@ -6,6 +6,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { PROVIDER_STATUS_LABELS, categoryLabel, travelLabel } from "@/lib/constants";
 import { AdminPccPanel } from "@/components/site/AdminPccPanel";
 import { VerificationBadge } from "@/components/site/VerificationBadge";
+import { ProfileLifecyclePanel } from "@/components/site/ProfileLifecyclePanel";
 import { ArrowLeft, FileDown, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 
@@ -147,6 +148,18 @@ function ProviderDetail() {
             <FileDown className="size-4" /> Generate Vetting PDF
           </button>
         </div>
+
+        <ProfileLifecyclePanel
+          table="service_providers"
+          id={id}
+          initial={{
+            is_published: !!(provider as { is_published?: boolean }).is_published,
+            is_suspended: !!(provider as { is_suspended?: boolean }).is_suspended,
+            is_archived: !!(provider as { is_archived?: boolean }).is_archived,
+          }}
+          onChange={() => qc.invalidateQueries({ queryKey: ["provider", id] })}
+        />
+
 
         <div className="grid lg:grid-cols-3 gap-6">
           <div className="lg:col-span-2 space-y-6">

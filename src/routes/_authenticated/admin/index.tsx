@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { supabase } from "@/integrations/supabase/client";
 import { PROVIDER_STATUS_LABELS, SERVICE_CATEGORIES, categoryLabel } from "@/lib/constants";
-import { LogOut, Users, HelpingHand, MessageCircle, Heart, FileText, Download } from "lucide-react";
+import { LogOut, Users, HelpingHand, MessageCircle, Heart, FileText, Download, ShieldAlert, ShieldCheck, Clock, HelpCircle } from "lucide-react";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/_authenticated/admin/")({
@@ -94,6 +94,36 @@ function AdminDashboard() {
     },
   });
 
+  // Buckets across all 3 applicant tables for the new dashboard sections.
+  const buckets = useQuery({
+    queryKey: ["admin_buckets"],
+    enabled: isAdmin === true,
+    queryFn: async () => {
+      const sel =
+        "id, full_name, status, verification_level, pcc_status, pcc_wants_assistance, pcc_verified, identity_verified, references_checked, interview_completed, work_permit_required, work_permit_verified, created_at";
+      const [{ data: sp }, { data: ap }, { data: yp }] = await Promise.all([
+        supabase.from("service_providers").select(sel),
+        supabase.from("apprentices").select(sel),
+        supabase.from("youth_profiles").select(sel),
+      ]);
+      const tag = (rows: any[] | null, t: string) => (rows ?? []).map((r) => ({ ...r, _type: t }));
+      return [...tag(sp, "service_provider"), ...tag(ap, "apprentice"), ...tag(yp, "youth")];
+    },
+  });
+
+  const safety = useQuery({
+    queryKey: ["admin_safety"],
+    enabled: isAdmin === true,
+    queryFn: async () => {
+      const { data } = await supabase
+        .from("safety_reports")
+        .select("*")
+        .order("created_at", { ascending: false })
+        .limit(50);
+      return data ?? [];
+    },
+  });
+
   async function signOut() {
     await supabase.auth.signOut();
     navigate({ to: "/", replace: true });
@@ -157,6 +187,9 @@ function AdminDashboard() {
           <StatCard icon={<MessageCircle />} label="Contact requests" value={contacts.data?.length ?? 0} />
           <StatCard icon={<Heart />} label="Donations" value={donations.data?.length ?? 0} />
         </div>
+
+        <DashboardBuckets rows={buckets.data ?? []} contacts={contacts.data ?? []} safety={safety.data ?? []} />
+
 
         <section className="bg-white border border-brand-dark/5 rounded-2xl p-5 mb-8">
           <div className="flex items-center justify-between gap-3 flex-wrap mb-4">
@@ -314,6 +347,100 @@ function AdminDashboard() {
     </SiteLayout>
   );
 }
+
+type Bucket = {
+  id: string; full_name: string; status?: string; verification_level?: string | null;
+  pcc_status?: string | null; pcc_wants_assistance?: boolean | null; pcc_verified?: boolean | null;
+  identity_verified?: boolean | null; references_checked?: boolean | null; interview_completed?: boolean | null;
+  work_permit_required?: boolean | null; work_permit_verified?: boolean | null;
+  created_at: string; _type: string;
+};
+
+function DashboardBuckets({ rows, contacts, safety }: { rows: Bucket[]; contacts: any[]; safety: any[] }) {
+  const pendingReview = rows.filter((r) => r.status === "pending_review" || r.status === "pending").length;
+  const awaitingRefs = rows.filter((r) => !r.references_checked && r.status !== "approved" && r.status !== "rejected").length;
+  const awaitingPcc = rows.filter((r) => !r.pcc_verified && r.pcc_status !== "have" && r.status !== "rejected").length;
+  const awaitingWp = rows.filter((r) => r.work_permit_required && !r.work_permit_verified).length;
+  const bronze = rows.filter((r) => r.verification_level === "bronze").length;
+  const silver = rows.filter((r) => r.verification_level === "silver").length;
+  const gold = rows.filter((r) => r.verification_level === "gold").length;
+  const pccAssist = rows.filter((r) => r.pcc_wants_assistance && !r.pcc_verified);
+
+  return (
+    <div className="grid lg:grid-cols-2 gap-6 mb-8">
+      <section className="bg-white border border-brand-dark/5 rounded-2xl p-5">
+        <div className="flex items-center gap-2 mb-3"><Clock className="size-4 text-brand-primary" /><h2 className="font-heading text-lg font-semibold">Pending applications</h2></div>
+        <ul className="text-sm divide-y divide-brand-dark/5">
+          <BucketRow label="Awaiting review" value={pendingReview} />
+          <BucketRow label="Awaiting references" value={awaitingRefs} />
+          <BucketRow label="Awaiting Police Clearance" value={awaitingPcc} />
+          <BucketRow label="Awaiting work-permit verification" value={awaitingWp} />
+        </ul>
+      </section>
+      <section className="bg-white border border-brand-dark/5 rounded-2xl p-5">
+        <div className="flex items-center gap-2 mb-3"><ShieldCheck className="size-4 text-brand-primary" /><h2 className="font-heading text-lg font-semibold">Approved applicants</h2></div>
+        <ul className="text-sm divide-y divide-brand-dark/5">
+          <BucketRow label="Bronze" value={bronze} />
+          <BucketRow label="Silver" value={silver} />
+          <BucketRow label="Gold" value={gold} />
+        </ul>
+      </section>
+      <section className="bg-white border border-brand-dark/5 rounded-2xl p-5">
+        <div className="flex items-center gap-2 mb-3"><MessageCircle className="size-4 text-brand-primary" /><h2 className="font-heading text-lg font-semibold">Contact requests</h2></div>
+        <ul className="divide-y divide-brand-dark/5 text-sm">
+          {contacts.slice(0, 8).map((c) => (
+            <li key={c.id} className="py-2.5">
+              <div className="font-medium">
+                {c.requester_name} → {c.service_providers?.display_name ?? c.service_providers?.full_name ?? c.applicant_type}
+              </div>
+              <div className="text-xs text-brand-dark/60">
+                {new Date(c.created_at).toLocaleDateString()} · {c.category ?? "—"} · {c.status}
+              </div>
+            </li>
+          ))}
+          {contacts.length === 0 && <li className="py-6 text-center text-brand-dark/50">No contact requests yet.</li>}
+        </ul>
+      </section>
+      <section className="bg-white border border-brand-dark/5 rounded-2xl p-5">
+        <div className="flex items-center gap-2 mb-3"><HelpCircle className="size-4 text-brand-primary" /><h2 className="font-heading text-lg font-semibold">PCC assistance requests</h2></div>
+        <ul className="divide-y divide-brand-dark/5 text-sm">
+          {pccAssist.slice(0, 10).map((r) => (
+            <li key={`${r._type}-${r.id}`} className="py-2.5 flex justify-between">
+              <div><div className="font-medium">{r.full_name}</div><div className="text-xs text-brand-dark/60">{r._type} · {new Date(r.created_at).toLocaleDateString()}</div></div>
+              <span className="text-xs px-2 py-1 rounded-full bg-amber-50 text-amber-800">{r.pcc_status ?? "needs PCC"}</span>
+            </li>
+          ))}
+          {pccAssist.length === 0 && <li className="py-6 text-center text-brand-dark/50">No PCC assistance requests.</li>}
+        </ul>
+      </section>
+      <section className="bg-white border border-brand-dark/5 rounded-2xl p-5 lg:col-span-2">
+        <div className="flex items-center gap-2 mb-3"><ShieldAlert className="size-4 text-rose-600" /><h2 className="font-heading text-lg font-semibold">Safety reports</h2></div>
+        <ul className="divide-y divide-brand-dark/5 text-sm">
+          {safety.slice(0, 10).map((s) => (
+            <li key={s.id} className="py-2.5 flex justify-between gap-3">
+              <div>
+                <div className="font-medium">{s.complaint_type}</div>
+                <div className="text-xs text-brand-dark/60">{new Date(s.created_at).toLocaleDateString()} · {s.applicant_type} · {s.applicant_id.slice(0, 8)}…</div>
+              </div>
+              <span className="text-xs px-2 py-1 rounded-full bg-rose-50 text-rose-700 shrink-0">{s.resolution_status}</span>
+            </li>
+          ))}
+          {safety.length === 0 && <li className="py-6 text-center text-brand-dark/50">No safety reports.</li>}
+        </ul>
+      </section>
+    </div>
+  );
+}
+
+function BucketRow({ label, value }: { label: string; value: number }) {
+  return (
+    <li className="py-2.5 flex justify-between items-center">
+      <span>{label}</span>
+      <span className="font-semibold">{value}</span>
+    </li>
+  );
+}
+
 
 function StatCard({
   icon,

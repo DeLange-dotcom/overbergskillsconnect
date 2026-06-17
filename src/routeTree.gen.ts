@@ -18,6 +18,7 @@ import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as HowItWorksRouteImport } from './routes/how-it-works'
 import { Route as FindHelpRouteImport } from './routes/find-help'
 import { Route as DonateRouteImport } from './routes/donate'
+import { Route as DirectoryRouteImport } from './routes/directory'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as ApprenticeshipsRouteImport } from './routes/apprenticeships'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
@@ -25,6 +26,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as YouthRegisterRouteImport } from './routes/youth.register'
 import { Route as YouthPostOpportunityRouteImport } from './routes/youth.post-opportunity'
 import { Route as YouthOpportunitiesRouteImport } from './routes/youth.opportunities'
+import { Route as FeedbackTokenRouteImport } from './routes/feedback.$token'
 import { Route as ApprenticeshipsRegisterProviderRouteImport } from './routes/apprenticeships.register-provider'
 import { Route as ApprenticeshipsRegisterApprenticeRouteImport } from './routes/apprenticeships.register-apprentice'
 import { Route as ApprenticeshipsOpportunitiesRouteImport } from './routes/apprenticeships.opportunities'
@@ -32,6 +34,8 @@ import { Route as ApprenticeshipsMentorsRouteImport } from './routes/apprentices
 import { Route as ApprenticeshipsImpactRouteImport } from './routes/apprenticeships.impact'
 import { Route as ApprenticeshipsBecomeMentorRouteImport } from './routes/apprenticeships.become-mentor'
 import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin/index'
+import { Route as DirectoryTypeIdRouteImport } from './routes/directory.$type.$id'
+import { Route as ApiPublicContactRequestRouteImport } from './routes/api/public/contact-request'
 import { Route as AuthenticatedYouthPortfolioRouteImport } from './routes/_authenticated/youth.portfolio'
 import { Route as AuthenticatedAdminYouthOpportunitiesRouteImport } from './routes/_authenticated/admin/youth-opportunities'
 import { Route as AuthenticatedAdminApprenticeshipsRouteImport } from './routes/_authenticated/admin/apprenticeships'
@@ -85,6 +89,11 @@ const DonateRoute = DonateRouteImport.update({
   path: '/donate',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DirectoryRoute = DirectoryRouteImport.update({
+  id: '/directory',
+  path: '/directory',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthRoute = AuthRouteImport.update({
   id: '/auth',
   path: '/auth',
@@ -118,6 +127,11 @@ const YouthOpportunitiesRoute = YouthOpportunitiesRouteImport.update({
   id: '/opportunities',
   path: '/opportunities',
   getParentRoute: () => YouthRoute,
+} as any)
+const FeedbackTokenRoute = FeedbackTokenRouteImport.update({
+  id: '/feedback/$token',
+  path: '/feedback/$token',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const ApprenticeshipsRegisterProviderRoute =
   ApprenticeshipsRegisterProviderRouteImport.update({
@@ -157,6 +171,16 @@ const AuthenticatedAdminIndexRoute = AuthenticatedAdminIndexRouteImport.update({
   id: '/admin/',
   path: '/admin/',
   getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const DirectoryTypeIdRoute = DirectoryTypeIdRouteImport.update({
+  id: '/$type/$id',
+  path: '/$type/$id',
+  getParentRoute: () => DirectoryRoute,
+} as any)
+const ApiPublicContactRequestRoute = ApiPublicContactRequestRouteImport.update({
+  id: '/api/public/contact-request',
+  path: '/api/public/contact-request',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const AuthenticatedYouthPortfolioRoute =
   AuthenticatedYouthPortfolioRouteImport.update({
@@ -205,6 +229,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/apprenticeships': typeof ApprenticeshipsRouteWithChildren
   '/auth': typeof AuthRoute
+  '/directory': typeof DirectoryRouteWithChildren
   '/donate': typeof DonateRoute
   '/find-help': typeof FindHelpRoute
   '/how-it-works': typeof HowItWorksRoute
@@ -220,12 +245,15 @@ export interface FileRoutesByFullPath {
   '/apprenticeships/opportunities': typeof ApprenticeshipsOpportunitiesRoute
   '/apprenticeships/register-apprentice': typeof ApprenticeshipsRegisterApprenticeRoute
   '/apprenticeships/register-provider': typeof ApprenticeshipsRegisterProviderRoute
+  '/feedback/$token': typeof FeedbackTokenRoute
   '/youth/opportunities': typeof YouthOpportunitiesRoute
   '/youth/post-opportunity': typeof YouthPostOpportunityRoute
   '/youth/register': typeof YouthRegisterRoute
   '/admin/apprenticeships': typeof AuthenticatedAdminApprenticeshipsRoute
   '/admin/youth-opportunities': typeof AuthenticatedAdminYouthOpportunitiesRoute
   '/youth/portfolio': typeof AuthenticatedYouthPortfolioRoute
+  '/api/public/contact-request': typeof ApiPublicContactRequestRoute
+  '/directory/$type/$id': typeof DirectoryTypeIdRoute
   '/admin/': typeof AuthenticatedAdminIndexRoute
   '/admin/apprentices/$id': typeof AuthenticatedAdminApprenticesIdRoute
   '/admin/providers/$id': typeof AuthenticatedAdminProvidersIdRoute
@@ -236,6 +264,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/apprenticeships': typeof ApprenticeshipsRouteWithChildren
   '/auth': typeof AuthRoute
+  '/directory': typeof DirectoryRouteWithChildren
   '/donate': typeof DonateRoute
   '/find-help': typeof FindHelpRoute
   '/how-it-works': typeof HowItWorksRoute
@@ -251,12 +280,15 @@ export interface FileRoutesByTo {
   '/apprenticeships/opportunities': typeof ApprenticeshipsOpportunitiesRoute
   '/apprenticeships/register-apprentice': typeof ApprenticeshipsRegisterApprenticeRoute
   '/apprenticeships/register-provider': typeof ApprenticeshipsRegisterProviderRoute
+  '/feedback/$token': typeof FeedbackTokenRoute
   '/youth/opportunities': typeof YouthOpportunitiesRoute
   '/youth/post-opportunity': typeof YouthPostOpportunityRoute
   '/youth/register': typeof YouthRegisterRoute
   '/admin/apprenticeships': typeof AuthenticatedAdminApprenticeshipsRoute
   '/admin/youth-opportunities': typeof AuthenticatedAdminYouthOpportunitiesRoute
   '/youth/portfolio': typeof AuthenticatedYouthPortfolioRoute
+  '/api/public/contact-request': typeof ApiPublicContactRequestRoute
+  '/directory/$type/$id': typeof DirectoryTypeIdRoute
   '/admin': typeof AuthenticatedAdminIndexRoute
   '/admin/apprentices/$id': typeof AuthenticatedAdminApprenticesIdRoute
   '/admin/providers/$id': typeof AuthenticatedAdminProvidersIdRoute
@@ -269,6 +301,7 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/apprenticeships': typeof ApprenticeshipsRouteWithChildren
   '/auth': typeof AuthRoute
+  '/directory': typeof DirectoryRouteWithChildren
   '/donate': typeof DonateRoute
   '/find-help': typeof FindHelpRoute
   '/how-it-works': typeof HowItWorksRoute
@@ -284,12 +317,15 @@ export interface FileRoutesById {
   '/apprenticeships/opportunities': typeof ApprenticeshipsOpportunitiesRoute
   '/apprenticeships/register-apprentice': typeof ApprenticeshipsRegisterApprenticeRoute
   '/apprenticeships/register-provider': typeof ApprenticeshipsRegisterProviderRoute
+  '/feedback/$token': typeof FeedbackTokenRoute
   '/youth/opportunities': typeof YouthOpportunitiesRoute
   '/youth/post-opportunity': typeof YouthPostOpportunityRoute
   '/youth/register': typeof YouthRegisterRoute
   '/_authenticated/admin/apprenticeships': typeof AuthenticatedAdminApprenticeshipsRoute
   '/_authenticated/admin/youth-opportunities': typeof AuthenticatedAdminYouthOpportunitiesRoute
   '/_authenticated/youth/portfolio': typeof AuthenticatedYouthPortfolioRoute
+  '/api/public/contact-request': typeof ApiPublicContactRequestRoute
+  '/directory/$type/$id': typeof DirectoryTypeIdRoute
   '/_authenticated/admin/': typeof AuthenticatedAdminIndexRoute
   '/_authenticated/admin/apprentices/$id': typeof AuthenticatedAdminApprenticesIdRoute
   '/_authenticated/admin/providers/$id': typeof AuthenticatedAdminProvidersIdRoute
@@ -302,6 +338,7 @@ export interface FileRouteTypes {
     | '/'
     | '/apprenticeships'
     | '/auth'
+    | '/directory'
     | '/donate'
     | '/find-help'
     | '/how-it-works'
@@ -317,12 +354,15 @@ export interface FileRouteTypes {
     | '/apprenticeships/opportunities'
     | '/apprenticeships/register-apprentice'
     | '/apprenticeships/register-provider'
+    | '/feedback/$token'
     | '/youth/opportunities'
     | '/youth/post-opportunity'
     | '/youth/register'
     | '/admin/apprenticeships'
     | '/admin/youth-opportunities'
     | '/youth/portfolio'
+    | '/api/public/contact-request'
+    | '/directory/$type/$id'
     | '/admin/'
     | '/admin/apprentices/$id'
     | '/admin/providers/$id'
@@ -333,6 +373,7 @@ export interface FileRouteTypes {
     | '/'
     | '/apprenticeships'
     | '/auth'
+    | '/directory'
     | '/donate'
     | '/find-help'
     | '/how-it-works'
@@ -348,12 +389,15 @@ export interface FileRouteTypes {
     | '/apprenticeships/opportunities'
     | '/apprenticeships/register-apprentice'
     | '/apprenticeships/register-provider'
+    | '/feedback/$token'
     | '/youth/opportunities'
     | '/youth/post-opportunity'
     | '/youth/register'
     | '/admin/apprenticeships'
     | '/admin/youth-opportunities'
     | '/youth/portfolio'
+    | '/api/public/contact-request'
+    | '/directory/$type/$id'
     | '/admin'
     | '/admin/apprentices/$id'
     | '/admin/providers/$id'
@@ -365,6 +409,7 @@ export interface FileRouteTypes {
     | '/_authenticated'
     | '/apprenticeships'
     | '/auth'
+    | '/directory'
     | '/donate'
     | '/find-help'
     | '/how-it-works'
@@ -380,12 +425,15 @@ export interface FileRouteTypes {
     | '/apprenticeships/opportunities'
     | '/apprenticeships/register-apprentice'
     | '/apprenticeships/register-provider'
+    | '/feedback/$token'
     | '/youth/opportunities'
     | '/youth/post-opportunity'
     | '/youth/register'
     | '/_authenticated/admin/apprenticeships'
     | '/_authenticated/admin/youth-opportunities'
     | '/_authenticated/youth/portfolio'
+    | '/api/public/contact-request'
+    | '/directory/$type/$id'
     | '/_authenticated/admin/'
     | '/_authenticated/admin/apprentices/$id'
     | '/_authenticated/admin/providers/$id'
@@ -398,6 +446,7 @@ export interface RootRouteChildren {
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   ApprenticeshipsRoute: typeof ApprenticeshipsRouteWithChildren
   AuthRoute: typeof AuthRoute
+  DirectoryRoute: typeof DirectoryRouteWithChildren
   DonateRoute: typeof DonateRoute
   FindHelpRoute: typeof FindHelpRoute
   HowItWorksRoute: typeof HowItWorksRoute
@@ -407,6 +456,8 @@ export interface RootRouteChildren {
   ResetPasswordRoute: typeof ResetPasswordRoute
   TermsRoute: typeof TermsRoute
   YouthRoute: typeof YouthRouteWithChildren
+  FeedbackTokenRoute: typeof FeedbackTokenRoute
+  ApiPublicContactRequestRoute: typeof ApiPublicContactRequestRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -474,6 +525,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DonateRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/directory': {
+      id: '/directory'
+      path: '/directory'
+      fullPath: '/directory'
+      preLoaderRoute: typeof DirectoryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/auth': {
       id: '/auth'
       path: '/auth'
@@ -523,6 +581,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof YouthOpportunitiesRouteImport
       parentRoute: typeof YouthRoute
     }
+    '/feedback/$token': {
+      id: '/feedback/$token'
+      path: '/feedback/$token'
+      fullPath: '/feedback/$token'
+      preLoaderRoute: typeof FeedbackTokenRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/apprenticeships/register-provider': {
       id: '/apprenticeships/register-provider'
       path: '/register-provider'
@@ -571,6 +636,20 @@ declare module '@tanstack/react-router' {
       fullPath: '/admin/'
       preLoaderRoute: typeof AuthenticatedAdminIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/directory/$type/$id': {
+      id: '/directory/$type/$id'
+      path: '/$type/$id'
+      fullPath: '/directory/$type/$id'
+      preLoaderRoute: typeof DirectoryTypeIdRouteImport
+      parentRoute: typeof DirectoryRoute
+    }
+    '/api/public/contact-request': {
+      id: '/api/public/contact-request'
+      path: '/api/public/contact-request'
+      fullPath: '/api/public/contact-request'
+      preLoaderRoute: typeof ApiPublicContactRequestRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/_authenticated/youth/portfolio': {
       id: '/_authenticated/youth/portfolio'
@@ -674,6 +753,18 @@ const ApprenticeshipsRouteWithChildren = ApprenticeshipsRoute._addFileChildren(
   ApprenticeshipsRouteChildren,
 )
 
+interface DirectoryRouteChildren {
+  DirectoryTypeIdRoute: typeof DirectoryTypeIdRoute
+}
+
+const DirectoryRouteChildren: DirectoryRouteChildren = {
+  DirectoryTypeIdRoute: DirectoryTypeIdRoute,
+}
+
+const DirectoryRouteWithChildren = DirectoryRoute._addFileChildren(
+  DirectoryRouteChildren,
+)
+
 interface YouthRouteChildren {
   YouthOpportunitiesRoute: typeof YouthOpportunitiesRoute
   YouthPostOpportunityRoute: typeof YouthPostOpportunityRoute
@@ -693,6 +784,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   ApprenticeshipsRoute: ApprenticeshipsRouteWithChildren,
   AuthRoute: AuthRoute,
+  DirectoryRoute: DirectoryRouteWithChildren,
   DonateRoute: DonateRoute,
   FindHelpRoute: FindHelpRoute,
   HowItWorksRoute: HowItWorksRoute,
@@ -702,6 +794,8 @@ const rootRouteChildren: RootRouteChildren = {
   ResetPasswordRoute: ResetPasswordRoute,
   TermsRoute: TermsRoute,
   YouthRoute: YouthRouteWithChildren,
+  FeedbackTokenRoute: FeedbackTokenRoute,
+  ApiPublicContactRequestRoute: ApiPublicContactRequestRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

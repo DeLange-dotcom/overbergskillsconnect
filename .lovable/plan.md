@@ -1,62 +1,74 @@
-# Apprenticeships & Mentorships Hub
+# Post-Approval Workflow Plan
 
-A new top-level section integrated alongside the Skills Register and Youth Hub, supporting four pathways: seek apprenticeship, offer apprenticeship, find mentor, become mentor. Includes a special "Master Craftspeople & Knowledge Keepers" mentor flag, an admin matching dashboard, and a public impact dashboard.
+This is a large, multi-part build. I'll ship it in **4 phases** so we can review and adjust as we go. Each phase ends in a usable state.
 
-## Navigation
+---
 
-- Add **Apprenticeships** to `Header.tsx` main nav and `Footer.tsx`.
-- Keep Youth Hub as the trailing CTA button.
+## Phase 1 — Public Profiles & Directory (Steps 4–5)
 
-## Routes (`src/routes/`)
+**Database**
+- Add to `service_providers`, `apprentices`, `youth_profiles`:
+  - `is_published` (bool, auto `true` when admin approves)
+  - `is_suspended`, `is_archived` (bool, default false)
+  - `work_permit_verified` (bool) + extend Gold rule to require it where applicable
+  - `short_bio`, `languages` (text[]), `category` (enum)
+  - `profile_photo_url` (re-use existing if present)
+- View `public.directory_profiles` unioning the 3 tables, exposing only safe columns. `TO anon` SELECT policy, filtered to `is_published AND NOT is_suspended AND NOT is_archived`.
+- Update verification trigger: Gold now needs PCC **and** work-permit (when role requires it).
 
-Public:
-- `apprenticeships.tsx` — Hub homepage with 4 pathway cards, learning pathway visual, impact stats.
-- `apprenticeships.register-apprentice.tsx` — Apprentice registration form.
-- `apprenticeships.register-provider.tsx` — Provider + opportunity registration form.
-- `apprenticeships.opportunities.tsx` — Public board of open opportunities (status = Open).
-- `apprenticeships.mentors.tsx` — Searchable list of approved mentors (filter by category/location/format).
-- `apprenticeships.become-mentor.tsx` — Mentor registration (includes "Master Craftsperson / Knowledge Keeper" toggle + traditional-skill categories).
-- `apprenticeships.impact.tsx` — Public impact dashboard.
+**Frontend**
+- New route `/directory` — search + filters (category, location, availability, verification level, languages, skills).
+- New route `/directory/$id` — public profile page with verification badge, bio, photo, "Request Contact" button.
+- `VerificationBadge` shown on every card + profile page.
+- Persistent disclaimer banner in footer + on profile pages.
 
-Authenticated (under `_authenticated/admin/`):
-- `apprenticeships.index.tsx` — Admin overview: apprentices, providers, mentors, opportunities, matches.
-- `apprenticeships.matching.tsx` — Matching dashboard (apprentice↔opportunity, apprentice↔mentor) with status tracking.
+## Phase 2 — Contact Request System (Steps 6–7)
 
-## Database (single migration)
+**Database**
+- Extend existing `contact_requests`: `visitor_name`, `visitor_email`, `visitor_phone`, `reason`, `applicant_type`, `applicant_id`, `category`, `status` (`new` | `contact_shared` | `closed`), `disclaimer_accepted_at`.
 
-New tables (all RLS-enabled, GRANTs included, `updated_at` trigger via existing `tg_set_updated_at`):
+**Backend**
+- Public server route `/api/public/contact-request` (no auth) — validates with Zod, inserts row, then sends 2 emails via Lovable Emails:
+  1. To visitor → applicant's contact details
+  2. To applicant → visitor's contact details
+- Set status to `contact_shared` after emails enqueue.
+- Requires Lovable Emails infrastructure + 2 new templates (`contact-applicant-details`, `contact-visitor-details`). I'll set up email infra in this phase.
 
-1. **`apprentices`** — personal details, education, career_interests text[], opportunity_types text[], availability text[], why/skills text, cv_url, status enum (`registered|reviewed|interview|matched|active|completed`), user_id (nullable for guest), terms_acceptance_id.
-2. **`apprenticeship_providers`** — provider_type, org details, user_id, status (`pending|approved|rejected`).
-3. **`apprenticeship_opportunities`** — provider_id FK, title, industry, skills_offered text[], placements_available int, paid bool, stipend numeric, duration, start_date, min_age, qualifications, transport_req, safety_req, status (`open|reviewing|filled|closed`).
-4. **`mentors`** — name, contact, categories text[], years_experience, background, biography, availability text, formats text[] (in_person/online/phone/group), is_knowledge_keeper bool, knowledge_keeper_categories text[], status (`pending|approved|active|inactive`), user_id.
-5. **`apprentice_applications`** — apprentice_id, opportunity_id, status (`submitted|interview|placed|completed|declined`), notes.
-6. **`mentor_matches`** — apprentice_id (or user_id), mentor_id, status (`requested|approved|active|completed|declined`), notes.
+**Frontend**
+- `RequestContactDialog` with form + disclaimer checkbox, posts to the route above.
 
-RLS:
-- Apprentices/providers/mentors: insert allowed for anyone (anon + authenticated) for self-registration; select own row by user_id; admins via `has_role(auth.uid(),'admin')` can select/update all.
-- Opportunities & approved mentors: public SELECT only via security_invoker views (`apprenticeship_opportunities_public`, `mentors_public`) limited to approved/open rows + safe columns.
-- Applications/matches: admin-only via `has_role`; the apprentice may select their own.
+## Phase 3 — Admin Dashboard & Suspension (Steps 8, 10)
 
-All contact brokered through Hineni — no contact info exposed in public views.
+**Frontend**
+- New `/admin` dashboard index with 5 sections (counts + drill-in tables):
+  - Pending Applications (Awaiting Review / References / PCC / Work Permit)
+  - Approved Applicants (Bronze / Silver / Gold)
+  - Contact Requests
+  - PCC Assistance Requests (filter on existing `pcc_wants_assistance`)
+  - Safety Reports
+- New `safety_reports` table (applicant ref, complaint_type, description, resolution_status, admin notes).
+- On each applicant admin page: Suspend / Archive / Reinstate buttons (admin only via RLS + `has_role`).
 
-## Library files
+## Phase 4 — Feedback & Reputation (Step 9)
 
-- `src/lib/apprenticeships.ts` — constants: `CAREER_INTERESTS`, `OPPORTUNITY_TYPES`, `AVAILABILITY`, `PROVIDER_TYPES`, `MENTOR_CATEGORIES`, `MENTOR_FORMATS`, `KNOWLEDGE_KEEPER_CATEGORIES`, `LEARNING_PATHWAY` (8 stages), status labels/colors.
-- `src/components/site/LearningPathway.tsx` — 8-step horizontal pathway visual (Register → Volunteer → Holiday Work → Apprenticeship → Skills Training → Employment → Mentor → Community Leader).
-- `src/components/site/PathwayCard.tsx` — reusable card for the 4 hub pathways.
-- `src/components/site/OpportunityCard.tsx` — apprenticeship opportunity card.
-- `src/components/site/MentorCard.tsx` — mentor profile card with knowledge-keeper badge.
+**Database**
+- `feedback_requests` (contact_request_id, scheduled_for, sent_at, token, completed_at)
+- `feedback_responses` (engaged enum, reliability/communication/punctuality 1–5, would_recommend bool, comment)
+- pg_cron job (every hour) → finds contact_requests >= 30 days old without a feedback_request, enqueues email with unique token.
+- Computed view: per-applicant review count, avg rating, recommendation %.
 
-## Integration
+**Frontend**
+- Public `/feedback/$token` route — form.
+- Reviews section on public profile page.
+- New email template `feedback-request`.
 
-- Hub homepage links into existing Youth Hub, Skills Register, Volunteer programme.
-- Impact dashboard runs aggregate counts via a public server fn using `supabaseAdmin` (counts only, no PII).
-- Terms & Disclaimer acceptance reused on all three registration forms via existing `TermsAcceptance` component.
-- All forms validated with `zod`; mobile-first layout, large tap targets, minimal text fields per step.
+---
 
-## Out of scope
+## Notes
+- Hineni's "introductions only" disclaimer will appear on the directory, profile pages, contact dialog, and emails.
+- All public reads go through narrow `TO anon` policies and projected views — no PII leaks.
+- Lovable Emails (built-in) used throughout; no third-party provider needed.
 
-- Direct messaging (all contact brokered).
-- Automated matching algorithm (admins match manually for now).
-- CV file upload UI beyond a simple Supabase Storage upload to existing patterns (use `provider-documents` bucket or skip CV upload in v1 — TBD; default: text "CV URL" field, file upload deferred).
+---
+
+**Ready to start with Phase 1?** Or would you like me to adjust scope/order first (e.g. skip feedback for now, or do contact requests before the public directory)?
