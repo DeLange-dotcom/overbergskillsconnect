@@ -473,6 +473,23 @@ function RegisterYouth() {
 
           <PccSection errors={errors} />
 
+          <Fieldset title="Declarations (required)">
+            <label className="flex items-start gap-2 text-sm mb-3">
+              <input type="checkbox" name="applicant_declaration" className="mt-1 accent-brand-primary" />
+              <span>I confirm that the information supplied is accurate and complete.</span>
+            </label>
+            {errors.applicant_declaration && <p className="text-xs text-destructive mb-2">{errors.applicant_declaration}</p>}
+            <label className="flex items-start gap-2 text-sm">
+              <input type="checkbox" name="liability_accepted" className="mt-1 accent-brand-primary" />
+              <span>
+                I understand that Hineni acts solely as a facilitator of opportunities and cannot
+                guarantee placements, employment outcomes, conduct of participants or opportunity
+                providers. I agree to the platform terms and conditions.
+              </span>
+            </label>
+            {errors.liability_accepted && <p className="text-xs text-destructive mt-1">{errors.liability_accepted}</p>}
+          </Fieldset>
+
           <Fieldset title="Terms & Disclaimer (required)">
             <TermsAcceptance name="accept_terms" error={errors.accept_terms} />
           </Fieldset>
