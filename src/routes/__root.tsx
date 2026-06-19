@@ -78,18 +78,18 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Khulisa Skills Platform" },
+      { title: "Khulisa Community Connect" },
       {
         name: "description",
         content:
-          "The Khulisa Skills Platform — supporting Skills, Mentorship, Apprenticeships and Community Opportunities. A Khulisa Group platform delivering programmes including Hineni in the Overberg.",
+          "The Khulisa Community Connect — supporting Skills, Mentorship, Apprenticeships and Community Opportunities. A Khulisa Group platform delivering programmes including Hineni in the Overberg.",
       },
-      { property: "og:site_name", content: "Khulisa Skills Platform" },
-      { property: "og:title", content: "Khulisa Skills Platform" },
+      { property: "og:site_name", content: "Khulisa Community Connect" },
+      { property: "og:title", content: "Khulisa Community Connect" },
       {
         property: "og:description",
         content:
-          "Powered by Khulisa Skills. Programmes include Hineni — vetted local people for households, farms, churches and businesses in the Overberg.",
+          "Powered by Khulisa Community Connect. Programmes include Hineni — vetted local people for households, farms, churches and businesses in the Overberg.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },

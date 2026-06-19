@@ -39,7 +39,7 @@ export function Header() {
           </div>
           <div className="leading-tight">
             <div className="font-heading font-bold text-brand-primary text-lg">
-              Khulisa Skills
+              Khulisa Community Connect
             </div>
             <div className="text-[10px] uppercase tracking-widest text-brand-dark/50">
               Hineni Programme
@@ -93,7 +93,7 @@ export function Header() {
             <Link
               to="/auth"
               className="hidden sm:inline-flex px-3 py-2 rounded-full border border-brand-dark/10 text-sm text-brand-dark/70 hover:bg-brand-soft hover:text-brand-primary transition whitespace-nowrap"
-              title="Khulisa Skills Platform — Admin sign-in"
+              title="Khulisa Community Connect — Admin sign-in"
             >
               Admin sign-in
             </Link>
