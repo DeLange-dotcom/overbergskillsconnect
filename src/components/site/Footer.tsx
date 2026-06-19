@@ -1,6 +1,13 @@
 import { useEffect, useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { HINENI_DISCLAIMER } from "@/lib/directory-constants";
+import {
+  PLATFORM_NAME,
+  POWERED_BY_LINE,
+  GROUP_PLATFORM_LINE,
+  PLATFORM_OWNER,
+  IP_OWNERSHIP_STATEMENT,
+} from "@/lib/brand";
 
 export function Footer() {
   const [shareUrl, setShareUrl] = useState("https://hineni.example");
