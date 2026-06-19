@@ -77,13 +77,21 @@ function AuthPage() {
   return (
     <SiteLayout>
       <div className="max-w-md mx-auto px-4 sm:px-6 py-14">
+        <div className="mb-6">
+          <div className="text-xs uppercase tracking-widest text-brand-primary font-semibold">
+            Khulisa Skills Platform
+          </div>
+          <p className="text-sm text-brand-dark/60 mt-1">
+            Supporting Skills, Mentorship, Apprenticeships and Community Opportunities
+          </p>
+        </div>
         <h1 className="text-3xl font-heading font-bold mb-2">
           {mode === "signin" ? "Sign in" : mode === "signup" ? "Create account" : "Reset password"}
         </h1>
         <p className="text-brand-dark/60 text-sm mb-8">
           {mode === "forgot"
             ? "Enter your email and we'll send you a link to set a new password."
-            : "Admins and coordinators use this area. The public site doesn't require an account."}
+            : "Admins and programme coordinators use this area. The public site doesn't require an account."}
         </p>
 
         {mode !== "forgot" && (
