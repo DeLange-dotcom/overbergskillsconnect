@@ -1,15 +1,16 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { ACCEPTANCE_TEXT, TERMS_EFFECTIVE_DATE, TERMS_VERSION } from "@/lib/terms";
+import { IP_OWNERSHIP_STATEMENT, PLATFORM_NAME, PLATFORM_OWNER } from "@/lib/brand";
 
 export const Route = createFileRoute("/terms")({
   head: () => ({
     meta: [
-      { title: "Terms & Disclaimer — Hineni Skills Register" },
+      { title: "Terms & Disclaimer — Khulisa Skills Platform" },
       {
         name: "description",
         content:
-          "Important disclaimer and terms of use for applicants, service providers and service seekers on the Hineni Community Skills Register.",
+          "Terms of use and disclaimer for the Khulisa Skills Platform, including the Hineni Programme delivered through the platform.",
       },
     ],
   }),
