@@ -39,7 +39,7 @@ export function Header() {
           </div>
           <div className="leading-tight">
             <div className="font-heading font-bold text-brand-primary text-lg">
-              Khulisa Skills
+              Khulisa Community Connect
             </div>
             <div className="text-[10px] uppercase tracking-widest text-brand-dark/50">
               Hineni Programme
