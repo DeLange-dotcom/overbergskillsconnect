@@ -61,12 +61,18 @@ export function Footer() {
           </ul>
         </div>
       </div>
-      <div className="border-t border-brand-dark/5 py-6 px-4 sm:px-6">
+      <div className="border-t border-brand-dark/5 py-6 px-4 sm:px-6 space-y-4">
         <p className="max-w-5xl mx-auto text-[11px] leading-relaxed text-brand-dark/55 text-center">
           {HINENI_DISCLAIMER}
         </p>
-        <div className="mt-3 text-center text-xs text-brand-dark/50">
-          &copy; {new Date().getFullYear()} Hineni Community Skills Register · Overberg, South Africa
+        <p className="max-w-5xl mx-auto text-[11px] leading-relaxed text-brand-dark/55 text-center">
+          {IP_OWNERSHIP_STATEMENT}
+        </p>
+        <div className="text-center text-xs text-brand-dark/60 font-medium">
+          {POWERED_BY_LINE} · {GROUP_PLATFORM_LINE}
+        </div>
+        <div className="text-center text-xs text-brand-dark/50">
+          &copy; {new Date().getFullYear()} {PLATFORM_OWNER} · {PLATFORM_NAME}
         </div>
       </div>
     </footer>
