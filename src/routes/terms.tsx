@@ -108,6 +108,18 @@ function Terms() {
           “{ACCEPTANCE_TEXT}”
         </div>
 
+        <h2 className="text-xl font-heading font-semibold mt-10 mb-3">
+          Platform ownership &amp; intellectual property
+        </h2>
+        <div className="bg-brand-soft/60 border border-brand-dark/10 rounded-2xl p-5 text-sm text-brand-dark/85 leading-relaxed">
+          {IP_OWNERSHIP_STATEMENT}
+        </div>
+        <p className="text-sm text-brand-dark/75 leading-relaxed mt-4">
+          The Hineni Programme is a participating programme delivered through the {PLATFORM_NAME}.
+          References to "Hineni" in these terms refer to the programme and its coordinators, not to
+          the ownership of the platform, which remains with {PLATFORM_OWNER}.
+        </p>
+
         <p className="text-xs text-brand-dark/50 mt-10">
           When you accept these terms, we record the date and time, the version accepted, and where
           legally permitted your IP address, as part of our audit log.
