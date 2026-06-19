@@ -18,8 +18,9 @@ function Privacy() {
       <article className="max-w-3xl mx-auto px-4 sm:px-6 py-12 sm:py-16 prose-content">
         <h1 className="text-4xl font-heading font-bold mb-3">Privacy Notice</h1>
         <p className="text-brand-dark/60 mb-10">
-          Hineni Community Skills Register respects your privacy and complies with the Protection of
-          Personal Information Act (POPIA).
+          The {PLATFORM_NAME} (owned and operated by {PLATFORM_OWNER}) and its participating
+          programmes — including the Hineni Programme — respect your privacy and comply with the
+          Protection of Personal Information Act (POPIA).
         </p>
 
         <Section title="Why we collect your information">
