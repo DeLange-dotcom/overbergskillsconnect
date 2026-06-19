@@ -1,11 +1,12 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { SiteLayout } from "@/components/site/SiteLayout";
+import { IP_OWNERSHIP_STATEMENT, PLATFORM_NAME, PLATFORM_OWNER } from "@/lib/brand";
 
 export const Route = createFileRoute("/privacy")({
   head: () => ({
     meta: [
-      { title: "Privacy Notice — Hineni Community Skills Register" },
-      { name: "description", content: "How we collect, store and protect your information under POPIA." },
+      { title: "Privacy Notice — Khulisa Skills Platform" },
+      { name: "description", content: "How we collect, store and protect your information under POPIA on the Khulisa Skills Platform." },
     ],
   }),
   component: Privacy,
