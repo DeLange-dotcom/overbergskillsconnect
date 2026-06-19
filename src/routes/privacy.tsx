@@ -5,8 +5,8 @@ import { IP_OWNERSHIP_STATEMENT, PLATFORM_NAME, PLATFORM_OWNER } from "@/lib/bra
 export const Route = createFileRoute("/privacy")({
   head: () => ({
     meta: [
-      { title: "Privacy Notice — Khulisa Skills Platform" },
-      { name: "description", content: "How we collect, store and protect your information under POPIA on the Khulisa Skills Platform." },
+      { title: `Privacy Notice — ${PLATFORM_NAME}` },
+      { name: "description", content: `How we collect, store and protect your information under POPIA on the ${PLATFORM_NAME}.` },
     ],
   }),
   component: Privacy,

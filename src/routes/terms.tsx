@@ -6,11 +6,11 @@ import { IP_OWNERSHIP_STATEMENT, PLATFORM_NAME, PLATFORM_OWNER } from "@/lib/bra
 export const Route = createFileRoute("/terms")({
   head: () => ({
     meta: [
-      { title: "Terms & Disclaimer — Khulisa Skills Platform" },
+      { title: `Terms & Disclaimer — ${PLATFORM_NAME}` },
       {
         name: "description",
         content:
-          "Terms of use and disclaimer for the Khulisa Skills Platform, including the Hineni Programme delivered through the platform.",
+          `Terms of use and disclaimer for the ${PLATFORM_NAME}, including the Hineni Programme delivered through the platform.`,
       },
     ],
   }),
