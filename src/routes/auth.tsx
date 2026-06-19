@@ -9,8 +9,8 @@ import { Loader2 } from "lucide-react";
 export const Route = createFileRoute("/auth")({
   head: () => ({
     meta: [
-      { title: "Sign in — Hineni Admin" },
-      { name: "description", content: "Sign in to the Hineni admin dashboard." },
+      { title: "Sign in — Khulisa Skills Platform" },
+      { name: "description", content: "Sign in to the Khulisa Skills Platform admin dashboard." },
     ],
   }),
   component: AuthPage,
