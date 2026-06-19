@@ -15,4 +15,4 @@ export const PROGRAMME_BYLINE = "Hineni Programme powered by Khulisa Skills";
 export const DELIVERED_THROUGH_LINE = "Delivered through the Khulisa Skills Platform";
 
 export const IP_OWNERSHIP_STATEMENT =
-  "The Khulisa Skills Platform, including its software, workflows, forms, policies, content structures, databases and proprietary processes, is owned and operated by Khulisa Group. Use of the platform by partner organisations does not transfer intellectual property ownership.";
+  "All intellectual property rights relating to the platform, software, forms, workflows, content, designs, documentation and databases remain the property of Khulisa Group unless expressly agreed otherwise in writing.";
