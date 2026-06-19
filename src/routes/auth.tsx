@@ -9,8 +9,8 @@ import { Loader2 } from "lucide-react";
 export const Route = createFileRoute("/auth")({
   head: () => ({
     meta: [
-      { title: "Sign in — Khulisa Skills Platform" },
-      { name: "description", content: "Sign in to the Khulisa Skills Platform admin dashboard." },
+      { title: "Sign in — Khulisa Community Connect" },
+      { name: "description", content: "Sign in to the Khulisa Community Connect admin dashboard." },
     ],
   }),
   component: AuthPage,
@@ -79,7 +79,7 @@ function AuthPage() {
       <div className="max-w-md mx-auto px-4 sm:px-6 py-14">
         <div className="mb-6">
           <div className="text-xs uppercase tracking-widest text-brand-primary font-semibold">
-            Khulisa Skills Platform
+            Khulisa Community Connect
           </div>
           <p className="text-sm text-brand-dark/60 mt-1">
             Supporting Skills, Mentorship, Apprenticeships and Community Opportunities
