@@ -131,6 +131,7 @@ export type Database = {
           location_pref: string | null
           nationality: string | null
           opportunity_types: string[]
+          organisation_id: string | null
           parent_consent_uploaded_path: string | null
           parent_email: string | null
           parent_full_name: string | null
@@ -199,6 +200,7 @@ export type Database = {
           location_pref?: string | null
           nationality?: string | null
           opportunity_types?: string[]
+          organisation_id?: string | null
           parent_consent_uploaded_path?: string | null
           parent_email?: string | null
           parent_full_name?: string | null
@@ -267,6 +269,7 @@ export type Database = {
           location_pref?: string | null
           nationality?: string | null
           opportunity_types?: string[]
+          organisation_id?: string | null
           parent_consent_uploaded_path?: string | null
           parent_email?: string | null
           parent_full_name?: string | null
@@ -306,7 +309,15 @@ export type Database = {
           work_permit_status?: string | null
           work_permit_verified?: boolean
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "apprentices_organisation_id_fkey"
+            columns: ["organisation_id"]
+            isOneToOne: false
+            referencedRelation: "organisations"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       apprenticeship_opportunities: {
         Row: {
@@ -323,6 +334,7 @@ export type Database = {
           industry: string
           is_published: boolean | null
           min_age: number | null
+          organisation_id: string | null
           paid: boolean
           placements_available: number
           preferred_qualifications: string | null
@@ -352,6 +364,7 @@ export type Database = {
           industry: string
           is_published?: boolean | null
           min_age?: number | null
+          organisation_id?: string | null
           paid?: boolean
           placements_available?: number
           preferred_qualifications?: string | null
@@ -381,6 +394,7 @@ export type Database = {
           industry?: string
           is_published?: boolean | null
           min_age?: number | null
+          organisation_id?: string | null
           paid?: boolean
           placements_available?: number
           preferred_qualifications?: string | null
@@ -398,6 +412,13 @@ export type Database = {
         }
         Relationships: [
           {
+            foreignKeyName: "apprenticeship_opportunities_organisation_id_fkey"
+            columns: ["organisation_id"]
+            isOneToOne: false
+            referencedRelation: "organisations"
+            referencedColumns: ["id"]
+          },
+          {
             foreignKeyName: "apprenticeship_opportunities_provider_id_fkey"
             columns: ["provider_id"]
             isOneToOne: false
@@ -414,6 +435,7 @@ export type Database = {
           disclaimer_accepted_at: string | null
           email: string
           id: string
+          organisation_id: string | null
           organisation_name: string
           physical_address: string | null
           provider_type: string
@@ -435,6 +457,7 @@ export type Database = {
           disclaimer_accepted_at?: string | null
           email: string
           id?: string
+          organisation_id?: string | null
           organisation_name: string
           physical_address?: string | null
           provider_type: string
@@ -456,6 +479,7 @@ export type Database = {
           disclaimer_accepted_at?: string | null
           email?: string
           id?: string
+          organisation_id?: string | null
           organisation_name?: string
           physical_address?: string | null
           provider_type?: string
@@ -470,7 +494,15 @@ export type Database = {
           verification_doc_path?: string | null
           website?: string | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "apprenticeship_providers_organisation_id_fkey"
+            columns: ["organisation_id"]
+            isOneToOne: false
+            referencedRelation: "organisations"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       audit_log: {
         Row: {
@@ -512,6 +544,7 @@ export type Database = {
           disclaimer_accepted_at: string | null
           id: string
           message: string | null
+          organisation_id: string | null
           reason: string | null
           requester_contact: string
           requester_email: string | null
@@ -531,6 +564,7 @@ export type Database = {
           disclaimer_accepted_at?: string | null
           id?: string
           message?: string | null
+          organisation_id?: string | null
           reason?: string | null
           requester_contact: string
           requester_email?: string | null
@@ -550,6 +584,7 @@ export type Database = {
           disclaimer_accepted_at?: string | null
           id?: string
           message?: string | null
+          organisation_id?: string | null
           reason?: string | null
           requester_contact?: string
           requester_email?: string | null
@@ -561,6 +596,13 @@ export type Database = {
           visitor_phone?: string | null
         }
         Relationships: [
+          {
+            foreignKeyName: "contact_requests_organisation_id_fkey"
+            columns: ["organisation_id"]
+            isOneToOne: false
+            referencedRelation: "organisations"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "contact_requests_service_provider_id_fkey"
             columns: ["service_provider_id"]
@@ -588,6 +630,7 @@ export type Database = {
           frequency: Database["public"]["Enums"]["donation_frequency"]
           id: string
           message: string | null
+          organisation_id: string | null
           payment_provider: string | null
           payment_reference: string | null
           payment_status: Database["public"]["Enums"]["payment_status"]
@@ -604,6 +647,7 @@ export type Database = {
           frequency?: Database["public"]["Enums"]["donation_frequency"]
           id?: string
           message?: string | null
+          organisation_id?: string | null
           payment_provider?: string | null
           payment_reference?: string | null
           payment_status?: Database["public"]["Enums"]["payment_status"]
@@ -620,13 +664,22 @@ export type Database = {
           frequency?: Database["public"]["Enums"]["donation_frequency"]
           id?: string
           message?: string | null
+          organisation_id?: string | null
           payment_provider?: string | null
           payment_reference?: string | null
           payment_status?: Database["public"]["Enums"]["payment_status"]
           phone?: string | null
           purpose?: Database["public"]["Enums"]["donation_purpose"]
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "donations_organisation_id_fkey"
+            columns: ["organisation_id"]
+            isOneToOne: false
+            referencedRelation: "organisations"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       feedback_requests: {
         Row: {
@@ -796,6 +849,7 @@ export type Database = {
           is_knowledge_keeper: boolean
           knowledge_keeper_categories: string[]
           linkedin_url: string | null
+          organisation_id: string | null
           pcc_path: string | null
           professional_background: string | null
           qualifications: string | null
@@ -833,6 +887,7 @@ export type Database = {
           is_knowledge_keeper?: boolean
           knowledge_keeper_categories?: string[]
           linkedin_url?: string | null
+          organisation_id?: string | null
           pcc_path?: string | null
           professional_background?: string | null
           qualifications?: string | null
@@ -870,6 +925,7 @@ export type Database = {
           is_knowledge_keeper?: boolean
           knowledge_keeper_categories?: string[]
           linkedin_url?: string | null
+          organisation_id?: string | null
           pcc_path?: string | null
           professional_background?: string | null
           qualifications?: string | null
@@ -892,7 +948,15 @@ export type Database = {
           website_url?: string | null
           years_experience?: number | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "mentors_organisation_id_fkey"
+            columns: ["organisation_id"]
+            isOneToOne: false
+            referencedRelation: "organisations"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       mentors_interest: {
         Row: {
@@ -957,6 +1021,7 @@ export type Database = {
           goals: string | null
           id: string
           mobile: string | null
+          organisation_id: string | null
           preferred_frequency: string | null
           preferred_mentor_id: string | null
           preferred_method: string | null
@@ -977,6 +1042,7 @@ export type Database = {
           goals?: string | null
           id?: string
           mobile?: string | null
+          organisation_id?: string | null
           preferred_frequency?: string | null
           preferred_mentor_id?: string | null
           preferred_method?: string | null
@@ -997,6 +1063,7 @@ export type Database = {
           goals?: string | null
           id?: string
           mobile?: string | null
+          organisation_id?: string | null
           preferred_frequency?: string | null
           preferred_mentor_id?: string | null
           preferred_method?: string | null
@@ -1019,6 +1086,13 @@ export type Database = {
             columns: ["assigned_mentor_id"]
             isOneToOne: false
             referencedRelation: "mentors_public"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "mentorship_requests_organisation_id_fkey"
+            columns: ["organisation_id"]
+            isOneToOne: false
+            referencedRelation: "organisations"
             referencedColumns: ["id"]
           },
           {
@@ -1079,6 +1153,48 @@ export type Database = {
           },
         ]
       }
+      organisations: {
+        Row: {
+          contact_email: string | null
+          created_at: string
+          id: string
+          is_active: boolean
+          kind: Database["public"]["Enums"]["organisation_kind"]
+          name: string
+          region: string | null
+          short_description: string | null
+          slug: string
+          updated_at: string
+          website_url: string | null
+        }
+        Insert: {
+          contact_email?: string | null
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          kind?: Database["public"]["Enums"]["organisation_kind"]
+          name: string
+          region?: string | null
+          short_description?: string | null
+          slug: string
+          updated_at?: string
+          website_url?: string | null
+        }
+        Update: {
+          contact_email?: string | null
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          kind?: Database["public"]["Enums"]["organisation_kind"]
+          name?: string
+          region?: string | null
+          short_description?: string | null
+          slug?: string
+          updated_at?: string
+          website_url?: string | null
+        }
+        Relationships: []
+      }
       placements: {
         Row: {
           apprentice_id: string
@@ -1087,6 +1203,7 @@ export type Database = {
           id: string
           notes: string | null
           opportunity_id: string
+          organisation_id: string | null
           outcome: string | null
           provider_id: string | null
           started_at: string | null
@@ -1100,6 +1217,7 @@ export type Database = {
           id?: string
           notes?: string | null
           opportunity_id: string
+          organisation_id?: string | null
           outcome?: string | null
           provider_id?: string | null
           started_at?: string | null
@@ -1113,6 +1231,7 @@ export type Database = {
           id?: string
           notes?: string | null
           opportunity_id?: string
+          organisation_id?: string | null
           outcome?: string | null
           provider_id?: string | null
           started_at?: string | null
@@ -1139,6 +1258,13 @@ export type Database = {
             columns: ["opportunity_id"]
             isOneToOne: false
             referencedRelation: "apprenticeship_opportunities_public"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "placements_organisation_id_fkey"
+            columns: ["organisation_id"]
+            isOneToOne: false
+            referencedRelation: "organisations"
             referencedColumns: ["id"]
           },
           {
@@ -1365,6 +1491,7 @@ export type Database = {
           max_travel: Database["public"]["Enums"]["travel_distance"]
           mobile_number: string
           nationality: string
+          organisation_id: string | null
           own_transport: boolean
           pcc_admin_notes: string | null
           pcc_certificate_path: string | null
@@ -1428,6 +1555,7 @@ export type Database = {
           max_travel?: Database["public"]["Enums"]["travel_distance"]
           mobile_number: string
           nationality: string
+          organisation_id?: string | null
           own_transport?: boolean
           pcc_admin_notes?: string | null
           pcc_certificate_path?: string | null
@@ -1491,6 +1619,7 @@ export type Database = {
           max_travel?: Database["public"]["Enums"]["travel_distance"]
           mobile_number?: string
           nationality?: string
+          organisation_id?: string | null
           own_transport?: boolean
           pcc_admin_notes?: string | null
           pcc_certificate_path?: string | null
@@ -1523,7 +1652,15 @@ export type Database = {
           work_permit_verified?: boolean
           years_experience?: number | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "service_providers_organisation_id_fkey"
+            columns: ["organisation_id"]
+            isOneToOne: false
+            referencedRelation: "organisations"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       service_requests: {
         Row: {
@@ -1536,6 +1673,7 @@ export type Database = {
           id: string
           location: string
           notes: string | null
+          organisation_id: string | null
           preferred_days: string[]
           preferred_times: string[]
           requester_name: string
@@ -1556,6 +1694,7 @@ export type Database = {
           id?: string
           location: string
           notes?: string | null
+          organisation_id?: string | null
           preferred_days?: string[]
           preferred_times?: string[]
           requester_name: string
@@ -1576,6 +1715,7 @@ export type Database = {
           id?: string
           location?: string
           notes?: string | null
+          organisation_id?: string | null
           preferred_days?: string[]
           preferred_times?: string[]
           requester_name?: string
@@ -1586,7 +1726,15 @@ export type Database = {
           updated_at?: string
           urgency?: string | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "service_requests_organisation_id_fkey"
+            columns: ["organisation_id"]
+            isOneToOne: false
+            referencedRelation: "organisations"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       terms_acceptances: {
         Row: {
@@ -1710,6 +1858,7 @@ export type Database = {
           id: string
           notes: string | null
           opportunity_id: string | null
+          organisation_id: string | null
           outcome: string | null
           outcome_notes: string | null
           outcome_updated_at: string | null
@@ -1724,6 +1873,7 @@ export type Database = {
           id?: string
           notes?: string | null
           opportunity_id?: string | null
+          organisation_id?: string | null
           outcome?: string | null
           outcome_notes?: string | null
           outcome_updated_at?: string | null
@@ -1738,6 +1888,7 @@ export type Database = {
           id?: string
           notes?: string | null
           opportunity_id?: string | null
+          organisation_id?: string | null
           outcome?: string | null
           outcome_notes?: string | null
           outcome_updated_at?: string | null
@@ -1758,6 +1909,13 @@ export type Database = {
             columns: ["opportunity_id"]
             isOneToOne: false
             referencedRelation: "youth_opportunities_public"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "youth_applications_organisation_id_fkey"
+            columns: ["organisation_id"]
+            isOneToOne: false
+            referencedRelation: "organisations"
             referencedColumns: ["id"]
           },
           {
@@ -1834,6 +1992,7 @@ export type Database = {
           max_age: number
           min_age: number
           opportunity_type: string
+          organisation_id: string | null
           organisation_name: string
           positions_available: number | null
           posted_by_user_id: string | null
@@ -1882,6 +2041,7 @@ export type Database = {
           max_age?: number
           min_age?: number
           opportunity_type: string
+          organisation_id?: string | null
           organisation_name: string
           positions_available?: number | null
           posted_by_user_id?: string | null
@@ -1930,6 +2090,7 @@ export type Database = {
           max_age?: number
           min_age?: number
           opportunity_type?: string
+          organisation_id?: string | null
           organisation_name?: string
           positions_available?: number | null
           posted_by_user_id?: string | null
@@ -1949,7 +2110,15 @@ export type Database = {
           verification_doc_url?: string | null
           website?: string | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "youth_opportunities_organisation_id_fkey"
+            columns: ["organisation_id"]
+            isOneToOne: false
+            referencedRelation: "organisations"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       youth_profiles: {
         Row: {
@@ -1995,6 +2164,7 @@ export type Database = {
           mobile_number: string | null
           notes_admin: string | null
           opportunity_types: string[]
+          organisation_id: string | null
           parent_consent_form_url: string | null
           parent_consent_method: string | null
           parent_consent_signature: string | null
@@ -2077,6 +2247,7 @@ export type Database = {
           mobile_number?: string | null
           notes_admin?: string | null
           opportunity_types?: string[]
+          organisation_id?: string | null
           parent_consent_form_url?: string | null
           parent_consent_method?: string | null
           parent_consent_signature?: string | null
@@ -2159,6 +2330,7 @@ export type Database = {
           mobile_number?: string | null
           notes_admin?: string | null
           opportunity_types?: string[]
+          organisation_id?: string | null
           parent_consent_form_url?: string | null
           parent_consent_method?: string | null
           parent_consent_signature?: string | null
@@ -2198,7 +2370,15 @@ export type Database = {
           work_permit_required?: boolean
           work_permit_verified?: boolean
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "youth_profiles_organisation_id_fkey"
+            columns: ["organisation_id"]
+            isOneToOne: false
+            referencedRelation: "organisations"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       youth_references: {
         Row: {
@@ -2650,6 +2830,14 @@ export type Database = {
         | "declined"
       mentor_status: "pending" | "approved" | "active" | "inactive"
       opportunity_status: "open" | "reviewing" | "filled" | "closed"
+      organisation_kind:
+        | "programme"
+        | "municipality"
+        | "school"
+        | "npo"
+        | "community"
+        | "government"
+        | "other"
       payment_status: "pending" | "succeeded" | "failed" | "refunded"
       pcc_status: "have" | "applied" | "none" | "need_help"
       provider_app_status: "pending" | "approved" | "rejected"
@@ -2887,6 +3075,15 @@ export const Constants = {
       ],
       mentor_status: ["pending", "approved", "active", "inactive"],
       opportunity_status: ["open", "reviewing", "filled", "closed"],
+      organisation_kind: [
+        "programme",
+        "municipality",
+        "school",
+        "npo",
+        "community",
+        "government",
+        "other",
+      ],
       payment_status: ["pending", "succeeded", "failed", "refunded"],
       pcc_status: ["have", "applied", "none", "need_help"],
       provider_app_status: ["pending", "approved", "rejected"],

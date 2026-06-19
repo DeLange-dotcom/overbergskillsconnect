@@ -1,6 +1,13 @@
 import { useEffect, useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { HINENI_DISCLAIMER } from "@/lib/directory-constants";
+import {
+  PLATFORM_NAME,
+  POWERED_BY_LINE,
+  GROUP_PLATFORM_LINE,
+  PLATFORM_OWNER,
+  IP_OWNERSHIP_STATEMENT,
+} from "@/lib/brand";
 
 export function Footer() {
   const [shareUrl, setShareUrl] = useState("https://hineni.example");
@@ -15,10 +22,16 @@ export function Footer() {
     <footer className="mt-20 border-t border-brand-dark/5 bg-brand-soft/50">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 py-12 grid gap-8 md:grid-cols-3">
         <div>
-          <div className="font-heading text-xl font-bold text-brand-primary mb-2">Hineni</div>
+          <div className="font-heading text-xl font-bold text-brand-primary mb-1">
+            {PLATFORM_NAME}
+          </div>
+          <div className="text-xs uppercase tracking-widest text-brand-dark/50 mb-3">
+            {GROUP_PLATFORM_LINE}
+          </div>
           <p className="text-sm text-brand-dark/70 max-w-xs">
-            A trusted community skills register for the Overberg. Connecting vetted local people
-            with households, farms and businesses that need help.
+            A multi-programme skills, mentorship and opportunities platform owned and operated by{" "}
+            {PLATFORM_OWNER}. The Hineni Programme is delivered through this platform to serve the
+            Overberg community.
           </p>
         </div>
         <div className="text-sm">
@@ -48,12 +61,18 @@ export function Footer() {
           </ul>
         </div>
       </div>
-      <div className="border-t border-brand-dark/5 py-6 px-4 sm:px-6">
+      <div className="border-t border-brand-dark/5 py-6 px-4 sm:px-6 space-y-4">
         <p className="max-w-5xl mx-auto text-[11px] leading-relaxed text-brand-dark/55 text-center">
           {HINENI_DISCLAIMER}
         </p>
-        <div className="mt-3 text-center text-xs text-brand-dark/50">
-          &copy; {new Date().getFullYear()} Hineni Community Skills Register · Overberg, South Africa
+        <p className="max-w-5xl mx-auto text-[11px] leading-relaxed text-brand-dark/55 text-center">
+          {IP_OWNERSHIP_STATEMENT}
+        </p>
+        <div className="text-center text-xs text-brand-dark/60 font-medium">
+          {POWERED_BY_LINE} · {GROUP_PLATFORM_LINE}
+        </div>
+        <div className="text-center text-xs text-brand-dark/50">
+          &copy; {new Date().getFullYear()} {PLATFORM_OWNER} · {PLATFORM_NAME}
         </div>
       </div>
     </footer>

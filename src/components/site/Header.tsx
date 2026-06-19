@@ -35,12 +35,14 @@ export function Header() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between gap-4">
         <Link to="/" className="flex items-center gap-2 shrink-0">
           <div className="size-9 rounded-full bg-brand-primary text-primary-foreground grid place-items-center font-heading font-bold">
-            H
+            K
           </div>
           <div className="leading-tight">
-            <div className="font-heading font-bold text-brand-primary text-lg">Hineni</div>
+            <div className="font-heading font-bold text-brand-primary text-lg">
+              Khulisa Skills
+            </div>
             <div className="text-[10px] uppercase tracking-widest text-brand-dark/50">
-              Skills Register
+              Hineni Programme
             </div>
           </div>
         </Link>
@@ -91,7 +93,7 @@ export function Header() {
             <Link
               to="/auth"
               className="hidden sm:inline-flex px-3 py-2 rounded-full border border-brand-dark/10 text-sm text-brand-dark/70 hover:bg-brand-soft hover:text-brand-primary transition whitespace-nowrap"
-              title="Hineni Admin sign-in"
+              title="Khulisa Skills Platform — Admin sign-in"
             >
               Admin sign-in
             </Link>
