@@ -22,10 +22,16 @@ export function Footer() {
     <footer className="mt-20 border-t border-brand-dark/5 bg-brand-soft/50">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 py-12 grid gap-8 md:grid-cols-3">
         <div>
-          <div className="font-heading text-xl font-bold text-brand-primary mb-2">Hineni</div>
+          <div className="font-heading text-xl font-bold text-brand-primary mb-1">
+            {PLATFORM_NAME}
+          </div>
+          <div className="text-xs uppercase tracking-widest text-brand-dark/50 mb-3">
+            {GROUP_PLATFORM_LINE}
+          </div>
           <p className="text-sm text-brand-dark/70 max-w-xs">
-            A trusted community skills register for the Overberg. Connecting vetted local people
-            with households, farms and businesses that need help.
+            A multi-programme skills, mentorship and opportunities platform owned and operated by{" "}
+            {PLATFORM_OWNER}. The Hineni Programme is delivered through this platform to serve the
+            Overberg community.
           </p>
         </div>
         <div className="text-sm">
