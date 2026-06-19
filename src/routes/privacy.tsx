@@ -55,8 +55,12 @@ function Privacy() {
         </Section>
 
         <Section title="Contact">
-          To exercise any of your rights, or to ask a privacy question, please contact a Hineni
-          coordinator.
+          To exercise any of your rights, or to ask a privacy question, please contact a programme
+          coordinator (e.g. the Hineni Programme team) or {PLATFORM_OWNER} directly.
+        </Section>
+
+        <Section title="Platform ownership & intellectual property">
+          {IP_OWNERSHIP_STATEMENT}
         </Section>
       </article>
     </SiteLayout>
