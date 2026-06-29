@@ -25,6 +25,34 @@ type Row = {
 function MyListing() {
   const { token } = Route.useParams();
   const qc = useQueryClient();
+  const navigate = useNavigate();
+  const [signedIn, setSignedIn] = useState(false);
+  const [claiming, setClaiming] = useState(false);
+
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data }) => setSignedIn(!!data.session));
+  }, []);
+
+  async function claim() {
+    if (!signedIn) {
+      navigate({
+        to: "/auth",
+        search: { next: `/my-listing/${token}` } as never,
+      });
+      return;
+    }
+    setClaiming(true);
+    const { error } = await supabase.rpc("noticeboard_claim_listing", {
+      _manage_token: token,
+    });
+    setClaiming(false);
+    if (error) {
+      toast.error(error.message);
+      return;
+    }
+    toast.success("Listing added to your account");
+    navigate({ to: "/my-advert" });
+  }
 
   const { data, isLoading, error } = useQuery({
     queryKey: ["my-listing", token],
