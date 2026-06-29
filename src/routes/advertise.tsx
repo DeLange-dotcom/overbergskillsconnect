@@ -26,7 +26,7 @@ function Advertise() {
   const [submitting, setSubmitting] = useState(false);
   const [skills, setSkills] = useState<string[]>([]);
   const [otherSkills, setOtherSkills] = useState("");
-  const [done, setDone] = useState<{ manageToken: string } | null>(null);
+  const [done, setDone] = useState<{ manageToken: string; publicRef: string | null } | null>(null);
   const [acks, setAcks] = useState({ age: false, truthful: false, terms: false, noticeboard: false });
 
   const hasOther = skills.includes("Other");
