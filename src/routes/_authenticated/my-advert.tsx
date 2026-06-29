@@ -475,3 +475,112 @@ function Field({
     </div>
   );
 }
+
+type IncomingRow = {
+  id: string;
+  requester_name: string;
+  requester_contact: string;
+  message: string | null;
+  status: "pending" | "approved" | "declined";
+  created_at: string;
+  decided_at: string | null;
+};
+
+function IncomingRequests() {
+  const qc = useQueryClient();
+  const { data, isLoading } = useQuery({
+    queryKey: ["incoming-requests"],
+    queryFn: async (): Promise<IncomingRow[]> => {
+      const { data, error } = await supabase.rpc("noticeboard_my_incoming_requests");
+      if (error) throw error;
+      return (data ?? []) as IncomingRow[];
+    },
+    refetchInterval: 30000,
+  });
+
+  async function decide(id: string, decision: "approved" | "declined") {
+    const { error } = await supabase.rpc("noticeboard_my_decide", {
+      _request_id: id,
+      _decision: decision,
+    });
+    if (error) {
+      toast.error(error.message);
+      return;
+    }
+    toast.success(decision === "approved" ? "Contact details shared." : "Request declined.");
+    qc.invalidateQueries({ queryKey: ["incoming-requests"] });
+  }
+
+  const rows = data ?? [];
+
+  return (
+    <section className="mb-8">
+      <h2 className="text-xl font-heading font-bold mb-3">People Interested In Me</h2>
+      {isLoading ? (
+        <div className="text-sm text-brand-dark/60">Loading…</div>
+      ) : rows.length === 0 ? (
+        <div className="p-5 rounded-2xl border border-dashed border-brand-dark/15 text-sm text-brand-dark/60 text-center">
+          No one has asked for your contact details yet.
+        </div>
+      ) : (
+        <ul className="space-y-3">
+          {rows.map((r) => {
+            const date = new Date(r.created_at).toLocaleDateString(undefined, {
+              year: "numeric",
+              month: "short",
+              day: "numeric",
+            });
+            return (
+              <li
+                key={r.id}
+                className="p-4 rounded-2xl border border-brand-dark/10 bg-white"
+              >
+                <div className="flex items-start justify-between gap-3">
+                  <div className="min-w-0">
+                    <div className="font-medium truncate">{r.requester_name}</div>
+                    <div className="text-xs text-brand-dark/50">Requested {date}</div>
+                    {r.message && (
+                      <p className="text-sm text-brand-dark/70 mt-2 whitespace-pre-line">
+                        {r.message}
+                      </p>
+                    )}
+                  </div>
+                  {r.status !== "pending" && (
+                    <span
+                      className={
+                        "text-xs px-2.5 py-1 rounded-full shrink-0 " +
+                        (r.status === "approved"
+                          ? "bg-emerald-100 text-emerald-800"
+                          : "bg-red-100 text-red-800")
+                      }
+                    >
+                      {r.status === "approved" ? "Approved" : "Declined"}
+                    </span>
+                  )}
+                </div>
+                {r.status === "pending" && (
+                  <div className="flex gap-2 mt-4">
+                    <button
+                      type="button"
+                      onClick={() => decide(r.id, "approved")}
+                      className="flex-1 px-3 py-2.5 rounded-xl bg-emerald-600 text-white text-sm font-medium"
+                    >
+                      ✅ Approve
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => decide(r.id, "declined")}
+                      className="flex-1 px-3 py-2.5 rounded-xl border border-red-200 text-red-700 text-sm font-medium"
+                    >
+                      ❌ Decline
+                    </button>
+                  </div>
+                )}
+              </li>
+            );
+          })}
+        </ul>
+      )}
+    </section>
+  );
+}
