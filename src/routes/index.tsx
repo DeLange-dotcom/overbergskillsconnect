@@ -45,7 +45,7 @@ function Home() {
           <div className="mt-10 grid gap-4 sm:grid-cols-2">
             <Link
               to="/advertise"
-              className="group rounded-3xl p-8 bg-emerald-600 text-white shadow-lg shadow-emerald-600/20 hover:shadow-emerald-600/30 hover:scale-[1.02] transition text-left"
+              className="group rounded-3xl p-8 bg-brand-field text-primary-foreground shadow-lg shadow-brand-field/25 hover:shadow-brand-field/35 hover:scale-[1.02] transition text-left"
             >
               <div className="flex items-center justify-between">
                 <span className="text-xs font-bold uppercase tracking-wider opacity-90">
@@ -61,7 +61,7 @@ function Home() {
 
             <Link
               to="/find-help"
-              className="group rounded-3xl p-8 bg-blue-600 text-white shadow-lg shadow-blue-600/20 hover:shadow-blue-600/30 hover:scale-[1.02] transition text-left"
+              className="group rounded-3xl p-8 bg-brand-sky text-primary-foreground shadow-lg shadow-brand-sky/25 hover:shadow-brand-sky/35 hover:scale-[1.02] transition text-left"
             >
               <div className="flex items-center justify-between">
                 <span className="text-xs font-bold uppercase tracking-wider opacity-90">
