@@ -646,7 +646,7 @@ function TextArea({
         rows={4}
         placeholder={placeholder}
         className="w-full px-4 py-3 border border-brand-dark/10 rounded-xl bg-white focus:outline-none focus:border-brand-primary"
-      />
+       spellCheck="true" />
       {error && <p className="text-xs text-destructive mt-1">{error}</p>}
     </div>
   );

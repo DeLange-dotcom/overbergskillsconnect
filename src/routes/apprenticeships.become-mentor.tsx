@@ -184,9 +184,9 @@ function Page() {
             <div className="mt-4"><Label>Professional background</Label>
               <input name="professional_background" className="w-full px-4 py-3 border border-brand-dark/10 rounded-xl bg-white" /></div>
             <div className="mt-4"><Label>Biography</Label>
-              <textarea name="biography" rows={4} className="w-full px-4 py-3 border border-brand-dark/10 rounded-xl bg-white" /></div>
+              <textarea name="biography" rows={4} className="w-full px-4 py-3 border border-brand-dark/10 rounded-xl bg-white"  spellCheck="true" /></div>
             <div className="mt-4"><Label>Qualifications</Label>
-              <textarea name="qualifications" rows={3} className="w-full px-4 py-3 border border-brand-dark/10 rounded-xl bg-white" /></div>
+              <textarea name="qualifications" rows={3} className="w-full px-4 py-3 border border-brand-dark/10 rounded-xl bg-white"  spellCheck="true" /></div>
           </Fieldset>
 
           <Fieldset title="Areas of expertise"><CheckGrid name="categories" options={MENTOR_CATEGORIES} error={errors.categories} /></Fieldset>

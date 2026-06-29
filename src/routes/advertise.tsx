@@ -228,6 +228,7 @@ function Advertise() {
                   onChange={(e) => setOtherSkills(e.target.value)}
                   required={hasOther}
                   placeholder="e.g. Upholstery, Drone Operator, Beekeeper, Piano Teacher, Stone Mason..."
+                  spellCheck
                   className="w-full px-4 py-3 border border-brand-dark/10 rounded-xl"
                 />
                 <p className="text-xs text-brand-dark/60 mt-1">
@@ -269,7 +270,7 @@ function Advertise() {
               rows={4}
               placeholder="A few sentences about what you do best."
               className="w-full px-4 py-3 border border-brand-dark/10 rounded-xl"
-            />
+             spellCheck="true" />
           </div>
 
           <Field
@@ -369,6 +370,7 @@ function Field({
         placeholder={placeholder}
         min={min}
         max={max}
+        spellCheck={!type || ["text", "search", "email"].includes(type)}
         className="w-full px-4 py-3 border border-brand-dark/10 rounded-xl"
       />
       {help && <p className="text-xs text-brand-dark/60 mt-1">{help}</p>}

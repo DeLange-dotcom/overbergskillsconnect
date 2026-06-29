@@ -199,7 +199,7 @@ function Donate() {
 
           <div>
             <Label>Message (optional)</Label>
-            <textarea name="message" rows={3} className="w-full px-4 py-3 border border-brand-dark/10 rounded-xl" />
+            <textarea name="message" rows={3} className="w-full px-4 py-3 border border-brand-dark/10 rounded-xl"  spellCheck="true" />
           </div>
 
           <label className="flex items-start gap-2 text-sm">

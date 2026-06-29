@@ -338,11 +338,11 @@ function Page() {
             </Grid>
             <div className="mt-4">
               <Label>Qualifications</Label>
-              <textarea name="qualifications" rows={2} className="w-full px-4 py-3 border border-brand-dark/10 rounded-xl bg-white" />
+              <textarea name="qualifications" rows={2} className="w-full px-4 py-3 border border-brand-dark/10 rounded-xl bg-white"  spellCheck="true" />
             </div>
             <div className="mt-4">
               <Label>Certificates</Label>
-              <textarea name="certificates" rows={2} className="w-full px-4 py-3 border border-brand-dark/10 rounded-xl bg-white" />
+              <textarea name="certificates" rows={2} className="w-full px-4 py-3 border border-brand-dark/10 rounded-xl bg-white"  spellCheck="true" />
             </div>
           </Fieldset>
 
@@ -352,10 +352,10 @@ function Page() {
 
           <Fieldset title="A bit more about you">
             <div><Label>Why are you interested in this field?</Label>
-              <textarea name="why_interested" rows={3} className="w-full px-4 py-3 border border-brand-dark/10 rounded-xl bg-white" />
+              <textarea name="why_interested" rows={3} className="w-full px-4 py-3 border border-brand-dark/10 rounded-xl bg-white"  spellCheck="true" />
             </div>
             <div className="mt-4"><Label>What skills would you like to learn?</Label>
-              <textarea name="skills_to_learn" rows={3} className="w-full px-4 py-3 border border-brand-dark/10 rounded-xl bg-white" />
+              <textarea name="skills_to_learn" rows={3} className="w-full px-4 py-3 border border-brand-dark/10 rounded-xl bg-white"  spellCheck="true" />
             </div>
             <Grid>
               <div className="mt-4"><Label>CV link (optional, e.g. Google Drive)</Label>

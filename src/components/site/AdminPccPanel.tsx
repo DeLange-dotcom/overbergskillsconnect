@@ -242,6 +242,7 @@ export function AdminPccPanel({ table, id }: Props) {
           Admin notes
         </div>
         <textarea
+          spellCheck
           rows={3}
           value={notesDraft}
           onChange={(e) => setNotesDraft(e.target.value)}

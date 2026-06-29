@@ -311,7 +311,7 @@ function RegisterYouth() {
             </Grid>
             <div className="mt-4">
               <Label>Physical address</Label>
-              <textarea name="physical_address" rows={2} className="w-full px-4 py-3 border border-brand-dark/10 rounded-xl bg-white" />
+              <textarea name="physical_address" rows={2} className="w-full px-4 py-3 border border-brand-dark/10 rounded-xl bg-white"  spellCheck="true" />
             </div>
             {ageGroup && (
               <p className="text-xs mt-3 text-brand-primary">
