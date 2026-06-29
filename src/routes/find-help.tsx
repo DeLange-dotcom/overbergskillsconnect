@@ -23,6 +23,7 @@ export const Route = createFileRoute("/find-help")({
 
 type Row = {
   id: string;
+  public_listing_reference: string | null;
   name: string;
   town: string;
   skills: string[];
