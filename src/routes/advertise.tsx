@@ -1,5 +1,6 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { CheckCircle2, Copy } from "lucide-react";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { DisclaimerBanner } from "@/components/site/DisclaimerBanner";
@@ -22,6 +23,7 @@ export const Route = createFileRoute("/advertise")({
 });
 
 function Advertise() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [submitting, setSubmitting] = useState(false);
   const [skills, setSkills] = useState<string[]>([]);
@@ -192,6 +194,7 @@ function Advertise() {
 
           <div>
             <Label required>Skills</Label>
+            <p className="text-xs text-brand-dark/60 mt-1 mb-2">{t("advertise.skillsHelp")}</p>
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 mt-2">
               {SKILL_CATEGORIES.map((s) => {
                 const active = skills.includes(s);
