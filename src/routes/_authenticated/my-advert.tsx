@@ -23,6 +23,7 @@ type MyListing = {
   availability: string | null;
   photo_url: string | null;
   is_hidden: boolean;
+  is_archived: boolean;
   public_listing_reference: string | null;
   created_at: string;
 };
