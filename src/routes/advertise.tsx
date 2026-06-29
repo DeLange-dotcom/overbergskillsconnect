@@ -25,11 +25,21 @@ function Advertise() {
   const navigate = useNavigate();
   const [submitting, setSubmitting] = useState(false);
   const [skills, setSkills] = useState<string[]>([]);
+  const [otherSkills, setOtherSkills] = useState("");
   const [done, setDone] = useState<{ manageToken: string } | null>(null);
   const [acks, setAcks] = useState({ age: false, truthful: false, terms: false, noticeboard: false });
 
+  const hasOther = skills.includes("Other");
+
   function toggleSkill(s: string) {
-    setSkills((prev) => (prev.includes(s) ? prev.filter((x) => x !== s) : [...prev, s]));
+    setSkills((prev) => {
+      const next = prev.includes(s) ? prev.filter((x) => x !== s) : [...prev, s];
+      if (s === "Other" && prev.includes(s)) {
+        // deselecting Other – clear the custom text
+        setOtherSkills("");
+      }
+      return next;
+    });
   }
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -42,8 +52,20 @@ function Advertise() {
       toast.error("Choose at least one skill.");
       return;
     }
+    const customSkills = hasOther
+      ? otherSkills
+          .split(",")
+          .map((s) => s.trim())
+          .filter(Boolean)
+      : [];
+    if (hasOther && customSkills.length === 0) {
+      toast.error("Please specify your skill(s) for the Other option.");
+      return;
+    }
     setSubmitting(true);
     const fd = new FormData(e.currentTarget);
+    // Replace literal "Other" with the custom values so the array stays searchable
+    const finalSkills = [...skills.filter((s) => s !== "Other"), ...customSkills];
     const payload = {
       name: String(fd.get("name") || "").trim(),
       town: String(fd.get("town") || "").trim(),
@@ -54,8 +76,8 @@ function Advertise() {
         ? Number(fd.get("years_experience"))
         : null,
       photo_url: String(fd.get("photo_url") || "").trim() || null,
-      skills,
-      category: skills[0] ?? null,
+      skills: finalSkills,
+      category: finalSkills[0] ?? null,
       accepted_terms: true,
     };
 
@@ -78,6 +100,7 @@ function Advertise() {
     }
     setDone({ manageToken: data.manage_token as string });
   }
+
 
   if (done) {
     const manageUrl = `${window.location.origin}/my-listing/${done.manageToken}`;
@@ -158,7 +181,31 @@ function Advertise() {
                 );
               })}
             </div>
+            <div
+              className={
+                "grid transition-all duration-300 ease-out " +
+                (hasOther
+                  ? "grid-rows-[1fr] opacity-100 mt-3"
+                  : "grid-rows-[0fr] opacity-0")
+              }
+            >
+              <div className="overflow-hidden">
+                <Label required>Please specify your skill(s)</Label>
+                <input
+                  type="text"
+                  value={otherSkills}
+                  onChange={(e) => setOtherSkills(e.target.value)}
+                  required={hasOther}
+                  placeholder="e.g. Upholstery, Drone Operator, Beekeeper, Piano Teacher, Stone Mason..."
+                  className="w-full px-4 py-3 border border-brand-dark/10 rounded-xl"
+                />
+                <p className="text-xs text-brand-dark/60 mt-1">
+                  Separate multiple skills with commas.
+                </p>
+              </div>
+            </div>
           </div>
+
 
           <Field
             label="Years of experience"
