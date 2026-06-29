@@ -1176,6 +1176,7 @@ export type Database = {
           name: string
           phone: string
           photo_url: string | null
+          public_listing_reference: string | null
           skills: string[]
           town: string
           updated_at: string
@@ -1194,6 +1195,7 @@ export type Database = {
           name: string
           phone: string
           photo_url?: string | null
+          public_listing_reference?: string | null
           skills?: string[]
           town: string
           updated_at?: string
@@ -1212,6 +1214,7 @@ export type Database = {
           name?: string
           phone?: string
           photo_url?: string | null
+          public_listing_reference?: string | null
           skills?: string[]
           town?: string
           updated_at?: string
@@ -2831,6 +2834,7 @@ export type Database = {
           id: string | null
           name: string | null
           photo_url: string | null
+          public_listing_reference: string | null
           skills: string[] | null
           town: string | null
           years_experience: number | null
@@ -2843,6 +2847,7 @@ export type Database = {
           id?: string | null
           name?: string | null
           photo_url?: string | null
+          public_listing_reference?: string | null
           skills?: string[] | null
           town?: string | null
           years_experience?: number | null
@@ -2855,6 +2860,7 @@ export type Database = {
           id?: string | null
           name?: string | null
           photo_url?: string | null
+          public_listing_reference?: string | null
           skills?: string[] | null
           town?: string | null
           years_experience?: number | null
