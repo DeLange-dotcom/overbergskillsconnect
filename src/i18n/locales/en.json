@@ -1,0 +1,59 @@
+{
+  "nav": {
+    "home": "Home",
+    "browse": "Browse Local Skills",
+    "advertise": "Advertise My Skills",
+    "about": "About",
+    "admin": "Admin",
+    "adminSignIn": "Admin sign-in",
+    "adminDashboard": "Admin Dashboard",
+    "toggleMenu": "Toggle menu",
+    "language": "Language"
+  },
+  "home": {
+    "eyebrow": "Overberg Skills Connect",
+    "title": "Connecting Local Skills with Local Opportunities",
+    "subtitle": "Advertise your skills or find someone to help with work in your local community.",
+    "lookingForWork": "Looking for Work",
+    "lookingForSomeone": "Looking for Someone",
+    "advertiseCta": "Advertise My Skills",
+    "advertiseDesc": "Create a simple skills profile.",
+    "browseCta": "Browse Local Skills",
+    "browseDesc": "See local people offering services.",
+    "disclaimer": "Overberg Skills Connect is a noticeboard only. We do not employ, vet or recommend anyone. Please carry out your own checks before entering into any agreement.",
+    "readDisclaimer": "Read the full disclaimer"
+  },
+  "footer": {
+    "tagline": "Connecting Local Skills with Local Opportunities",
+    "poweredBy": "Powered by Khulisa Group",
+    "information": "Information",
+    "about": "About",
+    "terms": "Terms of Use",
+    "privacy": "Privacy Policy",
+    "disclaimer": "Disclaimer",
+    "contact": "Contact Us",
+    "copyright": "© 2026 Khulisa Group. All rights reserved."
+  },
+  "about": {
+    "title": "About",
+    "p1": "Overberg Skills Connect is a simple digital community noticeboard that helps people in the Overberg connect. People looking for work can advertise their skills, and people looking for help can browse local profiles.",
+    "p2": "The platform is provided by Khulisa Group. Khulisa Group only provides the technology — it is not an employment agency, recruitment company, labour broker, vetting organisation, payment platform, employer or guarantor of any user.",
+    "p3": "Users are responsible for carrying out their own checks before entering into any arrangement. Please read our Terms of Use, Privacy Policy and Disclaimer."
+  },
+  "contact": {
+    "title": "Contact Us",
+    "intro": "For questions about Overberg Skills Connect, please get in touch."
+  },
+  "common": {
+    "loading": "Loading…",
+    "submit": "Submit",
+    "cancel": "Cancel",
+    "search": "Search",
+    "report": "Report this profile",
+    "requestContact": "Request Contact Details"
+  },
+  "lang": {
+    "en": "English",
+    "af": "Afrikaans"
+  }
+}
