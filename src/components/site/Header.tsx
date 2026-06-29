@@ -68,12 +68,20 @@ export function Header() {
         <div className="flex items-center gap-2">
           <LanguageSelector className="hidden sm:block" />
           {signedIn ? (
-            <Link
-              to="/my-advert"
-              className="hidden sm:inline-flex px-3 py-2 rounded-full border border-brand-dark/10 text-sm text-brand-dark hover:bg-brand-soft transition"
-            >
-              My Listing
-            </Link>
+            <>
+              <Link
+                to="/my-requests"
+                className="hidden sm:inline-flex px-3 py-2 rounded-full border border-brand-dark/10 text-sm text-brand-dark hover:bg-brand-soft transition"
+              >
+                My Requests
+              </Link>
+              <Link
+                to="/my-advert"
+                className="hidden sm:inline-flex px-3 py-2 rounded-full border border-brand-dark/10 text-sm text-brand-dark hover:bg-brand-soft transition"
+              >
+                My Listing
+              </Link>
+            </>
           ) : (
             <Link
               to="/auth"
