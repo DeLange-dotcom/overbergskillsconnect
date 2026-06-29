@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Briefcase, Search, ShieldAlert } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { SiteLayout } from "@/components/site/SiteLayout";
 
 export const Route = createFileRoute("/")({
