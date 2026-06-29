@@ -5,8 +5,9 @@ import { supabase } from "@/integrations/supabase/client";
 
 const NAV = [
   { to: "/", label: "Home" },
-  { to: "/find-help", label: "Looking for Someone" },
+  { to: "/find-help", label: "Browse Local Skills" },
   { to: "/advertise", label: "Advertise My Skills" },
+  { to: "/about", label: "About" },
 ];
 
 export function Header() {
