@@ -25,11 +25,36 @@ export const Route = createFileRoute("/advertise")({
 function Advertise() {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const [authChecked, setAuthChecked] = useState(false);
+  const [signedIn, setSignedIn] = useState(false);
+  const [hasListing, setHasListing] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [skills, setSkills] = useState<string[]>([]);
   const [otherSkills, setOtherSkills] = useState("");
-  const [done, setDone] = useState<{ manageToken: string; publicRef: string | null } | null>(null);
   const [acks, setAcks] = useState({ age: false, truthful: false, terms: false, noticeboard: false });
+
+  useEffect(() => {
+    let mounted = true;
+    (async () => {
+      const { data: sess } = await supabase.auth.getSession();
+      if (!mounted) return;
+      if (!sess.session) {
+        setSignedIn(false);
+        setAuthChecked(true);
+        return;
+      }
+      setSignedIn(true);
+      const { data } = await supabase.rpc("noticeboard_my_listing");
+      const existing = Array.isArray(data) ? data[0] : data;
+      if (mounted) {
+        setHasListing(!!existing);
+        setAuthChecked(true);
+      }
+    })();
+    return () => {
+      mounted = false;
+    };
+  }, []);
 
   const hasOther = skills.includes("Other");
 
