@@ -394,7 +394,7 @@ function ReviewsList({ type, id }: { type: ApplicantType; id: string }) {
     queryKey: ["reviews", type, id],
     queryFn: async () => {
       const { data } = await supabase
-        .from("feedback_responses")
+        .from("feedback_responses_public" as never)
         .select("reliability, communication, punctuality, would_recommend, comment, created_at")
         .eq("applicant_type", type)
         .eq("applicant_id", id)
