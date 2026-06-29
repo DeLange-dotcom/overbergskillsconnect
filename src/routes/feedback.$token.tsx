@@ -147,6 +147,7 @@ function FeedbackPage() {
           <div>
             <label className="block text-sm font-semibold mb-2">Any additional comments? (optional)</label>
             <textarea
+              spellCheck
               value={comment}
               onChange={(e) => setComment(e.target.value)}
               rows={3}
