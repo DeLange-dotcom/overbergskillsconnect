@@ -145,6 +145,37 @@ function MyListing() {
           Hello {first.name}. Manage contact requests and visibility below.
         </p>
 
+        <div className="p-4 rounded-2xl border border-amber-300 bg-amber-50 mb-4 flex items-start gap-3">
+          <UserPlus className="size-5 text-amber-700 mt-0.5 shrink-0" />
+          <div className="flex-1 text-sm text-amber-900">
+            <div className="font-medium mb-1">Manage this advert from your account</div>
+            <p className="mb-3">
+              {signedIn
+                ? "Add this advert to your account to manage it from your dashboard — no more secret links."
+                : "Sign in or create a free account, then attach this advert so you can manage it from one place."}
+            </p>
+            <div className="flex flex-wrap gap-2">
+              <button
+                type="button"
+                onClick={claim}
+                disabled={claiming}
+                className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg bg-amber-700 text-white text-sm disabled:opacity-60"
+              >
+                {claiming ? "Linking…" : signedIn ? "Add to my account" : "Sign in & link advert"}
+              </button>
+              {signedIn && (
+                <Link
+                  to="/my-advert"
+                  className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg border border-amber-300 text-amber-900 text-sm"
+                >
+                  Go to my dashboard
+                </Link>
+              )}
+            </div>
+          </div>
+        </div>
+
+
         {publicRef && (
           <div className="p-4 rounded-2xl border border-brand-primary/30 bg-white mb-4">
             <div className="text-xs uppercase tracking-wider text-brand-dark/60 mb-1">
