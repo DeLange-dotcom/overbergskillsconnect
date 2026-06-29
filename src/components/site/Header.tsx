@@ -69,10 +69,10 @@ export function Header() {
           <LanguageSelector className="hidden sm:block" />
           {signedIn ? (
             <Link
-              to="/admin"
+              to="/my-advert"
               className="hidden sm:inline-flex px-3 py-2 rounded-full border border-brand-dark/10 text-sm text-brand-dark hover:bg-brand-soft transition"
             >
-              {t("nav.admin")}
+              My Listing
             </Link>
           ) : (
             <Link
@@ -80,7 +80,7 @@ export function Header() {
               className="hidden sm:inline-flex px-3 py-2 rounded-full border border-brand-dark/10 text-sm text-brand-dark/70 hover:bg-brand-soft hover:text-brand-primary transition"
               title={t("nav.adminSignIn")}
             >
-              {t("nav.admin")}
+              Sign in
             </Link>
           )}
           <button
