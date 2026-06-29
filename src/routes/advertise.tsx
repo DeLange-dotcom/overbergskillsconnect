@@ -1,12 +1,12 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { CheckCircle2, Copy } from "lucide-react";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { DisclaimerBanner } from "@/components/site/DisclaimerBanner";
 import { supabase } from "@/integrations/supabase/client";
 import { SKILL_CATEGORIES, AVAILABILITY_OPTIONS } from "@/lib/noticeboard";
 import { toast } from "sonner";
+import { Loader2 } from "lucide-react";
 
 export const Route = createFileRoute("/advertise")({
   head: () => ({
@@ -25,11 +25,36 @@ export const Route = createFileRoute("/advertise")({
 function Advertise() {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const [authChecked, setAuthChecked] = useState(false);
+  const [signedIn, setSignedIn] = useState(false);
+  const [hasListing, setHasListing] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [skills, setSkills] = useState<string[]>([]);
   const [otherSkills, setOtherSkills] = useState("");
-  const [done, setDone] = useState<{ manageToken: string; publicRef: string | null } | null>(null);
   const [acks, setAcks] = useState({ age: false, truthful: false, terms: false, noticeboard: false });
+
+  useEffect(() => {
+    let mounted = true;
+    (async () => {
+      const { data: sess } = await supabase.auth.getSession();
+      if (!mounted) return;
+      if (!sess.session) {
+        setSignedIn(false);
+        setAuthChecked(true);
+        return;
+      }
+      setSignedIn(true);
+      const { data } = await supabase.rpc("noticeboard_my_listing");
+      const existing = Array.isArray(data) ? data[0] : data;
+      if (mounted) {
+        setHasListing(!!existing);
+        setAuthChecked(true);
+      }
+    })();
+    return () => {
+      mounted = false;
+    };
+  }, []);
 
   const hasOther = skills.includes("Other");
 
@@ -89,97 +114,70 @@ function Advertise() {
       return;
     }
 
-    const { data, error } = await supabase.rpc(
-      "noticeboard_create_listing" as never,
-      { _payload: payload } as never,
-    );
+    const { error } = await supabase.rpc("noticeboard_my_create", {
+      _payload: payload,
+    });
 
     setSubmitting(false);
-    if (error || !data) {
-      toast.error((error as { message?: string } | null)?.message ?? "Could not publish your listing.");
+    if (error) {
+      toast.error(error.message ?? "Could not publish your listing.");
       return;
     }
-    const row = Array.isArray(data) ? data[0] : data;
-    setDone({
-      manageToken: (row as { manage_token: string }).manage_token,
-      publicRef:
-        ((row as { public_listing_reference: string | null }).public_listing_reference) ?? null,
-    });
+    toast.success("Your advert is now live!");
+    navigate({ to: "/my-advert" });
   }
 
-
-  if (done) {
-    const manageUrl = `${window.location.origin}/my-listing/${done.manageToken}`;
-    const publicUrl = done.publicRef
-      ? `${window.location.origin}/profile/${done.publicRef}`
-      : manageUrl;
-
-    async function shareAdvert() {
-      const shareData = {
-        title: "My Overberg Skills Connect advert",
-        text: "Check out my advert on Overberg Skills Connect:",
-        url: publicUrl,
-      };
-      if (typeof navigator !== "undefined" && (navigator as Navigator).share) {
-        try {
-          await (navigator as Navigator).share(shareData);
-          return;
-        } catch {
-          // user cancelled or share failed – fall back to copy
-        }
-      }
-      await navigator.clipboard.writeText(publicUrl);
-      toast.success("Advert link copied — paste it anywhere to share");
-    }
-
+  if (!authChecked) {
     return (
       <SiteLayout>
-        <div className="max-w-xl mx-auto px-4 sm:px-6 py-16 text-center">
-          <div className="text-5xl mb-4" aria-hidden>🎉</div>
-          <h1 className="text-3xl font-heading font-bold mb-3">Your advert is now live!</h1>
-          <p className="text-brand-dark/70 mb-2">
-            People can now find you on Overberg Skills Connect.
-          </p>
-          <p className="text-brand-dark/70 mb-8">
-            You can share your advert with friends, family and potential employers.
-          </p>
-
-          <div className="grid gap-3">
-            <button
-              type="button"
-              onClick={shareAdvert}
-              className="w-full py-3.5 rounded-xl bg-brand-primary text-white font-medium"
-            >
-              Share My Advert
-            </button>
-            <button
-              type="button"
-              onClick={() => {
-                navigator.clipboard.writeText(publicUrl);
-                toast.success("Advert link copied");
-              }}
-              className="w-full py-3.5 rounded-xl bg-white border border-brand-primary/40 text-brand-dark font-medium"
-            >
-              Copy Advert Link
-            </button>
-            <button
-              type="button"
-              onClick={() => navigate({ to: "/my-listing/$token", params: { token: done.manageToken } })}
-              className="w-full py-3.5 rounded-xl bg-white border border-brand-dark/15 text-brand-dark font-medium"
-            >
-              Manage My Advert
-            </button>
-            <Link
-              to="/find-help"
-              className="w-full py-3.5 rounded-xl bg-white border border-brand-dark/15 text-brand-dark font-medium"
-            >
-              Browse Skills
-            </Link>
-          </div>
+        <div className="max-w-xl mx-auto px-4 py-20 text-center text-brand-dark/60">
+          <Loader2 className="size-6 animate-spin mx-auto" />
         </div>
       </SiteLayout>
     );
   }
+
+  if (!signedIn) {
+    return (
+      <SiteLayout>
+        <div className="max-w-xl mx-auto px-4 sm:px-6 py-16 text-center">
+          <div className="text-5xl mb-4" aria-hidden>👋</div>
+          <h1 className="text-3xl font-heading font-bold mb-3">Sign in to advertise</h1>
+          <p className="text-brand-dark/70 mb-8">
+            Create a free account so you can update or remove your advert at any time.
+          </p>
+          <Link
+            to="/auth"
+            search={{ next: "/advertise" } as never}
+            className="inline-flex px-6 py-3.5 rounded-xl bg-brand-primary text-white font-medium"
+          >
+            Sign in or create account
+          </Link>
+        </div>
+      </SiteLayout>
+    );
+  }
+
+  if (hasListing) {
+    return (
+      <SiteLayout>
+        <div className="max-w-xl mx-auto px-4 sm:px-6 py-16 text-center">
+          <div className="text-5xl mb-4" aria-hidden>✅</div>
+          <h1 className="text-3xl font-heading font-bold mb-3">You already have an advert</h1>
+          <p className="text-brand-dark/70 mb-8">
+            You can edit or remove it any time from your dashboard.
+          </p>
+          <Link
+            to="/my-advert"
+            className="inline-flex px-6 py-3.5 rounded-xl bg-brand-primary text-white font-medium"
+          >
+            Go to My Listing
+          </Link>
+        </div>
+      </SiteLayout>
+    );
+  }
+
 
 
   return (

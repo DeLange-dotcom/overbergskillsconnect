@@ -1,9 +1,10 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
-import { Eye, EyeOff, Check, X, Copy } from "lucide-react";
+import { Eye, EyeOff, Check, X, Copy, UserPlus } from "lucide-react";
 
 export const Route = createFileRoute("/my-listing/$token")({
   component: MyListing,
@@ -24,6 +25,34 @@ type Row = {
 function MyListing() {
   const { token } = Route.useParams();
   const qc = useQueryClient();
+  const navigate = useNavigate();
+  const [signedIn, setSignedIn] = useState(false);
+  const [claiming, setClaiming] = useState(false);
+
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data }) => setSignedIn(!!data.session));
+  }, []);
+
+  async function claim() {
+    if (!signedIn) {
+      navigate({
+        to: "/auth",
+        search: { next: `/my-listing/${token}` } as never,
+      });
+      return;
+    }
+    setClaiming(true);
+    const { error } = await supabase.rpc("noticeboard_claim_listing", {
+      _manage_token: token,
+    });
+    setClaiming(false);
+    if (error) {
+      toast.error(error.message);
+      return;
+    }
+    toast.success("Listing added to your account");
+    navigate({ to: "/my-advert" });
+  }
 
   const { data, isLoading, error } = useQuery({
     queryKey: ["my-listing", token],
@@ -115,6 +144,37 @@ function MyListing() {
         <p className="text-brand-dark/70 mb-6">
           Hello {first.name}. Manage contact requests and visibility below.
         </p>
+
+        <div className="p-4 rounded-2xl border border-amber-300 bg-amber-50 mb-4 flex items-start gap-3">
+          <UserPlus className="size-5 text-amber-700 mt-0.5 shrink-0" />
+          <div className="flex-1 text-sm text-amber-900">
+            <div className="font-medium mb-1">Manage this advert from your account</div>
+            <p className="mb-3">
+              {signedIn
+                ? "Add this advert to your account to manage it from your dashboard — no more secret links."
+                : "Sign in or create a free account, then attach this advert so you can manage it from one place."}
+            </p>
+            <div className="flex flex-wrap gap-2">
+              <button
+                type="button"
+                onClick={claim}
+                disabled={claiming}
+                className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg bg-amber-700 text-white text-sm disabled:opacity-60"
+              >
+                {claiming ? "Linking…" : signedIn ? "Add to my account" : "Sign in & link advert"}
+              </button>
+              {signedIn && (
+                <Link
+                  to="/my-advert"
+                  className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg border border-amber-300 text-amber-900 text-sm"
+                >
+                  Go to my dashboard
+                </Link>
+              )}
+            </div>
+          </div>
+        </div>
+
 
         {publicRef && (
           <div className="p-4 rounded-2xl border border-brand-primary/30 bg-white mb-4">

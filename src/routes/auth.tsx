@@ -22,10 +22,17 @@ function AuthPage() {
   const [busy, setBusy] = useState(false);
   const [resetSent, setResetSent] = useState(false);
 
+  function nextDest(): string {
+    if (typeof window === "undefined") return "/my-advert";
+    const params = new URLSearchParams(window.location.search);
+    const n = params.get("next");
+    if (n && n.startsWith("/")) return n;
+    return "/my-advert";
+  }
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data }) => {
-      if (data.session) navigate({ to: "/admin", replace: true });
+      if (data.session) navigate({ to: nextDest(), replace: true });
     });
   }, [navigate]);
 
@@ -39,11 +46,12 @@ function AuthPage() {
       if (mode === "signin") {
         const { error } = await supabase.auth.signInWithPassword({ email, password });
         if (error) throw error;
+        navigate({ to: nextDest(), replace: true });
       } else if (mode === "signup") {
         const { error } = await supabase.auth.signUp({
           email,
           password,
-          options: { emailRedirectTo: window.location.origin + "/admin" },
+          options: { emailRedirectTo: window.location.origin + nextDest() },
         });
         if (error) throw error;
         toast.success("Check your email to confirm your account.");
@@ -65,8 +73,10 @@ function AuthPage() {
 
   async function google() {
     setBusy(true);
+    // redirect_uri must be a public same-origin URL; the page-load effect
+    // will move the signed-in user to nextDest() on return.
     const result = await lovable.auth.signInWithOAuth("google", {
-      redirect_uri: window.location.origin + "/admin",
+      redirect_uri: window.location.origin + "/auth" + (window.location.search || ""),
     });
     if (result.error) {
       toast.error("Google sign-in failed.");

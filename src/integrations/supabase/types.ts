@@ -1208,6 +1208,7 @@ export type Database = {
           skills: string[]
           town: string
           updated_at: string
+          user_id: string | null
           years_experience: number | null
         }
         Insert: {
@@ -1227,6 +1228,7 @@ export type Database = {
           skills?: string[]
           town: string
           updated_at?: string
+          user_id?: string | null
           years_experience?: number | null
         }
         Update: {
@@ -1246,6 +1248,7 @@ export type Database = {
           skills?: string[]
           town?: string
           updated_at?: string
+          user_id?: string | null
           years_experience?: number | null
         }
         Relationships: []
@@ -3260,6 +3263,10 @@ export type Database = {
           parent_full_name: string
         }[]
       }
+      noticeboard_claim_listing: {
+        Args: { _manage_token: string }
+        Returns: string
+      }
       noticeboard_create_listing: {
         Args: { _payload: Json }
         Returns: {
@@ -3267,6 +3274,27 @@ export type Database = {
           public_listing_reference: string
         }[]
       }
+      noticeboard_my_create: { Args: { _payload: Json }; Returns: string }
+      noticeboard_my_delete: { Args: never; Returns: boolean }
+      noticeboard_my_listing: {
+        Args: never
+        Returns: {
+          availability: string
+          category: string
+          created_at: string
+          description: string
+          id: string
+          is_hidden: boolean
+          name: string
+          phone: string
+          photo_url: string
+          public_listing_reference: string
+          skills: string[]
+          town: string
+          years_experience: number
+        }[]
+      }
+      noticeboard_my_update: { Args: { _payload: Json }; Returns: string }
       noticeboard_owner_decide: {
         Args: { _decision: string; _manage_token: string; _request_id: string }
         Returns: string
