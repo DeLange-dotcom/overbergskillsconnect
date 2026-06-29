@@ -228,6 +228,7 @@ function Advertise() {
                   onChange={(e) => setOtherSkills(e.target.value)}
                   required={hasOther}
                   placeholder="e.g. Upholstery, Drone Operator, Beekeeper, Piano Teacher, Stone Mason..."
+                  spellCheck
                   className="w-full px-4 py-3 border border-brand-dark/10 rounded-xl"
                 />
                 <p className="text-xs text-brand-dark/60 mt-1">
