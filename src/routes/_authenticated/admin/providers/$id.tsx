@@ -258,6 +258,7 @@ function ProviderDetail() {
 
             <Section title="Admin notes">
               <textarea
+                spellCheck
                 rows={6}
                 value={notesDraft}
                 onChange={(e) => setNotesDraft(e.target.value)}
