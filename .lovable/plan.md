@@ -1,74 +1,106 @@
-# Apprenticeships & Mentorships Module — Build Plan
+# MVP Refactor — Khulisa Skills Connect Noticeboard
 
-This is a large module. I'll deliver it in **5 sequential phases**, each shippable on its own. After you approve the plan I'll start with Phase 1 and check in between phases.
+Strip the public surface down to a community noticeboard. **No code or database is deleted** — everything is hidden behind a single feature-flag module and can be re-enabled later.
 
-The existing project already has partial scaffolding I'll reuse / extend rather than rebuild:
+## 1. Feature flags (one source of truth)
 
-- `apprentices`, `apprenticeship_opportunities`, `apprenticeship_providers`, `mentors`, `mentors_interest`, `mentor_matches`, `provider_documents`, `provider_references`, `provider_vetting_checks`, `vetting_pdf_exports`, `safety_reports`, `feedback_*` tables exist.
-- Routes exist for `apprenticeships.*` (opportunities, register-apprentice, register-provider, mentors, become-mentor, impact).
-- Admin routes exist under `_authenticated/admin/` for apprenticeships, providers, apprentices.
-- Shared constants in `src/lib/apprenticeships.ts`, terms acceptance, PCC panel, verification badges already exist.
+Add `src/lib/features.ts` exporting a `FEATURES` object:
 
-So most of this work is **gap-filling, polish, and the new safeguarding policy + mentorship request flow**, not greenfield.
+```
+youthHub, apprenticeships, volunteer, employerRegistration,
+opportunityBoard, vetting, safeguarding, parentConsent,
+idUploads, workPermitUploads, references, skillsVerification,
+ratingsReviews, adminApprovalWorkflows, comingSoon
+```
 
----
+All default to `false` for MVP. Every change below reads from this file, so re-enabling a module later is a one-line flip.
 
-## Phase 1 — Safeguarding Policy + Acknowledgement component
+## 2. Navigation & layout
 
-- New route `/safeguarding-policy` (13 sections, last-updated date, Print + Download PDF buttons).
-- Constants file `src/lib/safeguarding.ts` (version, last updated).
-- New component `<SafeguardingAcknowledgement />` — 4 mandatory checkboxes with links to policy / terms / privacy; reusable across all registration forms.
-- New component `<LegalDisclaimer />` with the exact disclaimer copy + mandatory checkbox.
-- Migration: add `safeguarding_acknowledged_at`, `safeguarding_policy_version`, `disclaimer_accepted_at` columns to `apprentices`, `mentors`, `apprenticeship_providers`, `apprenticeship_opportunities` (only where missing).
+- `Header.tsx`: NAV reduced to `Home`, `Find Someone`, `Advertise My Skills`. Drop Youth Hub / Apprenticeships / Donate / Request Support pills (gated on flags).
+- `Footer.tsx`: links become **Terms of Use · Privacy Policy · Disclaimer · Contact Us**. Hide get-involved column items behind flags. Keep IP/owner lines.
+- Routes for hidden modules stay on disk; they are simply unlinked. Direct URL access still works for future re-enablement.
 
-## Phase 2 — Schema extensions for future matching + mentorship requests
+## 3. Home page (`src/routes/index.tsx`)
 
-Migration only (you approve before it runs):
+Replace existing hero/stats/process/donate with a minimal layout:
 
-- New table `mentorship_requests` (full_name, email, mobile, career_interests[], current_situation, goals, preferred_method, preferred_frequency, status, assigned_mentor_id, timestamps). RLS + GRANTs.
-- New table `apprentice_skills` and `opportunity_skills` (normalised skill tags) to enable future matching without redesign.
-- New table `placements` (apprentice_id, opportunity_id, started_at, ended_at, outcome, status) — the join the brief calls for.
-- Add missing columns to `apprentices` (nationality, work_permit_status, emergency_contact_*, parent_consent_uploaded_path, cv_path, location_pref, education fields) and `apprenticeship_opportunities` (compensation_type, compensation_amount, hours_per_week, age_range, remote_available) where not already present.
-- Storage bucket `apprenticeship-documents` (private) for CVs, parent consent uploads, mentor PCCs.
+- Headline: **Connecting Local Skills with Local Opportunities**
+- Sub-heading: *Advertise your skills or find someone to help with work in your local community.*
+- Two large CTAs:
+  - 🟢 **Looking for Work** → `/advertise` (Advertise My Skills)
+  - 🔵 **Looking for Someone** → `/find-help` (browse)
+- Short trust strip linking to the Disclaimer.
+- Remove impact stats, "Hineni Process" steps, and donation appeal section.
 
-## Phase 3 — Apprentice & Provider registration forms (fill the gaps)
+## 4. "Advertise My Skills" (`/advertise`)
 
-- Extend `apprenticeships.register-apprentice.tsx`: add nationality, work permit, emergency contact block, full parent/guardian block with **download + upload Parent Consent Form** (blocks submit if <18 and no upload), CV upload, location preferences. Wire SafeguardingAcknowledgement + LegalDisclaimer.
-- Extend `apprenticeships.register-provider.tsx`: add provider type (incl. Individual Household), verification document uploads (ID, registration, proof of address, references), full opportunity details incl. compensation conditional fields, age range, remote available. Wire acknowledgement + disclaimer.
-- Generated PDF Parent Consent Form (download endpoint) using pdf-lib at `/api/public/parent-consent.pdf`.
+New thin route that wraps the existing `register-provider` form with a **minimal-field mode** driven by a prop. Fields shown:
 
-## Phase 4 — Mentor flows
+Name · Town/Area · Skills · Years of Experience · Availability · Short Description · Optional Photo · Telephone (private)
 
-- Extend `apprenticeships.become-mentor.tsx` to the full Mentor Registration Form (expertise multi-select, preferences, availability, bio/qualifications/LinkedIn/website, profile photo upload, PCC upload, two references, safeguarding declaration). Wire acknowledgement + disclaimer.
-- Rebuild `apprenticeships.mentors.tsx` as a **searchable directory** with filters (industry, skills, location, online/in-person, language, availability) and mentor cards with "Request Mentorship" button.
-- New route `apprenticeships.request-mentorship.$mentorId.tsx` with the mentorship request form → inserts into `mentorship_requests`.
-- New route `apprenticeships.request-mentorship.tsx` (general request, no specific mentor).
+All vetting/PCC/work-permit/ID/reference/safeguarding fields are hidden via the feature flags. Telephone is stored on the existing column but never exposed in any public query.
 
-## Phase 5 — Admin panel + trust badges + polish
+Required acknowledgements before submit:
 
-- Extend `_authenticated/admin/apprenticeships.tsx` (or split): tabs for Apprentices / Opportunities / Mentors / Mentorship Requests.
-  - Apprentices: view / approve / reject / export CSV / export PDF.
-  - Opportunities: review / approve / reject / publish / archive.
-  - Mentors: review / approve / reject / suspend (blocks approval until PCC + 2 references + safeguarding declaration present).
-  - Mentorship Requests: list, assign mentor (dropdown of approved mentors), update status, progress notes.
-- Public Trust & Safety badges (`<VerificationBadge />` already exists) shown on approved public mentor & opportunity cards: Identity Verified, References Verified, PCC Submitted, Safeguarding Acknowledged.
-- Final pass on `/apprenticeships` landing page to link the new flows cleanly.
+- I am over 18.
+- Information is true and accurate.
+- I accept the Terms of Use and Privacy Policy.
+- I understand Khulisa Skills Connect is a community noticeboard only.
 
----
+## 5. "Looking for Someone" (`/find-help` + `/directory`)
 
-## Technical notes
+- Card grid showing: Photo, Name, Town, Skills, Experience, Availability, Description.
+- Search by town and skill category (use existing directory filters, trimmed).
+- **No phone number, no vetting badges, no ratings** displayed.
+- Each card has two buttons:
+  - **Request Contact Details** → opens existing contact-request flow (already in DB as `contact_requests`).
+  - 🚩 **Report this Profile** → opens report dialog (uses existing `safety_reports` table) with reasons: Spam, Fraud, Offensive Content, False Information, Inappropriate Behaviour.
+- Detail page (`/directory/$type/$id`) mirrors the same minimal info + Disclaimer banner.
 
-- All tables use the existing `tg_set_updated_at` trigger and follow the project's RLS pattern (`has_role(auth.uid(),'admin')` for admin writes, owner-scoped policies for users, narrow `TO anon` SELECT only on approved+published rows).
-- File uploads go to existing private buckets where possible (`provider-documents`, `pcc-documents`) plus the new `apprenticeship-documents` bucket for CVs / parent consent.
-- Compliance references (Children's Act, POPIA, Sexual Offences Act, BCEA young-worker provisions) live in the policy page copy and in the on-form disclaimer.
-- Future matching: `apprentice_skills` + `opportunity_skills` + `placements` give a clean join surface; no schema rewrite needed later to add a matching algorithm.
+## 6. Contact-reveal flow
 
----
+Existing `contact_requests` table already supports this. Wire the worker-facing approve/decline action:
 
-## What I need from you before starting
+- Worker receives notification (email via existing transactional path if configured; otherwise visible in their profile area on next sign-in — kept simple for MVP).
+- On **Share**: requester sees phone number on the request page.
+- On **Decline**: requester sees a polite decline message.
+- Phone number is never returned by any public list/detail endpoint — only by the authenticated "view approved contact request" endpoint.
 
-1. **Approve the plan** (or tell me to drop / reorder phases).
-2. **Policy "Last Updated" date** — use today (17 June 2026) or another date?
-3. **Hineni contact email for safeguarding reports** — to put in the policy's "Reporting Concerns" section. If you don't have one yet I'll use `safeguarding@hineni.org.za` as a placeholder you can edit.
+## 7. Legal pages
 
-Once you confirm, I'll start with Phase 1.
+Rewrite content (UI only, constants in `src/lib/brand.ts` kept):
+
+- **`/terms`** — South-African Terms of Use with the full list of "Khulisa is not / does not" statements from the brief.
+- **`/privacy`** — POPIA-aligned: what's collected, why, storage, edit/delete rights, phone-number rule.
+- **`/disclaimer`** — new route with the exact disclaimer wording from the brief. Banner version shown on registration, footer, and profile pages via a shared `<DisclaimerBanner />` component.
+- **`/contact`** — new simple contact page (email + short form posting to existing contact endpoint, or mailto fallback).
+
+## 8. Admin area
+
+Trim `/admin` dashboard to four actions only (others hidden via flags):
+
+- Review reports (`safety_reports`)
+- Remove inappropriate profiles (soft-hide via existing `is_published` / status field)
+- Suspend abusive users
+- Manage platform content
+
+All "approve / verify / certify" controls hidden behind `adminApprovalWorkflows` flag.
+
+## 9. Database
+
+No migrations required. All needed tables (`service_providers`, `contact_requests`, `safety_reports`, `terms_acceptances`) already exist with appropriate columns. We only change what the UI reads/writes.
+
+## Files touched (high level)
+
+- **New**: `src/lib/features.ts`, `src/components/site/DisclaimerBanner.tsx`, `src/components/site/ReportProfileDialog.tsx`, `src/routes/advertise.tsx`, `src/routes/disclaimer.tsx`, `src/routes/contact.tsx`.
+- **Edited**: `src/routes/index.tsx`, `src/components/site/Header.tsx`, `src/components/site/Footer.tsx`, `src/routes/register-provider.tsx` (add `minimal` mode), `src/routes/find-help.tsx`, `src/routes/directory.tsx`, `src/routes/directory.$type.$id.tsx`, `src/routes/terms.tsx`, `src/routes/privacy.tsx`, `src/routes/_authenticated/admin/index.tsx`.
+- **Untouched but hidden**: youth/*, apprenticeships/*, donate, request-support, safeguarding-policy, all PCC/vetting components, parent consent — kept on disk for future re-enablement.
+
+## Out of scope (for this MVP)
+
+- Email/SMS delivery infrastructure for contact-share notifications beyond what's already wired.
+- Re-styling individual hidden modules.
+- New analytics or moderation tooling beyond what exists.
+
+Confirm and I'll implement.
