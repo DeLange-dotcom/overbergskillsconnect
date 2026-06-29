@@ -90,7 +90,7 @@ function Advertise() {
     const { data, error } = await supabase
       .from("noticeboard_profiles")
       .insert(payload)
-      .select("manage_token")
+      .select("manage_token, public_listing_reference")
       .single();
 
     setSubmitting(false);
@@ -98,7 +98,10 @@ function Advertise() {
       toast.error(error?.message ?? "Could not publish your listing.");
       return;
     }
-    setDone({ manageToken: data.manage_token as string });
+    setDone({
+      manageToken: data.manage_token as string,
+      publicRef: (data.public_listing_reference as string | null) ?? null,
+    });
   }
 
 
