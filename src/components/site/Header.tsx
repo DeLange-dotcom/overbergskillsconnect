@@ -1,18 +1,21 @@
 import { Link } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { supabase } from "@/integrations/supabase/client";
-
-const NAV = [
-  { to: "/", label: "Home" },
-  { to: "/find-help", label: "Browse Local Skills" },
-  { to: "/advertise", label: "Advertise My Skills" },
-  { to: "/about", label: "About" },
-];
+import { LanguageSelector } from "@/components/site/LanguageSelector";
 
 export function Header() {
+  const { t } = useTranslation();
   const [open, setOpen] = useState(false);
   const [signedIn, setSignedIn] = useState(false);
+
+  const NAV = [
+    { to: "/", label: t("nav.home") },
+    { to: "/find-help", label: t("nav.browse") },
+    { to: "/advertise", label: t("nav.advertise") },
+    { to: "/about", label: t("nav.about") },
+  ];
 
   useEffect(() => {
     let mounted = true;
@@ -33,14 +36,14 @@ export function Header() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between gap-4">
         <Link to="/" className="flex items-center gap-2 shrink-0">
           <div className="size-9 rounded-full bg-brand-primary text-primary-foreground grid place-items-center font-heading font-bold">
-            K
+            O
           </div>
           <div className="leading-tight">
             <div className="font-heading font-bold text-brand-primary text-lg">
               Overberg Skills Connect
             </div>
             <div className="text-[10px] uppercase tracking-widest text-brand-dark/50">
-              Powered by Khulisa Group
+              {t("footer.poweredBy")}
             </div>
           </div>
         </Link>
@@ -60,32 +63,27 @@ export function Header() {
         </nav>
 
         <div className="flex items-center gap-2">
-          <Link
-            to="/advertise"
-            className="hidden sm:inline-flex px-4 py-2 rounded-full bg-brand-primary text-primary-foreground text-sm font-medium hover:brightness-110 transition"
-          >
-            Advertise
-          </Link>
+          <LanguageSelector className="hidden sm:block" />
           {signedIn ? (
             <Link
               to="/admin"
               className="hidden sm:inline-flex px-3 py-2 rounded-full border border-brand-dark/10 text-sm text-brand-dark hover:bg-brand-soft transition"
             >
-              Admin
+              {t("nav.admin")}
             </Link>
           ) : (
             <Link
               to="/auth"
               className="hidden sm:inline-flex px-3 py-2 rounded-full border border-brand-dark/10 text-sm text-brand-dark/70 hover:bg-brand-soft hover:text-brand-primary transition"
-              title="Admin sign-in"
+              title={t("nav.adminSignIn")}
             >
-              Admin
+              {t("nav.admin")}
             </Link>
           )}
           <button
             onClick={() => setOpen((v) => !v)}
             className="md:hidden size-10 rounded-full bg-brand-soft grid place-items-center"
-            aria-label="Toggle menu"
+            aria-label={t("nav.toggleMenu")}
           >
             {open ? <X className="size-5" /> : <Menu className="size-5" />}
           </button>
@@ -113,7 +111,7 @@ export function Header() {
                 onClick={() => setOpen(false)}
                 className="px-3 py-2.5 rounded-lg text-brand-dark/80 hover:bg-brand-soft"
               >
-                Admin Dashboard
+                {t("nav.adminDashboard")}
               </Link>
             ) : (
               <Link
@@ -121,9 +119,12 @@ export function Header() {
                 onClick={() => setOpen(false)}
                 className="px-3 py-2.5 rounded-lg text-brand-dark/80 hover:bg-brand-soft"
               >
-                Admin sign-in
+                {t("nav.adminSignIn")}
               </Link>
             )}
+            <div className="px-3 pt-2">
+              <LanguageSelector />
+            </div>
           </nav>
         </div>
       )}
