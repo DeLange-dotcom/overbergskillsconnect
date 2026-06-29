@@ -22,10 +22,17 @@ function AuthPage() {
   const [busy, setBusy] = useState(false);
   const [resetSent, setResetSent] = useState(false);
 
+  function nextDest(): string {
+    if (typeof window === "undefined") return "/my-advert";
+    const params = new URLSearchParams(window.location.search);
+    const n = params.get("next");
+    if (n && n.startsWith("/")) return n;
+    return "/my-advert";
+  }
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data }) => {
-      if (data.session) navigate({ to: "/admin", replace: true });
+      if (data.session) navigate({ to: nextDest(), replace: true });
     });
   }, [navigate]);
 
