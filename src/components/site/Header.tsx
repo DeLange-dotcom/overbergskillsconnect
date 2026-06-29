@@ -4,6 +4,7 @@ import { Menu, X } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { supabase } from "@/integrations/supabase/client";
 import { LanguageSelector } from "@/components/site/LanguageSelector";
+import overbergLogo from "@/assets/overberg-logo.png.asset.json";
 
 export function Header() {
   const { t } = useTranslation();
@@ -34,11 +35,13 @@ export function Header() {
   return (
     <header className="border-b border-brand-dark/5 bg-brand-page sticky top-0 z-40 backdrop-blur">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between gap-4">
-        <Link to="/" className="flex items-center gap-2 shrink-0">
-          <div className="size-9 rounded-full bg-brand-primary text-primary-foreground grid place-items-center font-heading font-bold">
-            O
-          </div>
-          <div className="leading-tight">
+        <Link to="/" className="flex items-center gap-3 shrink-0">
+          <img
+            src={overbergLogo.url}
+            alt="Overberg Skills Connect"
+            className="h-12 w-auto object-contain"
+          />
+          <div className="leading-tight hidden sm:block">
             <div className="font-heading font-bold text-brand-primary text-lg">
               Overberg Skills Connect
             </div>
