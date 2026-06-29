@@ -1,0 +1,59 @@
+{
+  "nav": {
+    "home": "Tuis",
+    "browse": "Blaai Plaaslike Vaardighede",
+    "advertise": "Adverteer My Vaardighede",
+    "about": "Oor Ons",
+    "admin": "Admin",
+    "adminSignIn": "Admin aanmelding",
+    "adminDashboard": "Admin Paneelbord",
+    "toggleMenu": "Wissel kieslys",
+    "language": "Taal"
+  },
+  "home": {
+    "eyebrow": "Overberg Skills Connect",
+    "title": "Plaaslike Vaardighede en Plaaslike Geleenthede Verbind",
+    "subtitle": "Adverteer jou vaardighede of vind iemand om met werk in jou plaaslike gemeenskap te help.",
+    "lookingForWork": "Soek Werk",
+    "lookingForSomeone": "Soek Iemand",
+    "advertiseCta": "Adverteer My Vaardighede",
+    "advertiseDesc": "Skep 'n eenvoudige vaardigheidsprofiel.",
+    "browseCta": "Blaai Plaaslike Vaardighede",
+    "browseDesc": "Sien plaaslike mense wat dienste aanbied.",
+    "disclaimer": "Overberg Skills Connect is slegs 'n kennisgewingbord. Ons werf, keur of beveel niemand aan nie. Doen asseblief jou eie ondersoeke voordat jy enige ooreenkoms aangaan.",
+    "readDisclaimer": "Lees die volledige vrywaring"
+  },
+  "footer": {
+    "tagline": "Plaaslike Vaardighede en Plaaslike Geleenthede Verbind",
+    "poweredBy": "Aangedryf deur Khulisa Group",
+    "information": "Inligting",
+    "about": "Oor Ons",
+    "terms": "Gebruiksvoorwaardes",
+    "privacy": "Privaatheidsbeleid",
+    "disclaimer": "Vrywaring",
+    "contact": "Kontak Ons",
+    "copyright": "© 2026 Khulisa Group. Alle regte voorbehou."
+  },
+  "about": {
+    "title": "Oor Ons",
+    "p1": "Overberg Skills Connect is 'n eenvoudige digitale gemeenskapskennisgewingbord wat mense in die Overberg help om in verbinding te tree. Mense wat werk soek, kan hul vaardighede adverteer, en mense wat hulp soek, kan plaaslike profiele deurblaai.",
+    "p2": "Die platform word verskaf deur Khulisa Group. Khulisa Group verskaf slegs die tegnologie — dit is nie 'n werwingsagentskap, 'n arbeidsmakelaar, 'n keuringsorganisasie, 'n betalingsplatform, 'n werkgewer of 'n waarborg vir enige gebruiker nie.",
+    "p3": "Gebruikers is self verantwoordelik om hul eie ondersoeke te doen voordat hulle enige reëling tref. Lees asseblief ons Gebruiksvoorwaardes, Privaatheidsbeleid en Vrywaring."
+  },
+  "contact": {
+    "title": "Kontak Ons",
+    "intro": "Vir navrae oor Overberg Skills Connect, kontak ons asseblief."
+  },
+  "common": {
+    "loading": "Laai…",
+    "submit": "Stuur",
+    "cancel": "Kanselleer",
+    "search": "Soek",
+    "report": "Rapporteer hierdie profiel",
+    "requestContact": "Versoek Kontakbesonderhede"
+  },
+  "lang": {
+    "en": "Engels",
+    "af": "Afrikaans"
+  }
+}

@@ -12,6 +12,7 @@ import { Toaster } from "sonner";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
+import "@/i18n";
 
 function NotFoundComponent() {
   return (
@@ -127,6 +128,14 @@ function RootShell({ children }: { children: ReactNode }) {
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
   const router = useRouter();
+
+  // Restore stored language on client
+  useEffect(() => {
+    import("@/i18n").then(({ default: i18n, getStoredLanguage }) => {
+      const stored = getStoredLanguage();
+      if (stored && stored !== i18n.language) i18n.changeLanguage(stored);
+    });
+  }, []);
 
   useEffect(() => {
     let cancelled = false;
