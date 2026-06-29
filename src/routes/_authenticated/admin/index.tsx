@@ -9,7 +9,7 @@ import { Link } from "@tanstack/react-router";
 import { REPORT_REASONS } from "@/lib/noticeboard";
 
 export const Route = createFileRoute("/_authenticated/admin/")({
-  head: () => ({ meta: [{ title: "Admin — Khulisa Community" }] }),
+  head: () => ({ meta: [{ title: "Admin — Overberg Skills Connect" }] }),
   component: AdminDashboard,
 });
 

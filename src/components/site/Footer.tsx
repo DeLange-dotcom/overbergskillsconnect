@@ -17,7 +17,7 @@ export function Footer() {
             A Khulisa Group Platform
           </div>
           <p className="text-sm text-brand-dark/70 max-w-sm">
-            A digital community noticeboard. Khulisa Community does not employ, recruit, recommend
+            A digital community noticeboard. Overberg Skills Connect does not employ, recruit, recommend
             or vet anyone using this platform.
           </p>
         </div>

@@ -35,4 +35,4 @@ export const REPORT_REASONS = [
 ] as const;
 
 export const DISCLAIMER_TEXT =
-  "Khulisa Community is a digital community noticeboard. Khulisa does not employ, recruit, recommend, vet, supervise or guarantee any person using this platform. Users are solely responsible for carrying out their own enquiries, obtaining references, requesting police clearance where appropriate, verifying qualifications and entering into any agreements. Khulisa accepts no responsibility for any loss, injury, damage, dispute or claim arising from introductions made through this platform.";
+  "Overberg Skills Connect is a digital community noticeboard. Khulisa does not employ, recruit, recommend, vet, supervise or guarantee any person using this platform. Users are solely responsible for carrying out their own enquiries, obtaining references, requesting police clearance where appropriate, verifying qualifications and entering into any agreements. Khulisa accepts no responsibility for any loss, injury, damage, dispute or claim arising from introductions made through this platform.";

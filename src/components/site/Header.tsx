@@ -36,7 +36,7 @@ export function Header() {
           </div>
           <div className="leading-tight">
             <div className="font-heading font-bold text-brand-primary text-lg">
-              Khulisa Community
+              Overberg Skills Connect
             </div>
             <div className="text-[10px] uppercase tracking-widest text-brand-dark/50">
               Community Noticeboard

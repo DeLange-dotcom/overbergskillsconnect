@@ -5,7 +5,7 @@ import { SiteLayout } from "@/components/site/SiteLayout";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Khulisa Community — Connecting Local Skills with Local Opportunities" },
+      { title: "Overberg Skills Connect — Connecting Local Skills with Local Opportunities" },
       {
         name: "description",
         content:
@@ -13,7 +13,7 @@ export const Route = createFileRoute("/")({
       },
       {
         property: "og:title",
-        content: "Khulisa Community — Connecting Local Skills with Local Opportunities",
+        content: "Overberg Skills Connect — Connecting Local Skills with Local Opportunities",
       },
       {
         property: "og:description",
@@ -77,7 +77,7 @@ function Home() {
           <div className="mt-10 flex items-start gap-3 text-left p-4 rounded-2xl border border-brand-dark/10 bg-white max-w-2xl mx-auto">
             <ShieldAlert className="size-5 text-amber-600 shrink-0 mt-0.5" />
             <p className="text-xs text-brand-dark/70 leading-relaxed">
-              Khulisa Community is a noticeboard only. We do not employ, vet or recommend anyone.
+              Overberg Skills Connect is a noticeboard only. We do not employ, vet or recommend anyone.
               Please carry out your own checks before entering into any agreement.{" "}
               <Link to="/disclaimer" className="underline hover:text-brand-primary">
                 Read the full disclaimer

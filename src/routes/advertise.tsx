@@ -10,7 +10,7 @@ import { toast } from "sonner";
 export const Route = createFileRoute("/advertise")({
   head: () => ({
     meta: [
-      { title: "Advertise My Skills — Khulisa Community" },
+      { title: "Advertise My Skills — Overberg Skills Connect" },
       {
         name: "description",
         content:
@@ -236,7 +236,7 @@ function Advertise() {
             <Ack
               checked={acks.noticeboard}
               onChange={(v) => setAcks((a) => ({ ...a, noticeboard: v }))}
-              label="I understand that Khulisa Community is a community noticeboard only and that any arrangements made are entirely between myself and other users."
+              label="I understand that Overberg Skills Connect is a community noticeboard only and that any arrangements made are entirely between myself and other users."
             />
           </div>
 

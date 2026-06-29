@@ -5,10 +5,10 @@ import { DisclaimerBanner } from "@/components/site/DisclaimerBanner";
 export const Route = createFileRoute("/disclaimer")({
   head: () => ({
     meta: [
-      { title: "Disclaimer — Khulisa Community" },
+      { title: "Disclaimer — Overberg Skills Connect" },
       {
         name: "description",
-        content: "Khulisa Community is a digital community noticeboard only.",
+        content: "Overberg Skills Connect is a digital community noticeboard only.",
       },
     ],
   }),
@@ -23,7 +23,7 @@ function DisclaimerPage() {
         <DisclaimerBanner />
         <div className="mt-8 space-y-4 text-brand-dark/80 leading-relaxed">
           <p>
-            Khulisa Community is a digital community noticeboard. It exists only to help people
+            Overberg Skills Connect is a digital community noticeboard. It exists only to help people
             offering skills and people looking for help to find each other. We are not a recruiter,
             employer, labour broker, agency or supervisor.
           </p>
@@ -40,7 +40,7 @@ function DisclaimerPage() {
             laws.
           </p>
           <p>
-            Khulisa Group, Khulisa Community and any related parties accept no responsibility for
+            Khulisa Group, Overberg Skills Connect and any related parties accept no responsibility for
             any loss, injury, damage, dispute or claim arising from introductions made through this
             platform.
           </p>
