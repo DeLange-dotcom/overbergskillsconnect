@@ -181,7 +181,31 @@ function Advertise() {
                 );
               })}
             </div>
+            <div
+              className={
+                "grid transition-all duration-300 ease-out " +
+                (hasOther
+                  ? "grid-rows-[1fr] opacity-100 mt-3"
+                  : "grid-rows-[0fr] opacity-0")
+              }
+            >
+              <div className="overflow-hidden">
+                <Label required>Please specify your skill(s)</Label>
+                <input
+                  type="text"
+                  value={otherSkills}
+                  onChange={(e) => setOtherSkills(e.target.value)}
+                  required={hasOther}
+                  placeholder="e.g. Upholstery, Drone Operator, Beekeeper, Piano Teacher, Stone Mason..."
+                  className="w-full px-4 py-3 border border-brand-dark/10 rounded-xl"
+                />
+                <p className="text-xs text-brand-dark/60 mt-1">
+                  Separate multiple skills with commas.
+                </p>
+              </div>
+            </div>
           </div>
+
 
           <Field
             label="Years of experience"
