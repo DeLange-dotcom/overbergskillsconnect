@@ -390,18 +390,25 @@ function Modal({ children, onClose }: { children: React.ReactNode; onClose: () =
 }
 
 function ReviewsList({ type, id }: { type: ApplicantType; id: string }) {
+  type Review = {
+    reliability: number | null;
+    communication: number | null;
+    punctuality: number | null;
+    would_recommend: boolean | null;
+    comment: string | null;
+    created_at: string;
+  };
   const { data } = useQuery({
     queryKey: ["reviews", type, id],
-    queryFn: async () => {
+    queryFn: async (): Promise<Review[]> => {
       const { data } = await supabase
         .from("feedback_responses_public" as never)
         .select("reliability, communication, punctuality, would_recommend, comment, created_at")
         .eq("applicant_type", type)
         .eq("applicant_id", id)
-        .eq("engaged", "yes")
         .order("created_at", { ascending: false })
         .limit(20);
-      return data ?? [];
+      return (data ?? []) as unknown as Review[];
     },
   });
 
