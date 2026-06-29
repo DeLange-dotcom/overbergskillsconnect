@@ -1,134 +1,101 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteLayout } from "@/components/site/SiteLayout";
-import { ACCEPTANCE_TEXT, TERMS_EFFECTIVE_DATE, TERMS_VERSION } from "@/lib/terms";
-import { IP_OWNERSHIP_STATEMENT, PLATFORM_NAME, PLATFORM_OWNER } from "@/lib/brand";
+import { PLATFORM_NAME, PLATFORM_OWNER, IP_OWNERSHIP_STATEMENT } from "@/lib/brand";
 
 export const Route = createFileRoute("/terms")({
   head: () => ({
     meta: [
-      { title: `Terms & Disclaimer — ${PLATFORM_NAME}` },
-      {
-        name: "description",
-        content:
-          `Terms of use and disclaimer for the ${PLATFORM_NAME}, including the Hineni Programme delivered through the platform.`,
-      },
+      { title: `Terms of Use — ${PLATFORM_NAME}` },
+      { name: "description", content: `${PLATFORM_NAME} terms of use.` },
     ],
   }),
   component: Terms,
 });
 
-const LIABILITY_ITEMS = [
-  "Personal injury",
-  "Death",
-  "Loss of property",
-  "Theft",
-  "Fraud",
-  "Misrepresentation",
-  "Negligence by third parties",
-  "Criminal conduct",
-  "Workplace disputes",
-  "Employment disputes",
-  "Immigration or permit issues",
-  "Financial losses",
-  "Data supplied by applicants",
-  "Actions or omissions of service providers",
-  "Actions or omissions of service seekers",
-  "Any relationship formed through the platform",
-];
-
 function Terms() {
   return (
     <SiteLayout>
-      <article className="max-w-3xl mx-auto px-4 sm:px-6 py-12 sm:py-16">
-        <p className="text-xs uppercase tracking-widest text-brand-dark/50 mb-3">
-          Version {TERMS_VERSION} · Effective {TERMS_EFFECTIVE_DATE}
-        </p>
-        <h1 className="text-4xl sm:text-5xl font-heading font-bold mb-6">
-          Terms &amp; Disclaimer
-        </h1>
+      <div className="max-w-3xl mx-auto px-4 sm:px-6 py-12 space-y-6 text-brand-dark/85 leading-relaxed">
+        <h1 className="text-3xl font-heading font-bold">Terms of Use</h1>
+        <p className="text-sm text-brand-dark/60">Effective date: 29 June 2026</p>
 
-        <div className="bg-brand-soft border-l-4 border-brand-primary rounded-r-xl p-5 mb-10">
-          <h2 className="font-heading text-lg font-bold mb-2">IMPORTANT DISCLAIMER</h2>
-          <p className="text-brand-dark/80 text-sm">
-            Please read these terms carefully. You must accept them before registering, requesting
-            a service or contacting a provider on this platform.
+        <Section title="1. What this platform is">
+          <p>
+            {PLATFORM_NAME} ("the platform") is a digital community noticeboard owned and operated
+            by {PLATFORM_OWNER}. It exists to allow people offering skills and people looking for
+            help to find each other in their local community.
           </p>
-        </div>
-
-        <Section>
-          The Hineni Community Skills Register is a community-based platform intended to help
-          connect individuals, households, businesses, farms, churches, charities and other
-          organisations with people offering services.
         </Section>
 
-        <Section>
-          Hineni may conduct document reviews, reference checks, identity verification and other
-          screening activities where possible. However, Hineni does not guarantee the accuracy,
-          completeness or authenticity of information supplied by applicants, references,
-          employers, third parties or government authorities.
+        <Section title="2. What Khulisa is not">
+          <ul className="list-disc pl-6 space-y-1">
+            <li>{PLATFORM_NAME} is a community noticeboard only.</li>
+            <li>Khulisa is not an employer.</li>
+            <li>Khulisa is not a labour broker.</li>
+            <li>Khulisa is not a recruitment agency.</li>
+            <li>Khulisa does not verify users.</li>
+            <li>Khulisa does not verify qualifications.</li>
+            <li>Khulisa does not verify experience.</li>
+            <li>Khulisa does not verify references.</li>
+            <li>Khulisa does not recommend any person.</li>
+          </ul>
         </Section>
 
-        <Section>
-          While reasonable efforts may be made to verify information, Hineni does not warrant or
-          guarantee the suitability, competence, conduct, honesty, qualifications, availability,
-          legal status or ongoing compliance of any applicant, service provider, employer or
-          service seeker.
+        <Section title="3. Your responsibilities">
+          <p>
+            Users are solely responsible for conducting their own checks before entering into any
+            agreement. This includes verifying identity, references, qualifications and work
+            permits where applicable, and obtaining a police clearance certificate where
+            appropriate.
+          </p>
+          <p>
+            Users are responsible for agreeing payment, work conditions and complying with all
+            applicable legal obligations, including labour, tax and immigration law.
+          </p>
         </Section>
 
-        <Section>
-          Users remain solely responsible for conducting their own assessments, interviews,
-          reference checks, supervision, contractual arrangements, safeguarding measures and due
-          diligence before engaging any individual or organisation through the platform.
+        <Section title="4. Listings and conduct">
+          <p>
+            You must only post information that is true and accurate, and you must be 18 or older
+            to publish a listing. Khulisa may remove listings that breach these Terms, are
+            misleading, fraudulent, offensive, illegal, or otherwise inappropriate.
+          </p>
         </Section>
 
-        <h2 className="text-xl font-heading font-semibold mt-10 mb-3">Limitation of liability</h2>
-        <p className="text-brand-dark/80 leading-relaxed mb-4">
-          To the fullest extent permitted by applicable law, Hineni, its directors, officers,
-          employees, volunteers, partners and affiliates shall not be liable for any direct,
-          indirect, incidental, consequential or special damages, losses, claims, costs or
-          expenses arising from or relating to:
-        </p>
-        <ul className="grid sm:grid-cols-2 gap-x-6 gap-y-1.5 text-brand-dark/80 text-sm mb-6 pl-5 list-disc">
-          {LIABILITY_ITEMS.map((i) => (
-            <li key={i}>{i}</li>
-          ))}
-        </ul>
-        <p className="text-brand-dark/80 leading-relaxed mb-6">
-          Nothing in these terms excludes any liability which cannot legally be excluded under
-          applicable law.
-        </p>
-
-        <Section>
-          Applicants and service seekers acknowledge that participation in the platform is
-          voluntary and undertaken at their own risk.
+        <Section title="5. Privacy and contact details">
+          <p>
+            Telephone numbers are stored privately and are only shared with another user once you
+            have explicitly approved their request. See our{" "}
+            <Link to="/privacy" className="underline">Privacy Policy</Link>.
+          </p>
         </Section>
 
-        <h2 className="text-xl font-heading font-semibold mt-10 mb-3">Mandatory acceptance</h2>
-        <div className="bg-white border border-brand-dark/10 rounded-2xl p-5 text-sm text-brand-dark/85 italic">
-          “{ACCEPTANCE_TEXT}”
-        </div>
+        <Section title="6. Limitation of liability">
+          <p>
+            To the maximum extent permitted by South African law, {PLATFORM_OWNER} accepts no
+            liability for any loss, injury, damage, dispute or claim arising from introductions
+            made through this platform. See our{" "}
+            <Link to="/disclaimer" className="underline">Disclaimer</Link>.
+          </p>
+        </Section>
 
-        <h2 className="text-xl font-heading font-semibold mt-10 mb-3">
-          Platform ownership &amp; intellectual property
-        </h2>
-        <div className="bg-brand-soft/60 border border-brand-dark/10 rounded-2xl p-5 text-sm text-brand-dark/85 leading-relaxed">
-          {IP_OWNERSHIP_STATEMENT}
-        </div>
-        <p className="text-sm text-brand-dark/75 leading-relaxed mt-4">
-          The Hineni Programme is a participating programme delivered through the {PLATFORM_NAME}.
-          References to "Hineni" in these terms refer to the programme and its coordinators, not to
-          the ownership of the platform, which remains with {PLATFORM_OWNER}.
-        </p>
+        <Section title="7. Intellectual property">
+          <p>{IP_OWNERSHIP_STATEMENT}</p>
+        </Section>
 
-        <p className="text-xs text-brand-dark/50 mt-10">
-          When you accept these terms, we record the date and time, the version accepted, and where
-          legally permitted your IP address, as part of our audit log.
-        </p>
-      </article>
+        <Section title="8. Governing law">
+          <p>These Terms are governed by the laws of the Republic of South Africa.</p>
+        </Section>
+      </div>
     </SiteLayout>
   );
 }
 
-function Section({ children }: { children: React.ReactNode }) {
-  return <p className="text-brand-dark/80 leading-relaxed mb-5">{children}</p>;
+function Section({ title, children }: { title: string; children: React.ReactNode }) {
+  return (
+    <section className="space-y-2">
+      <h2 className="text-xl font-heading font-semibold">{title}</h2>
+      {children}
+    </section>
+  );
 }

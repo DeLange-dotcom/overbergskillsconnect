@@ -1,15 +1,12 @@
 import { Link } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
-import { Menu, X, Heart } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 
 const NAV = [
   { to: "/", label: "Home" },
-  { to: "/directory", label: "Directory" },
-  { to: "/register-provider", label: "Register" },
-  { to: "/request-support", label: "Request Support" },
-  { to: "/how-it-works", label: "How it works" },
-  { to: "/donate", label: "Donate" },
+  { to: "/find-help", label: "Looking for Someone" },
+  { to: "/advertise", label: "Advertise My Skills" },
 ];
 
 export function Header() {
@@ -42,45 +39,31 @@ export function Header() {
               Khulisa Community
             </div>
             <div className="text-[10px] uppercase tracking-widest text-brand-dark/50">
-              Hineni Programme
+              Community Noticeboard
             </div>
           </div>
         </Link>
 
-        <nav className="hidden xl:flex items-center gap-6 text-sm whitespace-nowrap">
+        <nav className="hidden md:flex items-center gap-6 text-sm whitespace-nowrap">
           {NAV.map((n) => (
             <Link
               key={n.to}
               to={n.to}
-              className="text-brand-dark/70 hover:text-brand-primary transition-colors whitespace-nowrap"
-              activeProps={{ className: "text-brand-primary font-semibold whitespace-nowrap" }}
+              className="text-brand-dark/70 hover:text-brand-primary transition-colors"
+              activeProps={{ className: "text-brand-primary font-semibold" }}
               activeOptions={{ exact: n.to === "/" }}
             >
               {n.label}
             </Link>
           ))}
-          <Link
-            to="/youth"
-            className="px-4 py-2 rounded-full bg-brand-primary text-primary-foreground text-sm font-medium hover:brightness-110 transition whitespace-nowrap"
-            activeProps={{ className: "px-4 py-2 rounded-full bg-brand-primary text-primary-foreground text-sm font-medium brightness-110 whitespace-nowrap" }}
-          >
-            Youth Hub
-          </Link>
-          <Link
-            to="/apprenticeships"
-            className="px-4 py-2 rounded-full bg-brand-primary text-primary-foreground text-sm font-medium hover:brightness-110 transition whitespace-nowrap"
-            activeProps={{ className: "px-4 py-2 rounded-full bg-brand-primary text-primary-foreground text-sm font-medium brightness-110 whitespace-nowrap" }}
-          >
-            Apprenticeships
-          </Link>
         </nav>
 
         <div className="flex items-center gap-2">
           <Link
-            to="/donate"
-            className="hidden sm:inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-brand-accent text-white text-sm font-medium hover:brightness-110 transition whitespace-nowrap"
+            to="/advertise"
+            className="hidden sm:inline-flex px-4 py-2 rounded-full bg-brand-primary text-primary-foreground text-sm font-medium hover:brightness-110 transition"
           >
-            <Heart className="size-4" /> Donate
+            Advertise
           </Link>
           {signedIn ? (
             <Link
@@ -92,15 +75,15 @@ export function Header() {
           ) : (
             <Link
               to="/auth"
-              className="hidden sm:inline-flex px-3 py-2 rounded-full border border-brand-dark/10 text-sm text-brand-dark/70 hover:bg-brand-soft hover:text-brand-primary transition whitespace-nowrap"
-              title="Khulisa Community — Admin sign-in"
+              className="hidden sm:inline-flex px-3 py-2 rounded-full border border-brand-dark/10 text-sm text-brand-dark/70 hover:bg-brand-soft hover:text-brand-primary transition"
+              title="Admin sign-in"
             >
-              Admin sign-in
+              Admin
             </Link>
           )}
           <button
             onClick={() => setOpen((v) => !v)}
-            className="xl:hidden size-10 rounded-full bg-brand-soft grid place-items-center"
+            className="md:hidden size-10 rounded-full bg-brand-soft grid place-items-center"
             aria-label="Toggle menu"
           >
             {open ? <X className="size-5" /> : <Menu className="size-5" />}
@@ -109,7 +92,7 @@ export function Header() {
       </div>
 
       {open && (
-        <div className="xl:hidden border-t border-brand-dark/5 bg-brand-page">
+        <div className="md:hidden border-t border-brand-dark/5 bg-brand-page">
           <nav className="px-4 py-4 flex flex-col gap-2">
             {NAV.map((n) => (
               <Link
@@ -123,23 +106,6 @@ export function Header() {
                 {n.label}
               </Link>
             ))}
-            <div className="border-t border-brand-dark/10 my-1" />
-            <Link
-              to="/youth"
-              onClick={() => setOpen(false)}
-              className="px-3 py-3 rounded-lg text-center bg-brand-primary text-primary-foreground font-medium hover:brightness-110"
-              activeProps={{ className: "px-3 py-3 rounded-lg text-center bg-brand-primary text-primary-foreground font-medium brightness-110" }}
-            >
-              Youth Hub
-            </Link>
-            <Link
-              to="/apprenticeships"
-              onClick={() => setOpen(false)}
-              className="px-3 py-3 rounded-lg text-center bg-brand-primary text-primary-foreground font-medium hover:brightness-110"
-              activeProps={{ className: "px-3 py-3 rounded-lg text-center bg-brand-primary text-primary-foreground font-medium brightness-110" }}
-            >
-              Apprenticeships
-            </Link>
             {signedIn ? (
               <Link
                 to="/admin"
