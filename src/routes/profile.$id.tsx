@@ -32,6 +32,7 @@ export const Route = createFileRoute("/profile/$id")({
 
 type Row = {
   id: string;
+  public_listing_reference: string | null;
   name: string;
   town: string;
   skills: string[];
@@ -41,6 +42,8 @@ type Row = {
   photo_url: string | null;
 };
 
+const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
 function ProfilePage() {
   const { id } = Route.useParams();
   const [contactOpen, setContactOpen] = useState(false);
@@ -49,10 +52,11 @@ function ProfilePage() {
   const { data, isLoading, error } = useQuery({
     queryKey: ["profile", id],
     queryFn: async (): Promise<Row | null> => {
+      const lookupColumn = UUID_RE.test(id) ? "id" : "public_listing_reference";
       const { data, error } = await supabase
         .from("noticeboard_public")
         .select("*")
-        .eq("id", id)
+        .eq(lookupColumn, id)
         .maybeSingle();
       if (error) throw error;
       return (data as Row | null) ?? null;
