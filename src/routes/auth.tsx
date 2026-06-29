@@ -73,8 +73,10 @@ function AuthPage() {
 
   async function google() {
     setBusy(true);
+    // redirect_uri must be a public same-origin URL; the page-load effect
+    // will move the signed-in user to nextDest() on return.
     const result = await lovable.auth.signInWithOAuth("google", {
-      redirect_uri: window.location.origin + nextDest(),
+      redirect_uri: window.location.origin + "/auth" + (window.location.search || ""),
     });
     if (result.error) {
       toast.error("Google sign-in failed.");
