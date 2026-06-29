@@ -87,20 +87,21 @@ function Advertise() {
       return;
     }
 
-    const { data, error } = await supabase
-      .from("noticeboard_profiles")
-      .insert(payload)
-      .select("manage_token, public_listing_reference")
-      .single();
+    const { data, error } = await supabase.rpc(
+      "noticeboard_create_listing" as never,
+      { _payload: payload } as never,
+    );
 
     setSubmitting(false);
     if (error || !data) {
-      toast.error(error?.message ?? "Could not publish your listing.");
+      toast.error((error as { message?: string } | null)?.message ?? "Could not publish your listing.");
       return;
     }
+    const row = Array.isArray(data) ? data[0] : data;
     setDone({
-      manageToken: data.manage_token as string,
-      publicRef: (data.public_listing_reference as string | null) ?? null,
+      manageToken: (row as { manage_token: string }).manage_token,
+      publicRef:
+        ((row as { public_listing_reference: string | null }).public_listing_reference) ?? null,
     });
   }
 

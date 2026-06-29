@@ -49,17 +49,17 @@ function ProfilePage() {
   const [showContact, setShowContact] = useState(false);
   const [showReport, setShowReport] = useState(false);
 
-  const tableMap: Record<ApplicantType, "service_providers" | "apprentices" | "youth_profiles"> = {
-    service_provider: "service_providers",
-    apprentice: "apprentices",
-    youth: "youth_profiles",
+  const viewMap: Record<ApplicantType, string> = {
+    service_provider: "service_providers_public",
+    apprentice: "apprentices_public",
+    youth: "youth_profiles_public",
   };
 
   const { data: profile, isLoading } = useQuery({
     queryKey: ["directory_profile", type, id],
     queryFn: async () => {
       const { data, error } = await supabase
-        .from(tableMap[type])
+        .from(viewMap[type] as never)
         .select("*")
         .eq("id", id)
         .maybeSingle();
@@ -390,18 +390,25 @@ function Modal({ children, onClose }: { children: React.ReactNode; onClose: () =
 }
 
 function ReviewsList({ type, id }: { type: ApplicantType; id: string }) {
+  type Review = {
+    reliability: number | null;
+    communication: number | null;
+    punctuality: number | null;
+    would_recommend: boolean | null;
+    comment: string | null;
+    created_at: string;
+  };
   const { data } = useQuery({
     queryKey: ["reviews", type, id],
-    queryFn: async () => {
+    queryFn: async (): Promise<Review[]> => {
       const { data } = await supabase
-        .from("feedback_responses")
+        .from("feedback_responses_public" as never)
         .select("reliability, communication, punctuality, would_recommend, comment, created_at")
         .eq("applicant_type", type)
         .eq("applicant_id", id)
-        .eq("engaged", "yes")
         .order("created_at", { ascending: false })
         .limit(20);
-      return data ?? [];
+      return (data ?? []) as unknown as Review[];
     },
   });
 

@@ -39,12 +39,12 @@ function MyListing() {
   const { data: publicRef } = useQuery({
     queryKey: ["my-listing-ref", token],
     queryFn: async (): Promise<string | null> => {
-      const { data } = await supabase
-        .from("noticeboard_profiles")
-        .select("public_listing_reference")
-        .eq("manage_token", token)
-        .maybeSingle();
-      return (data?.public_listing_reference as string | null) ?? null;
+      const { data } = await supabase.rpc(
+        "noticeboard_owner_get_listing" as never,
+        { _manage_token: token } as never,
+      );
+      const row = Array.isArray(data) ? data[0] : data;
+      return ((row as { public_listing_reference: string | null } | null)?.public_listing_reference) ?? null;
     },
   });
 

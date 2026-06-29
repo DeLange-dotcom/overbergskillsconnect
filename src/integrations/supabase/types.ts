@@ -51,6 +51,13 @@ export type Database = {
             referencedColumns: ["id"]
           },
           {
+            foreignKeyName: "apprentice_applications_apprentice_id_fkey"
+            columns: ["apprentice_id"]
+            isOneToOne: false
+            referencedRelation: "apprentices_public"
+            referencedColumns: ["id"]
+          },
+          {
             foreignKeyName: "apprentice_applications_opportunity_id_fkey"
             columns: ["opportunity_id"]
             isOneToOne: false
@@ -97,6 +104,13 @@ export type Database = {
             columns: ["apprentice_id"]
             isOneToOne: false
             referencedRelation: "apprentices"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "apprentice_skills_apprentice_id_fkey"
+            columns: ["apprentice_id"]
+            isOneToOne: false
+            referencedRelation: "apprentices_public"
             referencedColumns: ["id"]
           },
         ]
@@ -617,6 +631,13 @@ export type Database = {
             referencedRelation: "service_providers"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "contact_requests_service_provider_id_fkey"
+            columns: ["service_provider_id"]
+            isOneToOne: false
+            referencedRelation: "service_providers_public"
+            referencedColumns: ["id"]
+          },
         ]
       }
       donations: {
@@ -815,6 +836,13 @@ export type Database = {
             columns: ["apprentice_id"]
             isOneToOne: false
             referencedRelation: "apprentices"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "mentor_matches_apprentice_id_fkey"
+            columns: ["apprentice_id"]
+            isOneToOne: false
+            referencedRelation: "apprentices_public"
             referencedColumns: ["id"]
           },
           {
@@ -1403,6 +1431,13 @@ export type Database = {
             referencedColumns: ["id"]
           },
           {
+            foreignKeyName: "placements_apprentice_id_fkey"
+            columns: ["apprentice_id"]
+            isOneToOne: false
+            referencedRelation: "apprentices_public"
+            referencedColumns: ["id"]
+          },
+          {
             foreignKeyName: "placements_opportunity_id_fkey"
             columns: ["opportunity_id"]
             isOneToOne: false
@@ -1472,6 +1507,13 @@ export type Database = {
             referencedRelation: "service_providers"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "provider_documents_service_provider_id_fkey"
+            columns: ["service_provider_id"]
+            isOneToOne: false
+            referencedRelation: "service_providers_public"
+            referencedColumns: ["id"]
+          },
         ]
       }
       provider_references: {
@@ -1523,6 +1565,13 @@ export type Database = {
             referencedRelation: "service_providers"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "provider_references_service_provider_id_fkey"
+            columns: ["service_provider_id"]
+            isOneToOne: false
+            referencedRelation: "service_providers_public"
+            referencedColumns: ["id"]
+          },
         ]
       }
       provider_vetting_checks: {
@@ -1566,6 +1615,13 @@ export type Database = {
             columns: ["service_provider_id"]
             isOneToOne: false
             referencedRelation: "service_providers"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "provider_vetting_checks_service_provider_id_fkey"
+            columns: ["service_provider_id"]
+            isOneToOne: false
+            referencedRelation: "service_providers_public"
             referencedColumns: ["id"]
           },
         ]
@@ -2004,6 +2060,13 @@ export type Database = {
             referencedRelation: "service_providers"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "vetting_pdf_exports_service_provider_id_fkey"
+            columns: ["service_provider_id"]
+            isOneToOne: false
+            referencedRelation: "service_providers_public"
+            referencedColumns: ["id"]
+          },
         ]
       }
       youth_applications: {
@@ -2081,6 +2144,13 @@ export type Database = {
             referencedRelation: "youth_profiles"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "youth_applications_youth_profile_id_fkey"
+            columns: ["youth_profile_id"]
+            isOneToOne: false
+            referencedRelation: "youth_profiles_public"
+            referencedColumns: ["id"]
+          },
         ]
       }
       youth_badges: {
@@ -2114,6 +2184,13 @@ export type Database = {
             columns: ["youth_profile_id"]
             isOneToOne: false
             referencedRelation: "youth_profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "youth_badges_youth_profile_id_fkey"
+            columns: ["youth_profile_id"]
+            isOneToOne: false
+            referencedRelation: "youth_profiles_public"
             referencedColumns: ["id"]
           },
         ]
@@ -2592,6 +2669,13 @@ export type Database = {
             referencedRelation: "youth_profiles"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "youth_references_youth_profile_id_fkey"
+            columns: ["youth_profile_id"]
+            isOneToOne: false
+            referencedRelation: "youth_profiles_public"
+            referencedColumns: ["id"]
+          },
         ]
       }
       youth_training: {
@@ -2636,6 +2720,13 @@ export type Database = {
             referencedRelation: "youth_profiles"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "youth_training_youth_profile_id_fkey"
+            columns: ["youth_profile_id"]
+            isOneToOne: false
+            referencedRelation: "youth_profiles_public"
+            referencedColumns: ["id"]
+          },
         ]
       }
     }
@@ -2647,6 +2738,54 @@ export type Database = {
           avg_rating: number | null
           recommend_pct: number | null
           review_count: number | null
+        }
+        Relationships: []
+      }
+      apprentices_public: {
+        Row: {
+          availability: string[] | null
+          career_interests: string[] | null
+          category: string | null
+          created_at: string | null
+          full_name: string | null
+          id: string | null
+          languages: string[] | null
+          profile_photo_url: string | null
+          short_bio: string | null
+          town: string | null
+          verification_level:
+            | Database["public"]["Enums"]["verification_level"]
+            | null
+        }
+        Insert: {
+          availability?: string[] | null
+          career_interests?: string[] | null
+          category?: string | null
+          created_at?: string | null
+          full_name?: string | null
+          id?: string | null
+          languages?: string[] | null
+          profile_photo_url?: string | null
+          short_bio?: string | null
+          town?: string | null
+          verification_level?:
+            | Database["public"]["Enums"]["verification_level"]
+            | null
+        }
+        Update: {
+          availability?: string[] | null
+          career_interests?: string[] | null
+          category?: string | null
+          created_at?: string | null
+          full_name?: string | null
+          id?: string | null
+          languages?: string[] | null
+          profile_photo_url?: string | null
+          short_bio?: string | null
+          town?: string | null
+          verification_level?:
+            | Database["public"]["Enums"]["verification_level"]
+            | null
         }
         Relationships: []
       }
@@ -2770,6 +2909,45 @@ export type Database = {
         }
         Relationships: []
       }
+      feedback_responses_public: {
+        Row: {
+          applicant_id: string | null
+          applicant_type: string | null
+          comment: string | null
+          communication: number | null
+          created_at: string | null
+          engaged: string | null
+          id: string | null
+          punctuality: number | null
+          reliability: number | null
+          would_recommend: boolean | null
+        }
+        Insert: {
+          applicant_id?: string | null
+          applicant_type?: string | null
+          comment?: string | null
+          communication?: number | null
+          created_at?: string | null
+          engaged?: string | null
+          id?: string | null
+          punctuality?: number | null
+          reliability?: number | null
+          would_recommend?: boolean | null
+        }
+        Update: {
+          applicant_id?: string | null
+          applicant_type?: string | null
+          comment?: string | null
+          communication?: number | null
+          created_at?: string | null
+          engaged?: string | null
+          id?: string | null
+          punctuality?: number | null
+          reliability?: number | null
+          would_recommend?: boolean | null
+        }
+        Relationships: []
+      }
       impact_stats: {
         Row: {
           approved: number | null
@@ -2867,6 +3045,63 @@ export type Database = {
         }
         Relationships: []
       }
+      service_providers_public: {
+        Row: {
+          available_immediately: boolean | null
+          category: string | null
+          created_at: string | null
+          days_available: string[] | null
+          display_name: string | null
+          full_name: string | null
+          id: string | null
+          languages: string[] | null
+          profile_photo_url: string | null
+          services: Database["public"]["Enums"]["service_category"][] | null
+          short_bio: string | null
+          town: string | null
+          verification_level:
+            | Database["public"]["Enums"]["verification_level"]
+            | null
+          years_experience: number | null
+        }
+        Insert: {
+          available_immediately?: boolean | null
+          category?: string | null
+          created_at?: string | null
+          days_available?: string[] | null
+          display_name?: string | null
+          full_name?: string | null
+          id?: string | null
+          languages?: string[] | null
+          profile_photo_url?: string | null
+          services?: Database["public"]["Enums"]["service_category"][] | null
+          short_bio?: string | null
+          town?: string | null
+          verification_level?:
+            | Database["public"]["Enums"]["verification_level"]
+            | null
+          years_experience?: number | null
+        }
+        Update: {
+          available_immediately?: boolean | null
+          category?: string | null
+          created_at?: string | null
+          days_available?: string[] | null
+          display_name?: string | null
+          full_name?: string | null
+          id?: string | null
+          languages?: string[] | null
+          profile_photo_url?: string | null
+          services?: Database["public"]["Enums"]["service_category"][] | null
+          short_bio?: string | null
+          town?: string | null
+          verification_level?:
+            | Database["public"]["Enums"]["verification_level"]
+            | null
+          years_experience?: number | null
+        }
+        Relationships: []
+      }
       supporter_wall: {
         Row: {
           amount_cents: number | null
@@ -2948,6 +3183,54 @@ export type Database = {
         }
         Relationships: []
       }
+      youth_profiles_public: {
+        Row: {
+          age_group: string | null
+          created_at: string | null
+          first_name: string | null
+          full_name: string | null
+          id: string | null
+          interests: string[] | null
+          languages: string[] | null
+          profile_photo_url: string | null
+          skills: string[] | null
+          town: string | null
+          verification_level:
+            | Database["public"]["Enums"]["verification_level"]
+            | null
+        }
+        Insert: {
+          age_group?: string | null
+          created_at?: string | null
+          first_name?: string | null
+          full_name?: string | null
+          id?: string | null
+          interests?: string[] | null
+          languages?: string[] | null
+          profile_photo_url?: string | null
+          skills?: string[] | null
+          town?: string | null
+          verification_level?:
+            | Database["public"]["Enums"]["verification_level"]
+            | null
+        }
+        Update: {
+          age_group?: string | null
+          created_at?: string | null
+          first_name?: string | null
+          full_name?: string | null
+          id?: string | null
+          interests?: string[] | null
+          languages?: string[] | null
+          profile_photo_url?: string | null
+          skills?: string[] | null
+          town?: string | null
+          verification_level?:
+            | Database["public"]["Enums"]["verification_level"]
+            | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
       has_role: {
@@ -2977,9 +3260,25 @@ export type Database = {
           parent_full_name: string
         }[]
       }
+      noticeboard_create_listing: {
+        Args: { _payload: Json }
+        Returns: {
+          manage_token: string
+          public_listing_reference: string
+        }[]
+      }
       noticeboard_owner_decide: {
         Args: { _decision: string; _manage_token: string; _request_id: string }
         Returns: string
+      }
+      noticeboard_owner_get_listing: {
+        Args: { _manage_token: string }
+        Returns: {
+          id: string
+          is_hidden: boolean
+          name: string
+          public_listing_reference: string
+        }[]
       }
       noticeboard_owner_set_hidden: {
         Args: { _hidden: boolean; _manage_token: string }
