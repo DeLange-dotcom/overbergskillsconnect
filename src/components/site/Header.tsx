@@ -40,7 +40,7 @@ export function Header() {
               Overberg Skills Connect
             </div>
             <div className="text-[10px] uppercase tracking-widest text-brand-dark/50">
-              Community Noticeboard
+              Powered by Khulisa Group
             </div>
           </div>
         </Link>
