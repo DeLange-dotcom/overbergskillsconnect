@@ -26,7 +26,7 @@ function Advertise() {
   const [submitting, setSubmitting] = useState(false);
   const [skills, setSkills] = useState<string[]>([]);
   const [otherSkills, setOtherSkills] = useState("");
-  const [done, setDone] = useState<{ manageToken: string } | null>(null);
+  const [done, setDone] = useState<{ manageToken: string; publicRef: string | null } | null>(null);
   const [acks, setAcks] = useState({ age: false, truthful: false, terms: false, noticeboard: false });
 
   const hasOther = skills.includes("Other");
@@ -90,7 +90,7 @@ function Advertise() {
     const { data, error } = await supabase
       .from("noticeboard_profiles")
       .insert(payload)
-      .select("manage_token")
+      .select("manage_token, public_listing_reference")
       .single();
 
     setSubmitting(false);
@@ -98,20 +98,50 @@ function Advertise() {
       toast.error(error?.message ?? "Could not publish your listing.");
       return;
     }
-    setDone({ manageToken: data.manage_token as string });
+    setDone({
+      manageToken: data.manage_token as string,
+      publicRef: (data.public_listing_reference as string | null) ?? null,
+    });
   }
 
 
   if (done) {
     const manageUrl = `${window.location.origin}/my-listing/${done.manageToken}`;
+    const publicUrl = done.publicRef
+      ? `${window.location.origin}/profile/${done.publicRef}`
+      : null;
     return (
       <SiteLayout>
         <div className="max-w-xl mx-auto px-4 sm:px-6 py-16 text-center">
           <CheckCircle2 className="size-16 text-emerald-600 mx-auto mb-6" />
           <h1 className="text-3xl font-heading font-bold mb-3">Your listing is live</h1>
-          <p className="text-brand-dark/70 mb-6">
-            Save this private link — it lets you manage your listing and approve contact requests.
-            Anyone with the link can manage your listing, so keep it safe.
+
+          {publicUrl && (
+            <>
+              <p className="text-brand-dark/70 mb-3">
+                Share this short link so people can find you on the noticeboard:
+              </p>
+              <div className="flex items-center gap-2 p-3 rounded-xl bg-white border border-brand-primary/30 mb-2 text-left">
+                <code className="text-sm font-medium break-all flex-1">{publicUrl}</code>
+                <button
+                  type="button"
+                  onClick={() => {
+                    navigator.clipboard.writeText(publicUrl);
+                    toast.success("Listing link copied");
+                  }}
+                  className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg bg-brand-primary text-white text-sm"
+                  aria-label="Copy my listing link"
+                >
+                  <Copy className="size-4" /> Copy My Listing Link
+                </button>
+              </div>
+              <p className="text-xs text-brand-dark/50 mb-6">Reference: {done.publicRef}</p>
+            </>
+          )}
+
+          <p className="text-brand-dark/70 mb-3 mt-2">
+            Save this <strong>private</strong> link — it lets you manage your listing and approve contact requests.
+            Anyone with this link can manage your listing, so keep it safe.
           </p>
           <div className="flex items-center gap-2 p-3 rounded-xl bg-brand-soft border border-brand-dark/10 mb-6 text-left">
             <code className="text-xs break-all flex-1">{manageUrl}</code>
@@ -122,7 +152,7 @@ function Advertise() {
                 toast.success("Link copied");
               }}
               className="p-2 rounded-lg hover:bg-white"
-              aria-label="Copy link"
+              aria-label="Copy manage link"
             >
               <Copy className="size-4" />
             </button>

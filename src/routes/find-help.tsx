@@ -23,6 +23,7 @@ export const Route = createFileRoute("/find-help")({
 
 type Row = {
   id: string;
+  public_listing_reference: string | null;
   name: string;
   town: string;
   skills: string[];
@@ -130,7 +131,7 @@ function FindHelp() {
               <Link
                 key={r.id}
                 to="/profile/$id"
-                params={{ id: r.id }}
+                params={{ id: r.public_listing_reference ?? r.id }}
                 className="bg-white border border-brand-dark/5 rounded-2xl p-5 flex flex-col hover:border-brand-primary/30 hover:shadow-sm transition"
               >
                 <div className="flex items-start gap-3 mb-3">
