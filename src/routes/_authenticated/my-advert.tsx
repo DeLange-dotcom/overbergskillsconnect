@@ -23,6 +23,7 @@ type MyListing = {
   availability: string | null;
   photo_url: string | null;
   is_hidden: boolean;
+  is_archived: boolean;
   public_listing_reference: string | null;
   created_at: string;
 };
@@ -36,6 +37,8 @@ function MyAdvert() {
     queryFn: async (): Promise<MyListing | null> => {
       const { data, error } = await supabase.rpc("noticeboard_my_listing");
       if (error) throw error;
+      // Best-effort: stamp last_login_at for lifecycle tracking
+      supabase.rpc("noticeboard_touch_login").then(() => {});
       const row = Array.isArray(data) ? data[0] : data;
       return (row as MyListing | undefined) ?? null;
     },
@@ -223,6 +226,13 @@ function MyAdvertEditor({
           )}
         </div>
 
+        {listing.is_archived && (
+          <div className="p-4 rounded-2xl border border-amber-300 bg-amber-50 mb-4 text-sm text-amber-900">
+            Your listing is <strong>archived</strong> and hidden from public search. Use{" "}
+            <em>Reactivate listing</em> below to bring it back live.
+          </div>
+        )}
+
         <div className="flex items-center justify-between p-4 rounded-2xl border border-brand-dark/10 bg-white mb-6">
           <div>
             <div className="font-medium">
@@ -390,7 +400,35 @@ function MyAdvertEditor({
           </div>
         </form>
 
-        <div className="mt-10 pt-6 border-t border-brand-dark/10">
+        <div className="mt-10 pt-6 border-t border-brand-dark/10 flex flex-wrap gap-2">
+          {listing.is_archived ? (
+            <button
+              type="button"
+              onClick={async () => {
+                const { error } = await supabase.rpc("noticeboard_my_reactivate");
+                if (error) return toast.error(error.message);
+                toast.success("Listing reactivated");
+                refetch();
+              }}
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-emerald-200 text-emerald-700 hover:bg-emerald-50 text-sm"
+            >
+              <Eye className="size-4" /> Reactivate listing
+            </button>
+          ) : (
+            <button
+              type="button"
+              onClick={async () => {
+                if (!confirm("Archive your listing? It will be hidden from public search but can be reactivated any time.")) return;
+                const { error } = await supabase.rpc("noticeboard_my_archive");
+                if (error) return toast.error(error.message);
+                toast.success("Listing archived");
+                refetch();
+              }}
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-brand-dark/15 text-brand-dark/80 hover:bg-brand-soft text-sm"
+            >
+              <EyeOff className="size-4" /> Archive my listing
+            </button>
+          )}
           <button
             type="button"
             onClick={() => setConfirmDelete(true)}
@@ -399,6 +437,7 @@ function MyAdvertEditor({
             <Trash2 className="size-4" /> Delete my listing
           </button>
         </div>
+
 
         {confirmDelete && (
           <div
