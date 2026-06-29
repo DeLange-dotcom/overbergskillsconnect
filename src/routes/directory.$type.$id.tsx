@@ -49,17 +49,17 @@ function ProfilePage() {
   const [showContact, setShowContact] = useState(false);
   const [showReport, setShowReport] = useState(false);
 
-  const tableMap: Record<ApplicantType, "service_providers" | "apprentices" | "youth_profiles"> = {
-    service_provider: "service_providers",
-    apprentice: "apprentices",
-    youth: "youth_profiles",
+  const viewMap: Record<ApplicantType, string> = {
+    service_provider: "service_providers_public",
+    apprentice: "apprentices_public",
+    youth: "youth_profiles_public",
   };
 
   const { data: profile, isLoading } = useQuery({
     queryKey: ["directory_profile", type, id],
     queryFn: async () => {
       const { data, error } = await supabase
-        .from(tableMap[type])
+        .from(viewMap[type] as never)
         .select("*")
         .eq("id", id)
         .maybeSingle();
