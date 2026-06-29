@@ -23,6 +23,7 @@ export const Route = createFileRoute("/advertise")({
 });
 
 function Advertise() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [submitting, setSubmitting] = useState(false);
   const [skills, setSkills] = useState<string[]>([]);
