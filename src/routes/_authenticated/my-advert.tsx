@@ -37,6 +37,8 @@ function MyAdvert() {
     queryFn: async (): Promise<MyListing | null> => {
       const { data, error } = await supabase.rpc("noticeboard_my_listing");
       if (error) throw error;
+      // Best-effort: stamp last_login_at for lifecycle tracking
+      supabase.rpc("noticeboard_touch_login").then(() => {});
       const row = Array.isArray(data) ? data[0] : data;
       return (row as MyListing | undefined) ?? null;
     },
