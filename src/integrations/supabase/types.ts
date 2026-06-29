@@ -1193,21 +1193,71 @@ export type Database = {
           },
         ]
       }
+      noticeboard_lifecycle_events: {
+        Row: {
+          created_at: string
+          details: Json
+          event_type: string
+          id: string
+          profile_id: string | null
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          details?: Json
+          event_type: string
+          id?: string
+          profile_id?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          details?: Json
+          event_type?: string
+          id?: string
+          profile_id?: string | null
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "noticeboard_lifecycle_events_profile_id_fkey"
+            columns: ["profile_id"]
+            isOneToOne: false
+            referencedRelation: "noticeboard_profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "noticeboard_lifecycle_events_profile_id_fkey"
+            columns: ["profile_id"]
+            isOneToOne: false
+            referencedRelation: "noticeboard_public"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       noticeboard_profiles: {
         Row: {
           accepted_terms: boolean
+          archive_notice_sent_at: string | null
+          archived_at: string | null
           availability: string | null
           category: string | null
           created_at: string
+          deletion_notice_sent_at: string | null
           description: string
           id: string
+          is_archived: boolean
           is_hidden: boolean
           is_suspended: boolean
+          last_activity_at: string
+          last_contact_request_at: string | null
+          last_login_at: string | null
           manage_token: string
           name: string
           phone: string
           photo_url: string | null
           public_listing_reference: string | null
+          renewal_reminder_sent_at: string | null
           skills: string[]
           town: string
           updated_at: string
@@ -1216,18 +1266,26 @@ export type Database = {
         }
         Insert: {
           accepted_terms?: boolean
+          archive_notice_sent_at?: string | null
+          archived_at?: string | null
           availability?: string | null
           category?: string | null
           created_at?: string
+          deletion_notice_sent_at?: string | null
           description: string
           id?: string
+          is_archived?: boolean
           is_hidden?: boolean
           is_suspended?: boolean
+          last_activity_at?: string
+          last_contact_request_at?: string | null
+          last_login_at?: string | null
           manage_token?: string
           name: string
           phone: string
           photo_url?: string | null
           public_listing_reference?: string | null
+          renewal_reminder_sent_at?: string | null
           skills?: string[]
           town: string
           updated_at?: string
@@ -1236,18 +1294,26 @@ export type Database = {
         }
         Update: {
           accepted_terms?: boolean
+          archive_notice_sent_at?: string | null
+          archived_at?: string | null
           availability?: string | null
           category?: string | null
           created_at?: string
+          deletion_notice_sent_at?: string | null
           description?: string
           id?: string
+          is_archived?: boolean
           is_hidden?: boolean
           is_suspended?: boolean
+          last_activity_at?: string
+          last_contact_request_at?: string | null
+          last_login_at?: string | null
           manage_token?: string
           name?: string
           phone?: string
           photo_url?: string | null
           public_listing_reference?: string | null
+          renewal_reminder_sent_at?: string | null
           skills?: string[]
           town?: string
           updated_at?: string
@@ -3266,6 +3332,7 @@ export type Database = {
           parent_full_name: string
         }[]
       }
+      noticeboard_admin_stats: { Args: never; Returns: Json }
       noticeboard_claim_listing: {
         Args: { _manage_token: string }
         Returns: string
@@ -3286,6 +3353,7 @@ export type Database = {
           public_listing_reference: string
         }[]
       }
+      noticeboard_my_archive: { Args: never; Returns: boolean }
       noticeboard_my_create: { Args: { _payload: Json }; Returns: string }
       noticeboard_my_decide: {
         Args: { _decision: string; _request_id: string }
@@ -3307,21 +3375,28 @@ export type Database = {
       noticeboard_my_listing: {
         Args: never
         Returns: {
+          archived_at: string
           availability: string
           category: string
           created_at: string
           description: string
           id: string
+          is_archived: boolean
           is_hidden: boolean
+          last_activity_at: string
+          last_contact_request_at: string
+          last_login_at: string
           name: string
           phone: string
           photo_url: string
           public_listing_reference: string
           skills: string[]
           town: string
+          updated_at: string
           years_experience: number
         }[]
       }
+      noticeboard_my_reactivate: { Args: never; Returns: boolean }
       noticeboard_my_requests: {
         Args: never
         Returns: {
@@ -3367,6 +3442,8 @@ export type Database = {
           status: string
         }[]
       }
+      noticeboard_run_lifecycle_maintenance: { Args: never; Returns: Json }
+      noticeboard_touch_login: { Args: never; Returns: undefined }
       noticeboard_view_request: {
         Args: { _requester_token: string }
         Returns: {
