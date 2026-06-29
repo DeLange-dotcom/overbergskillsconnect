@@ -10,7 +10,7 @@ import { SKILL_CATEGORIES } from "@/lib/noticeboard";
 export const Route = createFileRoute("/find-help")({
   head: () => ({
     meta: [
-      { title: "Looking for Someone — Overberg Skills Connect" },
+      { title: "Browse Local Skills — Overberg Skills Connect" },
       {
         name: "description",
         content:
