@@ -42,6 +42,9 @@
   --color-brand-dark: var(--brand-dark);
   --color-brand-soft: var(--brand-soft);
   --color-brand-page: var(--brand-page);
+  --color-brand-sky: var(--brand-sky);
+  --color-brand-field: var(--brand-field);
+  --color-brand-canola: var(--brand-canola);
 
   --font-heading: "Playfair Display", ui-serif, Georgia, serif;
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
@@ -50,12 +53,15 @@
 :root {
   --radius: 0.875rem;
 
-  /* Earthy Homestead palette */
-  --brand-primary: oklch(0.45 0.04 145);   /* sage / forest green #4A5D4E */
-  --brand-accent: oklch(0.72 0.13 60);     /* warm ochre #D48C45 */
-  --brand-dark: oklch(0.32 0.02 195);      /* slate teal #2D3A3A */
-  --brand-soft: oklch(0.95 0.01 80);       /* parchment #F1EFE9 */
-  --brand-page: oklch(0.985 0.005 80);     /* warm white #FDFBF7 */
+  /* Overberg poster palette — canola yellow, field green, crane blue, cream, charcoal */
+  --brand-primary: oklch(0.50 0.11 130);   /* field green  ~ #4E6B2C */
+  --brand-accent: oklch(0.83 0.15 92);     /* canola yellow ~ #E8C547 */
+  --brand-dark: oklch(0.25 0.01 90);       /* poster charcoal ~ #1F1F1F */
+  --brand-soft: oklch(0.94 0.03 92);       /* cream ~ #F4ECD8 */
+  --brand-page: oklch(0.985 0.008 92);     /* warm off-white */
+  --brand-sky: oklch(0.62 0.07 245);       /* crane blue ~ #6E8FB3 */
+  --brand-field: oklch(0.50 0.11 130);     /* alias of field green */
+  --brand-canola: oklch(0.83 0.15 92);     /* alias of canola yellow */
 
   --background: var(--brand-page);
   --foreground: var(--brand-dark);
@@ -66,22 +72,22 @@
   --popover-foreground: var(--brand-dark);
 
   --primary: var(--brand-primary);
-  --primary-foreground: oklch(0.985 0.005 80);
+  --primary-foreground: oklch(0.985 0.008 92);
 
   --secondary: var(--brand-soft);
   --secondary-foreground: var(--brand-dark);
 
   --muted: var(--brand-soft);
-  --muted-foreground: oklch(0.45 0.02 195);
+  --muted-foreground: oklch(0.45 0.02 90);
 
   --accent: var(--brand-accent);
-  --accent-foreground: oklch(0.99 0 0);
+  --accent-foreground: var(--brand-dark);
 
   --destructive: oklch(0.55 0.21 27);
   --destructive-foreground: oklch(0.99 0 0);
 
-  --border: oklch(0.32 0.02 195 / 0.08);
-  --input: oklch(0.32 0.02 195 / 0.12);
+  --border: oklch(0.25 0.01 90 / 0.08);
+  --input: oklch(0.25 0.01 90 / 0.12);
   --ring: var(--brand-primary);
 }
 
