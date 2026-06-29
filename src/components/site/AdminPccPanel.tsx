@@ -244,7 +244,7 @@ export function AdminPccPanel({ table, id }: Props) {
         <textarea
           rows={3}
           value={notesDraft}
-          onChange={(e) = spellCheck="true"> setNotesDraft(e.target.value)}
+          onChange={(e) => setNotesDraft(e.target.value)}
           onBlur={saveNotes}
           className="w-full px-3 py-2.5 rounded-lg border border-brand-dark/10 bg-white text-sm"
           placeholder="Internal PCC / vetting notes…"
