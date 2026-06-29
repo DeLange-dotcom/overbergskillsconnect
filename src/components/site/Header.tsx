@@ -4,6 +4,7 @@ import { Menu, X } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { supabase } from "@/integrations/supabase/client";
 import { LanguageSelector } from "@/components/site/LanguageSelector";
+import overbergLogo from "@/assets/overberg-logo.png.asset.json";
 
 export function Header() {
   const { t } = useTranslation();
