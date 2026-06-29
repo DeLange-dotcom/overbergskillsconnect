@@ -54,6 +54,7 @@ import { Route as DirectoryTypeIdRouteImport } from './routes/directory.$type.$i
 import { Route as ApiPublicContactRequestRouteImport } from './routes/api/public/contact-request'
 import { Route as AuthenticatedYouthPortfolioRouteImport } from './routes/_authenticated/youth.portfolio'
 import { Route as AuthenticatedAdminYouthOpportunitiesRouteImport } from './routes/_authenticated/admin/youth-opportunities'
+import { Route as AuthenticatedAdminNoticeboardRouteImport } from './routes/_authenticated/admin/noticeboard'
 import { Route as AuthenticatedAdminApprenticeshipsRouteImport } from './routes/_authenticated/admin/apprenticeships'
 import { Route as AuthenticatedAdminYouthIndexRouteImport } from './routes/_authenticated/admin/youth.index'
 import { Route as AuthenticatedAdminYouthIdRouteImport } from './routes/_authenticated/admin/youth.$id'
@@ -291,6 +292,12 @@ const AuthenticatedAdminYouthOpportunitiesRoute =
     path: '/admin/youth-opportunities',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedAdminNoticeboardRoute =
+  AuthenticatedAdminNoticeboardRouteImport.update({
+    id: '/admin/noticeboard',
+    path: '/admin/noticeboard',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedAdminApprenticeshipsRoute =
   AuthenticatedAdminApprenticeshipsRouteImport.update({
     id: '/admin/apprenticeships',
@@ -362,6 +369,7 @@ export interface FileRoutesByFullPath {
   '/request-mentorship/': typeof RequestMentorshipIndexRoute
   '/youth/': typeof YouthIndexRoute
   '/admin/apprenticeships': typeof AuthenticatedAdminApprenticeshipsRoute
+  '/admin/noticeboard': typeof AuthenticatedAdminNoticeboardRoute
   '/admin/youth-opportunities': typeof AuthenticatedAdminYouthOpportunitiesRoute
   '/youth/portfolio': typeof AuthenticatedYouthPortfolioRoute
   '/api/public/contact-request': typeof ApiPublicContactRequestRoute
@@ -411,6 +419,7 @@ export interface FileRoutesByTo {
   '/request-mentorship': typeof RequestMentorshipIndexRoute
   '/youth': typeof YouthIndexRoute
   '/admin/apprenticeships': typeof AuthenticatedAdminApprenticeshipsRoute
+  '/admin/noticeboard': typeof AuthenticatedAdminNoticeboardRoute
   '/admin/youth-opportunities': typeof AuthenticatedAdminYouthOpportunitiesRoute
   '/youth/portfolio': typeof AuthenticatedYouthPortfolioRoute
   '/api/public/contact-request': typeof ApiPublicContactRequestRoute
@@ -464,6 +473,7 @@ export interface FileRoutesById {
   '/request-mentorship/': typeof RequestMentorshipIndexRoute
   '/youth/': typeof YouthIndexRoute
   '/_authenticated/admin/apprenticeships': typeof AuthenticatedAdminApprenticeshipsRoute
+  '/_authenticated/admin/noticeboard': typeof AuthenticatedAdminNoticeboardRoute
   '/_authenticated/admin/youth-opportunities': typeof AuthenticatedAdminYouthOpportunitiesRoute
   '/_authenticated/youth/portfolio': typeof AuthenticatedYouthPortfolioRoute
   '/api/public/contact-request': typeof ApiPublicContactRequestRoute
@@ -517,6 +527,7 @@ export interface FileRouteTypes {
     | '/request-mentorship/'
     | '/youth/'
     | '/admin/apprenticeships'
+    | '/admin/noticeboard'
     | '/admin/youth-opportunities'
     | '/youth/portfolio'
     | '/api/public/contact-request'
@@ -566,6 +577,7 @@ export interface FileRouteTypes {
     | '/request-mentorship'
     | '/youth'
     | '/admin/apprenticeships'
+    | '/admin/noticeboard'
     | '/admin/youth-opportunities'
     | '/youth/portfolio'
     | '/api/public/contact-request'
@@ -618,6 +630,7 @@ export interface FileRouteTypes {
     | '/request-mentorship/'
     | '/youth/'
     | '/_authenticated/admin/apprenticeships'
+    | '/_authenticated/admin/noticeboard'
     | '/_authenticated/admin/youth-opportunities'
     | '/_authenticated/youth/portfolio'
     | '/api/public/contact-request'
@@ -977,6 +990,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminYouthOpportunitiesRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/admin/noticeboard': {
+      id: '/_authenticated/admin/noticeboard'
+      path: '/admin/noticeboard'
+      fullPath: '/admin/noticeboard'
+      preLoaderRoute: typeof AuthenticatedAdminNoticeboardRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/admin/apprenticeships': {
       id: '/_authenticated/admin/apprenticeships'
       path: '/admin/apprenticeships'
@@ -1019,6 +1039,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedMyAdvertRoute: typeof AuthenticatedMyAdvertRoute
   AuthenticatedMyRequestsRoute: typeof AuthenticatedMyRequestsRoute
   AuthenticatedAdminApprenticeshipsRoute: typeof AuthenticatedAdminApprenticeshipsRoute
+  AuthenticatedAdminNoticeboardRoute: typeof AuthenticatedAdminNoticeboardRoute
   AuthenticatedAdminYouthOpportunitiesRoute: typeof AuthenticatedAdminYouthOpportunitiesRoute
   AuthenticatedYouthPortfolioRoute: typeof AuthenticatedYouthPortfolioRoute
   AuthenticatedAdminIndexRoute: typeof AuthenticatedAdminIndexRoute
@@ -1033,6 +1054,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedMyRequestsRoute: AuthenticatedMyRequestsRoute,
   AuthenticatedAdminApprenticeshipsRoute:
     AuthenticatedAdminApprenticeshipsRoute,
+  AuthenticatedAdminNoticeboardRoute: AuthenticatedAdminNoticeboardRoute,
   AuthenticatedAdminYouthOpportunitiesRoute:
     AuthenticatedAdminYouthOpportunitiesRoute,
   AuthenticatedYouthPortfolioRoute: AuthenticatedYouthPortfolioRoute,
