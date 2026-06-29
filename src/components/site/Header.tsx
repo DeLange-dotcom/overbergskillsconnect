@@ -5,8 +5,9 @@ import { supabase } from "@/integrations/supabase/client";
 
 const NAV = [
   { to: "/", label: "Home" },
-  { to: "/find-help", label: "Looking for Someone" },
+  { to: "/find-help", label: "Browse Local Skills" },
   { to: "/advertise", label: "Advertise My Skills" },
+  { to: "/about", label: "About" },
 ];
 
 export function Header() {
@@ -36,10 +37,10 @@ export function Header() {
           </div>
           <div className="leading-tight">
             <div className="font-heading font-bold text-brand-primary text-lg">
-              Khulisa Community
+              Overberg Skills Connect
             </div>
             <div className="text-[10px] uppercase tracking-widest text-brand-dark/50">
-              Community Noticeboard
+              Powered by Khulisa Group
             </div>
           </div>
         </Link>

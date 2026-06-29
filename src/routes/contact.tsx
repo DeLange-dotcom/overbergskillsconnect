@@ -5,8 +5,8 @@ import { Mail } from "lucide-react";
 export const Route = createFileRoute("/contact")({
   head: () => ({
     meta: [
-      { title: "Contact Us — Khulisa Community" },
-      { name: "description", content: "Get in touch with the Khulisa Community team." },
+      { title: "Contact Us — Overberg Skills Connect" },
+      { name: "description", content: "Get in touch with the Overberg Skills Connect team." },
     ],
   }),
   component: ContactPage,

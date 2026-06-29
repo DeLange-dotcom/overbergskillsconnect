@@ -10,11 +10,11 @@ import { SKILL_CATEGORIES } from "@/lib/noticeboard";
 export const Route = createFileRoute("/find-help")({
   head: () => ({
     meta: [
-      { title: "Looking for Someone — Khulisa Community" },
+      { title: "Browse Local Skills — Overberg Skills Connect" },
       {
         name: "description",
         content:
-          "Browse local people offering services on the Khulisa Community noticeboard. Search by town and skill.",
+          "Browse local people offering services on the Overberg Skills Connect noticeboard. Search by town and skill.",
       },
     ],
   }),
@@ -68,7 +68,7 @@ function FindHelp() {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 py-10 sm:py-14">
         <h1 className="text-3xl sm:text-4xl font-heading font-bold mb-3">Looking for someone</h1>
         <p className="text-brand-dark/70 max-w-2xl mb-6">
-          Browse local people offering services. Khulisa Community does not vet or recommend anyone
+          Browse local people offering services. Overberg Skills Connect does not vet or recommend anyone
           — please make your own checks before entering into any agreement.
         </p>
 
