@@ -194,7 +194,7 @@ function RequestSupport() {
               name="notes"
               rows={4}
               className="w-full px-4 py-3 border border-brand-dark/10 rounded-xl bg-white"
-            />
+             spellCheck="true" />
           </div>
           <label className="flex items-start gap-3 text-sm">
             <input type="checkbox" name="consent_contact" className="mt-1 accent-brand-primary" />

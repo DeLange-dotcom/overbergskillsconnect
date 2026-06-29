@@ -291,7 +291,7 @@ function ContactDialog({
         <input required name="name" placeholder="Full name" className="w-full px-4 py-3 border border-brand-dark/10 rounded-xl" />
         <input required type="email" name="email" placeholder="Email address" className="w-full px-4 py-3 border border-brand-dark/10 rounded-xl" />
         <input required name="phone" placeholder="Phone or WhatsApp number" className="w-full px-4 py-3 border border-brand-dark/10 rounded-xl" />
-        <textarea required name="reason" rows={4} placeholder="Reason for contact (what help do you need?)" className="w-full px-4 py-3 border border-brand-dark/10 rounded-xl" />
+        <textarea required name="reason" rows={4} placeholder="Reason for contact (what help do you need?)" className="w-full px-4 py-3 border border-brand-dark/10 rounded-xl"  spellCheck="true" />
         <label className="flex items-start gap-2 text-sm text-brand-dark/75">
           <input
             type="checkbox"
@@ -364,7 +364,7 @@ function SafetyDialog({
             <option key={c.value} value={c.value}>{c.label}</option>
           ))}
         </select>
-        <textarea required name="description" rows={5} placeholder="Describe what happened…" className="w-full px-4 py-3 border border-brand-dark/10 rounded-xl" />
+        <textarea required name="description" rows={5} placeholder="Describe what happened…" className="w-full px-4 py-3 border border-brand-dark/10 rounded-xl"  spellCheck="true" />
         <input name="name" placeholder="Your name (optional)" className="w-full px-4 py-3 border border-brand-dark/10 rounded-xl" />
         <input type="email" name="email" placeholder="Your email (optional)" className="w-full px-4 py-3 border border-brand-dark/10 rounded-xl" />
         <input name="phone" placeholder="Your phone (optional)" className="w-full px-4 py-3 border border-brand-dark/10 rounded-xl" />

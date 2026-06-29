@@ -130,7 +130,7 @@ export function RequestMentorshipPage({ mentorId }: { mentorId?: string }) {
 
           <Fieldset title="What would you like guidance on?">
             <textarea name="goals" rows={4} className="w-full px-4 py-3 border border-brand-dark/10 rounded-xl bg-white"
-              placeholder="Goals, questions, where you'd like to grow…" />
+              placeholder="Goals, questions, where you'd like to grow…"  spellCheck="true" />
           </Fieldset>
 
           <Fieldset title="Preferences">

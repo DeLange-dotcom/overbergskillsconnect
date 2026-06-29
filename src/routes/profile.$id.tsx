@@ -244,7 +244,7 @@ function ContactDialog({
           rows={3}
           placeholder="Briefly, what help are you looking for?"
           className="w-full px-4 py-3 border border-brand-dark/10 rounded-xl"
-        />
+         spellCheck="true" />
         <div className="flex gap-2 justify-end pt-1">
           <button type="button" onClick={onClose} className="px-4 py-2.5 rounded-xl border border-brand-dark/10">
             Cancel
@@ -315,7 +315,7 @@ function ReportDialog({ profileId, onClose }: { profileId: string; onClose: () =
           rows={3}
           placeholder="Optional details"
           className="w-full px-4 py-3 border border-brand-dark/10 rounded-xl"
-        />
+         spellCheck="true" />
         <input
           name="reporter_contact"
           placeholder="Your contact (optional, so we can follow up)"

@@ -175,7 +175,7 @@ function PostOpportunity() {
             <F name="title" label="Opportunity title" required />
             <div className="mt-4">
               <Label>Description</Label>
-              <textarea name="description" rows={4} required className="w-full px-4 py-3 border border-brand-dark/10 rounded-xl bg-white" />
+              <textarea name="description" rows={4} required className="w-full px-4 py-3 border border-brand-dark/10 rounded-xl bg-white"  spellCheck="true" />
             </div>
             <Grid className="mt-4">
               <div>
@@ -269,7 +269,7 @@ function PostOpportunity() {
               </div>
               <div className="mt-4">
                 <Label>Residential address <span className="text-destructive">*</span></Label>
-                <textarea name="private_address" rows={2} required className="w-full px-4 py-3 border border-brand-dark/10 rounded-xl bg-white" />
+                <textarea name="private_address" rows={2} required className="w-full px-4 py-3 border border-brand-dark/10 rounded-xl bg-white"  spellCheck="true" />
               </div>
               <p className="text-xs text-brand-dark/60 mt-2">
                 A Hineni coordinator will verify your phone number manually before approval.

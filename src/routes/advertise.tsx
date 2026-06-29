@@ -269,7 +269,7 @@ function Advertise() {
               rows={4}
               placeholder="A few sentences about what you do best."
               className="w-full px-4 py-3 border border-brand-dark/10 rounded-xl"
-            />
+             spellCheck="true" />
           </div>
 
           <Field

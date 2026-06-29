@@ -90,7 +90,7 @@ function MentorInterest() {
           <F name="skills" label="Skills (comma separated)" placeholder="e.g. Carpentry, Bookkeeping, Public speaking" />
           <div>
             <Label>Industry experience</Label>
-            <textarea name="industry_experience" rows={3} className="w-full px-4 py-3 border border-brand-dark/10 rounded-xl bg-white" />
+            <textarea name="industry_experience" rows={3} className="w-full px-4 py-3 border border-brand-dark/10 rounded-xl bg-white"  spellCheck="true" />
           </div>
           <div>
             <Label>Availability</Label>
@@ -113,7 +113,7 @@ function MentorInterest() {
           </div>
           <div>
             <Label>Why do you want to mentor?</Label>
-            <textarea name="motivation" rows={3} className="w-full px-4 py-3 border border-brand-dark/10 rounded-xl bg-white" />
+            <textarea name="motivation" rows={3} className="w-full px-4 py-3 border border-brand-dark/10 rounded-xl bg-white"  spellCheck="true" />
           </div>
           <button
             type="submit"

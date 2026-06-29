@@ -148,7 +148,7 @@ function FeedbackPage() {
             <label className="block text-sm font-semibold mb-2">Any additional comments? (optional)</label>
             <textarea
               value={comment}
-              onChange={(e) => setComment(e.target.value)}
+              onChange={(e) = spellCheck="true"> setComment(e.target.value)}
               rows={3}
               className="w-full px-4 py-3 border border-brand-dark/10 rounded-xl"
               maxLength={1000}

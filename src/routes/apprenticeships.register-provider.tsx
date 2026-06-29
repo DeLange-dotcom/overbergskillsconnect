@@ -211,7 +211,7 @@ function Page() {
               <Field label="Maximum age" name="age_max" type="number" />
             </Grid>
             <div className="mt-4"><Label>Description</Label>
-              <textarea name="description" rows={3} className="w-full px-4 py-3 border border-brand-dark/10 rounded-xl bg-white" /></div>
+              <textarea name="description" rows={3} className="w-full px-4 py-3 border border-brand-dark/10 rounded-xl bg-white"  spellCheck="true" /></div>
             <div className="mt-4"><Label>Skills offered (comma-separated)</Label>
               <input name="skills_offered" className="w-full px-4 py-3 border border-brand-dark/10 rounded-xl bg-white" /></div>
             <Grid>
@@ -233,7 +233,7 @@ function Page() {
             <div className="mt-4"><Label>Transport requirements</Label>
               <input name="transport_requirements" className="w-full px-4 py-3 border border-brand-dark/10 rounded-xl bg-white" /></div>
             <div className="mt-4"><Label>Health & safety requirements</Label>
-              <textarea name="safety_requirements" rows={2} className="w-full px-4 py-3 border border-brand-dark/10 rounded-xl bg-white" /></div>
+              <textarea name="safety_requirements" rows={2} className="w-full px-4 py-3 border border-brand-dark/10 rounded-xl bg-white"  spellCheck="true" /></div>
           </Fieldset>
 
           <Fieldset title="Safeguarding & disclaimer (required)">
