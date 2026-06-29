@@ -110,11 +110,11 @@ export function Header() {
             ))}
             {signedIn ? (
               <Link
-                to="/admin"
+                to="/my-advert"
                 onClick={() => setOpen(false)}
                 className="px-3 py-2.5 rounded-lg text-brand-dark/80 hover:bg-brand-soft"
               >
-                {t("nav.adminDashboard")}
+                My Listing
               </Link>
             ) : (
               <Link
@@ -122,7 +122,7 @@ export function Header() {
                 onClick={() => setOpen(false)}
                 className="px-3 py-2.5 rounded-lg text-brand-dark/80 hover:bg-brand-soft"
               >
-                {t("nav.adminSignIn")}
+                Sign in
               </Link>
             )}
             <div className="px-3 pt-2">
