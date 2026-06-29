@@ -1111,6 +1111,159 @@ export type Database = {
           },
         ]
       }
+      noticeboard_contact_requests: {
+        Row: {
+          created_at: string
+          decided_at: string | null
+          id: string
+          message: string | null
+          profile_id: string
+          requester_contact: string
+          requester_name: string
+          requester_token: string
+          status: string
+        }
+        Insert: {
+          created_at?: string
+          decided_at?: string | null
+          id?: string
+          message?: string | null
+          profile_id: string
+          requester_contact: string
+          requester_name: string
+          requester_token?: string
+          status?: string
+        }
+        Update: {
+          created_at?: string
+          decided_at?: string | null
+          id?: string
+          message?: string | null
+          profile_id?: string
+          requester_contact?: string
+          requester_name?: string
+          requester_token?: string
+          status?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "noticeboard_contact_requests_profile_id_fkey"
+            columns: ["profile_id"]
+            isOneToOne: false
+            referencedRelation: "noticeboard_profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "noticeboard_contact_requests_profile_id_fkey"
+            columns: ["profile_id"]
+            isOneToOne: false
+            referencedRelation: "noticeboard_public"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      noticeboard_profiles: {
+        Row: {
+          accepted_terms: boolean
+          availability: string | null
+          category: string | null
+          created_at: string
+          description: string
+          id: string
+          is_hidden: boolean
+          is_suspended: boolean
+          manage_token: string
+          name: string
+          phone: string
+          photo_url: string | null
+          skills: string[]
+          town: string
+          updated_at: string
+          years_experience: number | null
+        }
+        Insert: {
+          accepted_terms?: boolean
+          availability?: string | null
+          category?: string | null
+          created_at?: string
+          description: string
+          id?: string
+          is_hidden?: boolean
+          is_suspended?: boolean
+          manage_token?: string
+          name: string
+          phone: string
+          photo_url?: string | null
+          skills?: string[]
+          town: string
+          updated_at?: string
+          years_experience?: number | null
+        }
+        Update: {
+          accepted_terms?: boolean
+          availability?: string | null
+          category?: string | null
+          created_at?: string
+          description?: string
+          id?: string
+          is_hidden?: boolean
+          is_suspended?: boolean
+          manage_token?: string
+          name?: string
+          phone?: string
+          photo_url?: string | null
+          skills?: string[]
+          town?: string
+          updated_at?: string
+          years_experience?: number | null
+        }
+        Relationships: []
+      }
+      noticeboard_reports: {
+        Row: {
+          created_at: string
+          details: string | null
+          id: string
+          profile_id: string
+          reason: string
+          reporter_contact: string | null
+          status: string
+        }
+        Insert: {
+          created_at?: string
+          details?: string | null
+          id?: string
+          profile_id: string
+          reason: string
+          reporter_contact?: string | null
+          status?: string
+        }
+        Update: {
+          created_at?: string
+          details?: string | null
+          id?: string
+          profile_id?: string
+          reason?: string
+          reporter_contact?: string | null
+          status?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "noticeboard_reports_profile_id_fkey"
+            columns: ["profile_id"]
+            isOneToOne: false
+            referencedRelation: "noticeboard_profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "noticeboard_reports_profile_id_fkey"
+            columns: ["profile_id"]
+            isOneToOne: false
+            referencedRelation: "noticeboard_public"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       opportunity_skills: {
         Row: {
           created_at: string
@@ -2669,6 +2822,45 @@ export type Database = {
         }
         Relationships: []
       }
+      noticeboard_public: {
+        Row: {
+          availability: string | null
+          category: string | null
+          created_at: string | null
+          description: string | null
+          id: string | null
+          name: string | null
+          photo_url: string | null
+          skills: string[] | null
+          town: string | null
+          years_experience: number | null
+        }
+        Insert: {
+          availability?: string | null
+          category?: string | null
+          created_at?: string | null
+          description?: string | null
+          id?: string | null
+          name?: string | null
+          photo_url?: string | null
+          skills?: string[] | null
+          town?: string | null
+          years_experience?: number | null
+        }
+        Update: {
+          availability?: string | null
+          category?: string | null
+          created_at?: string | null
+          description?: string | null
+          id?: string | null
+          name?: string | null
+          photo_url?: string | null
+          skills?: string[] | null
+          town?: string | null
+          years_experience?: number | null
+        }
+        Relationships: []
+      }
       supporter_wall: {
         Row: {
           amount_cents: number | null
@@ -2777,6 +2969,39 @@ export type Database = {
           parent_consent_signed_at: string
           parent_consent_status: string
           parent_full_name: string
+        }[]
+      }
+      noticeboard_owner_decide: {
+        Args: { _decision: string; _manage_token: string; _request_id: string }
+        Returns: string
+      }
+      noticeboard_owner_set_hidden: {
+        Args: { _hidden: boolean; _manage_token: string }
+        Returns: boolean
+      }
+      noticeboard_owner_view: {
+        Args: { _manage_token: string }
+        Returns: {
+          created_at: string
+          is_hidden: boolean
+          message: string
+          name: string
+          profile_id: string
+          request_id: string
+          requester_contact: string
+          requester_name: string
+          status: string
+        }[]
+      }
+      noticeboard_view_request: {
+        Args: { _requester_token: string }
+        Returns: {
+          created_at: string
+          decided_at: string
+          phone: string
+          profile_name: string
+          profile_town: string
+          status: string
         }[]
       }
       submit_feedback: {
