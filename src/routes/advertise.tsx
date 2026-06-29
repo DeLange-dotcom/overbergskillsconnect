@@ -370,6 +370,7 @@ function Field({
         placeholder={placeholder}
         min={min}
         max={max}
+        spellCheck={!type || ["text", "search", "email"].includes(type)}
         className="w-full px-4 py-3 border border-brand-dark/10 rounded-xl"
       />
       {help && <p className="text-xs text-brand-dark/60 mt-1">{help}</p>}
