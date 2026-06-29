@@ -117,13 +117,22 @@ export function Header() {
               </Link>
             ))}
             {signedIn ? (
-              <Link
-                to="/my-advert"
-                onClick={() => setOpen(false)}
-                className="px-3 py-2.5 rounded-lg text-brand-dark/80 hover:bg-brand-soft"
-              >
-                My Listing
-              </Link>
+              <>
+                <Link
+                  to="/my-requests"
+                  onClick={() => setOpen(false)}
+                  className="px-3 py-2.5 rounded-lg text-brand-dark/80 hover:bg-brand-soft"
+                >
+                  My Requests
+                </Link>
+                <Link
+                  to="/my-advert"
+                  onClick={() => setOpen(false)}
+                  className="px-3 py-2.5 rounded-lg text-brand-dark/80 hover:bg-brand-soft"
+                >
+                  My Listing
+                </Link>
+              </>
             ) : (
               <Link
                 to="/auth"
