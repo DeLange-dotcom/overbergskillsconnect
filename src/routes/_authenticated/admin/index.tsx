@@ -124,6 +124,21 @@ function AdminDashboard() {
           </button>
         </div>
 
+        <div className="mb-8 p-4 rounded-2xl border border-brand-primary/30 bg-brand-soft/40 flex items-center justify-between gap-3">
+          <div className="text-sm">
+            <div className="font-medium">Noticeboard administration</div>
+            <div className="text-brand-dark/60">
+              Lifecycle, stats, search, archive & delete listings.
+            </div>
+          </div>
+          <Link
+            to="/admin/noticeboard"
+            className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg bg-brand-primary text-white text-sm whitespace-nowrap"
+          >
+            Open dashboard
+          </Link>
+        </div>
+
         <section className="mb-10">
           <h2 className="text-xl font-heading font-semibold mb-3 flex items-center gap-2">
             <Flag className="size-5" /> Reports
