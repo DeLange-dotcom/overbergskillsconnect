@@ -224,6 +224,13 @@ function MyAdvertEditor({
           )}
         </div>
 
+        {listing.is_archived && (
+          <div className="p-4 rounded-2xl border border-amber-300 bg-amber-50 mb-4 text-sm text-amber-900">
+            Your listing is <strong>archived</strong> and hidden from public search. Use{" "}
+            <em>Reactivate listing</em> below to bring it back live.
+          </div>
+        )}
+
         <div className="flex items-center justify-between p-4 rounded-2xl border border-brand-dark/10 bg-white mb-6">
           <div>
             <div className="font-medium">
