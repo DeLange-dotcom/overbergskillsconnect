@@ -1,9 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import {
-  PLATFORM_NAME,
-  PLATFORM_OWNER,
-  IP_OWNERSHIP_STATEMENT,
-} from "@/lib/brand";
+import { PLATFORM_NAME, IP_OWNERSHIP_STATEMENT } from "@/lib/brand";
 
 export function Footer() {
   return (
@@ -13,17 +9,17 @@ export function Footer() {
           <div className="font-heading text-xl font-bold text-brand-primary mb-1">
             {PLATFORM_NAME}
           </div>
-          <div className="text-xs uppercase tracking-widest text-brand-dark/50 mb-3">
-            A Khulisa Group Platform
+          <div className="text-sm text-brand-dark/70 mb-1">
+            Connecting Local Skills with Local Opportunities
           </div>
-          <p className="text-sm text-brand-dark/70 max-w-sm">
-            A digital community noticeboard. Overberg Skills Connect does not employ, recruit, recommend
-            or vet anyone using this platform.
-          </p>
+          <div className="text-xs uppercase tracking-widest text-brand-dark/50">
+            Powered by Khulisa Group
+          </div>
         </div>
         <div className="text-sm">
           <div className="font-semibold mb-3 text-brand-dark">Information</div>
           <ul className="space-y-2 text-brand-dark/70">
+            <li><Link to="/about" className="hover:text-brand-primary">About</Link></li>
             <li><Link to="/terms" className="hover:text-brand-primary">Terms of Use</Link></li>
             <li><Link to="/privacy" className="hover:text-brand-primary">Privacy Policy</Link></li>
             <li><Link to="/disclaimer" className="hover:text-brand-primary">Disclaimer</Link></li>
@@ -36,7 +32,7 @@ export function Footer() {
           {IP_OWNERSHIP_STATEMENT}
         </p>
         <div className="text-center text-xs text-brand-dark/50">
-          &copy; {new Date().getFullYear()} {PLATFORM_OWNER} · {PLATFORM_NAME}
+          &copy; 2026 Khulisa Group. All rights reserved.
         </div>
       </div>
     </footer>
