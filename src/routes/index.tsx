@@ -31,7 +31,7 @@ function Home() {
       <section className="px-4 sm:px-6 pt-16 pb-20">
         <div className="max-w-3xl mx-auto text-center">
           <span className="inline-block px-3 py-1 rounded-full bg-brand-soft text-xs uppercase tracking-widest text-brand-primary font-semibold">
-            Community Noticeboard
+            Overberg Skills Connect
           </span>
           <h1 className="mt-6 text-4xl md:text-5xl font-heading font-bold leading-tight text-brand-dark">
             Connecting Local Skills with Local Opportunities
@@ -47,14 +47,14 @@ function Home() {
             >
               <div className="flex items-center justify-between">
                 <span className="text-xs font-bold uppercase tracking-wider opacity-90">
-                  For Workers
+                  Looking for Work
                 </span>
                 <span className="size-10 rounded-full bg-white/15 grid place-items-center">
                   <Briefcase className="size-5" />
                 </span>
               </div>
-              <div className="mt-6 text-2xl font-heading font-semibold">Looking for Work</div>
-              <p className="mt-1 text-sm opacity-90">Advertise your skills.</p>
+              <div className="mt-6 text-2xl font-heading font-semibold">Advertise My Skills</div>
+              <p className="mt-1 text-sm opacity-90">Create a simple skills profile.</p>
             </Link>
 
             <Link
@@ -63,14 +63,14 @@ function Home() {
             >
               <div className="flex items-center justify-between">
                 <span className="text-xs font-bold uppercase tracking-wider opacity-90">
-                  For Communities
+                  Looking for Someone
                 </span>
                 <span className="size-10 rounded-full bg-white/15 grid place-items-center">
                   <Search className="size-5" />
                 </span>
               </div>
-              <div className="mt-6 text-2xl font-heading font-semibold">Looking for Someone</div>
-              <p className="mt-1 text-sm opacity-90">Browse local people offering services.</p>
+              <div className="mt-6 text-2xl font-heading font-semibold">Browse Local Skills</div>
+              <p className="mt-1 text-sm opacity-90">See local people offering services.</p>
             </Link>
           </div>
 
