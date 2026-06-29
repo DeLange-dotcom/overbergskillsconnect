@@ -36,6 +36,18 @@ function MyListing() {
     },
   });
 
+  const { data: publicRef } = useQuery({
+    queryKey: ["my-listing-ref", token],
+    queryFn: async (): Promise<string | null> => {
+      const { data } = await supabase
+        .from("noticeboard_profiles")
+        .select("public_listing_reference")
+        .eq("manage_token", token)
+        .maybeSingle();
+      return (data?.public_listing_reference as string | null) ?? null;
+    },
+  });
+
   async function decide(requestId: string, decision: "approved" | "declined") {
     const { error } = await supabase.rpc("noticeboard_owner_decide", {
       _manage_token: token,
