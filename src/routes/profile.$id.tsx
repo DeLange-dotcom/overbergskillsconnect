@@ -1,7 +1,7 @@
-import { createFileRoute, Link, notFound } from "@tanstack/react-router";
+import { createFileRoute, Link, notFound, useNavigate } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
-import { useState } from "react";
-import { MapPin, Calendar, Flag, MessageCircle, ArrowLeft, Copy } from "lucide-react";
+import { useEffect, useState } from "react";
+import { MapPin, Calendar, Flag, MessageCircle, ArrowLeft, CheckCircle2 } from "lucide-react";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { DisclaimerBanner } from "@/components/site/DisclaimerBanner";
 import { supabase } from "@/integrations/supabase/client";
@@ -163,59 +163,119 @@ function ContactDialog({
   name: string;
   onClose: () => void;
 }) {
+  const navigate = useNavigate();
   const [submitting, setSubmitting] = useState(false);
-  const [token, setToken] = useState<string | null>(null);
+  const [sent, setSent] = useState(false);
+  const [authChecked, setAuthChecked] = useState(false);
+  const [signedIn, setSignedIn] = useState(false);
+  const [userName, setUserName] = useState("");
+  const [userPhone, setUserPhone] = useState("");
+
+  useEffect(() => {
+    supabase.auth.getUser().then(({ data }) => {
+      const u = data.user;
+      setSignedIn(!!u);
+      if (u) {
+        setUserName(
+          (u.user_metadata?.full_name as string) ||
+            (u.user_metadata?.name as string) ||
+            "",
+        );
+        setUserPhone((u.user_metadata?.phone as string) || u.phone || "");
+      }
+      setAuthChecked(true);
+    });
+  }, []);
 
   async function submit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setSubmitting(true);
     const fd = new FormData(e.currentTarget);
-    const { data, error } = await supabase
-      .from("noticeboard_contact_requests")
-      .insert({
-        profile_id: profileId,
-        requester_name: String(fd.get("name") || "").trim(),
-        requester_contact: String(fd.get("contact") || "").trim(),
-        message: String(fd.get("message") || "").trim() || null,
-      })
-      .select("requester_token")
-      .single();
+    const { error } = await supabase.rpc("noticeboard_create_contact_request", {
+      _profile_id: profileId,
+      _requester_name: String(fd.get("name") || "").trim(),
+      _requester_contact: String(fd.get("contact") || "").trim(),
+      _message: String(fd.get("message") || "").trim(),
+    });
     setSubmitting(false);
-    if (error || !data) {
-      toast.error(error?.message ?? "Could not send your request.");
+    if (error) {
+      toast.error(error.message ?? "Could not send your request.");
       return;
     }
-    setToken(data.requester_token as string);
+    setSent(true);
   }
 
-  if (token) {
-    const url = `${window.location.origin}/request/${token}`;
+  if (!authChecked) {
     return (
       <Modal onClose={onClose}>
-        <h2 className="font-heading text-xl font-semibold mb-2">Request sent</h2>
-        <p className="text-sm text-brand-dark/70 mb-4">
-          {name} will be notified. Save this link to check the response — if approved, you'll see
-          the contact details there.
+        <div className="py-6 text-center text-brand-dark/60 text-sm">Loading…</div>
+      </Modal>
+    );
+  }
+
+  if (!signedIn) {
+    return (
+      <Modal onClose={onClose}>
+        <h2 className="font-heading text-xl font-semibold mb-2">Sign in to continue</h2>
+        <p className="text-sm text-brand-dark/70 mb-5">
+          Create a free account or sign in so {name} can reply, and so you can track your
+          contact requests from your dashboard.
         </p>
-        <div className="flex items-center gap-2 p-3 rounded-xl bg-brand-soft border border-brand-dark/10 mb-4">
-          <code className="text-xs break-all flex-1">{url}</code>
+        <div className="flex gap-2 justify-end">
           <button
             type="button"
-            onClick={() => {
-              navigator.clipboard.writeText(url);
-              toast.success("Link copied");
-            }}
-            className="p-2 rounded-lg hover:bg-white"
+            onClick={onClose}
+            className="px-4 py-2.5 rounded-xl border border-brand-dark/10"
           >
-            <Copy className="size-4" />
+            Cancel
+          </button>
+          <button
+            type="button"
+            onClick={() =>
+              navigate({
+                to: "/auth",
+                search: { next: `/profile/${profileId}` } as never,
+              })
+            }
+            className="px-4 py-2.5 rounded-xl bg-brand-primary text-white"
+          >
+            Sign in
           </button>
         </div>
-        <button
-          onClick={onClose}
-          className="w-full px-4 py-2.5 rounded-xl bg-brand-primary text-white"
-        >
-          Done
-        </button>
+      </Modal>
+    );
+  }
+
+  if (sent) {
+    return (
+      <Modal onClose={onClose}>
+        <div className="text-center">
+          <div className="mx-auto size-14 rounded-full bg-emerald-100 grid place-items-center mb-3">
+            <CheckCircle2 className="size-7 text-emerald-600" />
+          </div>
+          <h2 className="font-heading text-xl font-semibold mb-2">Request sent</h2>
+          <p className="text-sm text-brand-dark/70 mb-5">
+            Your request has been sent successfully. {name} has been notified and can choose
+            whether to share their contact details. You can check the status any time from
+            <span className="font-medium"> My Contact Requests</span> in your dashboard.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-2">
+            <button
+              type="button"
+              onClick={() => navigate({ to: "/my-requests" })}
+              className="flex-1 px-4 py-3 rounded-xl bg-brand-primary text-white font-medium"
+            >
+              View My Contact Requests
+            </button>
+            <button
+              type="button"
+              onClick={onClose}
+              className="flex-1 px-4 py-3 rounded-xl border border-brand-dark/15"
+            >
+              Continue Browsing
+            </button>
+          </div>
+        </div>
       </Modal>
     );
   }
@@ -230,12 +290,14 @@ function ContactDialog({
         <input
           required
           name="name"
+          defaultValue={userName}
           placeholder="Your name"
           className="w-full px-4 py-3 border border-brand-dark/10 rounded-xl"
         />
         <input
           required
           name="contact"
+          defaultValue={userPhone}
           placeholder="Your phone or WhatsApp"
           className="w-full px-4 py-3 border border-brand-dark/10 rounded-xl"
         />
@@ -244,7 +306,8 @@ function ContactDialog({
           rows={3}
           placeholder="Briefly, what help are you looking for?"
           className="w-full px-4 py-3 border border-brand-dark/10 rounded-xl"
-         spellCheck="true" />
+          spellCheck
+        />
         <div className="flex gap-2 justify-end pt-1">
           <button type="button" onClick={onClose} className="px-4 py-2.5 rounded-xl border border-brand-dark/10">
             Cancel

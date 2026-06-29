@@ -1149,6 +1149,7 @@ export type Database = {
           requester_contact: string
           requester_name: string
           requester_token: string
+          requester_user_id: string | null
           status: string
         }
         Insert: {
@@ -1160,6 +1161,7 @@ export type Database = {
           requester_contact: string
           requester_name: string
           requester_token?: string
+          requester_user_id?: string | null
           status?: string
         }
         Update: {
@@ -1171,6 +1173,7 @@ export type Database = {
           requester_contact?: string
           requester_name?: string
           requester_token?: string
+          requester_user_id?: string | null
           status?: string
         }
         Relationships: [
@@ -3267,6 +3270,15 @@ export type Database = {
         Args: { _manage_token: string }
         Returns: string
       }
+      noticeboard_create_contact_request: {
+        Args: {
+          _message: string
+          _profile_id: string
+          _requester_contact: string
+          _requester_name: string
+        }
+        Returns: string
+      }
       noticeboard_create_listing: {
         Args: { _payload: Json }
         Returns: {
@@ -3275,7 +3287,23 @@ export type Database = {
         }[]
       }
       noticeboard_my_create: { Args: { _payload: Json }; Returns: string }
+      noticeboard_my_decide: {
+        Args: { _decision: string; _request_id: string }
+        Returns: string
+      }
       noticeboard_my_delete: { Args: never; Returns: boolean }
+      noticeboard_my_incoming_requests: {
+        Args: never
+        Returns: {
+          created_at: string
+          decided_at: string
+          id: string
+          message: string
+          requester_contact: string
+          requester_name: string
+          status: string
+        }[]
+      }
       noticeboard_my_listing: {
         Args: never
         Returns: {
@@ -3292,6 +3320,19 @@ export type Database = {
           skills: string[]
           town: string
           years_experience: number
+        }[]
+      }
+      noticeboard_my_requests: {
+        Args: never
+        Returns: {
+          created_at: string
+          decided_at: string
+          id: string
+          phone: string
+          profile_id: string
+          status: string
+          worker_name: string
+          worker_skills: string[]
         }[]
       }
       noticeboard_my_update: { Args: { _payload: Json }; Returns: string }
