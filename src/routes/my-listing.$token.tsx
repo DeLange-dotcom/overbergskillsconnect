@@ -116,6 +116,30 @@ function MyListing() {
           Hello {first.name}. Manage contact requests and visibility below.
         </p>
 
+        {publicRef && (
+          <div className="p-4 rounded-2xl border border-brand-primary/30 bg-white mb-4">
+            <div className="text-xs uppercase tracking-wider text-brand-dark/60 mb-1">
+              Your shareable listing link
+            </div>
+            <div className="flex items-center gap-2">
+              <code className="text-sm font-medium break-all flex-1">
+                {typeof window !== "undefined" ? window.location.origin : ""}/profile/{publicRef}
+              </code>
+              <button
+                type="button"
+                onClick={() => {
+                  const url = `${window.location.origin}/profile/${publicRef}`;
+                  navigator.clipboard.writeText(url);
+                  toast.success("Listing link copied");
+                }}
+                className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg bg-brand-primary text-white text-sm whitespace-nowrap"
+              >
+                <Copy className="size-4" /> Copy My Listing Link
+              </button>
+            </div>
+          </div>
+        )}
+
         <div className="flex items-center justify-between p-4 rounded-2xl border border-brand-dark/10 bg-white mb-6">
           <div>
             <div className="font-medium">Visibility</div>
