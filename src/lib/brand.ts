@@ -5,14 +5,14 @@
 export const PLATFORM_OWNER = "Khulisa Group";
 export const PLATFORM_NAME = "Overberg Skills Connect";
 export const PLATFORM_TAGLINE =
-  "Supporting Skills, Mentorship, Apprenticeships and Community Opportunities";
+  "Connecting Local Skills with Local Opportunities";
 
-export const POWERED_BY_LINE = "Powered by Overberg Skills Connect";
-export const GROUP_PLATFORM_LINE = "A Khulisa Group Platform";
+export const POWERED_BY_LINE = "Powered by Khulisa Group";
+export const GROUP_PLATFORM_LINE = "Powered by Khulisa Group";
 
 export const PROGRAMME_NAME = "Hineni Programme";
-export const PROGRAMME_BYLINE = "Hineni Programme powered by Overberg Skills Connect";
-export const DELIVERED_THROUGH_LINE = "Delivered through the Overberg Skills Connect Platform";
+export const PROGRAMME_BYLINE = "Hineni Programme powered by Khulisa Group";
+export const DELIVERED_THROUGH_LINE = "Delivered through the Overberg Skills Connect platform";
 
 export const IP_OWNERSHIP_STATEMENT =
   "All intellectual property rights relating to the platform, software, forms, workflows, content, designs, documentation and databases remain the property of Khulisa Group unless expressly agreed otherwise in writing.";
