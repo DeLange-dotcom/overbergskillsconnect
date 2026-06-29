@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useTranslation } from "react-i18next";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { Mail } from "lucide-react";
 
@@ -13,14 +14,12 @@ export const Route = createFileRoute("/contact")({
 });
 
 function ContactPage() {
+  const { t } = useTranslation();
   return (
     <SiteLayout>
       <div className="max-w-xl mx-auto px-4 sm:px-6 py-12">
-        <h1 className="text-3xl font-heading font-bold mb-3">Contact us</h1>
-        <p className="text-brand-dark/70 mb-8">
-          For questions about the noticeboard, to report misuse, or for general enquiries — please
-          reach out by email.
-        </p>
+        <h1 className="text-3xl font-heading font-bold mb-3">{t("contact.title")}</h1>
+        <p className="text-brand-dark/70 mb-8">{t("contact.intro")}</p>
         <div className="p-6 rounded-2xl border border-brand-dark/10 bg-white">
           <div className="flex items-center gap-3 mb-3">
             <Mail className="size-5 text-brand-primary" />
