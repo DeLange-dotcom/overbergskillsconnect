@@ -94,6 +94,12 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
+      { name: "twitter:title", content: "Overberg Skills Connect" },
+      { name: "description", content: "A trusted community skills platform connecting local service providers with those needing help, while facilitating donations." },
+      { property: "og:description", content: "A trusted community skills platform connecting local service providers with those needing help, while facilitating donations." },
+      { name: "twitter:description", content: "A trusted community skills platform connecting local service providers with those needing help, while facilitating donations." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/9f39acce-7dcc-44c0-9796-e7e0c45227ec/id-preview-de3eb8dc--f294ef0d-e1d7-4c98-a3cd-6eca3d4f17b1.lovable.app-1782823879888.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/9f39acce-7dcc-44c0-9796-e7e0c45227ec/id-preview-de3eb8dc--f294ef0d-e1d7-4c98-a3cd-6eca3d4f17b1.lovable.app-1782823879888.png" },
     ],
     links: [
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
