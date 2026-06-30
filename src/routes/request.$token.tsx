@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { supabase } from "@/integrations/supabase/client";
-import { Phone, Clock, X } from "lucide-react";
+import { Phone, Clock, X, MessageCircle } from "lucide-react";
 
 export const Route = createFileRoute("/request/$token")({
   component: ViewRequest,
