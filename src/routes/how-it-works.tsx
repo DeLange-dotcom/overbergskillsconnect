@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { SiteLayout } from "@/components/site/SiteLayout";
-import { UserPlus, Search, MessageCircle, ShieldAlert } from "lucide-react";
+import { UserPlus, Search, MessageCircle, ShieldAlert, Settings, Eye, Archive, Trash2 } from "lucide-react";
 import { Link } from "@tanstack/react-router";
 import { PLATFORM_NAME } from "@/lib/brand";
 
