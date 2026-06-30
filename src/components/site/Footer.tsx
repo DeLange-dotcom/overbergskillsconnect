@@ -19,6 +19,7 @@ export function Footer() {
         <div className="text-sm">
           <div className="font-semibold mb-3 text-brand-dark">{t("footer.information")}</div>
           <ul className="space-y-2 text-brand-dark/70">
+            <li><Link to="/how-it-works" className="hover:text-brand-primary">How It Works</Link></li>
             <li><Link to="/about" className="hover:text-brand-primary">{t("footer.about")}</Link></li>
             <li><Link to="/terms" className="hover:text-brand-primary">{t("footer.terms")}</Link></li>
             <li><Link to="/privacy" className="hover:text-brand-primary">{t("footer.privacy")}</Link></li>
