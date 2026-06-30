@@ -1,8 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { supabase } from "@/integrations/supabase/client";
-import { Phone, Copy, Clock, CheckCircle2, XCircle, Loader2 } from "lucide-react";
+import { Clock, CheckCircle2, XCircle, Loader2, Check, X } from "lucide-react";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/_authenticated/my-requests")({
@@ -11,11 +11,10 @@ export const Route = createFileRoute("/_authenticated/my-requests")({
 
 type Row = {
   id: string;
-  profile_id: string;
-  worker_name: string;
-  worker_skills: string[] | null;
+  requester_name: string;
+  requester_contact: string | null;
+  message: string | null;
   status: "pending" | "approved" | "declined";
-  phone: string | null;
   created_at: string;
   decided_at: string | null;
 };
@@ -32,15 +31,35 @@ function fmtDate(s: string) {
   }
 }
 
+function firstName(full: string) {
+  return (full || "").trim().split(/\s+/)[0] || full;
+}
+
 function MyRequests() {
+  const qc = useQueryClient();
   const { data, isLoading } = useQuery({
-    queryKey: ["my-requests"],
+    queryKey: ["my-incoming-requests"],
     queryFn: async (): Promise<Row[]> => {
-      const { data, error } = await supabase.rpc("noticeboard_my_requests");
+      const { data, error } = await supabase.rpc("noticeboard_my_incoming_requests");
       if (error) throw error;
       return (data ?? []) as Row[];
     },
     refetchInterval: 30000,
+  });
+
+  const decide = useMutation({
+    mutationFn: async (vars: { id: string; decision: "approved" | "declined" }) => {
+      const { error } = await supabase.rpc("noticeboard_my_decide", {
+        _request_id: vars.id,
+        _decision: vars.decision,
+      });
+      if (error) throw error;
+    },
+    onSuccess: (_d, vars) => {
+      toast.success(vars.decision === "approved" ? "Request approved" : "Request declined");
+      qc.invalidateQueries({ queryKey: ["my-incoming-requests"] });
+    },
+    onError: (e: Error) => toast.error(e.message),
   });
 
   if (isLoading) {
@@ -60,27 +79,33 @@ function MyRequests() {
     <SiteLayout>
       <div className="max-w-2xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
         <h1 className="text-3xl sm:text-4xl font-heading font-bold mb-2">
-          My Contact Requests
+          People Interested In Me
         </h1>
         <p className="text-brand-dark/60 mb-8">
-          When a worker approves your request, their phone number appears here.
+          When someone asks for your contact details, approve the request to share your phone
+          number, or decline to keep it private.
         </p>
 
         {rows.length === 0 ? (
           <div className="text-center py-16 border border-dashed border-brand-dark/15 rounded-2xl">
             <div className="text-5xl mb-3" aria-hidden>📨</div>
-            <p className="text-brand-dark/70 mb-4">You haven't sent any requests yet.</p>
+            <p className="text-brand-dark/70 mb-4">No one has requested your details yet.</p>
             <Link
-              to="/find-help"
+              to="/my-advert"
               className="inline-flex px-5 py-3 rounded-xl bg-brand-primary text-white font-medium"
             >
-              Browse skills
+              Manage my listing
             </Link>
           </div>
         ) : (
           <ul className="space-y-3">
             {rows.map((r) => (
-              <RequestCard key={r.id} row={r} />
+              <RequestCard
+                key={r.id}
+                row={r}
+                busy={decide.isPending}
+                onDecide={(decision) => decide.mutate({ id: r.id, decision })}
+              />
             ))}
           </ul>
         )}
@@ -89,8 +114,16 @@ function MyRequests() {
   );
 }
 
-function RequestCard({ row }: { row: Row }) {
-  const primarySkill = row.worker_skills?.[0];
+function RequestCard({
+  row,
+  busy,
+  onDecide,
+}: {
+  row: Row;
+  busy: boolean;
+  onDecide: (decision: "approved" | "declined") => void;
+}) {
+  const name = firstName(row.requester_name);
   const badge =
     row.status === "approved"
       ? {
@@ -105,25 +138,16 @@ function RequestCard({ row }: { row: Row }) {
             cls: "bg-red-100 text-red-800",
           }
         : {
-            label: "Pending Approval",
+            label: "Pending",
             icon: <Clock className="size-4" />,
             cls: "bg-amber-100 text-amber-900",
           };
-
-  function copy() {
-    if (!row.phone) return;
-    navigator.clipboard.writeText(row.phone);
-    toast.success("Number copied");
-  }
 
   return (
     <li className="bg-white rounded-2xl border border-brand-dark/10 p-4 sm:p-5">
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0">
-          <div className="font-heading font-semibold text-lg truncate">{row.worker_name}</div>
-          {primarySkill && (
-            <div className="text-sm text-brand-dark/60 truncate">{primarySkill}</div>
-          )}
+          <div className="font-heading font-semibold text-lg truncate">{name}</div>
           <div className="text-xs text-brand-dark/50 mt-1">
             Requested {fmtDate(row.created_at)}
           </div>
@@ -136,40 +160,41 @@ function RequestCard({ row }: { row: Row }) {
         </span>
       </div>
 
-      {row.status === "approved" && row.phone && (
-        <div className="mt-4 p-4 rounded-xl bg-emerald-50 border border-emerald-200">
-          <div className="text-xs uppercase tracking-wider text-emerald-800/70 mb-1">
-            Phone number
-          </div>
-          <div className="text-2xl font-heading font-bold text-emerald-800 mb-3">
-            {row.phone}
-          </div>
-          <div className="flex gap-2">
-            <a
-              href={`tel:${row.phone}`}
-              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-emerald-600 text-white font-medium"
-            >
-              <Phone className="size-4" /> Call
-            </a>
-            <button
-              type="button"
-              onClick={copy}
-              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-emerald-300 text-emerald-800"
-            >
-              <Copy className="size-4" /> Copy Number
-            </button>
-          </div>
-        </div>
+      {row.message && (
+        <p className="mt-3 text-sm text-brand-dark/80 whitespace-pre-line">
+          “{row.message}”
+        </p>
       )}
 
       {row.status === "pending" && (
-        <p className="mt-3 text-sm text-brand-dark/60">
-          Waiting for {row.worker_name} to respond.
+        <div className="mt-4 flex gap-2">
+          <button
+            type="button"
+            disabled={busy}
+            onClick={() => onDecide("approved")}
+            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-emerald-600 text-white font-medium disabled:opacity-60"
+          >
+            <Check className="size-4" /> Approve
+          </button>
+          <button
+            type="button"
+            disabled={busy}
+            onClick={() => onDecide("declined")}
+            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-brand-dark/15 text-brand-dark/80 disabled:opacity-60"
+          >
+            <X className="size-4" /> Decline
+          </button>
+        </div>
+      )}
+
+      {row.status === "approved" && (
+        <p className="mt-3 text-sm text-emerald-700">
+          {name} can now see your phone number.
         </p>
       )}
       {row.status === "declined" && (
         <p className="mt-3 text-sm text-brand-dark/60">
-          {row.worker_name} chose not to share their contact details.
+          You declined to share your details with {name}.
         </p>
       )}
     </li>
