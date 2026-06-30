@@ -72,13 +72,13 @@ export function Header() {
             <>
               <Link
                 to="/my-requests"
-                className="hidden sm:inline-flex px-3 py-2 rounded-full border border-brand-dark/10 text-sm text-brand-dark hover:bg-brand-soft transition"
+                className="hidden sm:inline-flex px-4 py-2 rounded-full bg-brand-primary text-white text-sm font-semibold shadow hover:bg-brand-primary/90 transition"
               >
                 My Requests
               </Link>
               <Link
                 to="/my-advert"
-                className="hidden sm:inline-flex px-3 py-2 rounded-full border border-brand-dark/10 text-sm text-brand-dark hover:bg-brand-soft transition"
+                className="hidden sm:inline-flex px-4 py-2 rounded-full bg-brand-primary text-white text-sm font-semibold shadow hover:bg-brand-primary/90 transition"
               >
                 My Listing
               </Link>
@@ -122,14 +122,14 @@ export function Header() {
                 <Link
                   to="/my-requests"
                   onClick={() => setOpen(false)}
-                  className="px-3 py-2.5 rounded-lg text-brand-dark/80 hover:bg-brand-soft"
+                  className="px-4 py-2.5 rounded-lg bg-brand-primary text-white font-semibold shadow hover:bg-brand-primary/90"
                 >
                   My Requests
                 </Link>
                 <Link
                   to="/my-advert"
                   onClick={() => setOpen(false)}
-                  className="px-3 py-2.5 rounded-lg text-brand-dark/80 hover:bg-brand-soft"
+                  className="px-4 py-2.5 rounded-lg bg-brand-primary text-white font-semibold shadow hover:bg-brand-primary/90"
                 >
                   My Listing
                 </Link>
