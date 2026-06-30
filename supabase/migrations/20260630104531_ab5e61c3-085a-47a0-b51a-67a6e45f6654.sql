@@ -1,0 +1,1 @@
+CREATE POLICY "Admins can delete profiles" ON public.noticeboard_profiles FOR DELETE USING (public.has_role(auth.uid(), 'admin'));
