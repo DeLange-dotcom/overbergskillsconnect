@@ -13,6 +13,7 @@ export function Header() {
 
   const NAV = [
     { to: "/", label: t("nav.home") },
+    { to: "/how-it-works", label: t("nav.howItWorks") },
     { to: "/find-help", label: t("nav.browse") },
     { to: "/advertise", label: t("nav.advertise") },
     { to: "/about", label: t("nav.about") },
