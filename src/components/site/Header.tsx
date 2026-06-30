@@ -122,14 +122,14 @@ export function Header() {
                 <Link
                   to="/my-requests"
                   onClick={() => setOpen(false)}
-                  className="px-3 py-2.5 rounded-lg text-brand-dark/80 hover:bg-brand-soft"
+                  className="px-4 py-2.5 rounded-lg bg-brand-primary text-white font-semibold shadow hover:bg-brand-primary/90"
                 >
                   My Requests
                 </Link>
                 <Link
                   to="/my-advert"
                   onClick={() => setOpen(false)}
-                  className="px-3 py-2.5 rounded-lg text-brand-dark/80 hover:bg-brand-soft"
+                  className="px-4 py-2.5 rounded-lg bg-brand-primary text-white font-semibold shadow hover:bg-brand-primary/90"
                 >
                   My Listing
                 </Link>
