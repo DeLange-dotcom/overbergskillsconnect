@@ -57,6 +57,7 @@ import { Route as AuthenticatedAdminYouthOpportunitiesRouteImport } from './rout
 import { Route as AuthenticatedAdminNoticeboardRouteImport } from './routes/_authenticated/admin/noticeboard'
 import { Route as AuthenticatedAdminApprenticeshipsRouteImport } from './routes/_authenticated/admin/apprenticeships'
 import { Route as AuthenticatedAdminYouthIndexRouteImport } from './routes/_authenticated/admin/youth.index'
+import { Route as LovableEmailQueueProcessRouteImport } from './routes/lovable/email/queue/process'
 import { Route as AuthenticatedAdminYouthIdRouteImport } from './routes/_authenticated/admin/youth.$id'
 import { Route as AuthenticatedAdminProvidersIdRouteImport } from './routes/_authenticated/admin/providers/$id'
 import { Route as AuthenticatedAdminApprenticesIdRouteImport } from './routes/_authenticated/admin/apprentices.$id'
@@ -310,6 +311,12 @@ const AuthenticatedAdminYouthIndexRoute =
     path: '/admin/youth/',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const LovableEmailQueueProcessRoute =
+  LovableEmailQueueProcessRouteImport.update({
+    id: '/lovable/email/queue/process',
+    path: '/lovable/email/queue/process',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const AuthenticatedAdminYouthIdRoute =
   AuthenticatedAdminYouthIdRouteImport.update({
     id: '/admin/youth/$id',
@@ -379,6 +386,7 @@ export interface FileRoutesByFullPath {
   '/admin/apprentices/$id': typeof AuthenticatedAdminApprenticesIdRoute
   '/admin/providers/$id': typeof AuthenticatedAdminProvidersIdRoute
   '/admin/youth/$id': typeof AuthenticatedAdminYouthIdRoute
+  '/lovable/email/queue/process': typeof LovableEmailQueueProcessRoute
   '/admin/youth/': typeof AuthenticatedAdminYouthIndexRoute
 }
 export interface FileRoutesByTo {
@@ -429,6 +437,7 @@ export interface FileRoutesByTo {
   '/admin/apprentices/$id': typeof AuthenticatedAdminApprenticesIdRoute
   '/admin/providers/$id': typeof AuthenticatedAdminProvidersIdRoute
   '/admin/youth/$id': typeof AuthenticatedAdminYouthIdRoute
+  '/lovable/email/queue/process': typeof LovableEmailQueueProcessRoute
   '/admin/youth': typeof AuthenticatedAdminYouthIndexRoute
 }
 export interface FileRoutesById {
@@ -483,6 +492,7 @@ export interface FileRoutesById {
   '/_authenticated/admin/apprentices/$id': typeof AuthenticatedAdminApprenticesIdRoute
   '/_authenticated/admin/providers/$id': typeof AuthenticatedAdminProvidersIdRoute
   '/_authenticated/admin/youth/$id': typeof AuthenticatedAdminYouthIdRoute
+  '/lovable/email/queue/process': typeof LovableEmailQueueProcessRoute
   '/_authenticated/admin/youth/': typeof AuthenticatedAdminYouthIndexRoute
 }
 export interface FileRouteTypes {
@@ -537,6 +547,7 @@ export interface FileRouteTypes {
     | '/admin/apprentices/$id'
     | '/admin/providers/$id'
     | '/admin/youth/$id'
+    | '/lovable/email/queue/process'
     | '/admin/youth/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -587,6 +598,7 @@ export interface FileRouteTypes {
     | '/admin/apprentices/$id'
     | '/admin/providers/$id'
     | '/admin/youth/$id'
+    | '/lovable/email/queue/process'
     | '/admin/youth'
   id:
     | '__root__'
@@ -640,6 +652,7 @@ export interface FileRouteTypes {
     | '/_authenticated/admin/apprentices/$id'
     | '/_authenticated/admin/providers/$id'
     | '/_authenticated/admin/youth/$id'
+    | '/lovable/email/queue/process'
     | '/_authenticated/admin/youth/'
   fileRoutesById: FileRoutesById
 }
@@ -671,6 +684,7 @@ export interface RootRouteChildren {
   RequestTokenRoute: typeof RequestTokenRoute
   RequestMentorshipIndexRoute: typeof RequestMentorshipIndexRoute
   ApiPublicContactRequestRoute: typeof ApiPublicContactRequestRoute
+  LovableEmailQueueProcessRoute: typeof LovableEmailQueueProcessRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -1011,6 +1025,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminYouthIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/lovable/email/queue/process': {
+      id: '/lovable/email/queue/process'
+      path: '/lovable/email/queue/process'
+      fullPath: '/lovable/email/queue/process'
+      preLoaderRoute: typeof LovableEmailQueueProcessRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_authenticated/admin/youth/$id': {
       id: '/_authenticated/admin/youth/$id'
       path: '/admin/youth/$id'
@@ -1151,6 +1172,7 @@ const rootRouteChildren: RootRouteChildren = {
   RequestTokenRoute: RequestTokenRoute,
   RequestMentorshipIndexRoute: RequestMentorshipIndexRoute,
   ApiPublicContactRequestRoute: ApiPublicContactRequestRoute,
+  LovableEmailQueueProcessRoute: LovableEmailQueueProcessRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
