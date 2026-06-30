@@ -46,7 +46,7 @@ function HowItWorks() {
           </div>
 
           <div className="p-6 rounded-2xl bg-brand-sky/10 border border-brand-dark/5">
-            <h2 className="font-heading text-xl font-semibold mb-6">I am looking for help</h2>
+            <h2 className="font-heading text-xl font-semibold mb-6">I am looking for a service</h2>
             <ol className="space-y-8">
               <Card icon={<Search />} title="1. Browse local skills">
                 Search or browse profiles by skill type and town. See what people offer and read
