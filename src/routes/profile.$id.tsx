@@ -170,6 +170,7 @@ function ContactDialog({
   const [signedIn, setSignedIn] = useState(false);
   const [userName, setUserName] = useState("");
   const [userPhone, setUserPhone] = useState("");
+  const [consent, setConsent] = useState(false);
 
   useEffect(() => {
     supabase.auth.getUser().then(({ data }) => {
@@ -189,6 +190,10 @@ function ContactDialog({
 
   async function submit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    if (!consent) {
+      toast.error("Please tick the consent box to continue.");
+      return;
+    }
     setSubmitting(true);
     const fd = new FormData(e.currentTarget);
     const { error } = await supabase.rpc("noticeboard_create_contact_request", {
@@ -196,10 +201,20 @@ function ContactDialog({
       _requester_name: String(fd.get("name") || "").trim(),
       _requester_contact: String(fd.get("contact") || "").trim(),
       _message: String(fd.get("message") || "").trim(),
+      _consent: true,
     });
     setSubmitting(false);
     if (error) {
-      toast.error(error.message ?? "Could not send your request.");
+      const msg = error.message ?? "";
+      if (msg.includes("rate_limited")) {
+        toast.error(
+          "You've reached the limit of 5 contact requests in 24 hours. Please try again later.",
+        );
+      } else if (msg.includes("consent_required")) {
+        toast.error("Please tick the consent box to continue.");
+      } else {
+        toast.error(msg || "Could not send your request.");
+      }
       return;
     }
     setSent(true);
@@ -308,13 +323,26 @@ function ContactDialog({
           className="w-full px-4 py-3 border border-brand-dark/10 rounded-xl"
           spellCheck
         />
+        <label className="flex items-start gap-2 text-xs text-brand-dark/70 leading-relaxed pt-1">
+          <input
+            type="checkbox"
+            checked={consent}
+            onChange={(e) => setConsent(e.target.checked)}
+            className="mt-0.5 size-4 shrink-0"
+          />
+          <span>
+            I agree that my name and contact details will be shared with {name} so they can
+            respond to my request. Any phone number they choose to share will be visible to me
+            for 30 days.
+          </span>
+        </label>
         <div className="flex gap-2 justify-end pt-1">
           <button type="button" onClick={onClose} className="px-4 py-2.5 rounded-xl border border-brand-dark/10">
             Cancel
           </button>
           <button
             type="submit"
-            disabled={submitting}
+            disabled={submitting || !consent}
             className="px-4 py-2.5 rounded-xl bg-brand-primary text-white disabled:opacity-60"
           >
             {submitting ? "Sending…" : "Send request"}
@@ -324,6 +352,7 @@ function ContactDialog({
     </Modal>
   );
 }
+
 
 function ReportDialog({ profileId, onClose }: { profileId: string; onClose: () => void }) {
   const [submitting, setSubmitting] = useState(false);
