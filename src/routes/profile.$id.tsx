@@ -128,7 +128,7 @@ function ProfilePage() {
               onClick={() => setContactOpen(true)}
               className="inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-brand-primary text-white font-medium hover:brightness-110"
             >
-              <MessageCircle className="size-4" /> Request Contact Details
+              <MessageCircle className="size-4" /> Request Contact
             </button>
             <button
               onClick={() => setReportOpen(true)}
