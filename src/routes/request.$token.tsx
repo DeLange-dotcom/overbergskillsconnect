@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { supabase } from "@/integrations/supabase/client";
-import { Phone, Clock, X } from "lucide-react";
+import { Phone, Clock, X, MessageCircle } from "lucide-react";
 
 export const Route = createFileRoute("/request/$token")({
   component: ViewRequest,
@@ -94,6 +94,24 @@ function ViewRequest() {
             >
               {data.phone}
             </a>
+            <div className="mt-4 flex gap-3">
+              <a
+                href={`tel:${data.phone}`}
+                className="inline-flex items-center justify-center gap-2 flex-1 py-2.5 px-4 rounded-xl bg-emerald-600 text-white font-semibold shadow hover:bg-emerald-700 transition-colors"
+              >
+                <Phone className="size-5" />
+                Call
+              </a>
+              <a
+                href={`https://wa.me/${data.phone.replace(/\D/g, "")}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-2 flex-1 py-2.5 px-4 rounded-xl bg-[#25D366] text-white font-semibold shadow hover:bg-[#1ebe5a] transition-colors"
+              >
+                <MessageCircle className="size-5" />
+                WhatsApp
+              </a>
+            </div>
             <p className="text-xs mt-4 opacity-80">
               Any arrangement you make is entirely between you and {data.profile_name}. Khulisa
               Community does not vet or guarantee anyone on this noticeboard.
