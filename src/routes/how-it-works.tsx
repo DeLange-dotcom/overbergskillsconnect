@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { SiteLayout } from "@/components/site/SiteLayout";
-import { UserPlus, Search, MessageCircle, ShieldAlert } from "lucide-react";
+import { UserPlus, Search, MessageCircle, ShieldAlert, Settings, Eye, Archive, Trash2 } from "lucide-react";
 import { Link } from "@tanstack/react-router";
 import { PLATFORM_NAME } from "@/lib/brand";
 
@@ -62,6 +62,33 @@ function HowItWorks() {
               </Card>
             </ol>
           </div>
+        </div>
+
+        <div className="p-6 rounded-2xl bg-white border border-brand-dark/5 mb-10">
+          <h2 className="font-heading text-xl font-semibold mb-6">Managing your listing</h2>
+          <ol className="space-y-8">
+            <Card icon={<Settings />} title="Edit your listing">
+              Go to <strong>My Listing</strong> to update your skills, description, photo or
+              contact details at any time. Changes appear immediately on the noticeboard.
+            </Card>
+            <Card icon={<Eye />} title="Hide or show your listing">
+              Temporarily hide your profile from public search without deleting it. When you are
+              ready, make it visible again with one click.
+            </Card>
+            <Card icon={<Archive />} title="Archive and reactivate">
+              Archiving removes your listing from public view but keeps all your data safe. You
+              can reactivate it whenever you want — perfect for seasonal work or short breaks.
+            </Card>
+            <Card icon={<Trash2 />} title="Delete permanently">
+              If you no longer need your profile, you can delete it permanently. This removes
+              all your data from the platform.
+            </Card>
+            <Card icon={<MessageCircle />} title="Handle contact requests">
+              When someone asks for your details, you will see it under <strong>People Interested
+              In Me</strong> on your My Listing page. You decide whether to approve or decline
+              each request. Your phone number and email are never shown publicly.
+            </Card>
+          </ol>
         </div>
 
         <div className="mt-8 flex items-start gap-3 p-4 rounded-2xl border border-brand-dark/10 bg-white">
