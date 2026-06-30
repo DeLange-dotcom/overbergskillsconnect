@@ -78,7 +78,7 @@ export function Header() {
               </Link>
               <Link
                 to="/my-advert"
-                className="hidden sm:inline-flex px-3 py-2 rounded-full border border-brand-dark/10 text-sm text-brand-dark hover:bg-brand-soft transition"
+                className="hidden sm:inline-flex px-4 py-2 rounded-full bg-brand-primary text-white text-sm font-semibold shadow hover:bg-brand-primary/90 transition"
               >
                 My Listing
               </Link>
