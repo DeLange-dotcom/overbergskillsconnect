@@ -11,7 +11,7 @@ import { Loader2 } from "lucide-react";
 export const Route = createFileRoute("/advertise")({
   head: () => ({
     meta: [
-      { title: "Advertise My Services — Overberg Skills Connect" },
+      { title: "Advertise My Skills — Overberg Skills Connect" },
       {
         name: "description",
         content:
