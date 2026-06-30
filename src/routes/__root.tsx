@@ -98,8 +98,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "description", content: "A trusted community skills platform connecting local service providers with those needing help, while facilitating donations." },
       { property: "og:description", content: "A trusted community skills platform connecting local service providers with those needing help, while facilitating donations." },
       { name: "twitter:description", content: "A trusted community skills platform connecting local service providers with those needing help, while facilitating donations." },
-      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/9f39acce-7dcc-44c0-9796-e7e0c45227ec/id-preview-de3eb8dc--f294ef0d-e1d7-4c98-a3cd-6eca3d4f17b1.lovable.app-1782823879888.png" },
-      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/9f39acce-7dcc-44c0-9796-e7e0c45227ec/id-preview-de3eb8dc--f294ef0d-e1d7-4c98-a3cd-6eca3d4f17b1.lovable.app-1782823879888.png" },
+      { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/5d15591b-1b42-4265-bd7e-4d1d8764c9e4" },
+      { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/5d15591b-1b42-4265-bd7e-4d1d8764c9e4" },
     ],
     links: [
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
