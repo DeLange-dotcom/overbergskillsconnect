@@ -1141,6 +1141,7 @@ export type Database = {
       }
       noticeboard_contact_requests: {
         Row: {
+          consent_given_at: string | null
           created_at: string
           decided_at: string | null
           id: string
@@ -1150,9 +1151,11 @@ export type Database = {
           requester_name: string
           requester_token: string
           requester_user_id: string | null
+          revoked_at: string | null
           status: string
         }
         Insert: {
+          consent_given_at?: string | null
           created_at?: string
           decided_at?: string | null
           id?: string
@@ -1162,9 +1165,11 @@ export type Database = {
           requester_name: string
           requester_token?: string
           requester_user_id?: string | null
+          revoked_at?: string | null
           status?: string
         }
         Update: {
+          consent_given_at?: string | null
           created_at?: string
           decided_at?: string | null
           id?: string
@@ -1174,6 +1179,7 @@ export type Database = {
           requester_name?: string
           requester_token?: string
           requester_user_id?: string | null
+          revoked_at?: string | null
           status?: string
         }
         Relationships: [
@@ -3339,6 +3345,7 @@ export type Database = {
       }
       noticeboard_create_contact_request: {
         Args: {
+          _consent?: boolean
           _message: string
           _profile_id: string
           _requester_contact: string
@@ -3365,10 +3372,12 @@ export type Database = {
         Returns: {
           created_at: string
           decided_at: string
+          expires_at: string
           id: string
           message: string
           requester_contact: string
           requester_name: string
+          revoked_at: string
           status: string
         }[]
       }
@@ -3402,6 +3411,7 @@ export type Database = {
         Returns: {
           created_at: string
           decided_at: string
+          expires_at: string
           id: string
           phone: string
           profile_id: string
@@ -3410,6 +3420,7 @@ export type Database = {
           worker_skills: string[]
         }[]
       }
+      noticeboard_my_revoke: { Args: { _request_id: string }; Returns: string }
       noticeboard_my_update: { Args: { _payload: Json }; Returns: string }
       noticeboard_owner_decide: {
         Args: { _decision: string; _manage_token: string; _request_id: string }

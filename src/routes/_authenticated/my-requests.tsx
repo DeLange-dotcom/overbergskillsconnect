@@ -2,7 +2,16 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { supabase } from "@/integrations/supabase/client";
-import { Clock, CheckCircle2, XCircle, Loader2, Check, X } from "lucide-react";
+import {
+  Clock,
+  CheckCircle2,
+  XCircle,
+  Loader2,
+  Check,
+  X,
+  ShieldOff,
+  TimerOff,
+} from "lucide-react";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/_authenticated/my-requests")({
@@ -14,9 +23,11 @@ type Row = {
   requester_name: string;
   requester_contact: string | null;
   message: string | null;
-  status: "pending" | "approved" | "declined";
+  status: "pending" | "approved" | "declined" | "revoked";
   created_at: string;
   decided_at: string | null;
+  revoked_at: string | null;
+  expires_at: string | null;
 };
 
 function fmtDate(s: string) {
@@ -33,6 +44,14 @@ function fmtDate(s: string) {
 
 function firstName(full: string) {
   return (full || "").trim().split(/\s+/)[0] || full;
+}
+
+function isExpired(row: Row) {
+  return (
+    row.status === "approved" &&
+    !!row.expires_at &&
+    new Date(row.expires_at).getTime() < Date.now()
+  );
 }
 
 function MyRequests() {
@@ -62,6 +81,18 @@ function MyRequests() {
     onError: (e: Error) => toast.error(e.message),
   });
 
+  const revoke = useMutation({
+    mutationFn: async (id: string) => {
+      const { error } = await supabase.rpc("noticeboard_my_revoke", { _request_id: id });
+      if (error) throw error;
+    },
+    onSuccess: () => {
+      toast.success("Access revoked — your phone number is hidden again.");
+      qc.invalidateQueries({ queryKey: ["my-incoming-requests"] });
+    },
+    onError: (e: Error) => toast.error(e.message),
+  });
+
   if (isLoading) {
     return (
       <SiteLayout>
@@ -82,8 +113,9 @@ function MyRequests() {
           People Interested In Me
         </h1>
         <p className="text-brand-dark/60 mb-8">
-          When someone asks for your contact details, approve the request to share your phone
-          number, or decline to keep it private.
+          When someone asks for your contact details, approve to share your phone number, or
+          decline to keep it private. Approved access automatically expires after 30 days, and
+          you can revoke it at any time.
         </p>
 
         {rows.length === 0 ? (
@@ -103,8 +135,9 @@ function MyRequests() {
               <RequestCard
                 key={r.id}
                 row={r}
-                busy={decide.isPending}
+                busy={decide.isPending || revoke.isPending}
                 onDecide={(decision) => decide.mutate({ id: r.id, decision })}
+                onRevoke={() => revoke.mutate(r.id)}
               />
             ))}
           </ul>
@@ -118,14 +151,23 @@ function RequestCard({
   row,
   busy,
   onDecide,
+  onRevoke,
 }: {
   row: Row;
   busy: boolean;
   onDecide: (decision: "approved" | "declined") => void;
+  onRevoke: () => void;
 }) {
   const name = firstName(row.requester_name);
-  const badge =
-    row.status === "approved"
+  const expired = isExpired(row);
+
+  const badge = expired
+    ? {
+        label: "Expired",
+        icon: <TimerOff className="size-4" />,
+        cls: "bg-brand-dark/10 text-brand-dark/70",
+      }
+    : row.status === "approved"
       ? {
           label: "Approved",
           icon: <CheckCircle2 className="size-4" />,
@@ -137,11 +179,17 @@ function RequestCard({
             icon: <XCircle className="size-4" />,
             cls: "bg-red-100 text-red-800",
           }
-        : {
-            label: "Pending",
-            icon: <Clock className="size-4" />,
-            cls: "bg-amber-100 text-amber-900",
-          };
+        : row.status === "revoked"
+          ? {
+              label: "Revoked",
+              icon: <ShieldOff className="size-4" />,
+              cls: "bg-brand-dark/10 text-brand-dark/70",
+            }
+          : {
+              label: "Pending",
+              icon: <Clock className="size-4" />,
+              cls: "bg-amber-100 text-amber-900",
+            };
 
   return (
     <li className="bg-white rounded-2xl border border-brand-dark/10 p-4 sm:p-5">
@@ -187,14 +235,43 @@ function RequestCard({
         </div>
       )}
 
-      {row.status === "approved" && (
-        <p className="mt-3 text-sm text-emerald-700">
-          {name} can now see your phone number.
+      {row.status === "approved" && !expired && (
+        <div className="mt-3 space-y-2">
+          <p className="text-sm text-emerald-700">
+            {name} can see your phone number until{" "}
+            <span className="font-medium">
+              {row.expires_at ? fmtDate(row.expires_at) : "30 days from approval"}
+            </span>
+            .
+          </p>
+          <button
+            type="button"
+            disabled={busy}
+            onClick={onRevoke}
+            className="inline-flex items-center gap-2 px-3 py-2 rounded-lg border border-red-200 text-sm text-red-700 hover:bg-red-50 disabled:opacity-60"
+          >
+            <ShieldOff className="size-4" /> Revoke access
+          </button>
+        </div>
+      )}
+
+      {row.status === "approved" && expired && (
+        <p className="mt-3 text-sm text-brand-dark/60">
+          Access expired on {row.expires_at ? fmtDate(row.expires_at) : "—"}. {name} can no
+          longer see your phone number.
         </p>
       )}
+
       {row.status === "declined" && (
         <p className="mt-3 text-sm text-brand-dark/60">
           You declined to share your details with {name}.
+        </p>
+      )}
+
+      {row.status === "revoked" && (
+        <p className="mt-3 text-sm text-brand-dark/60">
+          You revoked access on {row.revoked_at ? fmtDate(row.revoked_at) : "—"}. {name} can
+          no longer see your phone number.
         </p>
       )}
     </li>
