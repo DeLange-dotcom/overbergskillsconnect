@@ -10,6 +10,7 @@ export function Header() {
   const { t } = useTranslation();
   const [open, setOpen] = useState(false);
   const [signedIn, setSignedIn] = useState(false);
+  const [unread, setUnread] = useState(0);
 
   const NAV = [
     { to: "/", label: t("nav.home") },
@@ -21,17 +22,31 @@ export function Header() {
 
   useEffect(() => {
     let mounted = true;
+    async function loadUnread() {
+      const { data } = await supabase.rpc("notifications_unread_count");
+      if (mounted) setUnread(Number(data ?? 0));
+    }
     supabase.auth.getSession().then(({ data }) => {
-      if (mounted) setSignedIn(!!data.session);
+      if (!mounted) return;
+      const signed = !!data.session;
+      setSignedIn(signed);
+      if (signed) loadUnread();
     });
     const { data: sub } = supabase.auth.onAuthStateChange((_e, session) => {
-      setSignedIn(!!session);
+      const signed = !!session;
+      setSignedIn(signed);
+      if (signed) loadUnread();
+      else setUnread(0);
     });
+    const interval = setInterval(() => {
+      if (signedIn) loadUnread();
+    }, 60000);
     return () => {
       mounted = false;
       sub.subscription.unsubscribe();
+      clearInterval(interval);
     };
-  }, []);
+  }, [signedIn]);
 
   return (
     <header className="border-b border-brand-dark/5 bg-brand-page sticky top-0 z-40 backdrop-blur">
@@ -69,20 +84,17 @@ export function Header() {
         <div className="flex items-center gap-2">
           <LanguageSelector className="hidden sm:block" />
           {signedIn ? (
-            <>
-              <Link
-                to="/my-requests"
-                className="hidden sm:inline-flex px-4 py-2 rounded-full bg-brand-primary text-white text-sm font-semibold shadow hover:bg-brand-primary/90 transition"
-              >
-                My Requests
-              </Link>
-              <Link
-                to="/my-advert"
-                className="hidden sm:inline-flex px-4 py-2 rounded-full bg-brand-primary text-white text-sm font-semibold shadow hover:bg-brand-primary/90 transition"
-              >
-                My Listing
-              </Link>
-            </>
+            <Link
+              to="/profile"
+              className="hidden sm:inline-flex relative items-center gap-2 px-4 py-2 rounded-full bg-brand-primary text-white text-sm font-semibold shadow hover:bg-brand-primary/90 transition"
+            >
+              My Profile
+              {unread > 0 && (
+                <span className="inline-flex items-center justify-center min-w-[20px] h-5 px-1.5 rounded-full bg-white text-brand-primary text-[11px] font-bold">
+                  {unread > 9 ? "9+" : unread}
+                </span>
+              )}
+            </Link>
           ) : (
             <Link
               to="/auth"
@@ -94,10 +106,13 @@ export function Header() {
           )}
           <button
             onClick={() => setOpen((v) => !v)}
-            className="md:hidden size-10 rounded-full bg-brand-soft grid place-items-center"
+            className="md:hidden size-10 rounded-full bg-brand-soft grid place-items-center relative"
             aria-label={t("nav.toggleMenu")}
           >
             {open ? <X className="size-5" /> : <Menu className="size-5" />}
+            {signedIn && unread > 0 && !open && (
+              <span className="absolute top-1 right-1 size-2.5 rounded-full bg-brand-primary" />
+            )}
           </button>
         </div>
       </div>
@@ -118,22 +133,18 @@ export function Header() {
               </Link>
             ))}
             {signedIn ? (
-              <>
-                <Link
-                  to="/my-requests"
-                  onClick={() => setOpen(false)}
-                  className="px-4 py-2.5 rounded-lg bg-brand-primary text-white font-semibold shadow hover:bg-brand-primary/90"
-                >
-                  My Requests
-                </Link>
-                <Link
-                  to="/my-advert"
-                  onClick={() => setOpen(false)}
-                  className="px-4 py-2.5 rounded-lg bg-brand-primary text-white font-semibold shadow hover:bg-brand-primary/90"
-                >
-                  My Listing
-                </Link>
-              </>
+              <Link
+                to="/profile"
+                onClick={() => setOpen(false)}
+                className="relative px-4 py-2.5 rounded-lg bg-brand-primary text-white font-semibold shadow hover:bg-brand-primary/90 flex items-center justify-between"
+              >
+                <span>My Profile</span>
+                {unread > 0 && (
+                  <span className="inline-flex items-center justify-center min-w-[22px] h-5 px-1.5 rounded-full bg-white text-brand-primary text-[11px] font-bold">
+                    {unread > 9 ? "9+" : unread}
+                  </span>
+                )}
+              </Link>
             ) : (
               <Link
                 to="/auth"
