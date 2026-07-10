@@ -1460,6 +1460,42 @@ export type Database = {
           },
         ]
       }
+      notifications: {
+        Row: {
+          body: string | null
+          created_at: string
+          id: string
+          link: string | null
+          read_at: string | null
+          related_id: string | null
+          title: string
+          type: string
+          user_id: string
+        }
+        Insert: {
+          body?: string | null
+          created_at?: string
+          id?: string
+          link?: string | null
+          read_at?: string | null
+          related_id?: string | null
+          title: string
+          type: string
+          user_id: string
+        }
+        Update: {
+          body?: string | null
+          created_at?: string
+          id?: string
+          link?: string | null
+          read_at?: string | null
+          related_id?: string | null
+          title?: string
+          type?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       opportunity_skills: {
         Row: {
           created_at: string
@@ -2176,6 +2212,33 @@ export type Database = {
           terms_version?: string
           user_agent?: string | null
           user_id?: string | null
+        }
+        Relationships: []
+      }
+      user_profiles: {
+        Row: {
+          created_at: string
+          full_name: string | null
+          phone: string | null
+          town: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          full_name?: string | null
+          phone?: string | null
+          town?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          full_name?: string | null
+          phone?: string | null
+          town?: string | null
+          updated_at?: string
+          user_id?: string
         }
         Relationships: []
       }
@@ -3431,6 +3494,16 @@ export type Database = {
         Args: { payload: Json; queue_name: string }
         Returns: number
       }
+      get_my_profile: {
+        Args: never
+        Returns: {
+          email: string
+          full_name: string
+          phone: string
+          town: string
+          user_id: string
+        }[]
+      }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
@@ -3595,6 +3668,8 @@ export type Database = {
           status: string
         }[]
       }
+      notifications_mark_all_read: { Args: never; Returns: undefined }
+      notifications_unread_count: { Args: never; Returns: number }
       read_email_batch: {
         Args: { batch_size: number; queue_name: string; vt: number }
         Returns: {
@@ -3625,6 +3700,10 @@ export type Database = {
           _token: string
         }
         Returns: string
+      }
+      upsert_my_profile: {
+        Args: { _full_name: string; _phone: string; _town: string }
+        Returns: undefined
       }
       youth_age_group: { Args: { _dob: string }; Returns: string }
     }

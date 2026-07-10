@@ -46,6 +46,7 @@ import { Route as ApprenticeshipsOpportunitiesRouteImport } from './routes/appre
 import { Route as ApprenticeshipsMentorsRouteImport } from './routes/apprenticeships.mentors'
 import { Route as ApprenticeshipsImpactRouteImport } from './routes/apprenticeships.impact'
 import { Route as ApprenticeshipsBecomeMentorRouteImport } from './routes/apprenticeships.become-mentor'
+import { Route as AuthenticatedProfileRouteImport } from './routes/_authenticated/profile'
 import { Route as AuthenticatedMyRequestsRouteImport } from './routes/_authenticated/my-requests'
 import { Route as AuthenticatedMyAdvertRouteImport } from './routes/_authenticated/my-advert'
 import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin/index'
@@ -253,6 +254,11 @@ const ApprenticeshipsBecomeMentorRoute =
     path: '/become-mentor',
     getParentRoute: () => ApprenticeshipsRoute,
   } as any)
+const AuthenticatedProfileRoute = AuthenticatedProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedMyRequestsRoute = AuthenticatedMyRequestsRouteImport.update({
   id: '/my-requests',
   path: '/my-requests',
@@ -369,6 +375,7 @@ export interface FileRoutesByFullPath {
   '/youth': typeof YouthRouteWithChildren
   '/my-advert': typeof AuthenticatedMyAdvertRoute
   '/my-requests': typeof AuthenticatedMyRequestsRoute
+  '/profile': typeof AuthenticatedProfileRoute
   '/apprenticeships/become-mentor': typeof ApprenticeshipsBecomeMentorRoute
   '/apprenticeships/impact': typeof ApprenticeshipsImpactRoute
   '/apprenticeships/mentors': typeof ApprenticeshipsMentorsRoute
@@ -422,6 +429,7 @@ export interface FileRoutesByTo {
   '/terms': typeof TermsRoute
   '/my-advert': typeof AuthenticatedMyAdvertRoute
   '/my-requests': typeof AuthenticatedMyRequestsRoute
+  '/profile': typeof AuthenticatedProfileRoute
   '/apprenticeships/become-mentor': typeof ApprenticeshipsBecomeMentorRoute
   '/apprenticeships/impact': typeof ApprenticeshipsImpactRoute
   '/apprenticeships/mentors': typeof ApprenticeshipsMentorsRoute
@@ -479,6 +487,7 @@ export interface FileRoutesById {
   '/youth': typeof YouthRouteWithChildren
   '/_authenticated/my-advert': typeof AuthenticatedMyAdvertRoute
   '/_authenticated/my-requests': typeof AuthenticatedMyRequestsRoute
+  '/_authenticated/profile': typeof AuthenticatedProfileRoute
   '/apprenticeships/become-mentor': typeof ApprenticeshipsBecomeMentorRoute
   '/apprenticeships/impact': typeof ApprenticeshipsImpactRoute
   '/apprenticeships/mentors': typeof ApprenticeshipsMentorsRoute
@@ -536,6 +545,7 @@ export interface FileRouteTypes {
     | '/youth'
     | '/my-advert'
     | '/my-requests'
+    | '/profile'
     | '/apprenticeships/become-mentor'
     | '/apprenticeships/impact'
     | '/apprenticeships/mentors'
@@ -589,6 +599,7 @@ export interface FileRouteTypes {
     | '/terms'
     | '/my-advert'
     | '/my-requests'
+    | '/profile'
     | '/apprenticeships/become-mentor'
     | '/apprenticeships/impact'
     | '/apprenticeships/mentors'
@@ -645,6 +656,7 @@ export interface FileRouteTypes {
     | '/youth'
     | '/_authenticated/my-advert'
     | '/_authenticated/my-requests'
+    | '/_authenticated/profile'
     | '/apprenticeships/become-mentor'
     | '/apprenticeships/impact'
     | '/apprenticeships/mentors'
@@ -974,6 +986,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApprenticeshipsBecomeMentorRouteImport
       parentRoute: typeof ApprenticeshipsRoute
     }
+    '/_authenticated/profile': {
+      id: '/_authenticated/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof AuthenticatedProfileRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/my-requests': {
       id: '/_authenticated/my-requests'
       path: '/my-requests'
@@ -1099,6 +1118,7 @@ declare module '@tanstack/react-router' {
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedMyAdvertRoute: typeof AuthenticatedMyAdvertRoute
   AuthenticatedMyRequestsRoute: typeof AuthenticatedMyRequestsRoute
+  AuthenticatedProfileRoute: typeof AuthenticatedProfileRoute
   AuthenticatedAdminApprenticeshipsRoute: typeof AuthenticatedAdminApprenticeshipsRoute
   AuthenticatedAdminNoticeboardRoute: typeof AuthenticatedAdminNoticeboardRoute
   AuthenticatedAdminYouthOpportunitiesRoute: typeof AuthenticatedAdminYouthOpportunitiesRoute
@@ -1113,6 +1133,7 @@ interface AuthenticatedRouteRouteChildren {
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedMyAdvertRoute: AuthenticatedMyAdvertRoute,
   AuthenticatedMyRequestsRoute: AuthenticatedMyRequestsRoute,
+  AuthenticatedProfileRoute: AuthenticatedProfileRoute,
   AuthenticatedAdminApprenticeshipsRoute:
     AuthenticatedAdminApprenticeshipsRoute,
   AuthenticatedAdminNoticeboardRoute: AuthenticatedAdminNoticeboardRoute,
