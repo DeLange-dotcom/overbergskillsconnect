@@ -3381,6 +3381,8 @@ export type Database = {
             | Database["public"]["Enums"]["youth_opportunity_category"]
             | null
           closing_date: string | null
+          compensation_amount: number | null
+          compensation_type: string | null
           created_at: string | null
           description: string | null
           end_date: string | null
@@ -3391,6 +3393,7 @@ export type Database = {
           opportunity_type: string | null
           organisation_name: string | null
           prohibited_for_minors: boolean | null
+          provider_type: string | null
           start_date: string | null
           title: string | null
           town: string | null
@@ -3400,6 +3403,8 @@ export type Database = {
             | Database["public"]["Enums"]["youth_opportunity_category"]
             | null
           closing_date?: string | null
+          compensation_amount?: number | null
+          compensation_type?: string | null
           created_at?: string | null
           description?: string | null
           end_date?: string | null
@@ -3410,6 +3415,7 @@ export type Database = {
           opportunity_type?: string | null
           organisation_name?: string | null
           prohibited_for_minors?: boolean | null
+          provider_type?: string | null
           start_date?: string | null
           title?: string | null
           town?: string | null
@@ -3419,6 +3425,8 @@ export type Database = {
             | Database["public"]["Enums"]["youth_opportunity_category"]
             | null
           closing_date?: string | null
+          compensation_amount?: number | null
+          compensation_type?: string | null
           created_at?: string | null
           description?: string | null
           end_date?: string | null
@@ -3429,6 +3437,7 @@ export type Database = {
           opportunity_type?: string | null
           organisation_name?: string | null
           prohibited_for_minors?: boolean | null
+          provider_type?: string | null
           start_date?: string | null
           title?: string | null
           town?: string | null
