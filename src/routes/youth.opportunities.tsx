@@ -53,9 +53,8 @@ function OpportunityBoard() {
     queryKey: ["opp_board", type, ageGroup, location, category, comp],
     queryFn: async (): Promise<Opp[]> => {
       let q = supabase
-        .from("youth_opportunities")
+        .from("youth_opportunities_public")
         .select("id,organisation_name,title,description,category,opportunity_type,min_age,max_age,town,closing_date,prohibited_for_minors,compensation_type,compensation_amount,provider_type")
-        .eq("status", "approved" as never)
         .order("created_at", { ascending: false });
       if (type) q = q.eq("opportunity_type", type);
       if (category) q = q.eq("category", category as never);
