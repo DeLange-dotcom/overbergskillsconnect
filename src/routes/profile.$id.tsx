@@ -190,7 +190,7 @@ function ContactDialog({
     }
     setSubmitting(true);
     const fd = new FormData(e.currentTarget);
-    const { data: requestId, error } = await supabase.rpc("noticeboard_create_contact_request", {
+    const { error } = await supabase.rpc("noticeboard_create_contact_request", {
       _profile_id: profileId,
       _requester_name: String(fd.get("name") || "").trim(),
       _requester_contact: String(fd.get("contact") || "").trim(),
@@ -211,7 +211,6 @@ function ContactDialog({
       }
       return;
     }
-    notifyContactRequest(String(requestId || ""));
     setSent(true);
   }
 
@@ -265,8 +264,8 @@ function ContactDialog({
           </div>
           <h2 className="font-heading text-xl font-semibold mb-2">Request sent</h2>
           <p className="text-sm text-brand-dark/70 mb-5">
-            Your request has been sent successfully. {name} has been notified and can choose whether
-            to share their contact details. You can check the status any time from
+            Your request has been sent successfully. {name} can choose whether to share their
+            contact details. You can check the status any time from
             <span className="font-medium"> My Contact Requests</span> in your dashboard.
           </p>
           <div className="flex flex-col sm:flex-row gap-2">
@@ -349,24 +348,6 @@ function ContactDialog({
       </form>
     </Modal>
   );
-}
-
-async function notifyContactRequest(requestId: string) {
-  if (!requestId) return;
-  const { data } = await supabase.auth.getSession();
-  const token = data.session?.access_token;
-  if (!token) return;
-
-  fetch("/api/noticeboard/contact-request-notify", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-    body: JSON.stringify({ request_id: requestId }),
-  }).catch((error) => {
-    console.error("Could not send contact request WhatsApp", error);
-  });
 }
 
 function ReportDialog({ profileId, onClose }: { profileId: string; onClose: () => void }) {

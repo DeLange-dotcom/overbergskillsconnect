@@ -247,7 +247,6 @@ function RegisterProvider() {
       });
     }
 
-    notifyProviderWelcome(providerId, applicationCode);
     setDone({ code: applicationCode });
     setSubmitting(false);
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -569,16 +568,6 @@ function RegisterProvider() {
       </div>
     </SiteLayout>
   );
-}
-
-async function notifyProviderWelcome(providerId: string, applicationCode: string) {
-  fetch("/api/provider/welcome", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ provider_id: providerId, application_code: applicationCode }),
-  }).catch((error) => {
-    console.error("Could not send provider welcome WhatsApp", error);
-  });
 }
 
 function Fieldset({ title, children }: { title: string; children: React.ReactNode }) {

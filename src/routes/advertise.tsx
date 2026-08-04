@@ -117,7 +117,7 @@ function Advertise() {
       return;
     }
 
-    const { data: listingId, error } = await supabase.rpc("noticeboard_my_create", {
+    const { error } = await supabase.rpc("noticeboard_my_create", {
       _payload: payload,
     });
 
@@ -126,7 +126,6 @@ function Advertise() {
       toast.error(error.message ?? "Could not publish your listing.");
       return;
     }
-    notifyAdvertWelcome(String(listingId || ""));
     toast.success("Your advert is now live!");
     navigate({ to: "/my-advert" });
   }
@@ -342,24 +341,6 @@ function Advertise() {
       </div>
     </SiteLayout>
   );
-}
-
-async function notifyAdvertWelcome(listingId: string) {
-  if (!listingId) return;
-  const { data } = await supabase.auth.getSession();
-  const token = data.session?.access_token;
-  if (!token) return;
-
-  fetch("/api/noticeboard/welcome", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-    body: JSON.stringify({ listing_id: listingId }),
-  }).catch((error) => {
-    console.error("Could not send advert welcome WhatsApp", error);
-  });
 }
 
 function Label({ children, required }: { children: React.ReactNode; required?: boolean }) {

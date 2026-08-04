@@ -4,6 +4,11 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { supabase } from "@/integrations/supabase/client";
 import { SKILL_CATEGORIES, AVAILABILITY_OPTIONS } from "@/lib/noticeboard";
+import {
+  approvedContactMessage,
+  declinedContactMessage,
+  openWhatsAppMessage,
+} from "@/lib/manual-whatsapp";
 import { toast } from "sonner";
 import { Eye, EyeOff, Trash2, ExternalLink, Loader2 } from "lucide-react";
 
@@ -257,7 +262,7 @@ function MyAdvertEditor({
           </button>
         </div>
 
-        <IncomingRequests />
+        <IncomingRequests listing={listing} />
 
         <form
           onSubmit={(e) => {
@@ -528,7 +533,7 @@ type IncomingRow = {
   decided_at: string | null;
 };
 
-function IncomingRequests() {
+function IncomingRequests({ listing }: { listing: MyListing }) {
   const qc = useQueryClient();
   const { data, isLoading } = useQuery({
     queryKey: ["incoming-requests"],
@@ -541,16 +546,32 @@ function IncomingRequests() {
   });
 
   async function decide(id: string, decision: "approved" | "declined") {
+    const whatsappWindow = window.open("about:blank", "_blank");
     const { error } = await supabase.rpc("noticeboard_my_decide", {
       _request_id: id,
       _decision: decision,
     });
     if (error) {
+      whatsappWindow?.close();
       toast.error(error.message);
       return;
     }
-    notifyRequesterDecision(id);
-    toast.success(decision === "approved" ? "Contact details shared." : "Request declined.");
+    const row = rows.find((r) => r.id === id);
+    if (row?.requester_contact) {
+      const message =
+        decision === "approved"
+          ? approvedContactMessage(listing.name, listing.phone)
+          : declinedContactMessage(listing.name);
+      openWhatsAppMessage(row.requester_contact, message, whatsappWindow);
+      toast.success(
+        decision === "approved"
+          ? "Approved. WhatsApp is opening so you can send your contact details."
+          : "Declined. WhatsApp is opening so you can send the update.",
+      );
+    } else {
+      whatsappWindow?.close();
+      toast.success(decision === "approved" ? "Request approved." : "Request declined.");
+    }
     qc.invalidateQueries({ queryKey: ["incoming-requests"] });
   }
 
@@ -605,14 +626,14 @@ function IncomingRequests() {
                       onClick={() => decide(r.id, "approved")}
                       className="flex-1 px-3 py-2.5 rounded-xl bg-emerald-600 text-white text-sm font-medium"
                     >
-                      ✅ Approve
+                      Approve & WhatsApp
                     </button>
                     <button
                       type="button"
                       onClick={() => decide(r.id, "declined")}
                       className="flex-1 px-3 py-2.5 rounded-xl border border-red-200 text-red-700 text-sm font-medium"
                     >
-                      ❌ Decline
+                      Decline & WhatsApp
                     </button>
                   </div>
                 )}
@@ -623,21 +644,4 @@ function IncomingRequests() {
       )}
     </section>
   );
-}
-
-async function notifyRequesterDecision(requestId: string) {
-  const { data } = await supabase.auth.getSession();
-  const token = data.session?.access_token;
-  if (!token) return;
-
-  fetch("/api/noticeboard/decision-notify", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-    body: JSON.stringify({ request_id: requestId }),
-  }).catch((error) => {
-    console.error("Could not send decision WhatsApp", error);
-  });
 }

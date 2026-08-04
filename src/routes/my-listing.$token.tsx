@@ -3,6 +3,11 @@ import { useEffect, useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { supabase } from "@/integrations/supabase/client";
+import {
+  approvedContactMessage,
+  declinedContactMessage,
+  openWhatsAppMessage,
+} from "@/lib/manual-whatsapp";
 import { toast } from "sonner";
 import { Eye, EyeOff, Check, X, Copy, UserPlus } from "lucide-react";
 
@@ -67,31 +72,49 @@ function MyListing() {
 
   const { data: publicRef } = useQuery({
     queryKey: ["my-listing-ref", token],
-    queryFn: async (): Promise<string | null> => {
+    queryFn: async (): Promise<{
+      public_listing_reference: string | null;
+      phone: string | null;
+    } | null> => {
       const { data } = await supabase.rpc(
         "noticeboard_owner_get_listing" as never,
         { _manage_token: token } as never,
       );
       const row = Array.isArray(data) ? data[0] : data;
       return (
-        (row as { public_listing_reference: string | null } | null)?.public_listing_reference ??
-        null
+        (row as { public_listing_reference: string | null; phone: string | null } | null) ?? null
       );
     },
   });
 
   async function decide(requestId: string, decision: "approved" | "declined") {
+    const whatsappWindow = window.open("about:blank", "_blank");
     const { error } = await supabase.rpc("noticeboard_owner_decide", {
       _manage_token: token,
       _request_id: requestId,
       _decision: decision,
     });
     if (error) {
+      whatsappWindow?.close();
       toast.error(error.message);
       return;
     }
-    notifyRequesterDecision(requestId, token);
-    toast.success(decision === "approved" ? "Contact details shared." : "Request declined.");
+    const row = (data ?? []).find((r) => r.request_id === requestId);
+    if (row?.requester_contact) {
+      const message =
+        decision === "approved"
+          ? approvedContactMessage(row.name, publicRef?.phone ?? "")
+          : declinedContactMessage(row.name);
+      openWhatsAppMessage(row.requester_contact, message, whatsappWindow);
+      toast.success(
+        decision === "approved"
+          ? "Approved. WhatsApp is opening so you can send your contact details."
+          : "Declined. WhatsApp is opening so you can send the update.",
+      );
+    } else {
+      whatsappWindow?.close();
+      toast.success(decision === "approved" ? "Request approved." : "Request declined.");
+    }
     qc.invalidateQueries({ queryKey: ["my-listing", token] });
   }
 
@@ -177,19 +200,20 @@ function MyListing() {
           </div>
         </div>
 
-        {publicRef && (
+        {publicRef?.public_listing_reference && (
           <div className="p-4 rounded-2xl border border-brand-primary/30 bg-white mb-4">
             <div className="text-xs uppercase tracking-wider text-brand-dark/60 mb-1">
               Your shareable listing link
             </div>
             <div className="flex items-center gap-2">
               <code className="text-sm font-medium break-all flex-1">
-                {typeof window !== "undefined" ? window.location.origin : ""}/profile/{publicRef}
+                {typeof window !== "undefined" ? window.location.origin : ""}/profile/
+                {publicRef.public_listing_reference}
               </code>
               <button
                 type="button"
                 onClick={() => {
-                  const url = `${window.location.origin}/profile/${publicRef}`;
+                  const url = `${window.location.origin}/profile/${publicRef.public_listing_reference}`;
                   navigator.clipboard.writeText(url);
                   toast.success("Listing link copied");
                 }}
@@ -249,13 +273,13 @@ function MyListing() {
                       onClick={() => decide(r.request_id!, "approved")}
                       className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg bg-emerald-600 text-white text-sm"
                     >
-                      <Check className="size-4" /> Share my contact details
+                      <Check className="size-4" /> Approve & WhatsApp
                     </button>
                     <button
                       onClick={() => decide(r.request_id!, "declined")}
                       className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg border border-brand-dark/15 text-sm"
                     >
-                      <X className="size-4" /> Decline
+                      <X className="size-4" /> Decline & WhatsApp
                     </button>
                   </div>
                 )}
@@ -266,16 +290,6 @@ function MyListing() {
       </div>
     </SiteLayout>
   );
-}
-
-async function notifyRequesterDecision(requestId: string, manageToken: string) {
-  fetch("/api/noticeboard/decision-notify", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ request_id: requestId, manage_token: manageToken }),
-  }).catch((error) => {
-    console.error("Could not send decision WhatsApp", error);
-  });
 }
 
 function StatusBadge({ status }: { status: string }) {
