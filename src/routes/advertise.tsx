@@ -31,7 +31,12 @@ function Advertise() {
   const [submitting, setSubmitting] = useState(false);
   const [skills, setSkills] = useState<string[]>([]);
   const [otherSkills, setOtherSkills] = useState("");
-  const [acks, setAcks] = useState({ age: false, truthful: false, terms: false, noticeboard: false });
+  const [acks, setAcks] = useState({
+    age: false,
+    truthful: false,
+    terms: false,
+    noticeboard: false,
+  });
 
   useEffect(() => {
     let mounted = true;
@@ -99,9 +104,7 @@ function Advertise() {
       phone: String(fd.get("phone") || "").trim(),
       description: String(fd.get("description") || "").trim(),
       availability: String(fd.get("availability") || "").trim() || null,
-      years_experience: fd.get("years_experience")
-        ? Number(fd.get("years_experience"))
-        : null,
+      years_experience: fd.get("years_experience") ? Number(fd.get("years_experience")) : null,
       photo_url: String(fd.get("photo_url") || "").trim() || null,
       skills: finalSkills,
       category: finalSkills[0] ?? null,
@@ -114,7 +117,7 @@ function Advertise() {
       return;
     }
 
-    const { error } = await supabase.rpc("noticeboard_my_create", {
+    const { data: listingId, error } = await supabase.rpc("noticeboard_my_create", {
       _payload: payload,
     });
 
@@ -123,6 +126,7 @@ function Advertise() {
       toast.error(error.message ?? "Could not publish your listing.");
       return;
     }
+    notifyAdvertWelcome(String(listingId || ""));
     toast.success("Your advert is now live!");
     navigate({ to: "/my-advert" });
   }
@@ -141,7 +145,9 @@ function Advertise() {
     return (
       <SiteLayout>
         <div className="max-w-xl mx-auto px-4 sm:px-6 py-16 text-center">
-          <div className="text-5xl mb-4" aria-hidden>👋</div>
+          <div className="text-5xl mb-4" aria-hidden>
+            👋
+          </div>
           <h1 className="text-3xl font-heading font-bold mb-3">Sign in to advertise</h1>
           <p className="text-brand-dark/70 mb-8">
             Create a free account so you can update or remove your advert at any time.
@@ -162,7 +168,9 @@ function Advertise() {
     return (
       <SiteLayout>
         <div className="max-w-xl mx-auto px-4 sm:px-6 py-16 text-center">
-          <div className="text-5xl mb-4" aria-hidden>✅</div>
+          <div className="text-5xl mb-4" aria-hidden>
+            ✅
+          </div>
           <h1 className="text-3xl font-heading font-bold mb-3">You already have an advert</h1>
           <p className="text-brand-dark/70 mb-8">
             You can edit or remove it any time from your dashboard.
@@ -177,8 +185,6 @@ function Advertise() {
       </SiteLayout>
     );
   }
-
-
 
   return (
     <SiteLayout>
@@ -222,9 +228,7 @@ function Advertise() {
             <div
               className={
                 "grid transition-all duration-300 ease-out " +
-                (hasOther
-                  ? "grid-rows-[1fr] opacity-100 mt-3"
-                  : "grid-rows-[0fr] opacity-0")
+                (hasOther ? "grid-rows-[1fr] opacity-100 mt-3" : "grid-rows-[0fr] opacity-0")
               }
             >
               <div className="overflow-hidden">
@@ -244,7 +248,6 @@ function Advertise() {
               </div>
             </div>
           </div>
-
 
           <Field
             label="Years of experience"
@@ -277,15 +280,11 @@ function Advertise() {
               rows={4}
               placeholder="A few sentences about what you do best."
               className="w-full px-4 py-3 border border-brand-dark/10 rounded-xl"
-             spellCheck="true" />
+              spellCheck="true"
+            />
           </div>
 
-          <Field
-            label="Optional photo URL"
-            name="photo_url"
-            placeholder="https://…"
-            type="url"
-          />
+          <Field label="Optional photo URL" name="photo_url" placeholder="https://…" type="url" />
 
           <Field
             label="Telephone number (kept private)"
@@ -314,8 +313,14 @@ function Advertise() {
               label={
                 <>
                   I have read and accept the{" "}
-                  <Link to="/terms" className="underline">Terms of Use</Link> and{" "}
-                  <Link to="/privacy" className="underline">Privacy Policy</Link>.
+                  <Link to="/terms" className="underline">
+                    Terms of Use
+                  </Link>{" "}
+                  and{" "}
+                  <Link to="/privacy" className="underline">
+                    Privacy Policy
+                  </Link>
+                  .
                 </>
               }
             />
@@ -337,6 +342,24 @@ function Advertise() {
       </div>
     </SiteLayout>
   );
+}
+
+async function notifyAdvertWelcome(listingId: string) {
+  if (!listingId) return;
+  const { data } = await supabase.auth.getSession();
+  const token = data.session?.access_token;
+  if (!token) return;
+
+  fetch("/api/noticeboard/welcome", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({ listing_id: listingId }),
+  }).catch((error) => {
+    console.error("Could not send advert welcome WhatsApp", error);
+  });
 }
 
 function Label({ children, required }: { children: React.ReactNode; required?: boolean }) {

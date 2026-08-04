@@ -3,6 +3,7 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { supabase } from "@/integrations/supabase/client";
+import { whatsappHref } from "@/lib/phone";
 import { toast } from "sonner";
 import {
   Loader2,
@@ -42,11 +43,6 @@ function fmtDate(s?: string | null) {
 }
 function firstName(full: string) {
   return (full || "").trim().split(/\s+/)[0] || full;
-}
-function whatsappHref(phone: string, msg?: string) {
-  const digits = (phone || "").replace(/\D/g, "");
-  const text = msg ? `?text=${encodeURIComponent(msg)}` : "";
-  return `https://wa.me/${digits}${text}`;
 }
 
 // ============ Main ============
@@ -175,9 +171,7 @@ function NotificationsSection() {
               <div className="min-w-0 flex-1">
                 <div className="text-sm font-medium">{n.title}</div>
                 {n.body && <div className="text-sm text-brand-dark/70">{n.body}</div>}
-                <div className="text-[11px] text-brand-dark/40 mt-0.5">
-                  {fmtDate(n.created_at)}
-                </div>
+                <div className="text-[11px] text-brand-dark/40 mt-0.5">{fmtDate(n.created_at)}</div>
               </div>
               {n.link && (
                 <a
@@ -433,9 +427,7 @@ function MyListingSection() {
             ))}
           </div>
         )}
-        {data.description && (
-          <p className="text-brand-dark/70 line-clamp-3">{data.description}</p>
-        )}
+        {data.description && <p className="text-brand-dark/70 line-clamp-3">{data.description}</p>}
         <div className="text-xs text-brand-dark/50 pt-1">
           Created {fmtDate(data.created_at)} · Last activity {fmtDate(data.last_activity_at)}
         </div>
@@ -487,13 +479,30 @@ function statusLabelIncoming(row: IncomingRow) {
     row.status === "approved" &&
     !!row.expires_at &&
     new Date(row.expires_at).getTime() < Date.now();
-  if (expired) return { label: "Expired", icon: <TimerOff className="size-3.5" />, cls: "bg-brand-dark/10 text-brand-dark/70" };
+  if (expired)
+    return {
+      label: "Expired",
+      icon: <TimerOff className="size-3.5" />,
+      cls: "bg-brand-dark/10 text-brand-dark/70",
+    };
   if (row.status === "approved")
-    return { label: "Accepted", icon: <CheckCircle2 className="size-3.5" />, cls: "bg-emerald-100 text-emerald-800" };
+    return {
+      label: "Accepted",
+      icon: <CheckCircle2 className="size-3.5" />,
+      cls: "bg-emerald-100 text-emerald-800",
+    };
   if (row.status === "declined")
-    return { label: "Declined", icon: <XCircle className="size-3.5" />, cls: "bg-red-100 text-red-800" };
+    return {
+      label: "Declined",
+      icon: <XCircle className="size-3.5" />,
+      cls: "bg-red-100 text-red-800",
+    };
   if (row.status === "revoked")
-    return { label: "Revoked", icon: <ShieldOff className="size-3.5" />, cls: "bg-brand-dark/10 text-brand-dark/70" };
+    return {
+      label: "Revoked",
+      icon: <ShieldOff className="size-3.5" />,
+      cls: "bg-brand-dark/10 text-brand-dark/70",
+    };
   return { label: "New", icon: <Clock className="size-3.5" />, cls: "bg-amber-100 text-amber-900" };
 }
 
@@ -554,10 +563,7 @@ function PeopleInterestedSection() {
           {rows.map((r) => {
             const s = statusLabelIncoming(r);
             return (
-              <li
-                key={r.id}
-                className="border border-brand-dark/10 rounded-xl p-4"
-              >
+              <li key={r.id} className="border border-brand-dark/10 rounded-xl p-4">
                 <div className="flex items-start justify-between gap-3">
                   <div className="min-w-0">
                     <div className="font-semibold">{firstName(r.requester_name)}</div>
@@ -639,9 +645,11 @@ function statusLabelOutgoing(row: OutgoingRow) {
     !!row.expires_at &&
     new Date(row.expires_at).getTime() < Date.now();
   if (expired) return { label: "Expired", cls: "bg-brand-dark/10 text-brand-dark/70" };
-  if (row.status === "approved") return { label: "Accepted", cls: "bg-emerald-100 text-emerald-800" };
+  if (row.status === "approved")
+    return { label: "Accepted", cls: "bg-emerald-100 text-emerald-800" };
   if (row.status === "declined") return { label: "Declined", cls: "bg-red-100 text-red-800" };
-  if (row.status === "revoked") return { label: "Access ended", cls: "bg-brand-dark/10 text-brand-dark/70" };
+  if (row.status === "revoked")
+    return { label: "Access ended", cls: "bg-brand-dark/10 text-brand-dark/70" };
   return { label: "Awaiting Response", cls: "bg-amber-100 text-amber-900" };
 }
 
@@ -723,7 +731,10 @@ function MyServiceRequestsSection() {
                         <Phone className="size-4" /> Call
                       </a>
                       <a
-                        href={whatsappHref(r.phone!, `Hi ${firstName(r.worker_name)}, I'm reaching out via Overberg Skills Connect about my service request.`)}
+                        href={whatsappHref(
+                          r.phone!,
+                          `Hi ${firstName(r.worker_name)}, I'm reaching out via Overberg Skills Connect about my service request.`,
+                        )}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg bg-emerald-600 text-white text-sm font-medium"
