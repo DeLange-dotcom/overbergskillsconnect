@@ -12,10 +12,12 @@ import {
   Eye,
   EyeOff,
   Flag,
+  MessageCircle,
   RotateCcw,
   Search,
   Trash2,
 } from "lucide-react";
+import { whatsappHref } from "@/lib/phone";
 
 export const Route = createFileRoute("/_authenticated/admin/noticeboard")({
   head: () => ({ meta: [{ title: "Noticeboard Admin — Overberg Skills Connect" }] }),
@@ -58,6 +60,27 @@ type ReportRow = {
   created_at: string;
 };
 
+type ContactReminderRow = {
+  id: string;
+  requester_name: string;
+  created_at: string;
+  profile_id: string;
+  noticeboard_profiles:
+    | {
+        id: string;
+        name: string;
+        phone: string;
+        public_listing_reference: string | null;
+      }
+    | {
+        id: string;
+        name: string;
+        phone: string;
+        public_listing_reference: string | null;
+      }[]
+    | null;
+};
+
 function fmtDate(d: string | null) {
   if (!d) return "—";
   return new Date(d).toLocaleDateString(undefined, {
@@ -65,6 +88,34 @@ function fmtDate(d: string | null) {
     month: "short",
     day: "numeric",
   });
+}
+
+function fmtDateTime(d: string | null) {
+  if (!d) return "—";
+  return new Date(d).toLocaleString(undefined, {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+}
+
+function firstProfile(row: ContactReminderRow) {
+  const profile = row.noticeboard_profiles;
+  return Array.isArray(profile) ? (profile[0] ?? null) : profile;
+}
+
+function reminderMessage(providerName: string, requesterName: string, manageUrl: string) {
+  return (
+    `Hi ${providerName}, ${requesterName} has requested your contact details on Overberg SkillsConnect.\n\n` +
+    `Please log in to approve or decline the request: ${manageUrl}\n\n` +
+    "Your number is still private until you approve."
+  );
+}
+
+function appOrigin() {
+  return typeof window === "undefined" ? "" : window.location.origin;
 }
 
 function NoticeboardAdmin() {
@@ -125,6 +176,23 @@ function NoticeboardAdmin() {
     },
   });
 
+  const pendingReminders = useQuery({
+    queryKey: ["nb_admin_pending_reminders"],
+    enabled: isAdmin === true,
+    queryFn: async (): Promise<ContactReminderRow[]> => {
+      const { data, error } = await supabase
+        .from("noticeboard_contact_requests")
+        .select(
+          "id,requester_name,created_at,profile_id,noticeboard_profiles!noticeboard_contact_requests_profile_id_fkey(id,name,phone,public_listing_reference)",
+        )
+        .eq("status", "pending")
+        .order("created_at", { ascending: false });
+      if (error) throw error;
+      return (data ?? []) as unknown as ContactReminderRow[];
+    },
+    refetchInterval: 30000,
+  });
+
   async function patchProfile(id: string, patch: Partial<Profile>) {
     const { error } = await supabase
       .from("noticeboard_profiles")
@@ -170,9 +238,7 @@ function NoticeboardAdmin() {
   if (isAdmin === null) {
     return (
       <SiteLayout>
-        <div className="max-w-2xl mx-auto px-4 py-16 text-center text-brand-dark/50">
-          Loading…
-        </div>
+        <div className="max-w-2xl mx-auto px-4 py-16 text-center text-brand-dark/50">Loading…</div>
       </SiteLayout>
     );
   }
@@ -217,6 +283,80 @@ function NoticeboardAdmin() {
             title="Most active towns"
             items={stats.data?.most_active_towns?.map((t) => ({ label: t.town, count: t.count }))}
           />
+        </section>
+
+        {/* CONTACT REQUEST REMINDERS */}
+        <section className="mb-10">
+          <div className="flex items-center justify-between gap-3 mb-3">
+            <h2 className="text-xl font-heading font-semibold flex items-center gap-2">
+              <MessageCircle className="size-5" /> Pending WhatsApp Reminders
+            </h2>
+            {pendingReminders.data && pendingReminders.data.length > 0 && (
+              <span className="text-xs uppercase tracking-widest text-brand-dark/50">
+                {pendingReminders.data.length} waiting
+              </span>
+            )}
+          </div>
+          {pendingReminders.isLoading ? (
+            <div className="p-5 rounded-2xl border border-brand-dark/10 bg-white text-sm text-brand-dark/60">
+              Loading pending requests…
+            </div>
+          ) : !pendingReminders.data || pendingReminders.data.length === 0 ? (
+            <div className="p-5 rounded-2xl border border-dashed border-brand-dark/15 text-sm text-brand-dark/60">
+              No pending contact requests need a WhatsApp reminder.
+            </div>
+          ) : (
+            <ul className="space-y-2">
+              {pendingReminders.data.slice(0, 20).map((r) => {
+                const profile = firstProfile(r);
+                const manageUrl = `${appOrigin()}/my-advert`;
+                const href = profile?.phone
+                  ? whatsappHref(
+                      profile.phone,
+                      reminderMessage(profile.name, r.requester_name, manageUrl),
+                    )
+                  : null;
+                return (
+                  <li
+                    key={r.id}
+                    className="p-3 rounded-xl border border-brand-dark/10 bg-white flex flex-col sm:flex-row sm:items-center justify-between gap-3"
+                  >
+                    <div className="min-w-0">
+                      <div className="text-sm font-medium">
+                        {profile?.name ?? "Unknown advertiser"}
+                      </div>
+                      <div className="text-xs text-brand-dark/60">
+                        {r.requester_name} requested contact · {fmtDateTime(r.created_at)}
+                      </div>
+                    </div>
+                    <div className="flex flex-wrap gap-2 sm:justify-end">
+                      <Link
+                        to="/profile/$id"
+                        params={{ id: r.profile_id }}
+                        className="inline-flex items-center gap-1 px-3 py-2 rounded-xl border border-brand-dark/15 text-xs text-brand-dark/80"
+                      >
+                        View listing <ExternalLink className="size-3" />
+                      </Link>
+                      {href ? (
+                        <a
+                          href={href}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="inline-flex items-center gap-1 px-3 py-2 rounded-xl bg-emerald-600 text-xs font-medium text-white"
+                        >
+                          <MessageCircle className="size-3.5" /> Remind on WhatsApp
+                        </a>
+                      ) : (
+                        <span className="inline-flex items-center px-3 py-2 rounded-xl bg-brand-dark/5 text-xs text-brand-dark/50">
+                          No phone saved
+                        </span>
+                      )}
+                    </div>
+                  </li>
+                );
+              })}
+            </ul>
+          )}
         </section>
 
         {/* REPORTS */}
@@ -322,11 +462,7 @@ function NoticeboardAdmin() {
                   return (
                     <tr key={p.id} className="border-t border-brand-dark/5 align-top">
                       <td className="px-3 py-2 font-medium">
-                        <Link
-                          to="/profile/$id"
-                          params={{ id: p.id }}
-                          className="hover:underline"
-                        >
+                        <Link to="/profile/$id" params={{ id: p.id }} className="hover:underline">
                           {p.name}
                         </Link>
                       </td>
@@ -409,10 +545,7 @@ function NoticeboardAdmin() {
                 })}
                 {filtered.length === 0 && (
                   <tr>
-                    <td
-                      colSpan={9}
-                      className="px-3 py-8 text-center text-brand-dark/50 text-sm"
-                    >
+                    <td colSpan={9} className="px-3 py-8 text-center text-brand-dark/50 text-sm">
                       No listings match.
                     </td>
                   </tr>
@@ -444,9 +577,7 @@ function StatCard({
   return (
     <div className="p-4 rounded-2xl border border-brand-dark/10 bg-white">
       <div className="text-xs uppercase tracking-wider text-brand-dark/60">{label}</div>
-      <div className={"text-2xl font-heading font-bold mt-1 " + toneCls}>
-        {value ?? "—"}
-      </div>
+      <div className={"text-2xl font-heading font-bold mt-1 " + toneCls}>{value ?? "—"}</div>
     </div>
   );
 }
