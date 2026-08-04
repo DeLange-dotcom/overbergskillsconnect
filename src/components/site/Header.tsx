@@ -8,9 +8,15 @@ import overbergLogo from "@/assets/overberg-logo.png.asset.json";
 
 export function Header() {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const [signedIn, setSignedIn] = useState(false);
   const [unread, setUnread] = useState(0);
+
+  const handleSignOut = async () => {
+    await supabase.auth.signOut();
+    navigate({ to: "/" });
+  };
 
   const NAV = [
     { to: "/", label: t("nav.home") },
