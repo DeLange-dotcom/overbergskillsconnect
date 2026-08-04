@@ -139,18 +139,29 @@ export function Header() {
               </Link>
             ))}
             {signedIn ? (
-              <Link
-                to="/profile"
-                onClick={() => setOpen(false)}
-                className="relative px-4 py-2.5 rounded-lg bg-brand-primary text-white font-semibold shadow hover:bg-brand-primary/90 flex items-center justify-between"
-              >
-                <span>My Profile</span>
-                {unread > 0 && (
-                  <span className="inline-flex items-center justify-center min-w-[22px] h-5 px-1.5 rounded-full bg-white text-brand-primary text-[11px] font-bold">
-                    {unread > 9 ? "9+" : unread}
-                  </span>
-                )}
-              </Link>
+              <>
+                <Link
+                  to="/profile"
+                  onClick={() => setOpen(false)}
+                  className="relative px-4 py-2.5 rounded-lg bg-brand-primary text-white font-semibold shadow hover:bg-brand-primary/90 flex items-center justify-between"
+                >
+                  <span>My Profile</span>
+                  {unread > 0 && (
+                    <span className="inline-flex items-center justify-center min-w-[22px] h-5 px-1.5 rounded-full bg-white text-brand-primary text-[11px] font-bold">
+                      {unread > 9 ? "9+" : unread}
+                    </span>
+                  )}
+                </Link>
+                <button
+                  onClick={() => {
+                    setOpen(false);
+                    handleSignOut();
+                  }}
+                  className="px-4 py-2.5 rounded-lg border border-brand-dark/15 text-brand-dark/80 hover:bg-brand-soft flex items-center gap-2"
+                >
+                  <LogOut className="size-4" /> Sign out
+                </button>
+              </>
             ) : (
               <Link
                 to="/auth"
