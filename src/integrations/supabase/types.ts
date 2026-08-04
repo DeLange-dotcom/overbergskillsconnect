@@ -3643,7 +3643,6 @@ export type Database = {
           id: string
           is_hidden: boolean
           name: string
-          phone: string
           public_listing_reference: string
         }[]
       }
