@@ -59,11 +59,11 @@ function MyAdvert() {
     return (
       <SiteLayout>
         <div className="max-w-xl mx-auto px-4 sm:px-6 py-16 text-center">
-          <div className="text-5xl mb-4" aria-hidden>📝</div>
+          <div className="text-5xl mb-4" aria-hidden>
+            📝
+          </div>
           <h1 className="text-3xl font-heading font-bold mb-3">My Listing</h1>
-          <p className="text-brand-dark/70 mb-8">
-            You haven't created your advert yet.
-          </p>
+          <p className="text-brand-dark/70 mb-8">You haven't created your advert yet.</p>
           <Link
             to="/advertise"
             className="inline-flex px-6 py-3.5 rounded-xl bg-brand-primary text-white font-medium"
@@ -145,7 +145,10 @@ function MyAdvertEditor({
   async function save(extra: Partial<Record<string, unknown>> = {}) {
     setSaving(true);
     const customSkills = otherToggle
-      ? otherSkills.split(",").map((s) => s.trim()).filter(Boolean)
+      ? otherSkills
+          .split(",")
+          .map((s) => s.trim())
+          .filter(Boolean)
       : [];
     const finalSkills = [...skills, ...customSkills];
     if (finalSkills.length === 0) {
@@ -256,8 +259,6 @@ function MyAdvertEditor({
 
         <IncomingRequests />
 
-
-
         <form
           onSubmit={(e) => {
             e.preventDefault();
@@ -360,9 +361,7 @@ function MyAdvertEditor({
               placeholder="https://…"
               className="w-full px-4 py-3 border border-brand-dark/10 rounded-xl"
             />
-            <p className="text-xs text-brand-dark/60 mt-1">
-              Leave blank to remove your photo.
-            </p>
+            <p className="text-xs text-brand-dark/60 mt-1">Leave blank to remove your photo.</p>
           </div>
 
           <div>
@@ -418,7 +417,12 @@ function MyAdvertEditor({
             <button
               type="button"
               onClick={async () => {
-                if (!confirm("Archive your listing? It will be hidden from public search but can be reactivated any time.")) return;
+                if (
+                  !confirm(
+                    "Archive your listing? It will be hidden from public search but can be reactivated any time.",
+                  )
+                )
+                  return;
                 const { error } = await supabase.rpc("noticeboard_my_archive");
                 if (error) return toast.error(error.message);
                 toast.success("Listing archived");
@@ -437,7 +441,6 @@ function MyAdvertEditor({
             <Trash2 className="size-4" /> Delete my listing
           </button>
         </div>
-
 
         {confirmDelete && (
           <div
@@ -546,6 +549,7 @@ function IncomingRequests() {
       toast.error(error.message);
       return;
     }
+    notifyRequesterDecision(id);
     toast.success(decision === "approved" ? "Contact details shared." : "Request declined.");
     qc.invalidateQueries({ queryKey: ["incoming-requests"] });
   }
@@ -570,10 +574,7 @@ function IncomingRequests() {
               day: "numeric",
             });
             return (
-              <li
-                key={r.id}
-                className="p-4 rounded-2xl border border-brand-dark/10 bg-white"
-              >
+              <li key={r.id} className="p-4 rounded-2xl border border-brand-dark/10 bg-white">
                 <div className="flex items-start justify-between gap-3">
                   <div className="min-w-0">
                     <div className="font-medium truncate">{r.requester_name}</div>
@@ -622,4 +623,21 @@ function IncomingRequests() {
       )}
     </section>
   );
+}
+
+async function notifyRequesterDecision(requestId: string) {
+  const { data } = await supabase.auth.getSession();
+  const token = data.session?.access_token;
+  if (!token) return;
+
+  fetch("/api/noticeboard/decision-notify", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({ request_id: requestId }),
+  }).catch((error) => {
+    console.error("Could not send decision WhatsApp", error);
+  });
 }

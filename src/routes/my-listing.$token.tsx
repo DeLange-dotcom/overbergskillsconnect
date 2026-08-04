@@ -73,7 +73,10 @@ function MyListing() {
         { _manage_token: token } as never,
       );
       const row = Array.isArray(data) ? data[0] : data;
-      return ((row as { public_listing_reference: string | null } | null)?.public_listing_reference) ?? null;
+      return (
+        (row as { public_listing_reference: string | null } | null)?.public_listing_reference ??
+        null
+      );
     },
   });
 
@@ -87,6 +90,7 @@ function MyListing() {
       toast.error(error.message);
       return;
     }
+    notifyRequesterDecision(requestId, token);
     toast.success(decision === "approved" ? "Contact details shared." : "Request declined.");
     qc.invalidateQueries({ queryKey: ["my-listing", token] });
   }
@@ -107,9 +111,7 @@ function MyListing() {
   if (isLoading) {
     return (
       <SiteLayout>
-        <div className="max-w-2xl mx-auto px-4 py-16 text-center text-brand-dark/50">
-          Loading…
-        </div>
+        <div className="max-w-2xl mx-auto px-4 py-16 text-center text-brand-dark/50">Loading…</div>
       </SiteLayout>
     );
   }
@@ -174,7 +176,6 @@ function MyListing() {
             </div>
           </div>
         </div>
-
 
         {publicRef && (
           <div className="p-4 rounded-2xl border border-brand-primary/30 bg-white mb-4">
@@ -265,6 +266,16 @@ function MyListing() {
       </div>
     </SiteLayout>
   );
+}
+
+async function notifyRequesterDecision(requestId: string, manageToken: string) {
+  fetch("/api/noticeboard/decision-notify", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ request_id: requestId, manage_token: manageToken }),
+  }).catch((error) => {
+    console.error("Could not send decision WhatsApp", error);
+  });
 }
 
 function StatusBadge({ status }: { status: string }) {

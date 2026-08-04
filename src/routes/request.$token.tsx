@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { supabase } from "@/integrations/supabase/client";
 import { Phone, Clock, X, MessageCircle } from "lucide-react";
+import { whatsappHref } from "@/lib/phone";
 
 export const Route = createFileRoute("/request/$token")({
   component: ViewRequest,
@@ -54,9 +55,7 @@ function ViewRequest() {
   return (
     <SiteLayout>
       <div className="max-w-md mx-auto px-4 sm:px-6 py-10">
-        <h1 className="text-2xl font-heading font-bold mb-1">
-          Request to {data.profile_name}
-        </h1>
+        <h1 className="text-2xl font-heading font-bold mb-1">Request to {data.profile_name}</h1>
         <p className="text-sm text-brand-dark/60 mb-6">{data.profile_town}</p>
 
         {data.status === "pending" && (
@@ -85,9 +84,7 @@ function ViewRequest() {
             <div className="flex items-center gap-2 font-medium">
               <Phone className="size-5" /> Contact details
             </div>
-            <p className="text-sm mt-2">
-              {data.profile_name} has shared their phone number:
-            </p>
+            <p className="text-sm mt-2">{data.profile_name} has shared their phone number:</p>
             <a
               href={`tel:${data.phone}`}
               className="block mt-3 text-2xl font-heading font-bold text-emerald-700"
@@ -103,7 +100,7 @@ function ViewRequest() {
                 Call
               </a>
               <a
-                href={`https://wa.me/${data.phone.replace(/\D/g, "")}`}
+                href={whatsappHref(data.phone)}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center justify-center gap-2 flex-1 py-2.5 px-4 rounded-xl bg-[#25D366] text-white font-semibold shadow hover:bg-[#1ebe5a] transition-colors"

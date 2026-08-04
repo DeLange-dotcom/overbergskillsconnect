@@ -54,6 +54,11 @@ import { Route as AuthenticatedAdminApprenticeshipsRouteImport } from './routes/
 import { Route as AuthenticatedAdminNoticeboardRouteImport } from './routes/_authenticated/admin/noticeboard'
 import { Route as AuthenticatedAdminYouthOpportunitiesRouteImport } from './routes/_authenticated/admin/youth-opportunities'
 import { Route as AuthenticatedYouthPortfolioRouteImport } from './routes/_authenticated/youth.portfolio'
+import { Route as ApiNoticeboardContactRequestNotifyRouteImport } from './routes/api/noticeboard/contact-request-notify'
+import { Route as ApiNoticeboardDecisionRouteImport } from './routes/api/noticeboard/decision'
+import { Route as ApiNoticeboardDecisionNotifyRouteImport } from './routes/api/noticeboard/decision-notify'
+import { Route as ApiNoticeboardWelcomeRouteImport } from './routes/api/noticeboard/welcome'
+import { Route as ApiProviderWelcomeRouteImport } from './routes/api/provider/welcome'
 import { Route as ApiPublicContactRequestRouteImport } from './routes/api/public/contact-request'
 import { Route as DirectoryTypeIdRouteImport } from './routes/directory.$type.$id'
 import { Route as YouthParentConsentTokenRouteImport } from './routes/youth.parent-consent.$token'
@@ -298,6 +303,33 @@ const AuthenticatedYouthPortfolioRoute =
     path: '/youth/portfolio',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const ApiNoticeboardContactRequestNotifyRoute =
+  ApiNoticeboardContactRequestNotifyRouteImport.update({
+    id: '/api/noticeboard/contact-request-notify',
+    path: '/api/noticeboard/contact-request-notify',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const ApiNoticeboardDecisionRoute = ApiNoticeboardDecisionRouteImport.update({
+  id: '/api/noticeboard/decision',
+  path: '/api/noticeboard/decision',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiNoticeboardDecisionNotifyRoute =
+  ApiNoticeboardDecisionNotifyRouteImport.update({
+    id: '/api/noticeboard/decision-notify',
+    path: '/api/noticeboard/decision-notify',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const ApiNoticeboardWelcomeRoute = ApiNoticeboardWelcomeRouteImport.update({
+  id: '/api/noticeboard/welcome',
+  path: '/api/noticeboard/welcome',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiProviderWelcomeRoute = ApiProviderWelcomeRouteImport.update({
+  id: '/api/provider/welcome',
+  path: '/api/provider/welcome',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiPublicContactRequestRoute = ApiPublicContactRequestRouteImport.update({
   id: '/api/public/contact-request',
   path: '/api/public/contact-request',
@@ -398,6 +430,11 @@ export interface FileRoutesByFullPath {
   '/admin/noticeboard': typeof AuthenticatedAdminNoticeboardRoute
   '/admin/youth-opportunities': typeof AuthenticatedAdminYouthOpportunitiesRoute
   '/youth/portfolio': typeof AuthenticatedYouthPortfolioRoute
+  '/api/noticeboard/contact-request-notify': typeof ApiNoticeboardContactRequestNotifyRoute
+  '/api/noticeboard/decision': typeof ApiNoticeboardDecisionRoute
+  '/api/noticeboard/decision-notify': typeof ApiNoticeboardDecisionNotifyRoute
+  '/api/noticeboard/welcome': typeof ApiNoticeboardWelcomeRoute
+  '/api/provider/welcome': typeof ApiProviderWelcomeRoute
   '/api/public/contact-request': typeof ApiPublicContactRequestRoute
   '/directory/$type/$id': typeof DirectoryTypeIdRoute
   '/youth/parent-consent/$token': typeof YouthParentConsentTokenRoute
@@ -452,6 +489,11 @@ export interface FileRoutesByTo {
   '/admin/noticeboard': typeof AuthenticatedAdminNoticeboardRoute
   '/admin/youth-opportunities': typeof AuthenticatedAdminYouthOpportunitiesRoute
   '/youth/portfolio': typeof AuthenticatedYouthPortfolioRoute
+  '/api/noticeboard/contact-request-notify': typeof ApiNoticeboardContactRequestNotifyRoute
+  '/api/noticeboard/decision': typeof ApiNoticeboardDecisionRoute
+  '/api/noticeboard/decision-notify': typeof ApiNoticeboardDecisionNotifyRoute
+  '/api/noticeboard/welcome': typeof ApiNoticeboardWelcomeRoute
+  '/api/provider/welcome': typeof ApiProviderWelcomeRoute
   '/api/public/contact-request': typeof ApiPublicContactRequestRoute
   '/directory/$type/$id': typeof DirectoryTypeIdRoute
   '/youth/parent-consent/$token': typeof YouthParentConsentTokenRoute
@@ -510,6 +552,11 @@ export interface FileRoutesById {
   '/_authenticated/admin/noticeboard': typeof AuthenticatedAdminNoticeboardRoute
   '/_authenticated/admin/youth-opportunities': typeof AuthenticatedAdminYouthOpportunitiesRoute
   '/_authenticated/youth/portfolio': typeof AuthenticatedYouthPortfolioRoute
+  '/api/noticeboard/contact-request-notify': typeof ApiNoticeboardContactRequestNotifyRoute
+  '/api/noticeboard/decision': typeof ApiNoticeboardDecisionRoute
+  '/api/noticeboard/decision-notify': typeof ApiNoticeboardDecisionNotifyRoute
+  '/api/noticeboard/welcome': typeof ApiNoticeboardWelcomeRoute
+  '/api/provider/welcome': typeof ApiProviderWelcomeRoute
   '/api/public/contact-request': typeof ApiPublicContactRequestRoute
   '/directory/$type/$id': typeof DirectoryTypeIdRoute
   '/youth/parent-consent/$token': typeof YouthParentConsentTokenRoute
@@ -568,6 +615,11 @@ export interface FileRouteTypes {
     | '/admin/noticeboard'
     | '/admin/youth-opportunities'
     | '/youth/portfolio'
+    | '/api/noticeboard/contact-request-notify'
+    | '/api/noticeboard/decision'
+    | '/api/noticeboard/decision-notify'
+    | '/api/noticeboard/welcome'
+    | '/api/provider/welcome'
     | '/api/public/contact-request'
     | '/directory/$type/$id'
     | '/youth/parent-consent/$token'
@@ -622,6 +674,11 @@ export interface FileRouteTypes {
     | '/admin/noticeboard'
     | '/admin/youth-opportunities'
     | '/youth/portfolio'
+    | '/api/noticeboard/contact-request-notify'
+    | '/api/noticeboard/decision'
+    | '/api/noticeboard/decision-notify'
+    | '/api/noticeboard/welcome'
+    | '/api/provider/welcome'
     | '/api/public/contact-request'
     | '/directory/$type/$id'
     | '/youth/parent-consent/$token'
@@ -679,6 +736,11 @@ export interface FileRouteTypes {
     | '/_authenticated/admin/noticeboard'
     | '/_authenticated/admin/youth-opportunities'
     | '/_authenticated/youth/portfolio'
+    | '/api/noticeboard/contact-request-notify'
+    | '/api/noticeboard/decision'
+    | '/api/noticeboard/decision-notify'
+    | '/api/noticeboard/welcome'
+    | '/api/provider/welcome'
     | '/api/public/contact-request'
     | '/directory/$type/$id'
     | '/youth/parent-consent/$token'
@@ -719,6 +781,11 @@ export interface RootRouteChildren {
   RequestMentorshipMentorIdRoute: typeof RequestMentorshipMentorIdRoute
   RequestTokenRoute: typeof RequestTokenRoute
   RequestMentorshipIndexRoute: typeof RequestMentorshipIndexRoute
+  ApiNoticeboardContactRequestNotifyRoute: typeof ApiNoticeboardContactRequestNotifyRoute
+  ApiNoticeboardDecisionRoute: typeof ApiNoticeboardDecisionRoute
+  ApiNoticeboardDecisionNotifyRoute: typeof ApiNoticeboardDecisionNotifyRoute
+  ApiNoticeboardWelcomeRoute: typeof ApiNoticeboardWelcomeRoute
+  ApiProviderWelcomeRoute: typeof ApiProviderWelcomeRoute
   ApiPublicContactRequestRoute: typeof ApiPublicContactRequestRoute
   LovableEmailAuthPreviewRoute: typeof LovableEmailAuthPreviewRoute
   LovableEmailAuthWebhookRoute: typeof LovableEmailAuthWebhookRoute
@@ -1042,6 +1109,41 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedYouthPortfolioRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/api/noticeboard/contact-request-notify': {
+      id: '/api/noticeboard/contact-request-notify'
+      path: '/api/noticeboard/contact-request-notify'
+      fullPath: '/api/noticeboard/contact-request-notify'
+      preLoaderRoute: typeof ApiNoticeboardContactRequestNotifyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/noticeboard/decision': {
+      id: '/api/noticeboard/decision'
+      path: '/api/noticeboard/decision'
+      fullPath: '/api/noticeboard/decision'
+      preLoaderRoute: typeof ApiNoticeboardDecisionRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/noticeboard/decision-notify': {
+      id: '/api/noticeboard/decision-notify'
+      path: '/api/noticeboard/decision-notify'
+      fullPath: '/api/noticeboard/decision-notify'
+      preLoaderRoute: typeof ApiNoticeboardDecisionNotifyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/noticeboard/welcome': {
+      id: '/api/noticeboard/welcome'
+      path: '/api/noticeboard/welcome'
+      fullPath: '/api/noticeboard/welcome'
+      preLoaderRoute: typeof ApiNoticeboardWelcomeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/provider/welcome': {
+      id: '/api/provider/welcome'
+      path: '/api/provider/welcome'
+      fullPath: '/api/provider/welcome'
+      preLoaderRoute: typeof ApiProviderWelcomeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/public/contact-request': {
       id: '/api/public/contact-request'
       path: '/api/public/contact-request'
@@ -1232,6 +1334,12 @@ const rootRouteChildren: RootRouteChildren = {
   RequestMentorshipMentorIdRoute: RequestMentorshipMentorIdRoute,
   RequestTokenRoute: RequestTokenRoute,
   RequestMentorshipIndexRoute: RequestMentorshipIndexRoute,
+  ApiNoticeboardContactRequestNotifyRoute:
+    ApiNoticeboardContactRequestNotifyRoute,
+  ApiNoticeboardDecisionRoute: ApiNoticeboardDecisionRoute,
+  ApiNoticeboardDecisionNotifyRoute: ApiNoticeboardDecisionNotifyRoute,
+  ApiNoticeboardWelcomeRoute: ApiNoticeboardWelcomeRoute,
+  ApiProviderWelcomeRoute: ApiProviderWelcomeRoute,
   ApiPublicContactRequestRoute: ApiPublicContactRequestRoute,
   LovableEmailAuthPreviewRoute: LovableEmailAuthPreviewRoute,
   LovableEmailAuthWebhookRoute: LovableEmailAuthWebhookRoute,
@@ -1240,3 +1348,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}

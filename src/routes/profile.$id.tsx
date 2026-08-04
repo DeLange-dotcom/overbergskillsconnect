@@ -66,9 +66,7 @@ function ProfilePage() {
   if (isLoading) {
     return (
       <SiteLayout>
-        <div className="max-w-2xl mx-auto px-4 py-16 text-center text-brand-dark/50">
-          Loading…
-        </div>
+        <div className="max-w-2xl mx-auto px-4 py-16 text-center text-brand-dark/50">Loading…</div>
       </SiteLayout>
     );
   }
@@ -147,9 +145,7 @@ function ProfilePage() {
       {contactOpen && (
         <ContactDialog profileId={data.id} name={data.name} onClose={() => setContactOpen(false)} />
       )}
-      {reportOpen && (
-        <ReportDialog profileId={data.id} onClose={() => setReportOpen(false)} />
-      )}
+      {reportOpen && <ReportDialog profileId={data.id} onClose={() => setReportOpen(false)} />}
     </SiteLayout>
   );
 }
@@ -178,9 +174,7 @@ function ContactDialog({
       setSignedIn(!!u);
       if (u) {
         setUserName(
-          (u.user_metadata?.full_name as string) ||
-            (u.user_metadata?.name as string) ||
-            "",
+          (u.user_metadata?.full_name as string) || (u.user_metadata?.name as string) || "",
         );
         setUserPhone((u.user_metadata?.phone as string) || u.phone || "");
       }
@@ -196,7 +190,7 @@ function ContactDialog({
     }
     setSubmitting(true);
     const fd = new FormData(e.currentTarget);
-    const { error } = await supabase.rpc("noticeboard_create_contact_request", {
+    const { data: requestId, error } = await supabase.rpc("noticeboard_create_contact_request", {
       _profile_id: profileId,
       _requester_name: String(fd.get("name") || "").trim(),
       _requester_contact: String(fd.get("contact") || "").trim(),
@@ -217,6 +211,7 @@ function ContactDialog({
       }
       return;
     }
+    notifyContactRequest(String(requestId || ""));
     setSent(true);
   }
 
@@ -233,8 +228,8 @@ function ContactDialog({
       <Modal onClose={onClose}>
         <h2 className="font-heading text-xl font-semibold mb-2">Sign in to continue</h2>
         <p className="text-sm text-brand-dark/70 mb-5">
-          Create a free account or sign in so {name} can reply, and so you can track your
-          contact requests from your dashboard.
+          Create a free account or sign in so {name} can reply, and so you can track your contact
+          requests from your dashboard.
         </p>
         <div className="flex gap-2 justify-end">
           <button
@@ -270,8 +265,8 @@ function ContactDialog({
           </div>
           <h2 className="font-heading text-xl font-semibold mb-2">Request sent</h2>
           <p className="text-sm text-brand-dark/70 mb-5">
-            Your request has been sent successfully. {name} has been notified and can choose
-            whether to share their contact details. You can check the status any time from
+            Your request has been sent successfully. {name} has been notified and can choose whether
+            to share their contact details. You can check the status any time from
             <span className="font-medium"> My Contact Requests</span> in your dashboard.
           </p>
           <div className="flex flex-col sm:flex-row gap-2">
@@ -331,13 +326,16 @@ function ContactDialog({
             className="mt-0.5 size-4 shrink-0"
           />
           <span>
-            I agree that my name and contact details will be shared with {name} so they can
-            respond to my request. Any phone number they choose to share will be visible to me
-            for 30 days.
+            I agree that my name and contact details will be shared with {name} so they can respond
+            to my request. Any phone number they choose to share will be visible to me for 30 days.
           </span>
         </label>
         <div className="flex gap-2 justify-end pt-1">
-          <button type="button" onClick={onClose} className="px-4 py-2.5 rounded-xl border border-brand-dark/10">
+          <button
+            type="button"
+            onClick={onClose}
+            className="px-4 py-2.5 rounded-xl border border-brand-dark/10"
+          >
             Cancel
           </button>
           <button
@@ -353,6 +351,23 @@ function ContactDialog({
   );
 }
 
+async function notifyContactRequest(requestId: string) {
+  if (!requestId) return;
+  const { data } = await supabase.auth.getSession();
+  const token = data.session?.access_token;
+  if (!token) return;
+
+  fetch("/api/noticeboard/contact-request-notify", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({ request_id: requestId }),
+  }).catch((error) => {
+    console.error("Could not send contact request WhatsApp", error);
+  });
+}
 
 function ReportDialog({ profileId, onClose }: { profileId: string; onClose: () => void }) {
   const [submitting, setSubmitting] = useState(false);
@@ -407,14 +422,19 @@ function ReportDialog({ profileId, onClose }: { profileId: string; onClose: () =
           rows={3}
           placeholder="Optional details"
           className="w-full px-4 py-3 border border-brand-dark/10 rounded-xl"
-         spellCheck="true" />
+          spellCheck="true"
+        />
         <input
           name="reporter_contact"
           placeholder="Your contact (optional, so we can follow up)"
           className="w-full px-4 py-3 border border-brand-dark/10 rounded-xl"
         />
         <div className="flex gap-2 justify-end pt-1">
-          <button type="button" onClick={onClose} className="px-4 py-2.5 rounded-xl border border-brand-dark/10">
+          <button
+            type="button"
+            onClick={onClose}
+            className="px-4 py-2.5 rounded-xl border border-brand-dark/10"
+          >
             Cancel
           </button>
           <button

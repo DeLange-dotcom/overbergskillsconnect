@@ -5,13 +5,7 @@ import { SiteLayout } from "@/components/site/SiteLayout";
 import { TermsAcceptance } from "@/components/site/TermsAcceptance";
 import { PccSection, readPccFromForm } from "@/components/site/PccSection";
 import { supabase } from "@/integrations/supabase/client";
-import {
-  SERVICE_CATEGORIES,
-  DAYS,
-  HOURS,
-  LOOKING_FOR,
-  TRAVEL,
-} from "@/lib/constants";
+import { SERVICE_CATEGORIES, DAYS, HOURS, LOOKING_FOR, TRAVEL } from "@/lib/constants";
 import { TERMS_VERSION, recordTermsAcceptance } from "@/lib/terms";
 import { toast } from "sonner";
 import { CheckCircle2, Loader2 } from "lucide-react";
@@ -30,55 +24,56 @@ export const Route = createFileRoute("/register-provider")({
   component: RegisterProvider,
 });
 
-const schema = z.object({
-  full_name: z.string().trim().min(2).max(120),
-  id_passport_number: z.string().trim().min(4).max(40),
-  nationality: z.string().trim().min(2).max(60),
-  work_permit: z.enum(["yes", "no", "na"]).optional(),
-  date_of_birth: z.string().min(1, "Date of birth is required"),
-  mobile_number: z.string().trim().min(7).max(20),
-  whatsapp_number: z.string().trim().max(20).optional().or(z.literal("")),
-  email: z.string().trim().email().optional().or(z.literal("")),
-  physical_address: z.string().trim().min(3).max(200),
-  town: z.string().trim().min(2).max(60),
-  services: z.array(z.string()).min(1, "Select at least one service"),
-  skills_summary: z.string().trim().min(5).max(2000),
-  years_experience: z.coerce.number().int().min(0).max(80).optional(),
-  previous_employer: z.string().trim().max(200).optional().or(z.literal("")),
-  ref1_name: z.string().trim().min(2).max(120),
-  ref1_contact: z.string().trim().min(4).max(80),
-  ref2_name: z.string().trim().max(120).optional().or(z.literal("")),
-  ref2_contact: z.string().trim().max(80).optional().or(z.literal("")),
-  available_immediately: z.boolean(),
-  looking_for: z.array(z.string()).min(1, "Choose one or more"),
-  days_available: z.array(z.string()).min(1, "Choose at least one day"),
-  typical_hours: z.array(z.string()).min(1, "Choose at least one"),
-  max_travel: z.enum(["own_town", "within_20km", "within_50km", "overberg_wide"]),
-  own_transport: z.boolean(),
-  drivers_licence: z.boolean(),
-  criminal_conviction: z.boolean(),
-  criminal_conviction_details: z.string().trim().max(1000).optional().or(z.literal("")),
-  consent_store_info: z.literal(true, { errorMap: () => ({ message: "Required" }) }),
-  consent_reference_checks: z.literal(true, { errorMap: () => ({ message: "Required" }) }),
-  consent_background_checks: z.literal(true, { errorMap: () => ({ message: "Required" }) }),
-  consent_share_authorities: z.literal(true, { errorMap: () => ({ message: "Required" }) }),
-  consent_no_guarantee: z.literal(true, { errorMap: () => ({ message: "Required" }) }),
-  accept_terms: z.literal(true, {
-    errorMap: () => ({ message: "You must accept the Terms & Disclaimer to continue." }),
-  }),
-}).superRefine((data, ctx) => {
-  const isSA = /south\s*afric/i.test(data.nationality.trim());
-  if (!isSA) {
-    if (!data.work_permit || data.work_permit === "na") {
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        path: ["work_permit"],
-        message: "Please confirm whether you hold a valid South African work permit.",
-      });
+const schema = z
+  .object({
+    full_name: z.string().trim().min(2).max(120),
+    id_passport_number: z.string().trim().min(4).max(40),
+    nationality: z.string().trim().min(2).max(60),
+    work_permit: z.enum(["yes", "no", "na"]).optional(),
+    date_of_birth: z.string().min(1, "Date of birth is required"),
+    mobile_number: z.string().trim().min(7).max(20),
+    whatsapp_number: z.string().trim().max(20).optional().or(z.literal("")),
+    email: z.string().trim().email().optional().or(z.literal("")),
+    physical_address: z.string().trim().min(3).max(200),
+    town: z.string().trim().min(2).max(60),
+    services: z.array(z.string()).min(1, "Select at least one service"),
+    skills_summary: z.string().trim().min(5).max(2000),
+    years_experience: z.coerce.number().int().min(0).max(80).optional(),
+    previous_employer: z.string().trim().max(200).optional().or(z.literal("")),
+    ref1_name: z.string().trim().min(2).max(120),
+    ref1_contact: z.string().trim().min(4).max(80),
+    ref2_name: z.string().trim().max(120).optional().or(z.literal("")),
+    ref2_contact: z.string().trim().max(80).optional().or(z.literal("")),
+    available_immediately: z.boolean(),
+    looking_for: z.array(z.string()).min(1, "Choose one or more"),
+    days_available: z.array(z.string()).min(1, "Choose at least one day"),
+    typical_hours: z.array(z.string()).min(1, "Choose at least one"),
+    max_travel: z.enum(["own_town", "within_20km", "within_50km", "overberg_wide"]),
+    own_transport: z.boolean(),
+    drivers_licence: z.boolean(),
+    criminal_conviction: z.boolean(),
+    criminal_conviction_details: z.string().trim().max(1000).optional().or(z.literal("")),
+    consent_store_info: z.literal(true, { errorMap: () => ({ message: "Required" }) }),
+    consent_reference_checks: z.literal(true, { errorMap: () => ({ message: "Required" }) }),
+    consent_background_checks: z.literal(true, { errorMap: () => ({ message: "Required" }) }),
+    consent_share_authorities: z.literal(true, { errorMap: () => ({ message: "Required" }) }),
+    consent_no_guarantee: z.literal(true, { errorMap: () => ({ message: "Required" }) }),
+    accept_terms: z.literal(true, {
+      errorMap: () => ({ message: "You must accept the Terms & Disclaimer to continue." }),
+    }),
+  })
+  .superRefine((data, ctx) => {
+    const isSA = /south\s*afric/i.test(data.nationality.trim());
+    if (!isSA) {
+      if (!data.work_permit || data.work_permit === "na") {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          path: ["work_permit"],
+          message: "Please confirm whether you hold a valid South African work permit.",
+        });
+      }
     }
-  }
-});
-
+  });
 
 function RegisterProvider() {
   const [submitting, setSubmitting] = useState(false);
@@ -103,9 +98,7 @@ function RegisterProvider() {
     setErrors({});
 
     if (terminated) {
-      toast.error(
-        "Application cannot continue without a valid South African work permit."
-      );
+      toast.error("Application cannot continue without a valid South African work permit.");
       return;
     }
 
@@ -173,45 +166,43 @@ function RegisterProvider() {
     const d = parsed.data;
     const providerId = crypto.randomUUID();
     const applicationCode = `HIN-${providerId.slice(0, 8).toUpperCase()}`;
-    const { error } = await supabase
-      .from("service_providers")
-      .insert({
-        id: providerId,
-        application_code: applicationCode,
-        full_name: d.full_name,
-        id_passport_number: d.id_passport_number,
-        nationality: d.nationality,
-        date_of_birth: d.date_of_birth,
-        mobile_number: d.mobile_number,
-        whatsapp_number: d.whatsapp_number || null,
-        email: d.email || null,
-        physical_address: d.physical_address,
-        town: d.town,
-        services: d.services as never,
-        skills_summary: d.skills_summary,
-        years_experience: d.years_experience ?? null,
-        previous_employer: d.previous_employer || null,
-        available_immediately: d.available_immediately,
-        looking_for: d.looking_for as never,
-        days_available: d.days_available,
-        typical_hours: d.typical_hours,
-        max_travel: d.max_travel as never,
-        own_transport: d.own_transport,
-        drivers_licence: d.drivers_licence,
-        criminal_conviction: d.criminal_conviction,
-        criminal_conviction_details: d.criminal_conviction_details || null,
-        consent_store_info: d.consent_store_info,
-        consent_reference_checks: d.consent_reference_checks,
-        consent_background_checks: d.consent_background_checks,
-        consent_share_authorities: d.consent_share_authorities,
-        consent_no_guarantee: d.consent_no_guarantee,
-        terms_accepted_at: new Date().toISOString(),
-        terms_version_accepted: TERMS_VERSION,
-        pcc_status: pcc.pcc_status,
-        pcc_issue_date: pcc.pcc_issue_date,
-        pcc_number: pcc.pcc_number,
-        pcc_wants_assistance: pcc.pcc_wants_assistance,
-      });
+    const { error } = await supabase.from("service_providers").insert({
+      id: providerId,
+      application_code: applicationCode,
+      full_name: d.full_name,
+      id_passport_number: d.id_passport_number,
+      nationality: d.nationality,
+      date_of_birth: d.date_of_birth,
+      mobile_number: d.mobile_number,
+      whatsapp_number: d.whatsapp_number || null,
+      email: d.email || null,
+      physical_address: d.physical_address,
+      town: d.town,
+      services: d.services as never,
+      skills_summary: d.skills_summary,
+      years_experience: d.years_experience ?? null,
+      previous_employer: d.previous_employer || null,
+      available_immediately: d.available_immediately,
+      looking_for: d.looking_for as never,
+      days_available: d.days_available,
+      typical_hours: d.typical_hours,
+      max_travel: d.max_travel as never,
+      own_transport: d.own_transport,
+      drivers_licence: d.drivers_licence,
+      criminal_conviction: d.criminal_conviction,
+      criminal_conviction_details: d.criminal_conviction_details || null,
+      consent_store_info: d.consent_store_info,
+      consent_reference_checks: d.consent_reference_checks,
+      consent_background_checks: d.consent_background_checks,
+      consent_share_authorities: d.consent_share_authorities,
+      consent_no_guarantee: d.consent_no_guarantee,
+      terms_accepted_at: new Date().toISOString(),
+      terms_version_accepted: TERMS_VERSION,
+      pcc_status: pcc.pcc_status,
+      pcc_issue_date: pcc.pcc_issue_date,
+      pcc_number: pcc.pcc_number,
+      pcc_wants_assistance: pcc.pcc_wants_assistance,
+    });
 
     if (error) {
       toast.error(error?.message ?? "Could not submit your application.");
@@ -256,6 +247,7 @@ function RegisterProvider() {
       });
     }
 
+    notifyProviderWelcome(providerId, applicationCode);
     setDone({ code: applicationCode });
     setSubmitting(false);
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -267,9 +259,7 @@ function RegisterProvider() {
         <div className="max-w-2xl mx-auto px-4 sm:px-6 py-16 text-center">
           <CheckCircle2 className="size-16 text-brand-primary mx-auto mb-6" />
           <h1 className="text-3xl font-heading font-bold mb-3">Application received</h1>
-          <p className="text-brand-dark/70 mb-2">
-            Thank you. Your application reference is:
-          </p>
+          <p className="text-brand-dark/70 mb-2">Thank you. Your application reference is:</p>
           <p className="text-2xl font-heading font-bold text-brand-primary mb-6">{done.code}</p>
           <p className="text-brand-dark/70 max-w-md mx-auto mb-8">
             A Hineni coordinator will be in touch to verify your documents and references. This
@@ -376,9 +366,9 @@ function RegisterProvider() {
                   )}
                   {terminated && (
                     <div className="mt-3 rounded-xl border border-destructive/30 bg-destructive/5 p-4 text-sm text-destructive">
-                      Unfortunately, Hineni can only register providers who are
-                      South African citizens or hold a valid South African work
-                      permit. Your application cannot be submitted.
+                      Unfortunately, Hineni can only register providers who are South African
+                      citizens or hold a valid South African work permit. Your application cannot be
+                      submitted.
                     </div>
                   )}
                 </div>
@@ -439,7 +429,11 @@ function RegisterProvider() {
 
           <Fieldset title="Availability">
             <label className="flex items-center gap-2 mb-4">
-              <input type="checkbox" name="available_immediately" className="accent-brand-primary" />
+              <input
+                type="checkbox"
+                name="available_immediately"
+                className="accent-brand-primary"
+              />
               <span>Available immediately</span>
             </label>
             <CheckboxGrid
@@ -491,7 +485,12 @@ function RegisterProvider() {
 
           <Fieldset title="References">
             <Grid>
-              <Field label="Reference 1 — name" name="ref1_name" required error={errors.ref1_name} />
+              <Field
+                label="Reference 1 — name"
+                name="ref1_name"
+                required
+                error={errors.ref1_name}
+              />
               <Field
                 label="Reference 1 — phone or email"
                 name="ref1_contact"
@@ -559,7 +558,10 @@ function RegisterProvider() {
               {submitting && <Loader2 className="size-4 animate-spin" />}
               Submit application
             </button>
-            <Link to="/privacy" className="text-sm text-brand-dark/60 hover:text-brand-primary underline">
+            <Link
+              to="/privacy"
+              className="text-sm text-brand-dark/60 hover:text-brand-primary underline"
+            >
               Read our privacy notice
             </Link>
           </div>
@@ -567,6 +569,16 @@ function RegisterProvider() {
       </div>
     </SiteLayout>
   );
+}
+
+async function notifyProviderWelcome(providerId: string, applicationCode: string) {
+  fetch("/api/provider/welcome", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ provider_id: providerId, application_code: applicationCode }),
+  }).catch((error) => {
+    console.error("Could not send provider welcome WhatsApp", error);
+  });
 }
 
 function Fieldset({ title, children }: { title: string; children: React.ReactNode }) {
@@ -646,7 +658,8 @@ function TextArea({
         rows={4}
         placeholder={placeholder}
         className="w-full px-4 py-3 border border-brand-dark/10 rounded-xl bg-white focus:outline-none focus:border-brand-primary"
-       spellCheck="true" />
+        spellCheck="true"
+      />
       {error && <p className="text-xs text-destructive mt-1">{error}</p>}
     </div>
   );
