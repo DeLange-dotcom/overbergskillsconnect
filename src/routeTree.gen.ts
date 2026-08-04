@@ -9,140 +9,69 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as YouthRouteImport } from './routes/youth'
-import { Route as TermsRouteImport } from './routes/terms'
-import { Route as SafeguardingPolicyRouteImport } from './routes/safeguarding-policy'
-import { Route as ResetPasswordRouteImport } from './routes/reset-password'
-import { Route as RequestSupportRouteImport } from './routes/request-support'
-import { Route as RegisterProviderRouteImport } from './routes/register-provider'
-import { Route as PrivacyRouteImport } from './routes/privacy'
-import { Route as HowItWorksRouteImport } from './routes/how-it-works'
-import { Route as FindHelpRouteImport } from './routes/find-help'
-import { Route as DonateRouteImport } from './routes/donate'
-import { Route as DisclaimerRouteImport } from './routes/disclaimer'
-import { Route as DirectoryRouteImport } from './routes/directory'
-import { Route as ContactRouteImport } from './routes/contact'
-import { Route as AuthRouteImport } from './routes/auth'
-import { Route as ApprenticeshipsRouteImport } from './routes/apprenticeships'
-import { Route as AdvertiseRouteImport } from './routes/advertise'
-import { Route as AboutRouteImport } from './routes/about'
-import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as YouthIndexRouteImport } from './routes/youth.index'
-import { Route as RequestMentorshipIndexRouteImport } from './routes/request-mentorship.index'
-import { Route as ApprenticeshipsIndexRouteImport } from './routes/apprenticeships.index'
-import { Route as YouthRegisterRouteImport } from './routes/youth.register'
-import { Route as YouthPostOpportunityRouteImport } from './routes/youth.post-opportunity'
-import { Route as YouthOpportunitiesRouteImport } from './routes/youth.opportunities'
-import { Route as RequestTokenRouteImport } from './routes/request.$token'
-import { Route as RequestMentorshipMentorIdRouteImport } from './routes/request-mentorship.$mentorId'
-import { Route as ProfileIdRouteImport } from './routes/profile.$id'
-import { Route as MyListingTokenRouteImport } from './routes/my-listing.$token'
-import { Route as MentorsInterestRouteImport } from './routes/mentors.interest'
-import { Route as FeedbackTokenRouteImport } from './routes/feedback.$token'
-import { Route as ApprenticeshipsRegisterProviderRouteImport } from './routes/apprenticeships.register-provider'
-import { Route as ApprenticeshipsRegisterApprenticeRouteImport } from './routes/apprenticeships.register-apprentice'
-import { Route as ApprenticeshipsOpportunitiesRouteImport } from './routes/apprenticeships.opportunities'
-import { Route as ApprenticeshipsMentorsRouteImport } from './routes/apprenticeships.mentors'
-import { Route as ApprenticeshipsImpactRouteImport } from './routes/apprenticeships.impact'
-import { Route as ApprenticeshipsBecomeMentorRouteImport } from './routes/apprenticeships.become-mentor'
-import { Route as AuthenticatedProfileRouteImport } from './routes/_authenticated/profile'
-import { Route as AuthenticatedMyRequestsRouteImport } from './routes/_authenticated/my-requests'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
+import { Route as AboutRouteImport } from './routes/about'
+import { Route as AdvertiseRouteImport } from './routes/advertise'
+import { Route as ApprenticeshipsRouteImport } from './routes/apprenticeships'
+import { Route as AuthRouteImport } from './routes/auth'
+import { Route as ContactRouteImport } from './routes/contact'
+import { Route as DirectoryRouteImport } from './routes/directory'
+import { Route as DisclaimerRouteImport } from './routes/disclaimer'
+import { Route as DonateRouteImport } from './routes/donate'
+import { Route as FindHelpRouteImport } from './routes/find-help'
+import { Route as HowItWorksRouteImport } from './routes/how-it-works'
+import { Route as PrivacyRouteImport } from './routes/privacy'
+import { Route as RegisterProviderRouteImport } from './routes/register-provider'
+import { Route as RequestSupportRouteImport } from './routes/request-support'
+import { Route as ResetPasswordRouteImport } from './routes/reset-password'
+import { Route as SafeguardingPolicyRouteImport } from './routes/safeguarding-policy'
+import { Route as TermsRouteImport } from './routes/terms'
+import { Route as YouthRouteImport } from './routes/youth'
 import { Route as AuthenticatedMyAdvertRouteImport } from './routes/_authenticated/my-advert'
+import { Route as AuthenticatedMyRequestsRouteImport } from './routes/_authenticated/my-requests'
+import { Route as AuthenticatedProfileRouteImport } from './routes/_authenticated/profile'
+import { Route as ApprenticeshipsIndexRouteImport } from './routes/apprenticeships.index'
+import { Route as ApprenticeshipsBecomeMentorRouteImport } from './routes/apprenticeships.become-mentor'
+import { Route as ApprenticeshipsImpactRouteImport } from './routes/apprenticeships.impact'
+import { Route as ApprenticeshipsMentorsRouteImport } from './routes/apprenticeships.mentors'
+import { Route as ApprenticeshipsOpportunitiesRouteImport } from './routes/apprenticeships.opportunities'
+import { Route as ApprenticeshipsRegisterApprenticeRouteImport } from './routes/apprenticeships.register-apprentice'
+import { Route as ApprenticeshipsRegisterProviderRouteImport } from './routes/apprenticeships.register-provider'
+import { Route as FeedbackTokenRouteImport } from './routes/feedback.$token'
+import { Route as MentorsInterestRouteImport } from './routes/mentors.interest'
+import { Route as MyListingTokenRouteImport } from './routes/my-listing.$token'
+import { Route as ProfileIdRouteImport } from './routes/profile.$id'
+import { Route as RequestMentorshipIndexRouteImport } from './routes/request-mentorship.index'
+import { Route as RequestMentorshipMentorIdRouteImport } from './routes/request-mentorship.$mentorId'
+import { Route as RequestTokenRouteImport } from './routes/request.$token'
+import { Route as YouthIndexRouteImport } from './routes/youth.index'
+import { Route as YouthOpportunitiesRouteImport } from './routes/youth.opportunities'
+import { Route as YouthPostOpportunityRouteImport } from './routes/youth.post-opportunity'
+import { Route as YouthRegisterRouteImport } from './routes/youth.register'
 import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin/index'
-import { Route as YouthParentConsentTokenRouteImport } from './routes/youth.parent-consent.$token'
-import { Route as DirectoryTypeIdRouteImport } from './routes/directory.$type.$id'
-import { Route as ApiPublicContactRequestRouteImport } from './routes/api/public/contact-request'
-import { Route as AuthenticatedYouthPortfolioRouteImport } from './routes/_authenticated/youth.portfolio'
-import { Route as AuthenticatedAdminYouthOpportunitiesRouteImport } from './routes/_authenticated/admin/youth-opportunities'
-import { Route as AuthenticatedAdminNoticeboardRouteImport } from './routes/_authenticated/admin/noticeboard'
 import { Route as AuthenticatedAdminApprenticeshipsRouteImport } from './routes/_authenticated/admin/apprenticeships'
-import { Route as AuthenticatedAdminYouthIndexRouteImport } from './routes/_authenticated/admin/youth.index'
-import { Route as LovableEmailQueueProcessRouteImport } from './routes/lovable/email/queue/process'
-import { Route as LovableEmailAuthWebhookRouteImport } from './routes/lovable/email/auth/webhook'
-import { Route as LovableEmailAuthPreviewRouteImport } from './routes/lovable/email/auth/preview'
-import { Route as AuthenticatedAdminYouthIdRouteImport } from './routes/_authenticated/admin/youth.$id'
-import { Route as AuthenticatedAdminProvidersIdRouteImport } from './routes/_authenticated/admin/providers/$id'
+import { Route as AuthenticatedAdminNoticeboardRouteImport } from './routes/_authenticated/admin/noticeboard'
+import { Route as AuthenticatedAdminYouthOpportunitiesRouteImport } from './routes/_authenticated/admin/youth-opportunities'
+import { Route as AuthenticatedYouthPortfolioRouteImport } from './routes/_authenticated/youth.portfolio'
+import { Route as ApiPublicContactRequestRouteImport } from './routes/api/public/contact-request'
+import { Route as DirectoryTypeIdRouteImport } from './routes/directory.$type.$id'
+import { Route as YouthParentConsentTokenRouteImport } from './routes/youth.parent-consent.$token'
 import { Route as AuthenticatedAdminApprenticesIdRouteImport } from './routes/_authenticated/admin/apprentices.$id'
+import { Route as AuthenticatedAdminProvidersIdRouteImport } from './routes/_authenticated/admin/providers/$id'
+import { Route as AuthenticatedAdminYouthIndexRouteImport } from './routes/_authenticated/admin/youth.index'
+import { Route as AuthenticatedAdminYouthIdRouteImport } from './routes/_authenticated/admin/youth.$id'
+import { Route as LovableEmailAuthPreviewRouteImport } from './routes/lovable/email/auth/preview'
+import { Route as LovableEmailAuthWebhookRouteImport } from './routes/lovable/email/auth/webhook'
+import { Route as LovableEmailQueueProcessRouteImport } from './routes/lovable/email/queue/process'
 
-const YouthRoute = YouthRouteImport.update({
-  id: '/youth',
-  path: '/youth',
+const IndexRoute = IndexRouteImport.update({
+  id: '/',
+  path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const TermsRoute = TermsRouteImport.update({
-  id: '/terms',
-  path: '/terms',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const SafeguardingPolicyRoute = SafeguardingPolicyRouteImport.update({
-  id: '/safeguarding-policy',
-  path: '/safeguarding-policy',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ResetPasswordRoute = ResetPasswordRouteImport.update({
-  id: '/reset-password',
-  path: '/reset-password',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const RequestSupportRoute = RequestSupportRouteImport.update({
-  id: '/request-support',
-  path: '/request-support',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const RegisterProviderRoute = RegisterProviderRouteImport.update({
-  id: '/register-provider',
-  path: '/register-provider',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const PrivacyRoute = PrivacyRouteImport.update({
-  id: '/privacy',
-  path: '/privacy',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const HowItWorksRoute = HowItWorksRouteImport.update({
-  id: '/how-it-works',
-  path: '/how-it-works',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const FindHelpRoute = FindHelpRouteImport.update({
-  id: '/find-help',
-  path: '/find-help',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const DonateRoute = DonateRouteImport.update({
-  id: '/donate',
-  path: '/donate',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const DisclaimerRoute = DisclaimerRouteImport.update({
-  id: '/disclaimer',
-  path: '/disclaimer',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const DirectoryRoute = DirectoryRouteImport.update({
-  id: '/directory',
-  path: '/directory',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ContactRoute = ContactRouteImport.update({
-  id: '/contact',
-  path: '/contact',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AuthRoute = AuthRouteImport.update({
-  id: '/auth',
-  path: '/auth',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ApprenticeshipsRoute = ApprenticeshipsRouteImport.update({
-  id: '/apprenticeships',
-  path: '/apprenticeships',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AdvertiseRoute = AdvertiseRouteImport.update({
-  id: '/advertise',
-  path: '/advertise',
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AboutRoute = AboutRouteImport.update({
@@ -150,102 +79,104 @@ const AboutRoute = AboutRouteImport.update({
   path: '/about',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
-  id: '/_authenticated',
+const AdvertiseRoute = AdvertiseRouteImport.update({
+  id: '/advertise',
+  path: '/advertise',
   getParentRoute: () => rootRouteImport,
 } as any)
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
+const ApprenticeshipsRoute = ApprenticeshipsRouteImport.update({
+  id: '/apprenticeships',
+  path: '/apprenticeships',
   getParentRoute: () => rootRouteImport,
 } as any)
-const YouthIndexRoute = YouthIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => YouthRoute,
-} as any)
-const RequestMentorshipIndexRoute = RequestMentorshipIndexRouteImport.update({
-  id: '/request-mentorship/',
-  path: '/request-mentorship/',
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
   getParentRoute: () => rootRouteImport,
+} as any)
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DirectoryRoute = DirectoryRouteImport.update({
+  id: '/directory',
+  path: '/directory',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DisclaimerRoute = DisclaimerRouteImport.update({
+  id: '/disclaimer',
+  path: '/disclaimer',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DonateRoute = DonateRouteImport.update({
+  id: '/donate',
+  path: '/donate',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FindHelpRoute = FindHelpRouteImport.update({
+  id: '/find-help',
+  path: '/find-help',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HowItWorksRoute = HowItWorksRouteImport.update({
+  id: '/how-it-works',
+  path: '/how-it-works',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PrivacyRoute = PrivacyRouteImport.update({
+  id: '/privacy',
+  path: '/privacy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RegisterProviderRoute = RegisterProviderRouteImport.update({
+  id: '/register-provider',
+  path: '/register-provider',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RequestSupportRoute = RequestSupportRouteImport.update({
+  id: '/request-support',
+  path: '/request-support',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ResetPasswordRoute = ResetPasswordRouteImport.update({
+  id: '/reset-password',
+  path: '/reset-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SafeguardingPolicyRoute = SafeguardingPolicyRouteImport.update({
+  id: '/safeguarding-policy',
+  path: '/safeguarding-policy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TermsRoute = TermsRouteImport.update({
+  id: '/terms',
+  path: '/terms',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const YouthRoute = YouthRouteImport.update({
+  id: '/youth',
+  path: '/youth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedMyAdvertRoute = AuthenticatedMyAdvertRouteImport.update({
+  id: '/my-advert',
+  path: '/my-advert',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedMyRequestsRoute = AuthenticatedMyRequestsRouteImport.update({
+  id: '/my-requests',
+  path: '/my-requests',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedProfileRoute = AuthenticatedProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const ApprenticeshipsIndexRoute = ApprenticeshipsIndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => ApprenticeshipsRoute,
-} as any)
-const YouthRegisterRoute = YouthRegisterRouteImport.update({
-  id: '/register',
-  path: '/register',
-  getParentRoute: () => YouthRoute,
-} as any)
-const YouthPostOpportunityRoute = YouthPostOpportunityRouteImport.update({
-  id: '/post-opportunity',
-  path: '/post-opportunity',
-  getParentRoute: () => YouthRoute,
-} as any)
-const YouthOpportunitiesRoute = YouthOpportunitiesRouteImport.update({
-  id: '/opportunities',
-  path: '/opportunities',
-  getParentRoute: () => YouthRoute,
-} as any)
-const RequestTokenRoute = RequestTokenRouteImport.update({
-  id: '/request/$token',
-  path: '/request/$token',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const RequestMentorshipMentorIdRoute =
-  RequestMentorshipMentorIdRouteImport.update({
-    id: '/request-mentorship/$mentorId',
-    path: '/request-mentorship/$mentorId',
-    getParentRoute: () => rootRouteImport,
-  } as any)
-const ProfileIdRoute = ProfileIdRouteImport.update({
-  id: '/profile/$id',
-  path: '/profile/$id',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const MyListingTokenRoute = MyListingTokenRouteImport.update({
-  id: '/my-listing/$token',
-  path: '/my-listing/$token',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const MentorsInterestRoute = MentorsInterestRouteImport.update({
-  id: '/mentors/interest',
-  path: '/mentors/interest',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const FeedbackTokenRoute = FeedbackTokenRouteImport.update({
-  id: '/feedback/$token',
-  path: '/feedback/$token',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ApprenticeshipsRegisterProviderRoute =
-  ApprenticeshipsRegisterProviderRouteImport.update({
-    id: '/register-provider',
-    path: '/register-provider',
-    getParentRoute: () => ApprenticeshipsRoute,
-  } as any)
-const ApprenticeshipsRegisterApprenticeRoute =
-  ApprenticeshipsRegisterApprenticeRouteImport.update({
-    id: '/register-apprentice',
-    path: '/register-apprentice',
-    getParentRoute: () => ApprenticeshipsRoute,
-  } as any)
-const ApprenticeshipsOpportunitiesRoute =
-  ApprenticeshipsOpportunitiesRouteImport.update({
-    id: '/opportunities',
-    path: '/opportunities',
-    getParentRoute: () => ApprenticeshipsRoute,
-  } as any)
-const ApprenticeshipsMentorsRoute = ApprenticeshipsMentorsRouteImport.update({
-  id: '/mentors',
-  path: '/mentors',
-  getParentRoute: () => ApprenticeshipsRoute,
-} as any)
-const ApprenticeshipsImpactRoute = ApprenticeshipsImpactRouteImport.update({
-  id: '/impact',
-  path: '/impact',
   getParentRoute: () => ApprenticeshipsRoute,
 } as any)
 const ApprenticeshipsBecomeMentorRoute =
@@ -254,51 +185,99 @@ const ApprenticeshipsBecomeMentorRoute =
     path: '/become-mentor',
     getParentRoute: () => ApprenticeshipsRoute,
   } as any)
-const AuthenticatedProfileRoute = AuthenticatedProfileRouteImport.update({
-  id: '/profile',
-  path: '/profile',
-  getParentRoute: () => AuthenticatedRouteRoute,
+const ApprenticeshipsImpactRoute = ApprenticeshipsImpactRouteImport.update({
+  id: '/impact',
+  path: '/impact',
+  getParentRoute: () => ApprenticeshipsRoute,
 } as any)
-const AuthenticatedMyRequestsRoute = AuthenticatedMyRequestsRouteImport.update({
-  id: '/my-requests',
-  path: '/my-requests',
-  getParentRoute: () => AuthenticatedRouteRoute,
+const ApprenticeshipsMentorsRoute = ApprenticeshipsMentorsRouteImport.update({
+  id: '/mentors',
+  path: '/mentors',
+  getParentRoute: () => ApprenticeshipsRoute,
 } as any)
-const AuthenticatedMyAdvertRoute = AuthenticatedMyAdvertRouteImport.update({
-  id: '/my-advert',
-  path: '/my-advert',
-  getParentRoute: () => AuthenticatedRouteRoute,
+const ApprenticeshipsOpportunitiesRoute =
+  ApprenticeshipsOpportunitiesRouteImport.update({
+    id: '/opportunities',
+    path: '/opportunities',
+    getParentRoute: () => ApprenticeshipsRoute,
+  } as any)
+const ApprenticeshipsRegisterApprenticeRoute =
+  ApprenticeshipsRegisterApprenticeRouteImport.update({
+    id: '/register-apprentice',
+    path: '/register-apprentice',
+    getParentRoute: () => ApprenticeshipsRoute,
+  } as any)
+const ApprenticeshipsRegisterProviderRoute =
+  ApprenticeshipsRegisterProviderRouteImport.update({
+    id: '/register-provider',
+    path: '/register-provider',
+    getParentRoute: () => ApprenticeshipsRoute,
+  } as any)
+const FeedbackTokenRoute = FeedbackTokenRouteImport.update({
+  id: '/feedback/$token',
+  path: '/feedback/$token',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MentorsInterestRoute = MentorsInterestRouteImport.update({
+  id: '/mentors/interest',
+  path: '/mentors/interest',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MyListingTokenRoute = MyListingTokenRouteImport.update({
+  id: '/my-listing/$token',
+  path: '/my-listing/$token',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProfileIdRoute = ProfileIdRouteImport.update({
+  id: '/profile/$id',
+  path: '/profile/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RequestMentorshipIndexRoute = RequestMentorshipIndexRouteImport.update({
+  id: '/request-mentorship/',
+  path: '/request-mentorship/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RequestMentorshipMentorIdRoute =
+  RequestMentorshipMentorIdRouteImport.update({
+    id: '/request-mentorship/$mentorId',
+    path: '/request-mentorship/$mentorId',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const RequestTokenRoute = RequestTokenRouteImport.update({
+  id: '/request/$token',
+  path: '/request/$token',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const YouthIndexRoute = YouthIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => YouthRoute,
+} as any)
+const YouthOpportunitiesRoute = YouthOpportunitiesRouteImport.update({
+  id: '/opportunities',
+  path: '/opportunities',
+  getParentRoute: () => YouthRoute,
+} as any)
+const YouthPostOpportunityRoute = YouthPostOpportunityRouteImport.update({
+  id: '/post-opportunity',
+  path: '/post-opportunity',
+  getParentRoute: () => YouthRoute,
+} as any)
+const YouthRegisterRoute = YouthRegisterRouteImport.update({
+  id: '/register',
+  path: '/register',
+  getParentRoute: () => YouthRoute,
 } as any)
 const AuthenticatedAdminIndexRoute = AuthenticatedAdminIndexRouteImport.update({
   id: '/admin/',
   path: '/admin/',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
-const YouthParentConsentTokenRoute = YouthParentConsentTokenRouteImport.update({
-  id: '/parent-consent/$token',
-  path: '/parent-consent/$token',
-  getParentRoute: () => YouthRoute,
-} as any)
-const DirectoryTypeIdRoute = DirectoryTypeIdRouteImport.update({
-  id: '/$type/$id',
-  path: '/$type/$id',
-  getParentRoute: () => DirectoryRoute,
-} as any)
-const ApiPublicContactRequestRoute = ApiPublicContactRequestRouteImport.update({
-  id: '/api/public/contact-request',
-  path: '/api/public/contact-request',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AuthenticatedYouthPortfolioRoute =
-  AuthenticatedYouthPortfolioRouteImport.update({
-    id: '/youth/portfolio',
-    path: '/youth/portfolio',
-    getParentRoute: () => AuthenticatedRouteRoute,
-  } as any)
-const AuthenticatedAdminYouthOpportunitiesRoute =
-  AuthenticatedAdminYouthOpportunitiesRouteImport.update({
-    id: '/admin/youth-opportunities',
-    path: '/admin/youth-opportunities',
+const AuthenticatedAdminApprenticeshipsRoute =
+  AuthenticatedAdminApprenticeshipsRouteImport.update({
+    id: '/admin/apprenticeships',
+    path: '/admin/apprenticeships',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
 const AuthenticatedAdminNoticeboardRoute =
@@ -307,38 +286,37 @@ const AuthenticatedAdminNoticeboardRoute =
     path: '/admin/noticeboard',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
-const AuthenticatedAdminApprenticeshipsRoute =
-  AuthenticatedAdminApprenticeshipsRouteImport.update({
-    id: '/admin/apprenticeships',
-    path: '/admin/apprenticeships',
+const AuthenticatedAdminYouthOpportunitiesRoute =
+  AuthenticatedAdminYouthOpportunitiesRouteImport.update({
+    id: '/admin/youth-opportunities',
+    path: '/admin/youth-opportunities',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
-const AuthenticatedAdminYouthIndexRoute =
-  AuthenticatedAdminYouthIndexRouteImport.update({
-    id: '/admin/youth/',
-    path: '/admin/youth/',
+const AuthenticatedYouthPortfolioRoute =
+  AuthenticatedYouthPortfolioRouteImport.update({
+    id: '/youth/portfolio',
+    path: '/youth/portfolio',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
-const LovableEmailQueueProcessRoute =
-  LovableEmailQueueProcessRouteImport.update({
-    id: '/lovable/email/queue/process',
-    path: '/lovable/email/queue/process',
-    getParentRoute: () => rootRouteImport,
-  } as any)
-const LovableEmailAuthWebhookRoute = LovableEmailAuthWebhookRouteImport.update({
-  id: '/lovable/email/auth/webhook',
-  path: '/lovable/email/auth/webhook',
+const ApiPublicContactRequestRoute = ApiPublicContactRequestRouteImport.update({
+  id: '/api/public/contact-request',
+  path: '/api/public/contact-request',
   getParentRoute: () => rootRouteImport,
 } as any)
-const LovableEmailAuthPreviewRoute = LovableEmailAuthPreviewRouteImport.update({
-  id: '/lovable/email/auth/preview',
-  path: '/lovable/email/auth/preview',
-  getParentRoute: () => rootRouteImport,
+const DirectoryTypeIdRoute = DirectoryTypeIdRouteImport.update({
+  id: '/$type/$id',
+  path: '/$type/$id',
+  getParentRoute: () => DirectoryRoute,
 } as any)
-const AuthenticatedAdminYouthIdRoute =
-  AuthenticatedAdminYouthIdRouteImport.update({
-    id: '/admin/youth/$id',
-    path: '/admin/youth/$id',
+const YouthParentConsentTokenRoute = YouthParentConsentTokenRouteImport.update({
+  id: '/parent-consent/$token',
+  path: '/parent-consent/$token',
+  getParentRoute: () => YouthRoute,
+} as any)
+const AuthenticatedAdminApprenticesIdRoute =
+  AuthenticatedAdminApprenticesIdRouteImport.update({
+    id: '/admin/apprentices/$id',
+    path: '/admin/apprentices/$id',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
 const AuthenticatedAdminProvidersIdRoute =
@@ -347,11 +325,33 @@ const AuthenticatedAdminProvidersIdRoute =
     path: '/admin/providers/$id',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
-const AuthenticatedAdminApprenticesIdRoute =
-  AuthenticatedAdminApprenticesIdRouteImport.update({
-    id: '/admin/apprentices/$id',
-    path: '/admin/apprentices/$id',
+const AuthenticatedAdminYouthIndexRoute =
+  AuthenticatedAdminYouthIndexRouteImport.update({
+    id: '/admin/youth/',
+    path: '/admin/youth/',
     getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedAdminYouthIdRoute =
+  AuthenticatedAdminYouthIdRouteImport.update({
+    id: '/admin/youth/$id',
+    path: '/admin/youth/$id',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const LovableEmailAuthPreviewRoute = LovableEmailAuthPreviewRouteImport.update({
+  id: '/lovable/email/auth/preview',
+  path: '/lovable/email/auth/preview',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LovableEmailAuthWebhookRoute = LovableEmailAuthWebhookRouteImport.update({
+  id: '/lovable/email/auth/webhook',
+  path: '/lovable/email/auth/webhook',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LovableEmailQueueProcessRoute =
+  LovableEmailQueueProcessRouteImport.update({
+    id: '/lovable/email/queue/process',
+    path: '/lovable/email/queue/process',
+    getParentRoute: () => rootRouteImport,
   } as any)
 
 export interface FileRoutesByFullPath {
@@ -727,123 +727,11 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/youth': {
-      id: '/youth'
-      path: '/youth'
-      fullPath: '/youth'
-      preLoaderRoute: typeof YouthRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/terms': {
-      id: '/terms'
-      path: '/terms'
-      fullPath: '/terms'
-      preLoaderRoute: typeof TermsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/safeguarding-policy': {
-      id: '/safeguarding-policy'
-      path: '/safeguarding-policy'
-      fullPath: '/safeguarding-policy'
-      preLoaderRoute: typeof SafeguardingPolicyRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/reset-password': {
-      id: '/reset-password'
-      path: '/reset-password'
-      fullPath: '/reset-password'
-      preLoaderRoute: typeof ResetPasswordRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/request-support': {
-      id: '/request-support'
-      path: '/request-support'
-      fullPath: '/request-support'
-      preLoaderRoute: typeof RequestSupportRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/register-provider': {
-      id: '/register-provider'
-      path: '/register-provider'
-      fullPath: '/register-provider'
-      preLoaderRoute: typeof RegisterProviderRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/privacy': {
-      id: '/privacy'
-      path: '/privacy'
-      fullPath: '/privacy'
-      preLoaderRoute: typeof PrivacyRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/how-it-works': {
-      id: '/how-it-works'
-      path: '/how-it-works'
-      fullPath: '/how-it-works'
-      preLoaderRoute: typeof HowItWorksRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/find-help': {
-      id: '/find-help'
-      path: '/find-help'
-      fullPath: '/find-help'
-      preLoaderRoute: typeof FindHelpRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/donate': {
-      id: '/donate'
-      path: '/donate'
-      fullPath: '/donate'
-      preLoaderRoute: typeof DonateRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/disclaimer': {
-      id: '/disclaimer'
-      path: '/disclaimer'
-      fullPath: '/disclaimer'
-      preLoaderRoute: typeof DisclaimerRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/directory': {
-      id: '/directory'
-      path: '/directory'
-      fullPath: '/directory'
-      preLoaderRoute: typeof DirectoryRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/contact': {
-      id: '/contact'
-      path: '/contact'
-      fullPath: '/contact'
-      preLoaderRoute: typeof ContactRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/auth': {
-      id: '/auth'
-      path: '/auth'
-      fullPath: '/auth'
-      preLoaderRoute: typeof AuthRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/apprenticeships': {
-      id: '/apprenticeships'
-      path: '/apprenticeships'
-      fullPath: '/apprenticeships'
-      preLoaderRoute: typeof ApprenticeshipsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/advertise': {
-      id: '/advertise'
-      path: '/advertise'
-      fullPath: '/advertise'
-      preLoaderRoute: typeof AdvertiseRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/about': {
-      id: '/about'
-      path: '/about'
-      fullPath: '/about'
-      preLoaderRoute: typeof AboutRouteImport
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_authenticated': {
@@ -853,144 +741,130 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/youth/': {
-      id: '/youth/'
-      path: '/'
-      fullPath: '/youth/'
-      preLoaderRoute: typeof YouthIndexRouteImport
-      parentRoute: typeof YouthRoute
-    }
-    '/request-mentorship/': {
-      id: '/request-mentorship/'
-      path: '/request-mentorship'
-      fullPath: '/request-mentorship/'
-      preLoaderRoute: typeof RequestMentorshipIndexRouteImport
+    '/advertise': {
+      id: '/advertise'
+      path: '/advertise'
+      fullPath: '/advertise'
+      preLoaderRoute: typeof AdvertiseRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/apprenticeships/': {
-      id: '/apprenticeships/'
-      path: '/'
-      fullPath: '/apprenticeships/'
-      preLoaderRoute: typeof ApprenticeshipsIndexRouteImport
-      parentRoute: typeof ApprenticeshipsRoute
-    }
-    '/youth/register': {
-      id: '/youth/register'
-      path: '/register'
-      fullPath: '/youth/register'
-      preLoaderRoute: typeof YouthRegisterRouteImport
-      parentRoute: typeof YouthRoute
-    }
-    '/youth/post-opportunity': {
-      id: '/youth/post-opportunity'
-      path: '/post-opportunity'
-      fullPath: '/youth/post-opportunity'
-      preLoaderRoute: typeof YouthPostOpportunityRouteImport
-      parentRoute: typeof YouthRoute
-    }
-    '/youth/opportunities': {
-      id: '/youth/opportunities'
-      path: '/opportunities'
-      fullPath: '/youth/opportunities'
-      preLoaderRoute: typeof YouthOpportunitiesRouteImport
-      parentRoute: typeof YouthRoute
-    }
-    '/request/$token': {
-      id: '/request/$token'
-      path: '/request/$token'
-      fullPath: '/request/$token'
-      preLoaderRoute: typeof RequestTokenRouteImport
+    '/apprenticeships': {
+      id: '/apprenticeships'
+      path: '/apprenticeships'
+      fullPath: '/apprenticeships'
+      preLoaderRoute: typeof ApprenticeshipsRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/request-mentorship/$mentorId': {
-      id: '/request-mentorship/$mentorId'
-      path: '/request-mentorship/$mentorId'
-      fullPath: '/request-mentorship/$mentorId'
-      preLoaderRoute: typeof RequestMentorshipMentorIdRouteImport
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/profile/$id': {
-      id: '/profile/$id'
-      path: '/profile/$id'
-      fullPath: '/profile/$id'
-      preLoaderRoute: typeof ProfileIdRouteImport
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/my-listing/$token': {
-      id: '/my-listing/$token'
-      path: '/my-listing/$token'
-      fullPath: '/my-listing/$token'
-      preLoaderRoute: typeof MyListingTokenRouteImport
+    '/directory': {
+      id: '/directory'
+      path: '/directory'
+      fullPath: '/directory'
+      preLoaderRoute: typeof DirectoryRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/mentors/interest': {
-      id: '/mentors/interest'
-      path: '/mentors/interest'
-      fullPath: '/mentors/interest'
-      preLoaderRoute: typeof MentorsInterestRouteImport
+    '/disclaimer': {
+      id: '/disclaimer'
+      path: '/disclaimer'
+      fullPath: '/disclaimer'
+      preLoaderRoute: typeof DisclaimerRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/feedback/$token': {
-      id: '/feedback/$token'
-      path: '/feedback/$token'
-      fullPath: '/feedback/$token'
-      preLoaderRoute: typeof FeedbackTokenRouteImport
+    '/donate': {
+      id: '/donate'
+      path: '/donate'
+      fullPath: '/donate'
+      preLoaderRoute: typeof DonateRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/apprenticeships/register-provider': {
-      id: '/apprenticeships/register-provider'
+    '/find-help': {
+      id: '/find-help'
+      path: '/find-help'
+      fullPath: '/find-help'
+      preLoaderRoute: typeof FindHelpRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/how-it-works': {
+      id: '/how-it-works'
+      path: '/how-it-works'
+      fullPath: '/how-it-works'
+      preLoaderRoute: typeof HowItWorksRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/privacy': {
+      id: '/privacy'
+      path: '/privacy'
+      fullPath: '/privacy'
+      preLoaderRoute: typeof PrivacyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/register-provider': {
+      id: '/register-provider'
       path: '/register-provider'
-      fullPath: '/apprenticeships/register-provider'
-      preLoaderRoute: typeof ApprenticeshipsRegisterProviderRouteImport
-      parentRoute: typeof ApprenticeshipsRoute
+      fullPath: '/register-provider'
+      preLoaderRoute: typeof RegisterProviderRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/apprenticeships/register-apprentice': {
-      id: '/apprenticeships/register-apprentice'
-      path: '/register-apprentice'
-      fullPath: '/apprenticeships/register-apprentice'
-      preLoaderRoute: typeof ApprenticeshipsRegisterApprenticeRouteImport
-      parentRoute: typeof ApprenticeshipsRoute
+    '/request-support': {
+      id: '/request-support'
+      path: '/request-support'
+      fullPath: '/request-support'
+      preLoaderRoute: typeof RequestSupportRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/apprenticeships/opportunities': {
-      id: '/apprenticeships/opportunities'
-      path: '/opportunities'
-      fullPath: '/apprenticeships/opportunities'
-      preLoaderRoute: typeof ApprenticeshipsOpportunitiesRouteImport
-      parentRoute: typeof ApprenticeshipsRoute
+    '/reset-password': {
+      id: '/reset-password'
+      path: '/reset-password'
+      fullPath: '/reset-password'
+      preLoaderRoute: typeof ResetPasswordRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/apprenticeships/mentors': {
-      id: '/apprenticeships/mentors'
-      path: '/mentors'
-      fullPath: '/apprenticeships/mentors'
-      preLoaderRoute: typeof ApprenticeshipsMentorsRouteImport
-      parentRoute: typeof ApprenticeshipsRoute
+    '/safeguarding-policy': {
+      id: '/safeguarding-policy'
+      path: '/safeguarding-policy'
+      fullPath: '/safeguarding-policy'
+      preLoaderRoute: typeof SafeguardingPolicyRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/apprenticeships/impact': {
-      id: '/apprenticeships/impact'
-      path: '/impact'
-      fullPath: '/apprenticeships/impact'
-      preLoaderRoute: typeof ApprenticeshipsImpactRouteImport
-      parentRoute: typeof ApprenticeshipsRoute
+    '/terms': {
+      id: '/terms'
+      path: '/terms'
+      fullPath: '/terms'
+      preLoaderRoute: typeof TermsRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/apprenticeships/become-mentor': {
-      id: '/apprenticeships/become-mentor'
-      path: '/become-mentor'
-      fullPath: '/apprenticeships/become-mentor'
-      preLoaderRoute: typeof ApprenticeshipsBecomeMentorRouteImport
-      parentRoute: typeof ApprenticeshipsRoute
+    '/youth': {
+      id: '/youth'
+      path: '/youth'
+      fullPath: '/youth'
+      preLoaderRoute: typeof YouthRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/_authenticated/profile': {
-      id: '/_authenticated/profile'
-      path: '/profile'
-      fullPath: '/profile'
-      preLoaderRoute: typeof AuthenticatedProfileRouteImport
+    '/_authenticated/my-advert': {
+      id: '/_authenticated/my-advert'
+      path: '/my-advert'
+      fullPath: '/my-advert'
+      preLoaderRoute: typeof AuthenticatedMyAdvertRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/my-requests': {
@@ -1000,60 +874,144 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedMyRequestsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/_authenticated/my-advert': {
-      id: '/_authenticated/my-advert'
-      path: '/my-advert'
-      fullPath: '/my-advert'
-      preLoaderRoute: typeof AuthenticatedMyAdvertRouteImport
+    '/_authenticated/profile': {
+      id: '/_authenticated/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof AuthenticatedProfileRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/apprenticeships/': {
+      id: '/apprenticeships/'
+      path: '/'
+      fullPath: '/apprenticeships/'
+      preLoaderRoute: typeof ApprenticeshipsIndexRouteImport
+      parentRoute: typeof ApprenticeshipsRoute
+    }
+    '/apprenticeships/become-mentor': {
+      id: '/apprenticeships/become-mentor'
+      path: '/become-mentor'
+      fullPath: '/apprenticeships/become-mentor'
+      preLoaderRoute: typeof ApprenticeshipsBecomeMentorRouteImport
+      parentRoute: typeof ApprenticeshipsRoute
+    }
+    '/apprenticeships/impact': {
+      id: '/apprenticeships/impact'
+      path: '/impact'
+      fullPath: '/apprenticeships/impact'
+      preLoaderRoute: typeof ApprenticeshipsImpactRouteImport
+      parentRoute: typeof ApprenticeshipsRoute
+    }
+    '/apprenticeships/mentors': {
+      id: '/apprenticeships/mentors'
+      path: '/mentors'
+      fullPath: '/apprenticeships/mentors'
+      preLoaderRoute: typeof ApprenticeshipsMentorsRouteImport
+      parentRoute: typeof ApprenticeshipsRoute
+    }
+    '/apprenticeships/opportunities': {
+      id: '/apprenticeships/opportunities'
+      path: '/opportunities'
+      fullPath: '/apprenticeships/opportunities'
+      preLoaderRoute: typeof ApprenticeshipsOpportunitiesRouteImport
+      parentRoute: typeof ApprenticeshipsRoute
+    }
+    '/apprenticeships/register-apprentice': {
+      id: '/apprenticeships/register-apprentice'
+      path: '/register-apprentice'
+      fullPath: '/apprenticeships/register-apprentice'
+      preLoaderRoute: typeof ApprenticeshipsRegisterApprenticeRouteImport
+      parentRoute: typeof ApprenticeshipsRoute
+    }
+    '/apprenticeships/register-provider': {
+      id: '/apprenticeships/register-provider'
+      path: '/register-provider'
+      fullPath: '/apprenticeships/register-provider'
+      preLoaderRoute: typeof ApprenticeshipsRegisterProviderRouteImport
+      parentRoute: typeof ApprenticeshipsRoute
+    }
+    '/feedback/$token': {
+      id: '/feedback/$token'
+      path: '/feedback/$token'
+      fullPath: '/feedback/$token'
+      preLoaderRoute: typeof FeedbackTokenRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/mentors/interest': {
+      id: '/mentors/interest'
+      path: '/mentors/interest'
+      fullPath: '/mentors/interest'
+      preLoaderRoute: typeof MentorsInterestRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/my-listing/$token': {
+      id: '/my-listing/$token'
+      path: '/my-listing/$token'
+      fullPath: '/my-listing/$token'
+      preLoaderRoute: typeof MyListingTokenRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/profile/$id': {
+      id: '/profile/$id'
+      path: '/profile/$id'
+      fullPath: '/profile/$id'
+      preLoaderRoute: typeof ProfileIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/request-mentorship/': {
+      id: '/request-mentorship/'
+      path: '/request-mentorship'
+      fullPath: '/request-mentorship/'
+      preLoaderRoute: typeof RequestMentorshipIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/request-mentorship/$mentorId': {
+      id: '/request-mentorship/$mentorId'
+      path: '/request-mentorship/$mentorId'
+      fullPath: '/request-mentorship/$mentorId'
+      preLoaderRoute: typeof RequestMentorshipMentorIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/request/$token': {
+      id: '/request/$token'
+      path: '/request/$token'
+      fullPath: '/request/$token'
+      preLoaderRoute: typeof RequestTokenRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/youth/': {
+      id: '/youth/'
+      path: '/'
+      fullPath: '/youth/'
+      preLoaderRoute: typeof YouthIndexRouteImport
+      parentRoute: typeof YouthRoute
+    }
+    '/youth/opportunities': {
+      id: '/youth/opportunities'
+      path: '/opportunities'
+      fullPath: '/youth/opportunities'
+      preLoaderRoute: typeof YouthOpportunitiesRouteImport
+      parentRoute: typeof YouthRoute
+    }
+    '/youth/post-opportunity': {
+      id: '/youth/post-opportunity'
+      path: '/post-opportunity'
+      fullPath: '/youth/post-opportunity'
+      preLoaderRoute: typeof YouthPostOpportunityRouteImport
+      parentRoute: typeof YouthRoute
+    }
+    '/youth/register': {
+      id: '/youth/register'
+      path: '/register'
+      fullPath: '/youth/register'
+      preLoaderRoute: typeof YouthRegisterRouteImport
+      parentRoute: typeof YouthRoute
     }
     '/_authenticated/admin/': {
       id: '/_authenticated/admin/'
       path: '/admin'
       fullPath: '/admin/'
       preLoaderRoute: typeof AuthenticatedAdminIndexRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
-    }
-    '/youth/parent-consent/$token': {
-      id: '/youth/parent-consent/$token'
-      path: '/parent-consent/$token'
-      fullPath: '/youth/parent-consent/$token'
-      preLoaderRoute: typeof YouthParentConsentTokenRouteImport
-      parentRoute: typeof YouthRoute
-    }
-    '/directory/$type/$id': {
-      id: '/directory/$type/$id'
-      path: '/$type/$id'
-      fullPath: '/directory/$type/$id'
-      preLoaderRoute: typeof DirectoryTypeIdRouteImport
-      parentRoute: typeof DirectoryRoute
-    }
-    '/api/public/contact-request': {
-      id: '/api/public/contact-request'
-      path: '/api/public/contact-request'
-      fullPath: '/api/public/contact-request'
-      preLoaderRoute: typeof ApiPublicContactRequestRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/_authenticated/youth/portfolio': {
-      id: '/_authenticated/youth/portfolio'
-      path: '/youth/portfolio'
-      fullPath: '/youth/portfolio'
-      preLoaderRoute: typeof AuthenticatedYouthPortfolioRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
-    }
-    '/_authenticated/admin/youth-opportunities': {
-      id: '/_authenticated/admin/youth-opportunities'
-      path: '/admin/youth-opportunities'
-      fullPath: '/admin/youth-opportunities'
-      preLoaderRoute: typeof AuthenticatedAdminYouthOpportunitiesRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
-    }
-    '/_authenticated/admin/noticeboard': {
-      id: '/_authenticated/admin/noticeboard'
-      path: '/admin/noticeboard'
-      fullPath: '/admin/noticeboard'
-      preLoaderRoute: typeof AuthenticatedAdminNoticeboardRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/admin/apprenticeships': {
@@ -1063,39 +1021,53 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminApprenticeshipsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/_authenticated/admin/youth/': {
-      id: '/_authenticated/admin/youth/'
-      path: '/admin/youth'
-      fullPath: '/admin/youth/'
-      preLoaderRoute: typeof AuthenticatedAdminYouthIndexRouteImport
+    '/_authenticated/admin/noticeboard': {
+      id: '/_authenticated/admin/noticeboard'
+      path: '/admin/noticeboard'
+      fullPath: '/admin/noticeboard'
+      preLoaderRoute: typeof AuthenticatedAdminNoticeboardRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/lovable/email/queue/process': {
-      id: '/lovable/email/queue/process'
-      path: '/lovable/email/queue/process'
-      fullPath: '/lovable/email/queue/process'
-      preLoaderRoute: typeof LovableEmailQueueProcessRouteImport
+    '/_authenticated/admin/youth-opportunities': {
+      id: '/_authenticated/admin/youth-opportunities'
+      path: '/admin/youth-opportunities'
+      fullPath: '/admin/youth-opportunities'
+      preLoaderRoute: typeof AuthenticatedAdminYouthOpportunitiesRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/youth/portfolio': {
+      id: '/_authenticated/youth/portfolio'
+      path: '/youth/portfolio'
+      fullPath: '/youth/portfolio'
+      preLoaderRoute: typeof AuthenticatedYouthPortfolioRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/api/public/contact-request': {
+      id: '/api/public/contact-request'
+      path: '/api/public/contact-request'
+      fullPath: '/api/public/contact-request'
+      preLoaderRoute: typeof ApiPublicContactRequestRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/lovable/email/auth/webhook': {
-      id: '/lovable/email/auth/webhook'
-      path: '/lovable/email/auth/webhook'
-      fullPath: '/lovable/email/auth/webhook'
-      preLoaderRoute: typeof LovableEmailAuthWebhookRouteImport
-      parentRoute: typeof rootRouteImport
+    '/directory/$type/$id': {
+      id: '/directory/$type/$id'
+      path: '/$type/$id'
+      fullPath: '/directory/$type/$id'
+      preLoaderRoute: typeof DirectoryTypeIdRouteImport
+      parentRoute: typeof DirectoryRoute
     }
-    '/lovable/email/auth/preview': {
-      id: '/lovable/email/auth/preview'
-      path: '/lovable/email/auth/preview'
-      fullPath: '/lovable/email/auth/preview'
-      preLoaderRoute: typeof LovableEmailAuthPreviewRouteImport
-      parentRoute: typeof rootRouteImport
+    '/youth/parent-consent/$token': {
+      id: '/youth/parent-consent/$token'
+      path: '/parent-consent/$token'
+      fullPath: '/youth/parent-consent/$token'
+      preLoaderRoute: typeof YouthParentConsentTokenRouteImport
+      parentRoute: typeof YouthRoute
     }
-    '/_authenticated/admin/youth/$id': {
-      id: '/_authenticated/admin/youth/$id'
-      path: '/admin/youth/$id'
-      fullPath: '/admin/youth/$id'
-      preLoaderRoute: typeof AuthenticatedAdminYouthIdRouteImport
+    '/_authenticated/admin/apprentices/$id': {
+      id: '/_authenticated/admin/apprentices/$id'
+      path: '/admin/apprentices/$id'
+      fullPath: '/admin/apprentices/$id'
+      preLoaderRoute: typeof AuthenticatedAdminApprenticesIdRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/admin/providers/$id': {
@@ -1105,12 +1077,40 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminProvidersIdRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/_authenticated/admin/apprentices/$id': {
-      id: '/_authenticated/admin/apprentices/$id'
-      path: '/admin/apprentices/$id'
-      fullPath: '/admin/apprentices/$id'
-      preLoaderRoute: typeof AuthenticatedAdminApprenticesIdRouteImport
+    '/_authenticated/admin/youth/': {
+      id: '/_authenticated/admin/youth/'
+      path: '/admin/youth'
+      fullPath: '/admin/youth/'
+      preLoaderRoute: typeof AuthenticatedAdminYouthIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/admin/youth/$id': {
+      id: '/_authenticated/admin/youth/$id'
+      path: '/admin/youth/$id'
+      fullPath: '/admin/youth/$id'
+      preLoaderRoute: typeof AuthenticatedAdminYouthIdRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/lovable/email/auth/preview': {
+      id: '/lovable/email/auth/preview'
+      path: '/lovable/email/auth/preview'
+      fullPath: '/lovable/email/auth/preview'
+      preLoaderRoute: typeof LovableEmailAuthPreviewRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/lovable/email/auth/webhook': {
+      id: '/lovable/email/auth/webhook'
+      path: '/lovable/email/auth/webhook'
+      fullPath: '/lovable/email/auth/webhook'
+      preLoaderRoute: typeof LovableEmailAuthWebhookRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/lovable/email/queue/process': {
+      id: '/lovable/email/queue/process'
+      path: '/lovable/email/queue/process'
+      fullPath: '/lovable/email/queue/process'
+      preLoaderRoute: typeof LovableEmailQueueProcessRouteImport
+      parentRoute: typeof rootRouteImport
     }
   }
 }
