@@ -1,6 +1,6 @@
-import { Link } from "@tanstack/react-router";
+import { Link, useNavigate } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
-import { Menu, X } from "lucide-react";
+import { Menu, X, LogOut } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { supabase } from "@/integrations/supabase/client";
 import { LanguageSelector } from "@/components/site/LanguageSelector";
@@ -8,9 +8,15 @@ import overbergLogo from "@/assets/overberg-logo.png.asset.json";
 
 export function Header() {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const [signedIn, setSignedIn] = useState(false);
   const [unread, setUnread] = useState(0);
+
+  const handleSignOut = async () => {
+    await supabase.auth.signOut();
+    navigate({ to: "/" });
+  };
 
   const NAV = [
     { to: "/", label: t("nav.home") },
@@ -133,18 +139,29 @@ export function Header() {
               </Link>
             ))}
             {signedIn ? (
-              <Link
-                to="/profile"
-                onClick={() => setOpen(false)}
-                className="relative px-4 py-2.5 rounded-lg bg-brand-primary text-white font-semibold shadow hover:bg-brand-primary/90 flex items-center justify-between"
-              >
-                <span>My Profile</span>
-                {unread > 0 && (
-                  <span className="inline-flex items-center justify-center min-w-[22px] h-5 px-1.5 rounded-full bg-white text-brand-primary text-[11px] font-bold">
-                    {unread > 9 ? "9+" : unread}
-                  </span>
-                )}
-              </Link>
+              <>
+                <Link
+                  to="/profile"
+                  onClick={() => setOpen(false)}
+                  className="relative px-4 py-2.5 rounded-lg bg-brand-primary text-white font-semibold shadow hover:bg-brand-primary/90 flex items-center justify-between"
+                >
+                  <span>My Profile</span>
+                  {unread > 0 && (
+                    <span className="inline-flex items-center justify-center min-w-[22px] h-5 px-1.5 rounded-full bg-white text-brand-primary text-[11px] font-bold">
+                      {unread > 9 ? "9+" : unread}
+                    </span>
+                  )}
+                </Link>
+                <button
+                  onClick={() => {
+                    setOpen(false);
+                    handleSignOut();
+                  }}
+                  className="px-4 py-2.5 rounded-lg border border-brand-dark/15 text-brand-dark/80 hover:bg-brand-soft flex items-center gap-2"
+                >
+                  <LogOut className="size-4" /> Sign out
+                </button>
+              </>
             ) : (
               <Link
                 to="/auth"
