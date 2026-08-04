@@ -72,15 +72,10 @@ function MyProfile() {
     <SiteLayout>
       <div className="max-w-3xl mx-auto px-4 sm:px-6 py-8 sm:py-12 space-y-8">
         <header className="space-y-1">
-          <div className="flex items-start justify-between gap-4">
-            <div className="space-y-1">
-              <h1 className="text-3xl sm:text-4xl font-heading font-bold">My Profile</h1>
-              <p className="text-brand-dark/60">
-                Manage your details, your skills listing, and any service requests — all in one place.
-              </p>
-            </div>
-            <SignOutButton />
-          </div>
+          <h1 className="text-3xl sm:text-4xl font-heading font-bold">My Profile</h1>
+          <p className="text-brand-dark/60">
+            Manage your details, your skills listing, and any service requests — all in one place.
+          </p>
         </header>
 
         <NotificationsSection />
@@ -88,7 +83,12 @@ function MyProfile() {
         <MyListingSection />
         <PeopleInterestedSection />
         <MyServiceRequestsSection />
+
+        <div className="pt-4 border-t border-brand-dark/10">
+          <SignOutButton />
+        </div>
       </div>
+
     </SiteLayout>
   );
 }
