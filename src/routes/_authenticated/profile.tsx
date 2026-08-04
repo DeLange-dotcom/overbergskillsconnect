@@ -46,16 +46,41 @@ function firstName(full: string) {
   return (full || "").trim().split(/\s+/)[0] || full;
 }
 
+function SignOutButton() {
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+
+  return (
+    <button
+      onClick={async () => {
+        setLoading(true);
+        await supabase.auth.signOut();
+        navigate({ to: "/" });
+      }}
+      disabled={loading}
+      className="inline-flex items-center gap-2 px-3 py-2 rounded-lg border border-brand-dark/15 text-sm text-brand-dark/70 hover:bg-brand-soft hover:text-brand-primary transition shrink-0"
+    >
+      {loading ? <Loader2 className="size-4 animate-spin" /> : <LogOut className="size-4" />}
+      Sign out
+    </button>
+  );
+}
+
 // ============ Main ============
 function MyProfile() {
   return (
     <SiteLayout>
       <div className="max-w-3xl mx-auto px-4 sm:px-6 py-8 sm:py-12 space-y-8">
         <header className="space-y-1">
-          <h1 className="text-3xl sm:text-4xl font-heading font-bold">My Profile</h1>
-          <p className="text-brand-dark/60">
-            Manage your details, your skills listing, and any service requests — all in one place.
-          </p>
+          <div className="flex items-start justify-between gap-4">
+            <div className="space-y-1">
+              <h1 className="text-3xl sm:text-4xl font-heading font-bold">My Profile</h1>
+              <p className="text-brand-dark/60">
+                Manage your details, your skills listing, and any service requests — all in one place.
+              </p>
+            </div>
+            <SignOutButton />
+          </div>
         </header>
 
         <NotificationsSection />
