@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { SiteLayout } from "@/components/site/SiteLayout";
@@ -22,6 +22,7 @@ import {
   Clock,
   Eye,
   EyeOff,
+  LogOut,
 } from "lucide-react";
 
 export const Route = createFileRoute("/_authenticated/profile")({
