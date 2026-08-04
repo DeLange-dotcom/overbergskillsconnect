@@ -11,9 +11,11 @@ import {
   COMMON_LANGUAGES,
   directoryCategoryLabel,
 } from "@/lib/directory-constants";
+import { requireFeature } from "@/lib/disabled-route";
 import { MapPin, Loader2, Search } from "lucide-react";
 
 export const Route = createFileRoute("/directory")({
+  beforeLoad: () => requireFeature("legacyDirectory"),
   head: () => ({
     meta: [
       { title: "Directory — Hineni Verified Applicants" },
@@ -68,7 +70,8 @@ function Directory() {
       if (town && !(r.area ?? "").toLowerCase().includes(town.toLowerCase())) return false;
       if (level && r.verification_level !== level) return false;
       if (language && !(r.languages ?? []).includes(language)) return false;
-      if (skill && !(r.skills ?? []).some((s) => s.toLowerCase().includes(skill.toLowerCase()))) return false;
+      if (skill && !(r.skills ?? []).some((s) => s.toLowerCase().includes(skill.toLowerCase())))
+        return false;
       if (availability === "now" && !r.available_now) return false;
       return true;
     });
@@ -98,7 +101,9 @@ function Directory() {
             >
               <option value="">All categories</option>
               {DIRECTORY_CATEGORIES.map((c) => (
-                <option key={c.value} value={c.value}>{c.label}</option>
+                <option key={c.value} value={c.value}>
+                  {c.label}
+                </option>
               ))}
             </select>
           </Field>
@@ -118,7 +123,9 @@ function Directory() {
             >
               <option value="">Any level</option>
               {VERIFICATION_LEVELS.map((l) => (
-                <option key={l.value} value={l.value}>{l.label}</option>
+                <option key={l.value} value={l.value}>
+                  {l.label}
+                </option>
               ))}
             </select>
           </Field>
@@ -130,7 +137,9 @@ function Directory() {
             >
               <option value="">Any language</option>
               {COMMON_LANGUAGES.map((l) => (
-                <option key={l} value={l}>{l}</option>
+                <option key={l} value={l}>
+                  {l}
+                </option>
               ))}
             </select>
           </Field>
@@ -209,9 +218,7 @@ function ProfileCard({ row }: { row: Row }) {
         </div>
         <VerificationBadge level={row.verification_level ?? "unverified"} size="sm" />
       </div>
-      <div className="text-xs text-brand-dark/60 mb-2">
-        {directoryCategoryLabel(row.category)}
-      </div>
+      <div className="text-xs text-brand-dark/60 mb-2">{directoryCategoryLabel(row.category)}</div>
       {row.short_bio && (
         <p className="text-sm text-brand-dark/70 mb-3 line-clamp-3">{row.short_bio}</p>
       )}

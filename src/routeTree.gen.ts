@@ -27,6 +27,7 @@ import { Route as RequestSupportRouteImport } from './routes/request-support'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as SafeguardingPolicyRouteImport } from './routes/safeguarding-policy'
 import { Route as TermsRouteImport } from './routes/terms'
+import { Route as UnavailableRouteImport } from './routes/unavailable'
 import { Route as YouthRouteImport } from './routes/youth'
 import { Route as AuthenticatedMyAdvertRouteImport } from './routes/_authenticated/my-advert'
 import { Route as AuthenticatedMyRequestsRouteImport } from './routes/_authenticated/my-requests'
@@ -152,6 +153,11 @@ const SafeguardingPolicyRoute = SafeguardingPolicyRouteImport.update({
 const TermsRoute = TermsRouteImport.update({
   id: '/terms',
   path: '/terms',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const UnavailableRoute = UnavailableRouteImport.update({
+  id: '/unavailable',
+  path: '/unavailable',
   getParentRoute: () => rootRouteImport,
 } as any)
 const YouthRoute = YouthRouteImport.update({
@@ -372,6 +378,7 @@ export interface FileRoutesByFullPath {
   '/reset-password': typeof ResetPasswordRoute
   '/safeguarding-policy': typeof SafeguardingPolicyRoute
   '/terms': typeof TermsRoute
+  '/unavailable': typeof UnavailableRoute
   '/youth': typeof YouthRouteWithChildren
   '/my-advert': typeof AuthenticatedMyAdvertRoute
   '/my-requests': typeof AuthenticatedMyRequestsRoute
@@ -427,6 +434,7 @@ export interface FileRoutesByTo {
   '/reset-password': typeof ResetPasswordRoute
   '/safeguarding-policy': typeof SafeguardingPolicyRoute
   '/terms': typeof TermsRoute
+  '/unavailable': typeof UnavailableRoute
   '/my-advert': typeof AuthenticatedMyAdvertRoute
   '/my-requests': typeof AuthenticatedMyRequestsRoute
   '/profile': typeof AuthenticatedProfileRoute
@@ -484,6 +492,7 @@ export interface FileRoutesById {
   '/reset-password': typeof ResetPasswordRoute
   '/safeguarding-policy': typeof SafeguardingPolicyRoute
   '/terms': typeof TermsRoute
+  '/unavailable': typeof UnavailableRoute
   '/youth': typeof YouthRouteWithChildren
   '/_authenticated/my-advert': typeof AuthenticatedMyAdvertRoute
   '/_authenticated/my-requests': typeof AuthenticatedMyRequestsRoute
@@ -542,6 +551,7 @@ export interface FileRouteTypes {
     | '/reset-password'
     | '/safeguarding-policy'
     | '/terms'
+    | '/unavailable'
     | '/youth'
     | '/my-advert'
     | '/my-requests'
@@ -597,6 +607,7 @@ export interface FileRouteTypes {
     | '/reset-password'
     | '/safeguarding-policy'
     | '/terms'
+    | '/unavailable'
     | '/my-advert'
     | '/my-requests'
     | '/profile'
@@ -653,6 +664,7 @@ export interface FileRouteTypes {
     | '/reset-password'
     | '/safeguarding-policy'
     | '/terms'
+    | '/unavailable'
     | '/youth'
     | '/_authenticated/my-advert'
     | '/_authenticated/my-requests'
@@ -711,6 +723,7 @@ export interface RootRouteChildren {
   ResetPasswordRoute: typeof ResetPasswordRoute
   SafeguardingPolicyRoute: typeof SafeguardingPolicyRoute
   TermsRoute: typeof TermsRoute
+  UnavailableRoute: typeof UnavailableRoute
   YouthRoute: typeof YouthRouteWithChildren
   FeedbackTokenRoute: typeof FeedbackTokenRoute
   MentorsInterestRoute: typeof MentorsInterestRoute
@@ -851,6 +864,13 @@ declare module '@tanstack/react-router' {
       path: '/terms'
       fullPath: '/terms'
       preLoaderRoute: typeof TermsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/unavailable': {
+      id: '/unavailable'
+      path: '/unavailable'
+      fullPath: '/unavailable'
+      preLoaderRoute: typeof UnavailableRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/youth': {
@@ -1224,6 +1244,7 @@ const rootRouteChildren: RootRouteChildren = {
   ResetPasswordRoute: ResetPasswordRoute,
   SafeguardingPolicyRoute: SafeguardingPolicyRoute,
   TermsRoute: TermsRoute,
+  UnavailableRoute: UnavailableRoute,
   YouthRoute: YouthRouteWithChildren,
   FeedbackTokenRoute: FeedbackTokenRoute,
   MentorsInterestRoute: MentorsInterestRoute,

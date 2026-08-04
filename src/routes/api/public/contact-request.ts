@@ -9,7 +9,10 @@ const Body = z.object({
   applicant_type: z.enum(["service_provider", "apprentice", "youth"]),
   applicant_id: z.string().uuid(),
   category: z.string().trim().max(80).optional().nullable(),
+  website: z.string().trim().max(0).optional(),
 });
+
+const DAILY_REQUEST_LIMIT = 5;
 
 export const Route = createFileRoute("/api/public/contact-request")({
   server: {
@@ -24,6 +27,9 @@ export const Route = createFileRoute("/api/public/contact-request")({
             { error: e instanceof Error ? e.message : "Invalid request" },
             { status: 400 },
           );
+        }
+        if (parsed.website) {
+          return Response.json({ error: "Invalid request" }, { status: 400 });
         }
 
         const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
@@ -47,6 +53,27 @@ export const Route = createFileRoute("/api/public/contact-request")({
           return Response.json(
             { error: "This profile is not currently accepting contact requests." },
             { status: 403 },
+          );
+        }
+
+        const since = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
+        const { count: emailCount, error: emailCountErr } = await supabaseAdmin
+          .from("contact_requests")
+          .select("id", { count: "exact", head: true })
+          .eq("requester_email", parsed.visitor_email)
+          .gte("created_at", since);
+        const { count: phoneCount, error: phoneCountErr } = await supabaseAdmin
+          .from("contact_requests")
+          .select("id", { count: "exact", head: true })
+          .eq("visitor_phone", parsed.visitor_phone)
+          .gte("created_at", since);
+        if (emailCountErr || phoneCountErr) {
+          return Response.json({ error: "Could not validate request." }, { status: 500 });
+        }
+        if ((emailCount ?? 0) >= DAILY_REQUEST_LIMIT || (phoneCount ?? 0) >= DAILY_REQUEST_LIMIT) {
+          return Response.json(
+            { error: "Too many contact requests today. Please try again tomorrow." },
+            { status: 429 },
           );
         }
 
@@ -74,7 +101,10 @@ export const Route = createFileRoute("/api/public/contact-request")({
           .single();
 
         if (insertErr || !row) {
-          return Response.json({ error: insertErr?.message ?? "Could not save request." }, { status: 500 });
+          return Response.json(
+            { error: insertErr?.message ?? "Could not save request." },
+            { status: 500 },
+          );
         }
 
         // Schedule a 30-day feedback request

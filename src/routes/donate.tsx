@@ -3,10 +3,12 @@ import { useState } from "react";
 import { z } from "zod";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { supabase } from "@/integrations/supabase/client";
+import { requireFeature } from "@/lib/disabled-route";
 import { Heart, CheckCircle2, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/donate")({
+  beforeLoad: () => requireFeature("donations"),
   validateSearch: (s: Record<string, unknown>) => ({
     amount: typeof s.amount === "number" ? s.amount : undefined,
     purpose: s.purpose === "sponsor_vetting" ? "sponsor_vetting" : undefined,
@@ -134,7 +136,10 @@ function Donate() {
           </div>
         </div>
 
-        <form onSubmit={submit} className="bg-white border border-brand-dark/5 rounded-2xl p-5 sm:p-7 space-y-5">
+        <form
+          onSubmit={submit}
+          className="bg-white border border-brand-dark/5 rounded-2xl p-5 sm:p-7 space-y-5"
+        >
           <div>
             <div className="text-sm font-medium mb-2">Choose an amount (ZAR)</div>
             <div className="grid grid-cols-4 gap-2">
@@ -199,7 +204,12 @@ function Donate() {
 
           <div>
             <Label>Message (optional)</Label>
-            <textarea name="message" rows={3} className="w-full px-4 py-3 border border-brand-dark/10 rounded-xl"  spellCheck="true" />
+            <textarea
+              name="message"
+              rows={3}
+              className="w-full px-4 py-3 border border-brand-dark/10 rounded-xl"
+              spellCheck="true"
+            />
           </div>
 
           <label className="flex items-start gap-2 text-sm">
@@ -228,19 +238,15 @@ function Donate() {
 function Label({ children }: { children: React.ReactNode }) {
   return <label className="block text-sm font-medium mb-1.5 text-brand-dark">{children}</label>;
 }
-function Input({
-  label,
-  name,
-  type = "text",
-}: {
-  label: string;
-  name: string;
-  type?: string;
-}) {
+function Input({ label, name, type = "text" }: { label: string; name: string; type?: string }) {
   return (
     <div>
       <Label>{label}</Label>
-      <input name={name} type={type} className="w-full px-4 py-3 border border-brand-dark/10 rounded-xl" />
+      <input
+        name={name}
+        type={type}
+        className="w-full px-4 py-3 border border-brand-dark/10 rounded-xl"
+      />
     </div>
   );
 }
@@ -257,7 +263,13 @@ function Radio({
 }) {
   return (
     <label className="flex-1 flex items-center justify-center gap-2 px-3 py-3 rounded-xl border border-brand-dark/10 cursor-pointer hover:bg-brand-soft text-sm">
-      <input type="radio" name={name} value={value} defaultChecked={defaultChecked} className="accent-brand-primary" />
+      <input
+        type="radio"
+        name={name}
+        value={value}
+        defaultChecked={defaultChecked}
+        className="accent-brand-primary"
+      />
       <span>{label}</span>
     </label>
   );

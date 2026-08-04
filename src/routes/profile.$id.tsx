@@ -265,16 +265,16 @@ function ContactDialog({
           <h2 className="font-heading text-xl font-semibold mb-2">Request sent</h2>
           <p className="text-sm text-brand-dark/70 mb-5">
             Your request has been sent successfully. {name} can choose whether to share their
-            contact details. You can check the status any time from
-            <span className="font-medium"> My Contact Requests</span> in your dashboard.
+            contact details. You can check the status any time from your profile dashboard. The
+            advertiser will also see an in-app notification when they sign in.
           </p>
           <div className="flex flex-col sm:flex-row gap-2">
             <button
               type="button"
-              onClick={() => navigate({ to: "/my-requests" })}
+              onClick={() => navigate({ to: "/profile" })}
               className="flex-1 px-4 py-3 rounded-xl bg-brand-primary text-white font-medium"
             >
-              View My Contact Requests
+              View My Profile
             </button>
             <button
               type="button"
@@ -351,8 +351,23 @@ function ContactDialog({
 }
 
 function ReportDialog({ profileId, onClose }: { profileId: string; onClose: () => void }) {
+  const navigate = useNavigate();
+  const [authChecked, setAuthChecked] = useState(false);
+  const [signedIn, setSignedIn] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [reason, setReason] = useState<string>("");
+
+  useEffect(() => {
+    let active = true;
+    supabase.auth.getUser().then(({ data }) => {
+      if (!active) return;
+      setSignedIn(Boolean(data.user));
+      setAuthChecked(true);
+    });
+    return () => {
+      active = false;
+    };
+  }, []);
 
   async function submit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -375,6 +390,48 @@ function ReportDialog({ profileId, onClose }: { profileId: string; onClose: () =
     }
     toast.success("Thank you. Khulisa admins will review this report.");
     onClose();
+  }
+
+  if (!authChecked) {
+    return (
+      <Modal onClose={onClose}>
+        <h2 className="font-heading text-xl font-semibold mb-2">Checking your account</h2>
+        <p className="text-sm text-brand-dark/60">Please wait a moment.</p>
+      </Modal>
+    );
+  }
+
+  if (!signedIn) {
+    return (
+      <Modal onClose={onClose}>
+        <h2 className="font-heading text-xl font-semibold mb-2">Sign in to report a profile</h2>
+        <p className="text-sm text-brand-dark/60 mb-5">
+          Reports are reviewed by admins. Signing in helps prevent false reports and gives the
+          review team a clearer audit trail.
+        </p>
+        <div className="flex gap-2 justify-end">
+          <button
+            type="button"
+            onClick={onClose}
+            className="px-4 py-2.5 rounded-xl border border-brand-dark/10"
+          >
+            Cancel
+          </button>
+          <button
+            type="button"
+            onClick={() =>
+              navigate({
+                to: "/auth",
+                search: { next: `/profile/${profileId}` } as never,
+              })
+            }
+            className="px-4 py-2.5 rounded-xl bg-brand-primary text-white"
+          >
+            Sign in
+          </button>
+        </div>
+      </Modal>
+    );
   }
 
   return (

@@ -5,9 +5,21 @@ import { SiteLayout } from "@/components/site/SiteLayout";
 import { supabase } from "@/integrations/supabase/client";
 import { BadgeChip } from "@/components/site/BadgeChip";
 import { PathwayTracker } from "@/components/site/PathwayTracker";
+import { requireFeature } from "@/lib/disabled-route";
 import { YOUTH_INTERESTS, YOUTH_SKILLS, labelFromList } from "@/lib/youth";
 
+type ApplicationRow = {
+  id: string;
+  status: string | null;
+  hours_logged: number | null;
+  youth_opportunities?: {
+    title?: string | null;
+    organisation_name?: string | null;
+  } | null;
+};
+
 export const Route = createFileRoute("/_authenticated/youth/portfolio")({
+  beforeLoad: () => requireFeature("youthHub"),
   head: () => ({ meta: [{ title: "My Youth Portfolio — Hineni" }] }),
   component: YouthPortfolio,
 });
@@ -73,7 +85,11 @@ function YouthPortfolio() {
   });
 
   if (profileQ.isLoading) {
-    return <SiteLayout><div className="py-20 text-center text-brand-dark/60">Loading…</div></SiteLayout>;
+    return (
+      <SiteLayout>
+        <div className="py-20 text-center text-brand-dark/60">Loading…</div>
+      </SiteLayout>
+    );
   }
 
   if (!profile) {
@@ -111,9 +127,13 @@ function YouthPortfolio() {
     <SiteLayout>
       <div className="max-w-4xl mx-auto px-4 sm:px-6 py-10 sm:py-14">
         <header className="bg-brand-primary text-white rounded-2xl p-6 sm:p-8 mb-8">
-          <div className="text-xs uppercase tracking-widest opacity-80">{profile.age_group} · {profile.town}</div>
+          <div className="text-xs uppercase tracking-widest opacity-80">
+            {profile.age_group} · {profile.town}
+          </div>
           <h1 className="text-3xl font-heading font-bold mt-1">{profile.full_name}</h1>
-          <div className="text-sm opacity-90 mt-2">Reference: {profile.application_code} · Status: {profile.status}</div>
+          <div className="text-sm opacity-90 mt-2">
+            Reference: {profile.application_code} · Status: {profile.status}
+          </div>
         </header>
 
         <section className="mb-8">
@@ -131,7 +151,9 @@ function YouthPortfolio() {
           <h2 className="font-heading text-xl font-semibold mb-3">Badges</h2>
           {badgesQ.data && badgesQ.data.length > 0 ? (
             <div className="flex flex-wrap gap-2">
-              {badgesQ.data.map((b) => <BadgeChip key={b.id} badgeKey={b.badge_key} />)}
+              {badgesQ.data.map((b) => (
+                <BadgeChip key={b.id} badgeKey={b.badge_key} />
+              ))}
             </div>
           ) : (
             <p className="text-sm text-brand-dark/60">No badges yet — keep going!</p>
@@ -163,7 +185,7 @@ function YouthPortfolio() {
           <h2 className="font-heading text-xl font-semibold mb-3">My opportunities</h2>
           {applicationsQ.data && applicationsQ.data.length > 0 ? (
             <ul className="divide-y divide-brand-dark/5 bg-white border border-brand-dark/5 rounded-2xl">
-              {applicationsQ.data.map((a: any) => (
+              {(applicationsQ.data as ApplicationRow[]).map((a) => (
                 <li key={a.id} className="px-4 py-3 text-sm flex justify-between gap-3">
                   <div>
                     <div className="font-medium">
@@ -190,7 +212,8 @@ function YouthPortfolio() {
                 <li key={t.id} className="px-4 py-3 text-sm">
                   <div className="font-medium">{t.course_name}</div>
                   <div className="text-xs text-brand-dark/60">
-                    {t.provider ?? "—"} {t.completed_at ? `· ${t.completed_at}` : ""} {t.verified_by_admin ? "· verified" : ""}
+                    {t.provider ?? "—"} {t.completed_at ? `· ${t.completed_at}` : ""}{" "}
+                    {t.verified_by_admin ? "· verified" : ""}
                   </div>
                 </li>
               ))}

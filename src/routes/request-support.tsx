@@ -5,11 +5,13 @@ import { SiteLayout } from "@/components/site/SiteLayout";
 import { TermsAcceptance } from "@/components/site/TermsAcceptance";
 import { supabase } from "@/integrations/supabase/client";
 import { SERVICE_CATEGORIES, DAYS, HOURS, LOOKING_FOR } from "@/lib/constants";
+import { requireFeature } from "@/lib/disabled-route";
 import { TERMS_VERSION, recordTermsAcceptance } from "@/lib/terms";
 import { CheckCircle2, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/request-support")({
+  beforeLoad: () => requireFeature("volunteer"),
   head: () => ({
     meta: [
       { title: "Request Support — Hineni Skills Register" },
@@ -139,7 +141,10 @@ function RequestSupport() {
           Tell us what help you need. We will personally find a vetted community member for you.
         </p>
 
-        <form onSubmit={submit} className="space-y-5 bg-white p-5 sm:p-7 rounded-2xl border border-brand-dark/5">
+        <form
+          onSubmit={submit}
+          className="space-y-5 bg-white p-5 sm:p-7 rounded-2xl border border-brand-dark/5"
+        >
           <Input label="Your name" name="requester_name" required error={errors.requester_name} />
           <Input
             label="Contact number"
@@ -170,7 +175,11 @@ function RequestSupport() {
               <p className="text-xs text-destructive mt-1">{errors.service_needed}</p>
             )}
           </div>
-          <Input label="Urgency (optional)" name="urgency" placeholder="e.g. This week, next month" />
+          <Input
+            label="Urgency (optional)"
+            name="urgency"
+            placeholder="e.g. This week, next month"
+          />
           <div>
             <Label>Arrangement</Label>
             <select
@@ -186,15 +195,26 @@ function RequestSupport() {
               ))}
             </select>
           </div>
-          <CheckGroup label="Preferred days" name="preferred_days" options={DAYS as unknown as { value: string; label: string }[]} cols={7} />
-          <CheckGroup label="Preferred times" name="preferred_times" options={HOURS as unknown as { value: string; label: string }[]} cols={4} />
+          <CheckGroup
+            label="Preferred days"
+            name="preferred_days"
+            options={DAYS as unknown as { value: string; label: string }[]}
+            cols={7}
+          />
+          <CheckGroup
+            label="Preferred times"
+            name="preferred_times"
+            options={HOURS as unknown as { value: string; label: string }[]}
+            cols={4}
+          />
           <div>
             <Label>Notes</Label>
             <textarea
               name="notes"
               rows={4}
               className="w-full px-4 py-3 border border-brand-dark/10 rounded-xl bg-white"
-             spellCheck="true" />
+              spellCheck="true"
+            />
           </div>
           <label className="flex items-start gap-3 text-sm">
             <input type="checkbox" name="consent_contact" className="mt-1 accent-brand-primary" />
