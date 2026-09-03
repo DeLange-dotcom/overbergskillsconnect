@@ -20,6 +20,7 @@ import { Route as DirectoryRouteImport } from './routes/directory'
 import { Route as DisclaimerRouteImport } from './routes/disclaimer'
 import { Route as DonateRouteImport } from './routes/donate'
 import { Route as FindHelpRouteImport } from './routes/find-help'
+import { Route as HelpRouteImport } from './routes/help'
 import { Route as HowItWorksRouteImport } from './routes/how-it-works'
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as RegisterProviderRouteImport } from './routes/register-provider'
@@ -118,6 +119,11 @@ const DonateRoute = DonateRouteImport.update({
 const FindHelpRoute = FindHelpRouteImport.update({
   id: '/find-help',
   path: '/find-help',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HelpRoute = HelpRouteImport.update({
+  id: '/help',
+  path: '/help',
   getParentRoute: () => rootRouteImport,
 } as any)
 const HowItWorksRoute = HowItWorksRouteImport.update({
@@ -371,6 +377,7 @@ export interface FileRoutesByFullPath {
   '/disclaimer': typeof DisclaimerRoute
   '/donate': typeof DonateRoute
   '/find-help': typeof FindHelpRoute
+  '/help': typeof HelpRoute
   '/how-it-works': typeof HowItWorksRoute
   '/privacy': typeof PrivacyRoute
   '/register-provider': typeof RegisterProviderRoute
@@ -427,6 +434,7 @@ export interface FileRoutesByTo {
   '/disclaimer': typeof DisclaimerRoute
   '/donate': typeof DonateRoute
   '/find-help': typeof FindHelpRoute
+  '/help': typeof HelpRoute
   '/how-it-works': typeof HowItWorksRoute
   '/privacy': typeof PrivacyRoute
   '/register-provider': typeof RegisterProviderRoute
@@ -485,6 +493,7 @@ export interface FileRoutesById {
   '/disclaimer': typeof DisclaimerRoute
   '/donate': typeof DonateRoute
   '/find-help': typeof FindHelpRoute
+  '/help': typeof HelpRoute
   '/how-it-works': typeof HowItWorksRoute
   '/privacy': typeof PrivacyRoute
   '/register-provider': typeof RegisterProviderRoute
@@ -544,6 +553,7 @@ export interface FileRouteTypes {
     | '/disclaimer'
     | '/donate'
     | '/find-help'
+    | '/help'
     | '/how-it-works'
     | '/privacy'
     | '/register-provider'
@@ -600,6 +610,7 @@ export interface FileRouteTypes {
     | '/disclaimer'
     | '/donate'
     | '/find-help'
+    | '/help'
     | '/how-it-works'
     | '/privacy'
     | '/register-provider'
@@ -657,6 +668,7 @@ export interface FileRouteTypes {
     | '/disclaimer'
     | '/donate'
     | '/find-help'
+    | '/help'
     | '/how-it-works'
     | '/privacy'
     | '/register-provider'
@@ -716,6 +728,7 @@ export interface RootRouteChildren {
   DisclaimerRoute: typeof DisclaimerRoute
   DonateRoute: typeof DonateRoute
   FindHelpRoute: typeof FindHelpRoute
+  HelpRoute: typeof HelpRoute
   HowItWorksRoute: typeof HowItWorksRoute
   PrivacyRoute: typeof PrivacyRoute
   RegisterProviderRoute: typeof RegisterProviderRoute
@@ -815,6 +828,13 @@ declare module '@tanstack/react-router' {
       path: '/find-help'
       fullPath: '/find-help'
       preLoaderRoute: typeof FindHelpRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/help': {
+      id: '/help'
+      path: '/help'
+      fullPath: '/help'
+      preLoaderRoute: typeof HelpRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/how-it-works': {
@@ -1237,6 +1257,7 @@ const rootRouteChildren: RootRouteChildren = {
   DisclaimerRoute: DisclaimerRoute,
   DonateRoute: DonateRoute,
   FindHelpRoute: FindHelpRoute,
+  HelpRoute: HelpRoute,
   HowItWorksRoute: HowItWorksRoute,
   PrivacyRoute: PrivacyRoute,
   RegisterProviderRoute: RegisterProviderRoute,
