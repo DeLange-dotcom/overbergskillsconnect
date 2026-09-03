@@ -4,6 +4,7 @@ import { SiteLayout } from "@/components/site/SiteLayout";
 import { HINENI_DONATION_URL, PLATFORM_NAME } from "@/lib/brand";
 import { PageHeader } from "@/components/site/PageHeader";
 import { GraduationCap, HandHeart, Hammer, Sparkles } from "lucide-react";
+import hineniLogoAsset from "@/assets/hineni-logo-mark.png.asset.json";
 
 export const Route = createFileRoute("/about")({
   head: () => ({
