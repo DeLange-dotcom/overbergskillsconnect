@@ -180,15 +180,22 @@ function NoticeboardAdmin() {
     queryKey: ["nb_admin_pending_reminders"],
     enabled: isAdmin === true,
     queryFn: async (): Promise<ContactReminderRow[]> => {
-      const { data, error } = await supabase
-        .from("noticeboard_contact_requests")
-        .select(
-          "id,requester_name,created_at,profile_id,noticeboard_profiles!noticeboard_contact_requests_profile_id_fkey(id,name,phone,public_listing_reference)",
-        )
-        .eq("status", "pending")
-        .order("created_at", { ascending: false });
+      // Administrator-only database function: ordinary signed-in users have no
+      // read access to advertisers' telephone numbers.
+      const { data, error } = await supabase.rpc("admin_pending_contact_reminders");
       if (error) throw error;
-      return (data ?? []) as unknown as ContactReminderRow[];
+      return (data ?? []).map((r) => ({
+        id: r.id,
+        requester_name: r.requester_name,
+        created_at: r.created_at,
+        profile_id: r.profile_id,
+        noticeboard_profiles: {
+          id: r.profile_id,
+          name: r.profile_name,
+          phone: r.profile_phone,
+          public_listing_reference: r.public_listing_reference,
+        },
+      })) as ContactReminderRow[];
     },
     refetchInterval: 30000,
   });
