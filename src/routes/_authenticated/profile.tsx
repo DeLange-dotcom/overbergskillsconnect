@@ -3,6 +3,7 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { supabase } from "@/integrations/supabase/client";
+import { LocationSelect } from "@/components/site/LocationSelect";
 import { whatsappHref } from "@/lib/phone";
 import { toast } from "sonner";
 import {
@@ -146,6 +147,8 @@ function MyProfile() {
         <MyListingSection />
         <PeopleInterestedSection />
         <MyServiceRequestsSection />
+        <MyFavouritesSection />
+        <AccountSection />
 
         <div className="pt-4 border-t border-brand-dark/10 flex flex-wrap items-center gap-3">
           <Link
@@ -235,7 +238,11 @@ function NotificationsSection() {
     <Section
       icon="🔔"
       title="Notifications"
-      subtitle={unread > 0 ? `${unread} new` : "You're all caught up"}
+      subtitle={
+        unread > 0
+          ? `${unread} new — check your profile regularly, we do not send SMS messages`
+          : "Check your profile regularly. Updates appear here, not by SMS."
+      }
       right={
         unread > 0 && (
           <button
@@ -363,7 +370,7 @@ function MyDetailsSection() {
           className="space-y-3"
         >
           <Field label="Full name" value={fullName} onChange={setFullName} />
-          <Field label="Town or area" value={town} onChange={setTown} />
+          <LocationSelect value={town} onChange={setTown} label="Town or area" />
           <Field
             label="Telephone number (also used for WhatsApp)"
             type="tel"
@@ -550,7 +557,13 @@ function MyListingSection() {
           className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg border border-brand-dark/15 text-sm hover:bg-brand-soft"
         >
           {data.is_hidden ? <Eye className="size-4" /> : <EyeOff className="size-4" />}
-          {data.is_hidden ? "Unpause" : "Pause"} / Delete
+          {data.is_hidden ? "Unpause my listing" : "Pause my listing"}
+        </Link>
+        <Link
+          to="/my-advert"
+          className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg border border-red-200 text-red-700 text-sm hover:bg-red-50"
+        >
+          <Trash2 className="size-4" /> Delete my listing
         </Link>
       </div>
     </Section>
