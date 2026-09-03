@@ -271,6 +271,7 @@ function RegisterProvider() {
             </Link>
             <Link
               to="/donate"
+              search={{ amount: undefined, purpose: undefined }}
               className="px-6 py-3 rounded-xl border border-brand-dark/15 hover:bg-brand-soft"
             >
               Support Hineni
