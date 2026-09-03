@@ -187,7 +187,7 @@ function Advertise() {
         />
         <ShortNotice className="mb-8" />
 
-        <form onSubmit={onSubmit} className="space-y-5">
+        <form onSubmit={onSubmit} className="space-y-5 max-w-2xl">
           <Field label={t("advertiseForm.fields.name")} name="name" required />
           <LocationSelect value={town} onChange={setTown} required />
 
