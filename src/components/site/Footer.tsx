@@ -1,7 +1,8 @@
 import { Link } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
 import { useEffect, useState } from "react";
-import { PLATFORM_NAME, IP_OWNERSHIP_STATEMENT } from "@/lib/brand";
+import { IP_OWNERSHIP_STATEMENT } from "@/lib/brand";
+import { Logo } from "@/components/brand/Logo";
 import { supabase } from "@/integrations/supabase/client";
 
 export function Footer() {
@@ -23,32 +24,37 @@ export function Footer() {
   }, []);
 
   return (
-    <footer className="mt-20 border-t border-brand-dark/5 bg-brand-soft/50">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 py-12 grid gap-8 md:grid-cols-2">
+    <footer className="mt-20 bg-brand-navy text-white">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 py-12 grid gap-10 md:grid-cols-2">
         <div>
-          <div className="font-heading text-xl font-bold text-brand-primary mb-1">
-            {PLATFORM_NAME}
-          </div>
-          <div className="text-sm text-brand-dark/70 mb-1">{t("footer.tagline")}</div>
-          <div className="text-xs uppercase tracking-widest text-brand-dark/50">
-            {t("footer.poweredBy")}
+          <Logo onDark showRelationship={false} />
+          <p className="mt-4 text-sm text-white/70 max-w-sm leading-relaxed">
+            {t("footer.tagline")}
+          </p>
+          <div className="mt-4 space-y-1">
+            <div className="text-[11px] font-semibold uppercase tracking-[0.16em] text-brand-green">
+              A Hineni Call Initiative
+            </div>
+            <div className="text-[11px] uppercase tracking-[0.16em] text-white/55">
+              Powered by Khulisa Group
+            </div>
           </div>
         </div>
-        <div className="text-sm">
-          <div className="font-semibold mb-3 text-brand-dark">{t("footer.information")}</div>
-          <ul className="space-y-2 text-brand-dark/70">
-            <li><Link to="/help" className="font-semibold text-brand-primary hover:underline">Need Help?</Link></li>
-            <li><Link to="/how-it-works" className="hover:text-brand-primary">How It Works</Link></li>
-            <li><Link to="/about" className="hover:text-brand-primary">{t("footer.about")}</Link></li>
-            <li><Link to="/terms" className="hover:text-brand-primary">{t("footer.terms")}</Link></li>
-            <li><Link to="/privacy" className="hover:text-brand-primary">{t("footer.privacy")}</Link></li>
-            <li><Link to="/disclaimer" className="hover:text-brand-primary">{t("footer.disclaimer")}</Link></li>
-            <li><Link to="/contact" className="hover:text-brand-primary">{t("footer.contact")}</Link></li>
+        <div className="text-sm md:justify-self-end">
+          <div className="font-semibold mb-3 text-white">{t("footer.information")}</div>
+          <ul className="space-y-2.5 text-white/75">
+            <li><Link to="/help" className="font-semibold text-brand-green hover:underline">Need Help?</Link></li>
+            <li><Link to="/how-it-works" className="hover:text-white">How It Works</Link></li>
+            <li><Link to="/about" className="hover:text-white">{t("footer.about")}</Link></li>
+            <li><Link to="/terms" className="hover:text-white">{t("footer.terms")}</Link></li>
+            <li><Link to="/privacy" className="hover:text-white">{t("footer.privacy")}</Link></li>
+            <li><Link to="/disclaimer" className="hover:text-white">{t("footer.disclaimer")}</Link></li>
+            <li><Link to="/contact" className="hover:text-white">{t("footer.contact")}</Link></li>
             {isAdmin && (
               <li>
                 <Link
                   to="/admin"
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-brand-dark text-white text-xs font-semibold hover:bg-brand-dark/90 transition"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/10 text-white text-xs font-semibold hover:bg-white/20 transition"
                 >
                   🛠 Admin
                 </Link>
@@ -57,11 +63,11 @@ export function Footer() {
           </ul>
         </div>
       </div>
-      <div className="border-t border-brand-dark/5 py-6 px-4 sm:px-6 space-y-3">
-        <p className="max-w-5xl mx-auto text-[11px] leading-relaxed text-brand-dark/55 text-center">
+      <div className="border-t border-white/10 py-6 px-4 sm:px-6 space-y-3">
+        <p className="max-w-5xl mx-auto text-[11px] leading-relaxed text-white/45 text-center">
           {IP_OWNERSHIP_STATEMENT}
         </p>
-        <div className="text-center text-xs text-brand-dark/50">
+        <div className="text-center text-xs text-white/55">
           {t("footer.copyright")}
         </div>
       </div>
