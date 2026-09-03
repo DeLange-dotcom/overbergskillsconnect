@@ -96,7 +96,7 @@ function YouthPortfolio() {
     return (
       <SiteLayout>
         <div className="max-w-xl mx-auto px-6 py-16 text-center">
-          <h1 className="text-2xl font-heading font-bold mb-3">No youth profile linked</h1>
+          <h1 className="osc-heading text-2xl mb-3">No youth profile linked</h1>
           <p className="text-brand-dark/70 mb-6">
             You're signed in as <strong>{email}</strong>, but no youth registration is linked to
             this account yet. Register, then ask Hineni to link the profile.
@@ -130,7 +130,7 @@ function YouthPortfolio() {
           <div className="text-xs uppercase tracking-widest opacity-80">
             {profile.age_group} · {profile.town}
           </div>
-          <h1 className="text-3xl font-heading font-bold mt-1">{profile.full_name}</h1>
+          <h1 className="osc-heading text-3xl mt-1">{profile.full_name}</h1>
           <div className="text-sm opacity-90 mt-2">
             Reference: {profile.application_code} · Status: {profile.status}
           </div>

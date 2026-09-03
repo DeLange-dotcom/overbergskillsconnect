@@ -149,7 +149,7 @@ function Page() {
       <SiteLayout>
         <div className="max-w-2xl mx-auto px-4 sm:px-6 py-16 text-center">
           <CheckCircle2 className="size-16 text-brand-primary mx-auto mb-6" />
-          <h1 className="text-3xl font-heading font-bold mb-3">Thank you</h1>
+          <h1 className="osc-heading text-3xl mb-3">Thank you</h1>
           <p className="text-brand-dark/70 max-w-md mx-auto mb-8">
             Your opportunity has been received and will be reviewed by a Hineni coordinator before it goes live.
           </p>
@@ -162,7 +162,7 @@ function Page() {
   return (
     <SiteLayout>
       <div className="max-w-3xl mx-auto px-4 sm:px-6 py-10 sm:py-14">
-        <h1 className="text-3xl sm:text-4xl font-heading font-bold mb-3">Offer an Apprenticeship</h1>
+        <h1 className="osc-heading text-3xl sm:text-4xl mb-3">Offer an Apprenticeship</h1>
         <p className="text-brand-dark/70 mb-8">Tell us about your organisation and the opportunity you want to offer.</p>
         <form onSubmit={onSubmit} className="space-y-8">
           <Fieldset title="Organisation">

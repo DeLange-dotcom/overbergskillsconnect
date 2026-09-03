@@ -142,7 +142,7 @@ function MyListing() {
     return (
       <SiteLayout>
         <div className="max-w-xl mx-auto px-4 py-16 text-center">
-          <h1 className="text-2xl font-heading font-bold mb-2">Invalid link</h1>
+          <h1 className="osc-heading text-2xl mb-2">Invalid link</h1>
           <p className="text-brand-dark/70">{(error as Error).message}</p>
         </div>
       </SiteLayout>
@@ -154,7 +154,7 @@ function MyListing() {
     return (
       <SiteLayout>
         <div className="max-w-xl mx-auto px-4 py-16 text-center">
-          <h1 className="text-2xl font-heading font-bold mb-2">Listing not found</h1>
+          <h1 className="osc-heading text-2xl mb-2">Listing not found</h1>
         </div>
       </SiteLayout>
     );
@@ -165,7 +165,7 @@ function MyListing() {
   return (
     <SiteLayout>
       <div className="max-w-3xl mx-auto px-4 sm:px-6 py-10">
-        <h1 className="text-3xl font-heading font-bold mb-2">My listing</h1>
+        <h1 className="osc-heading text-3xl mb-2">My listing</h1>
         <p className="text-brand-dark/70 mb-6">
           Hello {first.name}. Manage contact requests and visibility below.
         </p>

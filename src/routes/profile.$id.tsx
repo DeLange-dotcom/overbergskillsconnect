@@ -14,7 +14,7 @@ export const Route = createFileRoute("/profile/$id")({
   errorComponent: ({ error }) => (
     <SiteLayout>
       <div className="max-w-xl mx-auto px-4 py-16 text-center">
-        <h1 className="text-2xl font-heading font-bold mb-2">Something went wrong</h1>
+        <h1 className="osc-heading text-2xl mb-2">Something went wrong</h1>
         <p className="text-brand-dark/70">{(error as Error).message}</p>
       </div>
     </SiteLayout>
@@ -22,7 +22,7 @@ export const Route = createFileRoute("/profile/$id")({
   notFoundComponent: () => (
     <SiteLayout>
       <div className="max-w-xl mx-auto px-4 py-16 text-center">
-        <h1 className="text-2xl font-heading font-bold mb-2">Listing not found</h1>
+        <h1 className="osc-heading text-2xl mb-2">Listing not found</h1>
         <Link to="/find-help" className="text-brand-primary underline">
           Back to the noticeboard
         </Link>
@@ -95,7 +95,7 @@ function ProfilePage() {
               )}
             </div>
             <div className="flex-1 min-w-0">
-              <h1 className="text-2xl font-heading font-bold">{data.name}</h1>
+              <h1 className="osc-heading text-2xl">{data.name}</h1>
               <div className="flex items-center gap-1.5 text-sm text-brand-dark/60 mt-1">
                 <MapPin className="size-4" /> {data.town}
               </div>

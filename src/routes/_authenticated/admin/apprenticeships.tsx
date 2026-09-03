@@ -64,7 +64,7 @@ function AdminApp() {
     <SiteLayout>
       <div className="max-w-6xl mx-auto px-4 sm:px-6 py-8">
         <div className="flex items-center justify-between mb-6">
-          <h1 className="text-3xl font-heading font-bold">Apprenticeships Admin</h1>
+          <h1 className="osc-heading text-3xl">Apprenticeships Admin</h1>
           <Link to="/admin" className="text-sm text-brand-primary underline">
             ← Admin home
           </Link>

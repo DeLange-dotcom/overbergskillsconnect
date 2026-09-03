@@ -107,7 +107,7 @@ export function RequestMentorshipPage({ mentorId }: { mentorId?: string }) {
       <SiteLayout>
         <div className="max-w-2xl mx-auto px-4 sm:px-6 py-16 text-center">
           <CheckCircle2 className="size-16 text-brand-primary mx-auto mb-6" />
-          <h1 className="text-3xl font-heading font-bold mb-3">Request received</h1>
+          <h1 className="osc-heading text-3xl mb-3">Request received</h1>
           <p className="text-brand-dark/70 max-w-md mx-auto mb-8">
             A Hineni coordinator will review your request and broker the introduction. Your details
             stay private until both sides agree.
@@ -126,7 +126,7 @@ export function RequestMentorshipPage({ mentorId }: { mentorId?: string }) {
   return (
     <SiteLayout>
       <div className="max-w-2xl mx-auto px-4 sm:px-6 py-10 sm:py-14">
-        <h1 className="text-3xl sm:text-4xl font-heading font-bold mb-3">Request mentorship</h1>
+        <h1 className="osc-heading text-3xl sm:text-4xl mb-3">Request mentorship</h1>
         <p className="text-brand-dark/70 mb-8">
           {mentorId ? (
             <>

@@ -19,7 +19,7 @@ function DisclaimerPage() {
   return (
     <SiteLayout>
       <div className="max-w-3xl mx-auto px-4 sm:px-6 py-12 prose prose-sm">
-        <h1 className="text-3xl font-heading font-bold mb-6">Disclaimer</h1>
+        <h1 className="osc-heading text-3xl mb-6">Disclaimer</h1>
         <DisclaimerBanner />
         <div className="mt-8 space-y-4 text-brand-dark/80 leading-relaxed">
           <p>

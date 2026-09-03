@@ -135,7 +135,7 @@ function Advertise() {
           <div className="text-5xl mb-4" aria-hidden>
             👋
           </div>
-          <h1 className="text-3xl font-heading font-bold mb-3">Sign in to advertise</h1>
+          <h1 className="osc-heading text-3xl mb-3">Sign in to advertise</h1>
           <p className="text-brand-dark/70 mb-8">
             Create a free account so you can update or remove your advert at any time.
           </p>
@@ -158,7 +158,7 @@ function Advertise() {
           <div className="text-5xl mb-4" aria-hidden>
             ✅
           </div>
-          <h1 className="text-3xl font-heading font-bold mb-3">You already have an advert</h1>
+          <h1 className="osc-heading text-3xl mb-3">You already have an advert</h1>
           <p className="text-brand-dark/70 mb-8">
             You can edit or remove it any time from your dashboard.
           </p>
@@ -188,7 +188,7 @@ function Advertise() {
           <LocationSelect value={town} onChange={setTown} required />
 
           <div>
-            <h2 className="text-xl font-heading font-bold">What work can you do?</h2>
+            <h2 className="osc-heading text-xl">What work can you do?</h2>
             <p className="text-sm text-brand-dark/60 mt-1 mb-3">
               Choose a skill, then say how much experience you have. You can add as many skills as
               you like.

@@ -34,7 +34,7 @@ function SafeguardingPolicy() {
           </span>
         </div>
 
-        <h1 className="text-3xl sm:text-4xl font-heading font-bold mb-4">
+        <h1 className="osc-heading text-3xl sm:text-4xl mb-4">
           Hineni Safeguarding Policy
         </h1>
         <p className="text-brand-dark/70 mb-6 leading-relaxed">

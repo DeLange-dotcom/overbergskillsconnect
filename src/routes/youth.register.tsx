@@ -251,7 +251,7 @@ function RegisterYouth() {
       <SiteLayout>
         <div className="max-w-2xl mx-auto px-4 sm:px-6 py-16 text-center">
           <CheckCircle2 className="size-16 text-brand-primary mx-auto mb-6" />
-          <h1 className="text-3xl font-heading font-bold mb-3">Registration received</h1>
+          <h1 className="osc-heading text-3xl mb-3">Registration received</h1>
           <p className="text-brand-dark/70 mb-2">Your reference code is:</p>
           <p className="text-2xl font-heading font-bold text-brand-primary mb-6">{done.code}</p>
           <p className="text-brand-dark/70 max-w-md mx-auto mb-8">
@@ -273,7 +273,7 @@ function RegisterYouth() {
   return (
     <SiteLayout>
       <div className="max-w-3xl mx-auto px-4 sm:px-6 py-10 sm:py-14">
-        <h1 className="text-3xl sm:text-4xl font-heading font-bold mb-3">
+        <h1 className="osc-heading text-3xl sm:text-4xl mb-3">
           Register as a young person
         </h1>
         <p className="text-brand-dark/70 mb-8">

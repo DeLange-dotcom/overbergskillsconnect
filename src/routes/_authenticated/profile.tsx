@@ -95,7 +95,7 @@ function WelcomeCard() {
   return (
     <section className="rounded-2xl border border-brand-primary/30 bg-brand-soft/70 p-5 sm:p-6">
       <div className="flex items-start justify-between gap-3">
-        <h2 className="text-xl font-heading font-bold">Welcome to Overberg Skills Connect</h2>
+        <h2 className="osc-heading text-xl">Welcome to Overberg Skills Connect</h2>
         <button
           onClick={dismiss}
           aria-label="Dismiss welcome message"
@@ -139,7 +139,7 @@ function MyProfile() {
     <SiteLayout>
       <div className="max-w-3xl mx-auto px-4 sm:px-6 py-8 sm:py-12 space-y-8">
         <header className="space-y-1">
-          <h1 className="text-3xl sm:text-4xl font-heading font-bold">My Profile</h1>
+          <h1 className="osc-heading text-3xl sm:text-4xl">My Profile</h1>
           <p className="text-brand-dark/60">
             Manage your details, your skills listing, and any service requests — all in one place.
           </p>
@@ -187,7 +187,7 @@ function Section({
     <section className="bg-white rounded-2xl border border-brand-dark/10 p-5 sm:p-6">
       <div className="flex items-start justify-between gap-3 mb-4">
         <div>
-          <h2 className="text-xl font-heading font-bold flex items-center gap-2">
+          <h2 className="osc-heading text-xl flex items-center gap-2">
             <span aria-hidden>{icon}</span>
             {title}
           </h2>
@@ -1049,7 +1049,7 @@ function AccountSection() {
           aria-modal="true"
         >
           <div className="bg-white rounded-2xl shadow-xl max-w-md w-full p-6">
-            <h2 className="text-xl font-heading font-bold mb-2">Delete your account?</h2>
+            <h2 className="osc-heading text-xl mb-2">Delete your account?</h2>
             <p className="text-sm text-brand-dark/70 mb-4">
               Step 1 of 2. Everything below will be removed permanently: your listing, your skills,
               your favourites and your personal details.

@@ -73,7 +73,7 @@ function FeedbackPage() {
     return (
       <SiteLayout>
         <div className="max-w-xl mx-auto p-10 text-center">
-          <h1 className="text-2xl font-heading font-bold mb-3">Link not valid</h1>
+          <h1 className="osc-heading text-2xl mb-3">Link not valid</h1>
           <p className="text-brand-dark/70 mb-4">
             This feedback link is invalid or has expired.
           </p>
@@ -87,7 +87,7 @@ function FeedbackPage() {
     return (
       <SiteLayout>
         <div className="max-w-xl mx-auto p-10 text-center">
-          <h1 className="text-2xl font-heading font-bold mb-3">Thank you</h1>
+          <h1 className="osc-heading text-2xl mb-3">Thank you</h1>
           <p className="text-brand-dark/70">Your feedback has been recorded.</p>
         </div>
       </SiteLayout>
@@ -97,7 +97,7 @@ function FeedbackPage() {
   return (
     <SiteLayout>
       <div className="max-w-2xl mx-auto px-4 sm:px-6 py-10">
-        <h1 className="text-3xl font-heading font-bold mb-2">How did your experience go?</h1>
+        <h1 className="osc-heading text-3xl mb-2">How did your experience go?</h1>
         <p className="text-brand-dark/70 mb-6">
           You requested contact with <strong>{data.applicant_name}</strong> through Hineni. Your
           honest feedback helps the community.

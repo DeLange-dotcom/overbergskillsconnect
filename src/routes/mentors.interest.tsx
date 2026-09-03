@@ -56,7 +56,7 @@ function MentorInterest() {
       <SiteLayout>
         <div className="max-w-lg mx-auto px-4 py-16 text-center">
           <CheckCircle2 className="size-14 text-brand-primary mx-auto mb-4" />
-          <h1 className="text-2xl font-heading font-bold mb-2">Thank you</h1>
+          <h1 className="osc-heading text-2xl mb-2">Thank you</h1>
           <p className="text-brand-dark/70 mb-6">
             Your interest has been recorded. We'll be in touch as the mentor programme launches.
           </p>
@@ -72,7 +72,7 @@ function MentorInterest() {
         <span className="inline-block px-3 py-1 rounded-full bg-brand-accent/10 text-xs uppercase tracking-widest text-brand-accent font-semibold mb-3">
           Coming soon
         </span>
-        <h1 className="text-3xl font-heading font-bold mb-2">Become a mentor</h1>
+        <h1 className="osc-heading text-3xl mb-2">Become a mentor</h1>
         <p className="text-brand-dark/70 mb-6">
           Help shape the next generation. Register your interest and we'll be in touch as the Hineni
           Mentor programme rolls out.

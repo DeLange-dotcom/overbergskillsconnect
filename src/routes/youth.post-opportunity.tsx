@@ -114,7 +114,7 @@ function PostOpportunity() {
       <SiteLayout>
         <div className="max-w-lg mx-auto px-4 py-16 text-center">
           <CheckCircle2 className="size-14 text-brand-primary mx-auto mb-4" />
-          <h1 className="text-2xl font-heading font-bold mb-2">Submitted for review</h1>
+          <h1 className="osc-heading text-2xl mb-2">Submitted for review</h1>
           <p className="text-brand-dark/70 mb-6">
             Thank you. A Hineni coordinator will review your opportunity and contact you before it appears on the board.
           </p>
@@ -127,7 +127,7 @@ function PostOpportunity() {
   return (
     <SiteLayout>
       <div className="max-w-3xl mx-auto px-4 sm:px-6 py-10 sm:py-14">
-        <h1 className="text-3xl font-heading font-bold mb-2">Post a youth opportunity</h1>
+        <h1 className="osc-heading text-3xl mb-2">Post a youth opportunity</h1>
         <p className="text-brand-dark/70 mb-6">
           Tell us about the opportunity. All submissions are reviewed by Hineni before being published.
         </p>

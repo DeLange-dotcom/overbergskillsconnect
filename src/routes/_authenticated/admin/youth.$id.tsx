@@ -83,7 +83,7 @@ function AdminYouthDetail() {
 
         <header className="mt-4 mb-6">
           <div className="text-xs uppercase tracking-widest text-brand-dark/50">{p.application_code}</div>
-          <h1 className="text-3xl font-heading font-bold">{p.full_name}</h1>
+          <h1 className="osc-heading text-3xl">{p.full_name}</h1>
           <div className="text-sm text-brand-dark/60 mt-1">
             {p.age_group} · {p.town} · {p.school ?? "—"} · DOB {p.dob}
           </div>

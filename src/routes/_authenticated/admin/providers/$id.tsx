@@ -129,7 +129,7 @@ function ProviderDetail() {
         <div className="flex items-start justify-between gap-4 flex-wrap mb-6">
           <div>
             <div className="text-xs font-mono text-brand-dark/50 mb-1">{provider.application_code}</div>
-            <h1 className="text-3xl font-heading font-bold">{provider.full_name}</h1>
+            <h1 className="osc-heading text-3xl">{provider.full_name}</h1>
             <p className="text-brand-dark/60 text-sm">
               {provider.town} · Registered {new Date(provider.created_at).toLocaleDateString()}
             </p>

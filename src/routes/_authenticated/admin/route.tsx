@@ -42,7 +42,7 @@ function AdminLayout() {
       <SiteLayout>
         <div className="max-w-md mx-auto px-4 py-20 text-center">
           <ShieldAlert className="size-10 text-amber-600 mx-auto mb-4" />
-          <h1 className="text-2xl font-heading font-bold mb-2">Access denied</h1>
+          <h1 className="osc-heading text-2xl mb-2">Access denied</h1>
           <p className="text-brand-dark/70 mb-6">
             This area is for authorised administrators only.
           </p>

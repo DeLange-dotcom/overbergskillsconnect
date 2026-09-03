@@ -92,7 +92,7 @@ function Donate() {
       <SiteLayout>
         <div className="max-w-2xl mx-auto px-4 sm:px-6 py-16 text-center">
           <CheckCircle2 className="size-16 text-brand-primary mx-auto mb-6" />
-          <h1 className="text-3xl font-heading font-bold mb-3">Thank you</h1>
+          <h1 className="osc-heading text-3xl mb-3">Thank you</h1>
           <p className="text-brand-dark/70 max-w-md mx-auto mb-6">
             Your pledge has been recorded. A Hineni coordinator will reach out with secure payment
             details (EFT or card). Every contribution makes a real difference.
@@ -108,7 +108,7 @@ function Donate() {
         <span className="inline-block px-3 py-1 rounded-full bg-brand-accent/10 text-xs uppercase tracking-widest text-brand-accent font-semibold">
           Support the register
         </span>
-        <h1 className="text-3xl sm:text-4xl font-heading font-bold mt-4 mb-4">
+        <h1 className="osc-heading text-3xl sm:text-4xl mt-4 mb-4">
           Support the Hineni Community Skills Register
         </h1>
         <p className="text-brand-dark/75 leading-relaxed mb-4">

@@ -16,7 +16,7 @@ function Privacy() {
   return (
     <SiteLayout>
       <div className="max-w-3xl mx-auto px-4 sm:px-6 py-12 space-y-6 text-brand-dark/85 leading-relaxed">
-        <h1 className="text-3xl font-heading font-bold">Privacy Policy</h1>
+        <h1 className="osc-heading text-3xl">Privacy Policy</h1>
         <p className="text-sm text-brand-dark/60">Effective date: 4 August 2026</p>
 
         <Section title="1. Who we are">
