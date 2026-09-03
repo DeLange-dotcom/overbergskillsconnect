@@ -83,7 +83,7 @@ export default function About() {
               <p className="mt-1 text-sm font-semibold uppercase tracking-wide text-brand-navy/55">
                 {t("aboutPage.hineni.role")}
               </p>
-              <div className="mt-4 overflow-hidden rounded-xl bg-[#9ACD32]">
+              <div className="mt-4 overflow-hidden rounded-xl">
                 <img
                   src={hineniLogoAsset.url}
                   alt={t("aboutPage.hineni.logoAlt", "Hineni Call logo")}
