@@ -5,7 +5,6 @@ import { MapPin, Loader2, Search, Calendar } from "lucide-react";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { DisclaimerBanner } from "@/components/site/DisclaimerBanner";
 import { supabase } from "@/integrations/supabase/client";
-import { SKILL_CATEGORIES } from "@/lib/noticeboard";
 
 export const Route = createFileRoute("/find-help")({
   head: () => ({
