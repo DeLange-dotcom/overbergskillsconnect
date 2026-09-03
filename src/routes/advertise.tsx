@@ -2,6 +2,7 @@ import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { ShortNotice } from "@/components/site/ShortNotice";
+import { PageHeader } from "@/components/site/PageHeader";
 import { LocationSelect } from "@/components/site/LocationSelect";
 import { supabase } from "@/integrations/supabase/client";
 import { AVAILABILITY_OPTIONS } from "@/lib/noticeboard";
@@ -141,7 +142,7 @@ function Advertise() {
           <Link
             to="/auth"
             search={{ next: "/advertise" } as never}
-            className="inline-flex px-6 py-3.5 rounded-xl bg-brand-primary text-white font-medium"
+            className="osc-btn osc-btn-primary px-6 py-3.5"
           >
             Sign in or create account
           </Link>
@@ -163,7 +164,7 @@ function Advertise() {
           </p>
           <Link
             to="/my-advert"
-            className="inline-flex px-6 py-3.5 rounded-xl bg-brand-primary text-white font-medium"
+            className="osc-btn osc-btn-primary px-6 py-3.5"
           >
             Go to My Listing
           </Link>
@@ -175,11 +176,11 @@ function Advertise() {
   return (
     <SiteLayout>
       <div className="max-w-2xl mx-auto px-4 sm:px-6 py-10 sm:py-14">
-        <h1 className="text-3xl sm:text-4xl font-heading font-bold mb-3">Advertise my skills</h1>
-        <p className="text-brand-dark/70 mb-6">
-          Post a free listing on the community noticeboard. Your phone number stays private — it is
-          only shared when you approve a request.
-        </p>
+        <PageHeader
+          eyebrow="Advertise My Skills"
+          title="Make your skills visible"
+          intro="Post a free listing on the community noticeboard. Your phone number stays private — it is only shared when you approve a request."
+        />
         <ShortNotice className="mb-8" />
 
         <form onSubmit={onSubmit} className="space-y-5">
@@ -200,7 +201,7 @@ function Advertise() {
             <Label>Availability</Label>
             <select
               name="availability"
-              className="w-full px-4 py-3 border border-brand-dark/10 rounded-xl bg-white"
+              className="osc-input"
             >
               <option value="">Select…</option>
               {AVAILABILITY_OPTIONS.map((a) => (
@@ -218,7 +219,7 @@ function Advertise() {
               required
               rows={4}
               placeholder="A few sentences about what you do best."
-              className="w-full px-4 py-3 border border-brand-dark/10 rounded-xl"
+              className="osc-input"
               spellCheck="true"
             />
           </div>
@@ -233,7 +234,7 @@ function Advertise() {
             help="This is never shown publicly. It is only shared when you approve a contact request."
           />
 
-          <div className="space-y-3 p-5 rounded-2xl border border-brand-dark/10 bg-brand-soft/40">
+          <div className="space-y-3 p-5 osc-panel">
             <p className="text-sm font-semibold">Before publishing, please confirm:</p>
             <Ack
               checked={acks.age}

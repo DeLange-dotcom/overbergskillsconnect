@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { PLATFORM_NAME } from "@/lib/brand";
+import { PageHeader } from "@/components/site/PageHeader";
 
 export const Route = createFileRoute("/about")({
   head: () => ({
@@ -22,9 +23,11 @@ function About() {
   return (
     <SiteLayout>
       <div className="max-w-3xl mx-auto px-4 sm:px-6 py-12 space-y-6 text-brand-dark/85 leading-relaxed">
-        <h1 className="text-3xl font-heading font-bold">
-          {t("about.title")} {PLATFORM_NAME}
-        </h1>
+        <PageHeader
+          eyebrow="About"
+          title={`${t("about.title")} ${PLATFORM_NAME}`}
+          className="mb-2"
+        />
         <p>{t("about.p1")}</p>
         <p>{t("about.p2")}</p>
         <p>
