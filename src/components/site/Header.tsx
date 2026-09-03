@@ -59,7 +59,7 @@ export function Header() {
 
   return (
     <header className="border-b border-brand-dark/5 bg-brand-page sticky top-0 z-40 backdrop-blur">
-      <div className="max-w-7xl mx-auto px-3 sm:px-6 py-4 sm:py-6 grid grid-cols-[minmax(0,1fr)_auto] items-center gap-2 sm:flex sm:justify-between sm:gap-3">
+      <div className="max-w-[1180px] mx-auto px-3 sm:px-6 py-4 sm:py-6 grid grid-cols-[minmax(0,1fr)_auto] items-center gap-2 sm:flex sm:justify-between sm:gap-3">
         <Link to="/" className="flex flex-col items-start gap-1.5 sm:gap-2.5 min-w-0">
           <img
             src={logoAsset.url}

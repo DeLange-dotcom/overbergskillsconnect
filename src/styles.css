@@ -153,6 +153,23 @@
  * Use these instead of hand-rolling greens, navies, radii or shadows.
  * ------------------------------------------------------------------ */
 
+/*
+ * Shared desktop page container: wider frame (~1180px) on large screens,
+ * same 16px gutters on mobile (matches px-4) so mobile is unchanged.
+ * Individual text blocks may still use narrower readable widths inside.
+ */
+.osc-container {
+  width: 100%;
+  max-width: 1180px;
+  margin-inline: auto;
+  padding-inline: 1rem;
+}
+@media (min-width: 640px) {
+  .osc-container {
+    padding-inline: 1.5rem;
+  }
+}
+
 @utility osc-eyebrow {
   display: inline-block;
   font-size: 0.6875rem;

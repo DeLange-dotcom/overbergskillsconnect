@@ -82,7 +82,7 @@ function ProfilePage() {
 
   return (
     <SiteLayout>
-      <div className="max-w-2xl mx-auto px-4 sm:px-6 py-10">
+      <div className="osc-container py-10">
         <Link
           to="/find-help"
           className="inline-flex items-center gap-1.5 text-sm text-brand-dark/60 hover:text-brand-primary mb-6"

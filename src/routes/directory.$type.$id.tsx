@@ -115,7 +115,7 @@ function ProfilePage() {
 
   return (
     <SiteLayout>
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 py-8">
+      <div className="osc-container py-8">
         <Link
           to="/directory"
           className="inline-flex items-center gap-2 text-sm text-brand-dark/60 hover:text-brand-primary mb-4"

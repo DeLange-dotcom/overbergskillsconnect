@@ -218,7 +218,7 @@ function MyAdvertEditor({
 
   return (
     <SiteLayout>
-      <div className="max-w-2xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
+      <div className="osc-container py-8 sm:py-12">
         <div className="flex items-start justify-between gap-3 mb-6">
           <div>
             <h1 className="osc-heading text-3xl sm:text-4xl">{t("myAdvert.page.title")}</h1>

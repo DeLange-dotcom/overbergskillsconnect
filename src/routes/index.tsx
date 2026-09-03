@@ -30,8 +30,8 @@ function Home() {
   const { t } = useTranslation();
   return (
     <SiteLayout>
-      <section className="px-4 sm:px-6 pt-14 pb-20">
-        <div className="max-w-3xl mx-auto text-center">
+      <section className="osc-container pt-14 pb-20">
+        <div className="max-w-4xl mx-auto text-center">
           <span className="inline-block px-3 py-1 rounded-full bg-brand-green/10 text-xs uppercase tracking-widest text-brand-green font-semibold">
             {t("home.eyebrow")}
           </span>
