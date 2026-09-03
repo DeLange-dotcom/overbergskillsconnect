@@ -178,7 +178,8 @@ function FindHelp() {
           </div>
         ) : filtered.length === 0 ? (
           <div className="text-center py-20 text-brand-dark/60">
-            No listings match your filters yet.{" "}
+            No one matches that search yet. Try a different word or choose “All Overberg areas”.{" "}
+
             <Link to="/advertise" className="text-brand-primary underline">
               Be the first to advertise.
             </Link>
