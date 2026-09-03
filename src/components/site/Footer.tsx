@@ -2,8 +2,8 @@ import { Link } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
 import { useEffect, useState } from "react";
 import { IP_OWNERSHIP_STATEMENT } from "@/lib/brand";
-import { Logo } from "@/components/brand/Logo";
 import { supabase } from "@/integrations/supabase/client";
+import logoAsset from "@/assets/osc-logo-header.png.asset.json";
 
 export function Footer() {
   const { t } = useTranslation();
@@ -27,12 +27,18 @@ export function Footer() {
     <footer className="mt-14 bg-brand-navy text-white">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 py-6 flex flex-col gap-5 md:flex-row md:items-start md:justify-between">
         <div>
-          <Logo onDark showRelationship={false} />
-          <div className="mt-2 flex flex-wrap items-center gap-x-2 gap-y-1 text-[10px] uppercase tracking-[0.14em]">
-            <span className="font-semibold text-brand-green">A Hineni Call Initiative</span>
-            <span className="text-white/25">·</span>
-            <span className="text-white/60">Powered by Khulisa Group</span>
-          </div>
+          <Link to="/" className="inline-flex flex-col items-start gap-0.5">
+            <img
+              src={logoAsset.url}
+              alt="Overberg Skills Connect — A Hineni Call Initiative, powered by Khulisa Group"
+              className="h-9 sm:h-11 w-auto brightness-0 invert"
+            />
+            <span className="flex items-center gap-1 text-[8px] sm:text-[9px] uppercase tracking-[0.14em] leading-none whitespace-nowrap">
+              <span className="font-semibold text-brand-green">A Hineni Call Initiative</span>
+              <span className="text-white/25">·</span>
+              <span className="text-white/60">Powered by Khulisa Group</span>
+            </span>
+          </Link>
         </div>
         <div className="text-sm md:text-right">
           <div className="text-[11px] font-semibold uppercase tracking-[0.14em] text-white/50 mb-2">
