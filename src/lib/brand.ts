@@ -21,3 +21,11 @@ export const DELIVERED_THROUGH_LINE = "Delivered through the Overberg Skills Con
 
 export const IP_OWNERSHIP_STATEMENT =
   "All intellectual property rights relating to the platform, software, forms, workflows, content, designs, documentation and databases remain the property of Khulisa Group unless expressly agreed otherwise in writing.";
+
+/**
+ * Hineni Call's secure external donation page.
+ * Leave as an empty string until Hineni Call confirms the official URL.
+ * When set, the "Support Hineni Call" button on /about becomes an active link.
+ * No payment processing happens inside Overberg Skills Connect.
+ */
+export const HINENI_DONATION_URL = "";
