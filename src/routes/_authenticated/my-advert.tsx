@@ -4,6 +4,7 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { supabase } from "@/integrations/supabase/client";
 import { AVAILABILITY_OPTIONS, type SkillExperience } from "@/lib/noticeboard";
+import { LocationSelect } from "@/components/site/LocationSelect";
 import {
   SkillExperienceEditor,
   entriesFromSkillExperience,
@@ -128,6 +129,7 @@ function MyAdvertEditor({
   );
   const [saving, setSaving] = useState(false);
   const [confirmDelete, setConfirmDelete] = useState(false);
+  const [deleteAck, setDeleteAck] = useState(false);
 
   // Keep form in sync if listing changes externally
   useEffect(() => {
@@ -185,15 +187,15 @@ function MyAdvertEditor({
   }
 
 
-  async function toggleHidden() {
-    const { error } = await supabase.rpc("noticeboard_my_update", {
-      _payload: { is_hidden: !listing.is_hidden },
+  async function togglePaused() {
+    const { error } = await supabase.rpc("noticeboard_my_set_paused", {
+      _paused: !listing.is_hidden,
     });
     if (error) {
-      toast.error(error.message);
+      toast.error("Sorry, we could not change your listing. Please try again.");
       return;
     }
-    toast.success(listing.is_hidden ? "Advert visible" : "Advert hidden");
+    toast.success(listing.is_hidden ? "Your listing is live again." : "Your listing is paused.");
     refetch();
   }
 
@@ -244,21 +246,21 @@ function MyAdvertEditor({
         <div className="flex items-center justify-between p-4 rounded-2xl border border-brand-dark/10 bg-white mb-6">
           <div>
             <div className="font-medium">
-              {listing.is_hidden ? "Hidden from noticeboard" : "Live on the noticeboard"}
+              {listing.is_hidden ? "Paused — not shown to anyone" : "Live on the noticeboard"}
             </div>
             <div className="text-xs text-brand-dark/60">
               {listing.is_hidden
-                ? "Other users can't see your advert."
-                : "People can find and contact you."}
+                ? "Pausing keeps everything saved. Nothing is deleted."
+                : "People can find you and ask for your number."}
             </div>
           </div>
           <button
             type="button"
-            onClick={toggleHidden}
-            className="inline-flex items-center gap-2 px-3 py-2 rounded-lg border border-brand-dark/15 text-sm hover:bg-brand-soft"
+            onClick={togglePaused}
+            className="inline-flex items-center gap-2 px-3 py-2 rounded-lg border border-brand-dark/15 text-sm hover:bg-brand-soft whitespace-nowrap"
           >
             {listing.is_hidden ? <Eye className="size-4" /> : <EyeOff className="size-4" />}
-            {listing.is_hidden ? "Make visible" : "Hide"}
+            {listing.is_hidden ? "Unpause my listing" : "Pause my listing"}
           </button>
         </div>
 
@@ -272,7 +274,7 @@ function MyAdvertEditor({
           className="space-y-5"
         >
           <Field label="Name" value={name} onChange={setName} required />
-          <Field label="Town or area" value={town} onChange={setTown} required />
+          <LocationSelect value={town} onChange={setTown} required />
 
           <div>
             <h2 className="text-xl font-heading font-bold">What work can you do?</h2>
@@ -392,12 +394,20 @@ function MyAdvertEditor({
               <EyeOff className="size-4" /> Archive my listing
             </button>
           )}
+        </div>
+
+        <div className="mt-6 p-5 rounded-2xl border border-red-200 bg-red-50/50">
+          <h2 className="font-heading font-bold text-red-800 mb-1">Delete my listing</h2>
+          <p className="text-sm text-red-900/80 mb-4">
+            This is permanent. Your listing and its skills are removed for good. If you only want a
+            break, use <strong>Pause my listing</strong> instead — nothing is lost.
+          </p>
           <button
             type="button"
             onClick={() => setConfirmDelete(true)}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-red-200 text-red-700 hover:bg-red-50 text-sm"
+            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-red-600 text-white text-sm font-medium"
           >
-            <Trash2 className="size-4" /> Delete my listing
+            <Trash2 className="size-4" /> Delete my listing permanently
           </button>
         </div>
 
@@ -408,28 +418,44 @@ function MyAdvertEditor({
             aria-modal="true"
           >
             <div className="bg-white rounded-2xl shadow-xl max-w-md w-full p-6">
-              <h2 className="text-xl font-heading font-bold mb-2">Delete your advert?</h2>
-              <p className="text-brand-dark/70 mb-6">
-                Are you sure you want to permanently remove your advert from Overberg Skills
-                Connect?
+              <h2 className="text-xl font-heading font-bold mb-2">
+                Permanently delete your listing?
+              </h2>
+              <p className="text-brand-dark/70 mb-4">
+                This cannot be undone. To keep your details for later, choose Cancel and use
+                <strong> Pause my listing</strong> instead.
               </p>
+              <label className="flex items-start gap-2.5 text-sm mb-6 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={deleteAck}
+                  onChange={(e) => setDeleteAck(e.target.checked)}
+                  className="mt-1 size-4"
+                />
+                <span>Yes, I understand my listing will be deleted for good.</span>
+              </label>
               <div className="flex gap-3 justify-end">
                 <button
                   type="button"
-                  onClick={() => setConfirmDelete(false)}
+                  onClick={() => {
+                    setConfirmDelete(false);
+                    setDeleteAck(false);
+                  }}
                   className="px-4 py-2 rounded-lg border border-brand-dark/15 text-sm"
                 >
                   Cancel
                 </button>
                 <button
                   type="button"
+                  disabled={!deleteAck}
                   onClick={() => {
                     setConfirmDelete(false);
+                    setDeleteAck(false);
                     deleteListing();
                   }}
-                  className="px-4 py-2 rounded-lg bg-red-600 text-white text-sm"
+                  className="px-4 py-2 rounded-lg bg-red-600 text-white text-sm disabled:opacity-40"
                 >
-                  Delete Listing
+                  Delete permanently
                 </button>
               </div>
             </div>
