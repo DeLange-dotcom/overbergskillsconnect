@@ -66,11 +66,12 @@ export function Header() {
             alt={t("shell.brand.logoAlt")}
             className="h-8 sm:h-11 w-auto max-w-full"
           />
-          <span className="flex items-center gap-1 max-w-full overflow-hidden text-[7px] sm:text-[9px] uppercase tracking-[0.12em] sm:tracking-[0.14em] leading-none whitespace-nowrap">
-            <span className="font-semibold text-brand-green truncate">{t("shell.brand.initiative")}</span>
+          <span className="flex flex-wrap items-center gap-x-1 gap-y-0.5 max-w-full text-[7px] sm:text-[9px] uppercase tracking-[0.1em] sm:tracking-[0.14em] leading-tight sm:whitespace-nowrap">
+            <span className="font-semibold text-brand-green">{t("shell.brand.initiative")}</span>
             <span className="text-brand-navy/25 shrink-0">·</span>
-            <span className="text-brand-navy/60 truncate">{t("shell.brand.poweredBy")}</span>
+            <span className="text-brand-navy/60">{t("shell.brand.poweredBy")}</span>
           </span>
+
 
         </Link>
 
