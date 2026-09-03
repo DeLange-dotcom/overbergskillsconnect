@@ -1,7 +1,8 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { SiteLayout } from "@/components/site/SiteLayout";
-import { DisclaimerBanner } from "@/components/site/DisclaimerBanner";
+import { ShortNotice } from "@/components/site/ShortNotice";
+import { LocationSelect } from "@/components/site/LocationSelect";
 import { supabase } from "@/integrations/supabase/client";
 import { AVAILABILITY_OPTIONS } from "@/lib/noticeboard";
 import {
@@ -35,6 +36,7 @@ function Advertise() {
   const [hasListing, setHasListing] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [entries, setEntries] = useState<SkillEntry[]>([newSkillEntry()]);
+  const [town, setTown] = useState("");
   const [acks, setAcks] = useState({
     age: false,
     truthful: false,
@@ -85,7 +87,7 @@ function Advertise() {
     const finalSkills = skillExperience.map((s) => s.skill);
     const payload = {
       name: String(fd.get("name") || "").trim(),
-      town: String(fd.get("town") || "").trim(),
+      town: town.trim(),
       phone: String(fd.get("phone") || "").trim(),
       description: String(fd.get("description") || "").trim(),
       availability: String(fd.get("availability") || "").trim() || null,
@@ -178,13 +180,11 @@ function Advertise() {
           Post a free listing on the community noticeboard. Your phone number stays private — it is
           only shared when you approve a request.
         </p>
-        <div className="mb-8">
-          <DisclaimerBanner />
-        </div>
+        <ShortNotice className="mb-8" />
 
         <form onSubmit={onSubmit} className="space-y-5">
           <Field label="Name" name="name" required />
-          <Field label="Town or area" name="town" required placeholder="e.g. Hermanus" />
+          <LocationSelect value={town} onChange={setTown} required />
 
           <div>
             <h2 className="text-xl font-heading font-bold">What work can you do?</h2>
