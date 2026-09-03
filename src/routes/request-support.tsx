@@ -124,7 +124,7 @@ function RequestSupport() {
             <Link to="/find-help" className="px-6 py-3 rounded-xl bg-brand-primary text-white">
               Browse providers
             </Link>
-            <Link to="/donate" className="px-6 py-3 rounded-xl border border-brand-dark/15">
+            <Link to="/donate" search={{ amount: undefined, purpose: undefined }} className="px-6 py-3 rounded-xl border border-brand-dark/15">
               Support Hineni
             </Link>
           </div>

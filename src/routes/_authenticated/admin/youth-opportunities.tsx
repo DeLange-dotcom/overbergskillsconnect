@@ -14,10 +14,8 @@ function AdminYouthOpportunities() {
   const q = useQuery({
     queryKey: ["admin_youth_opps"],
     queryFn: async () => {
-      const { data } = await supabase
-        .from("youth_opportunities")
-        .select("*")
-        .order("created_at", { ascending: false });
+      const { data, error } = await supabase.rpc("youth_opportunities_admin_list");
+      if (error) throw error;
       return data ?? [];
     },
   });

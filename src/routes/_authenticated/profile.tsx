@@ -66,6 +66,68 @@ function SignOutButton() {
   );
 }
 
+function WelcomeCard() {
+  const [show, setShow] = useState(false);
+  useEffect(() => {
+    try {
+      if (localStorage.getItem("osc_show_welcome") === "1") setShow(true);
+    } catch {
+      /* storage unavailable */
+    }
+  }, []);
+  if (!show) return null;
+
+  function dismiss() {
+    try {
+      localStorage.removeItem("osc_show_welcome");
+      localStorage.setItem("osc_welcomed", "1");
+    } catch {
+      /* storage unavailable */
+    }
+    setShow(false);
+  }
+
+  return (
+    <section className="rounded-2xl border border-brand-primary/30 bg-brand-soft/70 p-5 sm:p-6">
+      <div className="flex items-start justify-between gap-3">
+        <h2 className="text-xl font-heading font-bold">Welcome to Overberg Skills Connect</h2>
+        <button
+          onClick={dismiss}
+          aria-label="Dismiss welcome message"
+          className="text-brand-dark/50 hover:text-brand-dark"
+        >
+          <X className="size-4" />
+        </button>
+      </div>
+      <p className="text-sm text-brand-dark/70 mt-1">
+        You can now advertise your skills, find local help, or manage your profile.
+      </p>
+      <div className="flex flex-wrap gap-2 mt-4">
+        <Link
+          to="/advertise"
+          onClick={dismiss}
+          className="px-4 py-2.5 rounded-xl bg-brand-primary text-white text-sm font-semibold"
+        >
+          Advertise my skills
+        </Link>
+        <Link
+          to="/find-help"
+          onClick={dismiss}
+          className="px-4 py-2.5 rounded-xl border border-brand-dark/15 bg-white text-sm font-medium hover:bg-brand-soft"
+        >
+          Find local help
+        </Link>
+        <button
+          onClick={dismiss}
+          className="px-4 py-2.5 rounded-xl border border-brand-dark/15 bg-white text-sm font-medium hover:bg-brand-soft"
+        >
+          My Profile
+        </button>
+      </div>
+    </section>
+  );
+}
+
 // ============ Main ============
 function MyProfile() {
   return (
@@ -78,6 +140,7 @@ function MyProfile() {
           </p>
         </header>
 
+        <WelcomeCard />
         <NotificationsSection />
         <MyDetailsSection />
         <MyListingSection />
