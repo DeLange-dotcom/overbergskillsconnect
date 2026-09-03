@@ -25,7 +25,7 @@ export function Footer() {
 
   return (
     <footer className="mt-14 bg-brand-navy text-white">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 py-6 flex flex-col gap-5 md:flex-row md:items-start md:justify-between">
+      <div className="max-w-[1180px] mx-auto px-4 sm:px-6 py-6 flex flex-col gap-5 md:flex-row md:items-start md:justify-between">
         <div>
           <Link to="/" className="inline-flex flex-col items-start gap-0.5">
             <img

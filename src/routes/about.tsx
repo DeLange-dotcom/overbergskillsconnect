@@ -59,7 +59,7 @@ export default function About() {
     <SiteLayout>
       {/* 1. Introduction */}
       <section className="px-4 sm:px-6 py-12 sm:py-16">
-        <div className="mx-auto max-w-3xl">
+        <div className="mx-auto max-w-4xl">
           <PageHeader
             eyebrow={t("aboutPage.eyebrow", { platform: PLATFORM_NAME })}
             title={t("aboutPage.heroTitle")}
@@ -174,7 +174,7 @@ export default function About() {
 
       {/* 7 + 8. Support Hineni Call */}
       <section className="bg-brand-navy px-4 sm:px-6 py-12 sm:py-16">
-        <div className="mx-auto max-w-3xl text-center">
+        <div className="mx-auto max-w-4xl text-center">
           <span className="text-xs font-semibold uppercase tracking-wider text-brand-green">
             {t("aboutPage.support.eyebrow")}
           </span>
@@ -215,7 +215,7 @@ export default function About() {
 
       {/* 9. Community platform / safety */}
       <section className="px-4 sm:px-6 py-12 sm:py-16">
-        <div className="mx-auto max-w-3xl">
+        <div className="mx-auto max-w-4xl">
           <span className="osc-eyebrow">{t("aboutPage.platform.eyebrow")}</span>
           <div className="mt-3 space-y-3 leading-relaxed text-brand-navy/80">
             {platformBody.map((p, i) => (
