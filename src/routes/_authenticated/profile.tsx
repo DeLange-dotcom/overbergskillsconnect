@@ -24,6 +24,10 @@ import {
   Eye,
   EyeOff,
   LogOut,
+  Trash2,
+  Heart,
+  MapPin,
+
 } from "lucide-react";
 
 export const Route = createFileRoute("/_authenticated/profile")({
