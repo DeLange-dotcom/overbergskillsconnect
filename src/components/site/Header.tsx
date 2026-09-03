@@ -59,21 +59,18 @@ export function Header() {
   return (
     <header className="border-b border-brand-dark/5 bg-brand-page sticky top-0 z-40 backdrop-blur">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4 flex items-center justify-between gap-3">
-        <Link to="/" className="flex items-center gap-3 shrink-0">
-          <img
-            src={overbergLogo.url}
-            alt="Overberg Skills Connect"
-            className="h-10 sm:h-12 w-auto object-contain"
-          />
-          <div className="leading-tight hidden sm:block">
-            <div className="font-heading font-bold text-brand-primary text-lg">
-              Overberg Skills Connect
-            </div>
-            <div className="text-[10px] uppercase tracking-widest text-brand-dark/50">
-              {t("footer.poweredBy")}
-            </div>
-          </div>
+        <Link to="/" className="flex items-center gap-2.5 shrink-0">
+          <ConnectMark className="size-9 sm:size-10" />
+          <span className="leading-tight">
+            <span className="block font-heading text-[15px] sm:text-lg font-bold uppercase tracking-tight text-brand-navy">
+              Overberg <span className="text-brand-green">Skills</span> Connect
+            </span>
+            <span className="hidden sm:block text-[9px] font-medium uppercase tracking-[0.14em] text-brand-navy/55">
+              A Hineni Call Initiative · Powered by Khulisa Group
+            </span>
+          </span>
         </Link>
+
 
         <nav className="hidden md:flex items-center gap-6 text-sm whitespace-nowrap">
           {NAV.filter((n) => n.to !== "/help").map((n) => (
