@@ -3,7 +3,14 @@ import { useEffect, useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { supabase } from "@/integrations/supabase/client";
-import { SKILL_CATEGORIES, AVAILABILITY_OPTIONS } from "@/lib/noticeboard";
+import { AVAILABILITY_OPTIONS, type SkillExperience } from "@/lib/noticeboard";
+import {
+  SkillExperienceEditor,
+  entriesFromSkillExperience,
+  entriesToPayload,
+  type SkillEntry,
+} from "@/components/site/SkillExperienceEditor";
+
 import {
   approvedContactMessage,
   declinedContactMessage,
@@ -23,6 +30,8 @@ type MyListing = {
   phone: string;
   description: string;
   skills: string[];
+  skill_experience?: SkillExperience[] | null;
+
   category: string | null;
   years_experience: number | null;
   availability: string | null;
@@ -109,19 +118,14 @@ function MyAdvertEditor({
   const [phone, setPhone] = useState(listing.phone);
   const [description, setDescription] = useState(listing.description);
   const [photoUrl, setPhotoUrl] = useState(listing.photo_url ?? "");
-  const [yearsExp, setYearsExp] = useState<string>(
-    listing.years_experience != null ? String(listing.years_experience) : "",
-  );
   const [availability, setAvailability] = useState(listing.availability ?? "");
-  const [skills, setSkills] = useState<string[]>(() => {
-    // Map any non-standard skills onto the "Other" bucket toggle
-    return listing.skills.filter((s) => (SKILL_CATEGORIES as readonly string[]).includes(s));
-  });
-  const [otherSkills, setOtherSkills] = useState<string>(() =>
-    listing.skills.filter((s) => !(SKILL_CATEGORIES as readonly string[]).includes(s)).join(", "),
+  const [entries, setEntries] = useState<SkillEntry[]>(() =>
+    entriesFromSkillExperience(
+      listing.skill_experience?.length
+        ? listing.skill_experience
+        : listing.skills.map((s) => ({ skill: s, experience_level: null })),
+    ),
   );
-  const hasOtherInList = otherSkills.trim().length > 0;
-  const [otherToggle, setOtherToggle] = useState<boolean>(hasOtherInList);
   const [saving, setSaving] = useState(false);
   const [confirmDelete, setConfirmDelete] = useState(false);
 
@@ -132,43 +136,38 @@ function MyAdvertEditor({
     setPhone(listing.phone);
     setDescription(listing.description);
     setPhotoUrl(listing.photo_url ?? "");
-    setYearsExp(listing.years_experience != null ? String(listing.years_experience) : "");
     setAvailability(listing.availability ?? "");
+    setEntries(
+      entriesFromSkillExperience(
+        listing.skill_experience?.length
+          ? listing.skill_experience
+          : listing.skills.map((s) => ({ skill: s, experience_level: null })),
+      ),
+    );
   }, [listing.id]);
-
-  function toggleSkill(s: string) {
-    if (s === "Other") {
-      setOtherToggle((v) => {
-        if (v) setOtherSkills("");
-        return !v;
-      });
-      return;
-    }
-    setSkills((prev) => (prev.includes(s) ? prev.filter((x) => x !== s) : [...prev, s]));
-  }
 
   async function save(extra: Partial<Record<string, unknown>> = {}) {
     setSaving(true);
-    const customSkills = otherToggle
-      ? otherSkills
-          .split(",")
-          .map((s) => s.trim())
-          .filter(Boolean)
-      : [];
-    const finalSkills = [...skills, ...customSkills];
-    if (finalSkills.length === 0) {
+    const skillExperience = entriesToPayload(entries);
+    if (skillExperience.length === 0) {
       setSaving(false);
-      toast.error("Choose at least one skill.");
+      toast.error("Please add at least one skill.");
       return;
     }
+    if (skillExperience.some((s) => !s.experience_level)) {
+      setSaving(false);
+      toast.error("Please choose how much experience you have for each skill.");
+      return;
+    }
+    const finalSkills = skillExperience.map((s) => s.skill);
     const payload = {
       name: name.trim(),
       town: town.trim(),
       phone: phone.trim(),
       description: description.trim(),
       skills: finalSkills,
+      skill_experience: skillExperience,
       category: finalSkills[0],
-      years_experience: yearsExp === "" ? null : Number(yearsExp),
       availability,
       photo_url: photoUrl.trim(),
       ...extra,
@@ -184,6 +183,7 @@ function MyAdvertEditor({
     toast.success("Advert updated");
     onSaved();
   }
+
 
   async function toggleHidden() {
     const { error } = await supabase.rpc("noticeboard_my_update", {
@@ -275,59 +275,13 @@ function MyAdvertEditor({
           <Field label="Town or area" value={town} onChange={setTown} required />
 
           <div>
-            <Label required>Skills</Label>
-            <p className="text-xs text-brand-dark/60 mt-1 mb-2">
-              Tap to add or remove. Choose "Other" to add your own.
+            <h2 className="text-xl font-heading font-bold">What work can you do?</h2>
+            <p className="text-sm text-brand-dark/60 mt-1 mb-3">
+              Add, remove or change a skill and its experience level, then save your changes.
             </p>
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
-              {SKILL_CATEGORIES.map((s) => {
-                const active = s === "Other" ? otherToggle : skills.includes(s);
-                return (
-                  <button
-                    type="button"
-                    key={s}
-                    onClick={() => toggleSkill(s)}
-                    className={
-                      "px-3 py-2 rounded-xl text-sm border text-left " +
-                      (active
-                        ? "bg-brand-primary text-white border-brand-primary"
-                        : "bg-white border-brand-dark/10 hover:border-brand-primary/40")
-                    }
-                  >
-                    {s}
-                  </button>
-                );
-              })}
-            </div>
-            {otherToggle && (
-              <div className="mt-3">
-                <Label required>Please specify your skill(s)</Label>
-                <input
-                  type="text"
-                  value={otherSkills}
-                  onChange={(e) => setOtherSkills(e.target.value)}
-                  placeholder="e.g. Upholstery, Beekeeper"
-                  spellCheck
-                  className="w-full px-4 py-3 border border-brand-dark/10 rounded-xl"
-                />
-                <p className="text-xs text-brand-dark/60 mt-1">
-                  Separate multiple skills with commas.
-                </p>
-              </div>
-            )}
+            <SkillExperienceEditor entries={entries} onChange={setEntries} />
           </div>
 
-          <div>
-            <Label>Years of experience</Label>
-            <input
-              type="number"
-              min={0}
-              max={70}
-              value={yearsExp}
-              onChange={(e) => setYearsExp(e.target.value)}
-              className="w-full px-4 py-3 border border-brand-dark/10 rounded-xl"
-            />
-          </div>
 
           <div>
             <Label>Availability</Label>

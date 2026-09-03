@@ -1328,6 +1328,54 @@ export type Database = {
           },
         ]
       }
+      noticeboard_profile_skills: {
+        Row: {
+          created_at: string
+          experience_level: string | null
+          id: string
+          is_custom: boolean
+          position: number
+          profile_id: string
+          skill: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          experience_level?: string | null
+          id?: string
+          is_custom?: boolean
+          position?: number
+          profile_id: string
+          skill: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          experience_level?: string | null
+          id?: string
+          is_custom?: boolean
+          position?: number
+          profile_id?: string
+          skill?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "noticeboard_profile_skills_profile_id_fkey"
+            columns: ["profile_id"]
+            isOneToOne: false
+            referencedRelation: "noticeboard_profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "noticeboard_profile_skills_profile_id_fkey"
+            columns: ["profile_id"]
+            isOneToOne: false
+            referencedRelation: "noticeboard_public"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       noticeboard_profiles: {
         Row: {
           accepted_terms: boolean
@@ -3265,6 +3313,7 @@ export type Database = {
           name: string | null
           photo_url: string | null
           public_listing_reference: string | null
+          skill_experience: Json | null
           skills: string[] | null
           town: string | null
           years_experience: number | null
@@ -3278,6 +3327,7 @@ export type Database = {
           name?: string | null
           photo_url?: string | null
           public_listing_reference?: string | null
+          skill_experience?: never
           skills?: string[] | null
           town?: string | null
           years_experience?: number | null
@@ -3291,6 +3341,7 @@ export type Database = {
           name?: string | null
           photo_url?: string | null
           public_listing_reference?: string | null
+          skill_experience?: never
           skills?: string[] | null
           town?: string | null
           years_experience?: number | null
@@ -3610,6 +3661,7 @@ export type Database = {
           phone: string
           photo_url: string
           public_listing_reference: string
+          skill_experience: Json
           skills: string[]
           town: string
           updated_at: string
@@ -3665,6 +3717,10 @@ export type Database = {
         }[]
       }
       noticeboard_run_lifecycle_maintenance: { Args: never; Returns: Json }
+      noticeboard_sync_skills: {
+        Args: { _profile_id: string; _skill_experience: Json }
+        Returns: undefined
+      }
       noticeboard_touch_login: { Args: never; Returns: undefined }
       noticeboard_view_request: {
         Args: { _requester_token: string }
