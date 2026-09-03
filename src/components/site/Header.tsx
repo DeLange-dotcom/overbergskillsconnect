@@ -4,7 +4,7 @@ import { Menu, X, LogOut, UserRound } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { supabase } from "@/integrations/supabase/client";
 import { LanguageSelector } from "@/components/site/LanguageSelector";
-import { ConnectMark } from "@/components/brand/Logo";
+import logoAsset from "@/assets/osc-logo-header.png.asset.json";
 
 export function Header() {
   const { t } = useTranslation();
@@ -60,15 +60,11 @@ export function Header() {
     <header className="border-b border-brand-dark/5 bg-brand-page sticky top-0 z-40 backdrop-blur">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4 flex items-center justify-between gap-3">
         <Link to="/" className="flex items-center gap-2.5 shrink-0">
-          <ConnectMark className="size-9 sm:size-10" />
-          <span className="leading-tight">
-            <span className="block font-heading text-[12.5px] sm:text-lg font-bold uppercase tracking-tight text-brand-navy">
-              Overberg <span className="text-brand-green">Skills</span> Connect
-            </span>
-            <span className="hidden sm:block text-[9px] font-medium uppercase tracking-[0.14em] text-brand-navy/55">
-              A Hineni Call Initiative · Powered by Khulisa Group
-            </span>
-          </span>
+          <img
+            src={logoAsset.url}
+            alt="Overberg Skills Connect — A Hineni Call Initiative, powered by Khulisa Group"
+            className="h-10 sm:h-12 w-auto"
+          />
         </Link>
 
 
