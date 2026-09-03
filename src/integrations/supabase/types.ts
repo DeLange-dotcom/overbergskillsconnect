@@ -3715,6 +3715,64 @@ export type Database = {
         Returns: undefined
       }
       youth_age_group: { Args: { _dob: string }; Returns: string }
+      youth_opportunities_admin_list: {
+        Args: never
+        Returns: {
+          approval_notes: string | null
+          category: Database["public"]["Enums"]["youth_opportunity_category"]
+          child_safe_reviewed: boolean
+          closing_date: string | null
+          compensation_amount: number | null
+          compensation_type: string | null
+          contact_email: string | null
+          contact_name: string | null
+          contact_phone: string | null
+          contact_position: string | null
+          created_at: string
+          description: string
+          end_date: string | null
+          experience_required: string | null
+          hazardous_flag: boolean
+          id: string
+          involves_chemicals: boolean | null
+          involves_children: boolean | null
+          involves_heights: boolean | null
+          involves_home_visits: boolean | null
+          involves_machinery: boolean | null
+          involves_overnight: boolean | null
+          involves_transport: boolean | null
+          involves_vulnerable_adults: boolean | null
+          linked_programme: string | null
+          max_age: number
+          min_age: number
+          opportunity_type: string
+          organisation_id: string | null
+          organisation_name: string
+          positions_available: number | null
+          posted_by_user_id: string | null
+          private_individual_address: string | null
+          private_individual_id_url: string | null
+          private_individual_phone_verified: boolean | null
+          prohibited_for_minors: boolean
+          provider_type: string | null
+          requires_manual_review: boolean | null
+          skills_required: string[] | null
+          start_date: string | null
+          status: Database["public"]["Enums"]["youth_opportunity_status"]
+          title: string
+          town: string
+          updated_at: string
+          verification_doc_type: string | null
+          verification_doc_url: string | null
+          website: string | null
+        }[]
+        SetofOptions: {
+          from: "*"
+          to: "youth_opportunities"
+          isOneToOne: false
+          isSetofReturn: true
+        }
+      }
     }
     Enums: {
       app_role: "admin" | "user"
