@@ -1,0 +1,84 @@
+{
+  "aboutPage": {
+    "eyebrow": "About {{platform}}",
+    "heroTitle": "Connecting local skills with local opportunity",
+    "intro": [
+      "Overberg Skills Connect is a Hineni Call community initiative created to make it easier for people across the Overberg to share their skills, find local help and connect with opportunities.",
+      "Across our communities, people have valuable practical skills, experience and knowledge — but finding the right person for a job often still depends on word of mouth.",
+      "At the same time, households, businesses and organisations are often looking for people locally who can help.",
+      "Overberg Skills Connect brings the two together.",
+      "People can create a skills profile showing what they can do, while people looking for help can search locally and request contact."
+    ],
+    "introEmphasisIndex": 3,
+    "hineni": {
+      "eyebrow": "Hineni Call",
+      "role": "Community & Programme",
+      "logoPlaceholder": "Hineni Call logo",
+      "heading": "Connecting people and opportunity",
+      "body": [
+        "Hineni Call is at the heart of the community side of Overberg Skills Connect.",
+        "Hineni works directly with communities to encourage participation, help people register their skills, promote opportunities and support the day-to-day community engagement around the platform.",
+        "The aim is simple:",
+        "Make local skills more visible and local opportunity more accessible."
+      ]
+    },
+    "khulisa": {
+      "eyebrow": "Khulisa Group",
+      "role": "Technology & Development",
+      "logoPlaceholder": "Khulisa Group logo",
+      "heading": "Made possible with Khulisa Group",
+      "body": [
+        "The Overberg Skills Connect digital platform was developed by Khulisa Group (Pty) Ltd, Hineni Call's technology and development partner.",
+        "Khulisa provides the technology behind Skills Connect and continues to support the development of the platform as it grows."
+      ]
+    },
+    "partnership": {
+      "statement": "Together, Hineni Call brings the community connection and Khulisa Group provides the technology that enables it.",
+      "tagline": "Overberg Skills Connect · A Hineni Call initiative · Powered by Khulisa Group"
+    },
+    "future": {
+      "eyebrow": "What's coming next",
+      "heading": "Growing beyond the skills directory",
+      "intro": "Overberg Skills Connect is being developed beyond the current skills directory. Future phases are intended to create more ways for people to learn, share knowledge and connect with opportunity.",
+      "badge": "Coming next",
+      "cards": {
+        "youthClub": {
+          "title": "Youth Club",
+          "copy": "A future space for younger people to discover activities, skills development, mentoring and opportunities to become more involved in their communities."
+        },
+        "apprenticeships": {
+          "title": "Apprenticeships & Mentoring",
+          "copy": "Connecting people who want to learn with local tradespeople, businesses and experienced community members who can help develop practical skills."
+        },
+        "knowledgeGuardians": {
+          "title": "Knowledge Guardians",
+          "copy": "Recognising people who hold valuable practical, traditional and specialist knowledge — and creating opportunities for that knowledge to be shared with the next generation."
+        },
+        "sponsors": {
+          "title": "Sponsors",
+          "copy": "Creating opportunities for businesses, organisations and individuals to support skills development, learning, apprenticeships and community opportunity across the Overberg."
+        }
+      }
+    },
+    "support": {
+      "eyebrow": "Support Hineni Call",
+      "heading": "Help us create more local opportunities",
+      "body": "Your support helps Hineni Call continue its work connecting people, developing opportunities and strengthening communities across the Overberg.",
+      "cta": "Support Hineni Call",
+      "comingSoon": "Hineni Call's secure donation link will be added here soon."
+    },
+    "platform": {
+      "eyebrow": "A community connection platform",
+      "body": [
+        "Overberg Skills Connect is a community noticeboard that helps local people offer their skills and find local help.",
+        "It is not an employment or recruitment agency and does not employ, vet, recommend or guarantee people listed on the platform.",
+        "Users should make their own enquiries and checks before agreeing to work or services."
+      ],
+      "links": {
+        "terms": "Terms of Use",
+        "privacy": "Privacy Policy",
+        "disclaimer": "Safety & Disclaimer"
+      }
+    }
+  }
+}

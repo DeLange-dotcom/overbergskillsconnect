@@ -1,0 +1,33 @@
+{
+  "meta": {
+    "title": "Browse Local Skills — Overberg Skills Connect",
+    "description": "Browse local people offering services on the Overberg Skills Connect noticeboard. Search by town and skill."
+  },
+  "eyebrow": "Find Local Help",
+  "title": "What help do you need?",
+  "intro": "Type the kind of work you need, then choose an area if you want to narrow it down.",
+  "searchPlaceholder": "e.g. Gardener",
+  "searchAriaLabel": "What help do you need?",
+  "areaLabel": "Area (optional)",
+  "anyAreaLabel": "All Overberg areas",
+  "clearSearch": "Clear search",
+  "loading": "Loading…",
+  "peopleFound_one": "{{count}} person found",
+  "peopleFound_other": "{{count}} people found",
+  "noResults": "No one matches that search yet. Try a different word or choose “All Overberg areas”.",
+  "beFirst": "Be the first to advertise.",
+  "experienceSuffix": "experience",
+  "moreSkills_one": "+{{count}} more skill",
+  "moreSkills_other": "+{{count}} more skills",
+  "locationSelect": {
+    "townOrArea": "Town or area",
+    "selectArea": "Select your area…",
+    "otherAreaPlaceholder": "Type your area, e.g. Protem",
+    "otherAreaAriaLabel": "Other Overberg area",
+    "otherOption": "Other Overberg area"
+  },
+  "shortNotice": {
+    "text": "This is a community noticeboard. We do not vet or recommend anyone. Please make your own checks.",
+    "readMore": "Read the full notice"
+  }
+}

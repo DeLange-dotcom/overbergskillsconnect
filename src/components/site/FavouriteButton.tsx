@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Heart, Loader2 } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 
@@ -16,6 +17,7 @@ export function FavouriteButton({
   className?: string;
   withLabel?: boolean;
 }) {
+  const { t } = useTranslation();
   const [signedIn, setSignedIn] = useState<boolean | null>(null);
   const [saved, setSaved] = useState(false);
   const [busy, setBusy] = useState(false);
@@ -48,7 +50,7 @@ export function FavouriteButton({
 
   async function toggle() {
     if (!signedIn) {
-      toast.info("Sign in to save people to your favourites.");
+      toast.info(t("publicProfile.favourite.signInToSave"));
       return;
     }
     setBusy(true);
@@ -65,17 +67,17 @@ export function FavouriteButton({
         .eq("user_id", uid)
         .eq("profile_id", profileId);
       setBusy(false);
-      if (error) return toast.error("Could not remove from favourites.");
+      if (error) return toast.error(t("publicProfile.favourite.removeError"));
       setSaved(false);
-      toast.success("Removed from My Favourites.");
+      toast.success(t("publicProfile.favourite.removed"));
     } else {
       const { error } = await supabase
         .from("noticeboard_favourites")
         .insert({ user_id: uid, profile_id: profileId });
       setBusy(false);
-      if (error) return toast.error("Could not save to favourites.");
+      if (error) return toast.error(t("publicProfile.favourite.saveError"));
       setSaved(true);
-      toast.success("Saved to My Favourites.");
+      toast.success(t("publicProfile.favourite.saved"));
     }
   }
 
@@ -85,7 +87,9 @@ export function FavouriteButton({
       onClick={toggle}
       disabled={busy}
       aria-pressed={saved}
-      aria-label={saved ? "Remove from My Favourites" : "Save to My Favourites"}
+      aria-label={
+        saved ? t("publicProfile.favourite.removeAriaLabel") : t("publicProfile.favourite.saveAriaLabel")
+      }
       className={`inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl border font-medium transition ${
         saved
           ? "bg-brand-primary/10 border-brand-primary/30 text-brand-primary"
@@ -97,7 +101,9 @@ export function FavouriteButton({
       ) : (
         <Heart className={`size-4 ${saved ? "fill-current" : ""}`} />
       )}
-      {withLabel && <span>{saved ? "Saved" : "Save"}</span>}
+      {withLabel && (
+        <span>{saved ? t("publicProfile.favourite.savedLabel") : t("publicProfile.favourite.saveLabel")}</span>
+      )}
     </button>
   );
 }

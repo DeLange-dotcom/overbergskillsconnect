@@ -1,0 +1,41 @@
+{
+  "howItWorks": {
+    "title": "Hoe dit werk",
+    "intro": "{{platform}} is 'n eenvoudige gemeenskapskennisgewingbord. Of jy nou werk soek of hulp soek, die proses is maklik.",
+    "seeking": {
+      "heading": "Ek soek werk",
+      "step1Title": "1. Skep jou profiel",
+      "step1Body": "Registreer en vertel die gemeenskap wat jy kan doen. Voeg jou vaardighede, 'n kort beskrywing en die areas waarin jy werk by. Dit neem net 'n paar minute.",
+      "step2Title": "2. Word raakgesien",
+      "step2Body": "Jou profiel verskyn in die plaaslike gids waar mense volgens vaardigheid en area kan soek. Geen papierwerk of goedkeuring nodig nie.",
+      "step3Title": "3. Ontvang kontakversoeke",
+      "step3Body": "Wanneer iemand belangstel, stuur hulle 'n kontakversoek. Jou telefoonnommer word nooit op die kennisgewingbord gewys nie. Dit word eers met iemand gedeel nadat jy hul versoek goedgekeur het, en jy kan daardie goedkeuring enige tyd terugtrek."
+    },
+    "hiring": {
+      "heading": "Ek soek 'n diens",
+      "step1Title": "1. Blaai deur plaaslike vaardighede",
+      "step1Body": "Soek of blaai deur profiele volgens tipe vaardigheid en dorp. Kyk wat mense aanbied en lees hul beskrywings voordat jy kontak maak.",
+      "step2Title": "2. Vra kontakbesonderhede",
+      "step2Body": "Iemand gekry wat pas? Stuur 'n kontakversoek. Hulle word in kennis gestel en besluit of hulle hul telefoonnommer met jou wil deel. Niemand anders kan dit sien nie.",
+      "step3Title": "3. Maak direk kontak",
+      "step3Body": "Sodra die werker hul besonderhede deel, kontak julle mekaar direk en kom oor die werk ooreen. Die platform het net die skakeling gemaak."
+    },
+    "managing": {
+      "heading": "Bestuur jou lys",
+      "editTitle": "Wysig jou lys",
+      "editBody": "Gaan na <strong>My Lys</strong> om jou vaardighede, beskrywing, foto of kontakbesonderhede enige tyd op te dateer. Veranderinge verskyn onmiddellik op die kennisgewingbord.",
+      "pauseTitle": "Wys of verberg jou lys",
+      "pauseBody": "Wanneer jy jou lys wegsteek, verdwyn dit van die kennisgewingbord sonder om iets uit te vee. Wys dit weer wanneer jy gereed is om werk te vat.",
+      "archiveTitle": "Argiveer en heraktiveer",
+      "archiveBody": "Argivering verwyder jou lys van openbare sig, maar hou al jou inligting veilig. Jy kan dit enige tyd heraktiveer — perfek vir seisoenswerk of kort breke.",
+      "deleteTitle": "Verwyder permanent",
+      "deleteBody": "Verwydering is anders as wegsteek en kan nie ongedaan gemaak word nie. Jy sal twee keer gevra word om te bevestig voordat iets verwyder word.",
+      "requestsTitle": "Hanteer kontakversoeke",
+      "requestsBody": "Wanneer iemand jou besonderhede vra, sien jy dit onder <strong>Mense Wat In My Belangstel</strong> op <strong>My Profiel</strong>. Jy besluit of jy elke versoek goedkeur of afkeur. Jou telefoonnommer word slegs vrygestel aan iemand wat jy goedgekeur het, en jy kan dit enige tyd weer terugtrek.",
+      "notificationsTitle": "Gaan jou profiel gereeld na",
+      "notificationsBody": "Ons stuur nie SMS-boodskappe nie. Nuwe kontakversoeke en opdaterings verskyn onder <strong>Kennisgewings</strong> op <strong>My Profiel</strong>, gaan dit dus asseblief gereeld na."
+    },
+    "disclaimer": "{{platform}} is slegs 'n kennisgewingbord. Ons keur, verifieer of beveel niemand aan nie. Doen asseblief jou eie navrae voordat jy enige ooreenkoms aangaan.",
+    "disclaimerLink": "Lees die volle vrywaring"
+  }
+}

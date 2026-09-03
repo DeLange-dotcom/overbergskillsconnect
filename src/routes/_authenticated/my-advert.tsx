@@ -1,5 +1,6 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
+import { useTranslation, Trans } from "react-i18next";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { supabase } from "@/integrations/supabase/client";
@@ -44,6 +45,7 @@ type MyListing = {
 };
 
 function MyAdvert() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const qc = useQueryClient();
 
@@ -64,7 +66,7 @@ function MyAdvert() {
       <SiteLayout>
         <div className="max-w-2xl mx-auto px-4 py-16 text-center text-brand-dark/60">
           <Loader2 className="size-6 animate-spin mx-auto mb-3" />
-          Loading…
+          {t("myAdvert.loading")}
         </div>
       </SiteLayout>
     );
@@ -77,13 +79,13 @@ function MyAdvert() {
           <div className="text-5xl mb-4" aria-hidden>
             📝
           </div>
-          <h1 className="osc-heading text-3xl mb-3">My Listing</h1>
-          <p className="text-brand-dark/70 mb-8">You haven't created your advert yet.</p>
+          <h1 className="osc-heading text-3xl mb-3">{t("myAdvert.notCreated.title")}</h1>
+          <p className="text-brand-dark/70 mb-8">{t("myAdvert.notCreated.body")}</p>
           <Link
             to="/advertise"
             className="inline-flex px-6 py-3.5 rounded-xl bg-brand-primary text-white font-medium"
           >
-            Create My Listing
+            {t("myAdvert.notCreated.create")}
           </Link>
         </div>
       </SiteLayout>
@@ -114,6 +116,7 @@ function MyAdvertEditor({
   onDeleted: () => void;
   refetch: () => void;
 }) {
+  const { t } = useTranslation();
   const [name, setName] = useState(listing.name);
   const [town, setTown] = useState(listing.town);
   const [phone, setPhone] = useState(listing.phone);
@@ -153,12 +156,12 @@ function MyAdvertEditor({
     const skillExperience = entriesToPayload(entries);
     if (skillExperience.length === 0) {
       setSaving(false);
-      toast.error("Please add at least one skill.");
+      toast.error(t("myAdvert.toasts.atLeastOneSkill"));
       return;
     }
     if (skillExperience.some((s) => !s.experience_level)) {
       setSaving(false);
-      toast.error("Please choose how much experience you have for each skill.");
+      toast.error(t("myAdvert.toasts.chooseExperience"));
       return;
     }
     const finalSkills = skillExperience.map((s) => s.skill);
@@ -182,7 +185,7 @@ function MyAdvertEditor({
       toast.error(error.message);
       return;
     }
-    toast.success("Advert updated");
+    toast.success(t("myAdvert.toasts.updated"));
     onSaved();
   }
 
@@ -192,10 +195,10 @@ function MyAdvertEditor({
       _paused: !listing.is_hidden,
     });
     if (error) {
-      toast.error("Sorry, we could not change your listing. Please try again.");
+      toast.error(t("myAdvert.toasts.pauseError"));
       return;
     }
-    toast.success(listing.is_hidden ? "Your listing is live again." : "Your listing is paused.");
+    toast.success(listing.is_hidden ? t("myAdvert.toasts.listingLive") : t("myAdvert.toasts.listingPaused"));
     refetch();
   }
 
@@ -205,7 +208,7 @@ function MyAdvertEditor({
       toast.error(error.message);
       return;
     }
-    toast.success("Advert removed");
+    toast.success(t("myAdvert.toasts.removed"));
     onDeleted();
   }
 
@@ -218,9 +221,9 @@ function MyAdvertEditor({
       <div className="max-w-2xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
         <div className="flex items-start justify-between gap-3 mb-6">
           <div>
-            <h1 className="osc-heading text-3xl sm:text-4xl">My Listing</h1>
+            <h1 className="osc-heading text-3xl sm:text-4xl">{t("myAdvert.page.title")}</h1>
             <p className="text-brand-dark/60 text-sm mt-1">
-              Update any field and your advert changes immediately.
+              {t("myAdvert.page.subtitle")}
             </p>
           </div>
           {publicUrl && (
@@ -229,29 +232,31 @@ function MyAdvertEditor({
               target="_blank"
               rel="noopener noreferrer"
               className="hidden sm:inline-flex items-center gap-1.5 px-3 py-2 rounded-lg border border-brand-dark/15 text-sm hover:bg-brand-soft whitespace-nowrap"
-              title="Preview My Public Listing"
+              title={t("myAdvert.page.preview")}
             >
-              <ExternalLink className="size-4" /> Preview
+              <ExternalLink className="size-4" /> {t("myAdvert.page.preview")}
             </a>
           )}
         </div>
 
         {listing.is_archived && (
           <div className="p-4 rounded-2xl border border-amber-300 bg-amber-50 mb-4 text-sm text-amber-900">
-            Your listing is <strong>archived</strong> and hidden from public search. Use{" "}
-            <em>Reactivate listing</em> below to bring it back live.
+            <Trans
+              i18nKey="myAdvert.archivedNotice"
+              components={{ bold: <strong />, italic: <em /> }}
+            />
           </div>
         )}
 
         <div className="flex items-center justify-between p-4 rounded-2xl border border-brand-dark/10 bg-white mb-6">
           <div>
             <div className="font-medium">
-              {listing.is_hidden ? "Paused — not shown to anyone" : "Live on the noticeboard"}
+              {listing.is_hidden ? t("myAdvert.status.pausedNotShown") : t("myAdvert.status.live")}
             </div>
             <div className="text-xs text-brand-dark/60">
               {listing.is_hidden
-                ? "Pausing keeps everything saved. Nothing is deleted."
-                : "People can find you and ask for your number."}
+                ? t("myAdvert.status.pausedInfo")
+                : t("myAdvert.status.liveInfo")}
             </div>
           </div>
           <button
@@ -260,7 +265,7 @@ function MyAdvertEditor({
             className="inline-flex items-center gap-2 px-3 py-2 rounded-lg border border-brand-dark/15 text-sm hover:bg-brand-soft whitespace-nowrap"
           >
             {listing.is_hidden ? <Eye className="size-4" /> : <EyeOff className="size-4" />}
-            {listing.is_hidden ? "Unpause my listing" : "Pause my listing"}
+            {listing.is_hidden ? t("myAdvert.unpause") : t("myAdvert.pause")}
           </button>
         </div>
 
@@ -273,26 +278,26 @@ function MyAdvertEditor({
           }}
           className="space-y-5"
         >
-          <Field label="Name" value={name} onChange={setName} required />
+          <Field label={t("myAdvert.form.name")} value={name} onChange={setName} required />
           <LocationSelect value={town} onChange={setTown} required />
 
           <div>
-            <h2 className="osc-heading text-xl">What work can you do?</h2>
+            <h2 className="osc-heading text-xl">{t("myAdvert.form.skillsTitle")}</h2>
             <p className="text-sm text-brand-dark/60 mt-1 mb-3">
-              Add, remove or change a skill and its experience level, then save your changes.
+              {t("myAdvert.form.skillsSubtitle")}
             </p>
             <SkillExperienceEditor entries={entries} onChange={setEntries} />
           </div>
 
 
           <div>
-            <Label>Availability</Label>
+            <Label>{t("myAdvert.form.availability")}</Label>
             <select
               value={availability}
               onChange={(e) => setAvailability(e.target.value)}
               className="w-full px-4 py-3 border border-brand-dark/10 rounded-xl bg-white"
             >
-              <option value="">Select…</option>
+              <option value="">{t("myAdvert.form.availabilityPlaceholder")}</option>
               {AVAILABILITY_OPTIONS.map((a) => (
                 <option key={a} value={a}>
                   {a}
@@ -302,7 +307,7 @@ function MyAdvertEditor({
           </div>
 
           <div>
-            <Label required>Short description</Label>
+            <Label required>{t("myAdvert.form.description")}</Label>
             <textarea
               value={description}
               onChange={(e) => setDescription(e.target.value)}
@@ -314,19 +319,19 @@ function MyAdvertEditor({
           </div>
 
           <div>
-            <Label>Photo URL</Label>
+            <Label>{t("myAdvert.form.photoUrl")}</Label>
             <input
               type="url"
               value={photoUrl}
               onChange={(e) => setPhotoUrl(e.target.value)}
-              placeholder="https://…"
+              placeholder={t("myAdvert.form.photoUrlPlaceholder")}
               className="w-full px-4 py-3 border border-brand-dark/10 rounded-xl"
             />
-            <p className="text-xs text-brand-dark/60 mt-1">Leave blank to remove your photo.</p>
+            <p className="text-xs text-brand-dark/60 mt-1">{t("myAdvert.form.photoUrlHelp")}</p>
           </div>
 
           <div>
-            <Label required>Telephone number (kept private)</Label>
+            <Label required>{t("myAdvert.form.phone")}</Label>
             <input
               type="tel"
               value={phone}
@@ -335,7 +340,7 @@ function MyAdvertEditor({
               className="w-full px-4 py-3 border border-brand-dark/10 rounded-xl"
             />
             <p className="text-xs text-brand-dark/60 mt-1">
-              Only shared when you approve a request.
+              {t("myAdvert.form.phoneHelp")}
             </p>
           </div>
 
@@ -345,7 +350,7 @@ function MyAdvertEditor({
               disabled={saving}
               className="flex-1 py-3.5 rounded-xl bg-brand-primary text-white font-medium disabled:opacity-60"
             >
-              {saving ? "Saving…" : "Save changes"}
+              {saving ? t("myAdvert.form.saving") : t("myAdvert.form.save")}
             </button>
             {publicUrl && (
               <a
@@ -354,7 +359,7 @@ function MyAdvertEditor({
                 rel="noopener noreferrer"
                 className="sm:hidden inline-flex justify-center items-center gap-1.5 py-3.5 rounded-xl border border-brand-dark/15 text-sm"
               >
-                <ExternalLink className="size-4" /> Preview my public listing
+                <ExternalLink className="size-4" /> {t("myAdvert.form.previewMobile")}
               </a>
             )}
           </div>
@@ -367,47 +372,44 @@ function MyAdvertEditor({
               onClick={async () => {
                 const { error } = await supabase.rpc("noticeboard_my_reactivate");
                 if (error) return toast.error(error.message);
-                toast.success("Listing reactivated");
+                toast.success(t("myAdvert.toasts.reactivated"));
                 refetch();
               }}
               className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-emerald-200 text-emerald-700 hover:bg-emerald-50 text-sm"
             >
-              <Eye className="size-4" /> Reactivate listing
+              <Eye className="size-4" /> {t("myAdvert.reactivate")}
             </button>
           ) : (
             <button
               type="button"
               onClick={async () => {
                 if (
-                  !confirm(
-                    "Archive your listing? It will be hidden from public search but can be reactivated any time.",
-                  )
+                  !confirm(t("myAdvert.archiveConfirm"))
                 )
                   return;
                 const { error } = await supabase.rpc("noticeboard_my_archive");
                 if (error) return toast.error(error.message);
-                toast.success("Listing archived");
+                toast.success(t("myAdvert.toasts.archived"));
                 refetch();
               }}
               className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-brand-dark/15 text-brand-dark/80 hover:bg-brand-soft text-sm"
             >
-              <EyeOff className="size-4" /> Archive my listing
+              <EyeOff className="size-4" /> {t("myAdvert.archive")}
             </button>
           )}
         </div>
 
         <div className="mt-6 p-5 rounded-2xl border border-red-200 bg-red-50/50">
-          <h2 className="font-heading font-bold text-red-800 mb-1">Delete my listing</h2>
+          <h2 className="font-heading font-bold text-red-800 mb-1">{t("myAdvert.deleteSection.title")}</h2>
           <p className="text-sm text-red-900/80 mb-4">
-            This is permanent. Your listing and its skills are removed for good. If you only want a
-            break, use <strong>Pause my listing</strong> instead — nothing is lost.
+            <Trans i18nKey="myAdvert.deleteSection.body" components={{ bold: <strong /> }} />
           </p>
           <button
             type="button"
             onClick={() => setConfirmDelete(true)}
             className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-red-600 text-white text-sm font-medium"
           >
-            <Trash2 className="size-4" /> Delete my listing permanently
+            <Trash2 className="size-4" /> {t("myAdvert.deleteSection.button")}
           </button>
         </div>
 
@@ -419,11 +421,10 @@ function MyAdvertEditor({
           >
             <div className="bg-white rounded-2xl shadow-xl max-w-md w-full p-6">
               <h2 className="osc-heading text-xl mb-2">
-                Permanently delete your listing?
+                {t("myAdvert.deleteDialog.title")}
               </h2>
               <p className="text-brand-dark/70 mb-4">
-                This cannot be undone. To keep your details for later, choose Cancel and use
-                <strong> Pause my listing</strong> instead.
+                <Trans i18nKey="myAdvert.deleteDialog.body" components={{ bold: <strong /> }} />
               </p>
               <label className="flex items-start gap-2.5 text-sm mb-6 cursor-pointer">
                 <input
@@ -432,7 +433,7 @@ function MyAdvertEditor({
                   onChange={(e) => setDeleteAck(e.target.checked)}
                   className="mt-1 size-4"
                 />
-                <span>Yes, I understand my listing will be deleted for good.</span>
+                <span>{t("myAdvert.deleteDialog.ack")}</span>
               </label>
               <div className="flex gap-3 justify-end">
                 <button
@@ -443,7 +444,7 @@ function MyAdvertEditor({
                   }}
                   className="px-4 py-2 rounded-lg border border-brand-dark/15 text-sm"
                 >
-                  Cancel
+                  {t("myAdvert.deleteDialog.cancel")}
                 </button>
                 <button
                   type="button"
@@ -455,7 +456,7 @@ function MyAdvertEditor({
                   }}
                   className="px-4 py-2 rounded-lg bg-red-600 text-white text-sm disabled:opacity-40"
                 >
-                  Delete permanently
+                  {t("myAdvert.deleteDialog.confirm")}
                 </button>
               </div>
             </div>
@@ -514,6 +515,7 @@ type IncomingRow = {
 };
 
 function IncomingRequests({ listing }: { listing: MyListing }) {
+  const { t } = useTranslation();
   const qc = useQueryClient();
   const { data, isLoading } = useQuery({
     queryKey: ["incoming-requests"],
@@ -545,12 +547,12 @@ function IncomingRequests({ listing }: { listing: MyListing }) {
       openWhatsAppMessage(row.requester_contact, message, whatsappWindow);
       toast.success(
         decision === "approved"
-          ? "Approved. WhatsApp is opening so you can send your contact details."
-          : "Declined. WhatsApp is opening so you can send the update.",
+          ? t("myAdvert.incoming.approvedWhatsappToast")
+          : t("myAdvert.incoming.declinedWhatsappToast"),
       );
     } else {
       whatsappWindow?.close();
-      toast.success(decision === "approved" ? "Request approved." : "Request declined.");
+      toast.success(decision === "approved" ? t("myAdvert.incoming.approvedToast") : t("myAdvert.incoming.declinedToast"));
     }
     qc.invalidateQueries({ queryKey: ["incoming-requests"] });
   }
@@ -559,12 +561,12 @@ function IncomingRequests({ listing }: { listing: MyListing }) {
 
   return (
     <section className="mb-8">
-      <h2 className="osc-heading text-xl mb-3">People Interested In Me</h2>
+      <h2 className="osc-heading text-xl mb-3">{t("myAdvert.incoming.title")}</h2>
       {isLoading ? (
-        <div className="text-sm text-brand-dark/60">Loading…</div>
+        <div className="text-sm text-brand-dark/60">{t("myAdvert.incoming.loading")}</div>
       ) : rows.length === 0 ? (
         <div className="p-5 rounded-2xl border border-dashed border-brand-dark/15 text-sm text-brand-dark/60 text-center">
-          No one has asked for your contact details yet.
+          {t("myAdvert.incoming.empty")}
         </div>
       ) : (
         <ul className="space-y-3">
@@ -579,7 +581,7 @@ function IncomingRequests({ listing }: { listing: MyListing }) {
                 <div className="flex items-start justify-between gap-3">
                   <div className="min-w-0">
                     <div className="font-medium truncate">{r.requester_name}</div>
-                    <div className="text-xs text-brand-dark/50">Requested {date}</div>
+                    <div className="text-xs text-brand-dark/50">{t("myAdvert.incoming.requested", { date })}</div>
                     {r.message && (
                       <p className="text-sm text-brand-dark/70 mt-2 whitespace-pre-line">
                         {r.message}
@@ -595,7 +597,7 @@ function IncomingRequests({ listing }: { listing: MyListing }) {
                           : "bg-red-100 text-red-800")
                       }
                     >
-                      {r.status === "approved" ? "Approved" : "Declined"}
+                      {r.status === "approved" ? t("myAdvert.incoming.approved") : t("myAdvert.incoming.declined")}
                     </span>
                   )}
                 </div>
@@ -606,14 +608,14 @@ function IncomingRequests({ listing }: { listing: MyListing }) {
                       onClick={() => decide(r.id, "approved")}
                       className="flex-1 px-3 py-2.5 rounded-xl bg-emerald-600 text-white text-sm font-medium"
                     >
-                      Approve & WhatsApp
+                      {t("myAdvert.incoming.approveWhatsapp")}
                     </button>
                     <button
                       type="button"
                       onClick={() => decide(r.id, "declined")}
                       className="flex-1 px-3 py-2.5 rounded-xl border border-red-200 text-red-700 text-sm font-medium"
                     >
-                      Decline & WhatsApp
+                      {t("myAdvert.incoming.declineWhatsapp")}
                     </button>
                   </div>
                 )}

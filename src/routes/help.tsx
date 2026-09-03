@@ -1,6 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useTranslation } from "react-i18next";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { PageHeader } from "@/components/site/PageHeader";
+import { PLATFORM_NAME } from "@/lib/brand";
 
 export const Route = createFileRoute("/help")({
   head: () => ({
@@ -39,58 +41,53 @@ function Step({ n, children }: { n: number; children: React.ReactNode }) {
 }
 
 function HelpPage() {
+  const { t } = useTranslation();
   return (
     <SiteLayout>
       <div className="max-w-2xl mx-auto px-4 sm:px-6 py-10 sm:py-14">
         <PageHeader
-          eyebrow="Need Help?"
-          title="Need help using Overberg Skills Connect?"
-          intro="Here is how it works, step by step."
+          eyebrow={t("helpPage.eyebrow")}
+          title={t("helpPage.title", { platform: PLATFORM_NAME })}
+          intro={t("helpPage.intro")}
         />
 
         <section className="rounded-2xl border border-brand-dark/10 bg-white p-5 sm:p-6 mb-6">
-          <h2 className="osc-heading text-xl mb-4">How to advertise your skills</h2>
+          <h2 className="osc-heading text-xl mb-4">{t("helpPage.advertise.heading")}</h2>
           <ol className="space-y-3 text-base">
-            <Step n={1}>Create a free account.</Step>
-            <Step n={2}>Choose the skills you offer.</Step>
-            <Step n={3}>Add your area and contact number.</Step>
-            <Step n={4}>Publish your listing.</Step>
-            <Step n={5}>
-              Your telephone number stays private until you approve someone&apos;s request.
-            </Step>
+            <Step n={1}>{t("helpPage.advertise.step1")}</Step>
+            <Step n={2}>{t("helpPage.advertise.step2")}</Step>
+            <Step n={3}>{t("helpPage.advertise.step3")}</Step>
+            <Step n={4}>{t("helpPage.advertise.step4")}</Step>
+            <Step n={5}>{t("helpPage.advertise.step5")}</Step>
           </ol>
           <Link
             to="/advertise"
             className="mt-5 inline-block w-full sm:w-auto text-center px-5 py-3.5 rounded-xl bg-brand-primary text-white font-semibold"
           >
-            Advertise My Skills
+            {t("helpPage.advertise.cta")}
           </Link>
         </section>
 
         <section className="rounded-2xl border border-brand-dark/10 bg-white p-5 sm:p-6 mb-6">
-          <h2 className="osc-heading text-xl mb-4">How to find someone</h2>
+          <h2 className="osc-heading text-xl mb-4">{t("helpPage.find.heading")}</h2>
           <ol className="space-y-3 text-base">
-            <Step n={1}>Search for the help you need.</Step>
-            <Step n={2}>Choose a service provider.</Step>
-            <Step n={3}>Request their contact details.</Step>
-            <Step n={4}>The service provider decides whether to share their number.</Step>
-            <Step n={5}>
-              If they accept, the Call and WhatsApp options will appear in My Profile.
-            </Step>
+            <Step n={1}>{t("helpPage.find.step1")}</Step>
+            <Step n={2}>{t("helpPage.find.step2")}</Step>
+            <Step n={3}>{t("helpPage.find.step3")}</Step>
+            <Step n={4}>{t("helpPage.find.step4")}</Step>
+            <Step n={5}>{t("helpPage.find.step5")}</Step>
           </ol>
           <Link
             to="/find-help"
             className="mt-5 inline-block w-full sm:w-auto text-center px-5 py-3.5 rounded-xl bg-brand-primary text-white font-semibold"
           >
-            Find Local Help
+            {t("helpPage.find.cta")}
           </Link>
         </section>
 
         <section className="rounded-2xl border border-brand-dark/10 bg-brand-soft/60 p-5 sm:p-6">
-          <h2 className="osc-heading text-xl mb-2">Still stuck?</h2>
-          <p className="text-brand-dark/75 text-base">
-            If you cannot create an account or publish your listing, you can ask a person for help.
-          </p>
+          <h2 className="osc-heading text-xl mb-2">{t("helpPage.stuck.heading")}</h2>
+          <p className="text-brand-dark/75 text-base">{t("helpPage.stuck.body")}</p>
           {SUPPORT_EMAIL || SUPPORT_PHONE ? (
             <ul className="mt-3 space-y-2 text-base">
               {SUPPORT_EMAIL && (
@@ -109,16 +106,13 @@ function HelpPage() {
               )}
             </ul>
           ) : (
-            <p className="mt-3 text-brand-dark/70 text-sm">
-              Support contact details will be published here shortly. In the meantime, please use
-              the contact page.
-            </p>
+            <p className="mt-3 text-brand-dark/70 text-sm">{t("helpPage.stuck.placeholder")}</p>
           )}
           <Link
             to="/contact"
             className="mt-4 inline-block w-full sm:w-auto text-center px-5 py-3.5 rounded-xl border border-brand-dark/15 bg-white font-semibold hover:bg-brand-soft"
           >
-            Contact Us
+            {t("helpPage.stuck.cta")}
           </Link>
         </section>
       </div>

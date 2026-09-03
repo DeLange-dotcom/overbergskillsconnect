@@ -1,0 +1,70 @@
+{
+  "advertiseForm": {
+    "meta": {
+      "title": "Advertise My Services — Overberg Skills Connect",
+      "description": "Post a free noticeboard listing for your skills. Your phone number stays private until you approve a request."
+    },
+    "toasts": {
+      "confirmAll": "Please confirm all four declarations to publish.",
+      "addOneSkill": "Please add at least one skill.",
+      "chooseExperience": "Please choose how much experience you have for each skill.",
+      "completeRequired": "Please complete the required fields.",
+      "publishError": "Could not publish your listing.",
+      "published": "Your advert is now live!"
+    },
+    "loading": "Loading…",
+    "signIn": {
+      "heading": "Sign in to advertise",
+      "body": "Create a free account so you can update or remove your advert at any time.",
+      "cta": "Sign in or create account"
+    },
+    "hasListing": {
+      "heading": "You already have an advert",
+      "body": "You can edit or remove it any time from your dashboard.",
+      "cta": "Go to My Listing"
+    },
+    "header": {
+      "eyebrow": "Advertise My Skills",
+      "title": "Make your skills visible",
+      "intro": "Post a free listing on the community noticeboard. Your phone number stays private — it is only shared when you approve a request."
+    },
+    "fields": {
+      "name": "Name",
+      "skillsHeading": "What work can you do?",
+      "skillsHelp": "Choose a skill, then say how much experience you have. You can add as many skills as you like.",
+      "availability": "Availability",
+      "selectPlaceholder": "Select…",
+      "description": "Short description",
+      "descriptionPlaceholder": "A few sentences about what you do best.",
+      "phone": "Telephone number (kept private)",
+      "phonePlaceholder": "e.g. 082 123 4567",
+      "phoneHelp": "This is never shown publicly. It is only shared when you approve a contact request."
+    },
+    "acks": {
+      "heading": "Before publishing, please confirm:",
+      "age": "I am over the age of 18.",
+      "truthful": "The information I have provided is true and accurate.",
+      "termsPrefix": "I have read and accept the",
+      "termsLink": "Terms of Use",
+      "and": "and",
+      "privacyLink": "Privacy Policy",
+      "noticeboard": "I understand that Overberg Skills Connect is a community noticeboard only and that any arrangements made are entirely between myself and other users."
+    },
+    "submit": {
+      "publishing": "Publishing…",
+      "publish": "Publish my listing"
+    },
+    "skillEditor": {
+      "skillNumber": "Skill {{number}}",
+      "removeAria": "Remove skill {{number}}",
+      "remove": "Remove",
+      "chooseSkillAria": "Choose a skill",
+      "chooseSkill": "Choose a skill…",
+      "alreadyAdded": "(already added)",
+      "customPlaceholder": "Type your skill, e.g. Stone wall building",
+      "customHelp": "People can search for this skill too.",
+      "experiencePrompt": "How much experience do you have with this skill?",
+      "addAnother": "Add another skill"
+    }
+  }
+}

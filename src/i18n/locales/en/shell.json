@@ -1,0 +1,38 @@
+{
+  "nav": {
+    "home": "Home",
+    "findHelp": "Find Local Help",
+    "advertise": "Advertise My Skills",
+    "howItWorks": "How It Works",
+    "about": "About",
+    "help": "Need Help?",
+    "myProfile": "My Profile",
+    "signIn": "Sign In",
+    "signInOrCreate": "Sign In / Create Account",
+    "signOut": "Sign Out",
+    "menu": "Menu",
+    "admin": "Admin"
+  },
+  "brand": {
+    "initiative": "A Hineni Call Initiative",
+    "poweredBy": "Powered by Khulisa Group",
+    "logoAlt": "Overberg Skills Connect — A Hineni Call Initiative, powered by Khulisa Group"
+  },
+  "home": {
+    "strapline": {
+      "skills": "Local skills.",
+      "connections": "Real connections.",
+      "communities": "Stronger communities."
+    }
+  },
+  "notFound": {
+    "title": "Page not found",
+    "body": "The page you're looking for doesn't exist or has been moved.",
+    "goHome": "Go home"
+  },
+  "error": {
+    "title": "This page didn't load",
+    "body": "Something went wrong. You can try refreshing or head back home.",
+    "retry": "Try again"
+  }
+}

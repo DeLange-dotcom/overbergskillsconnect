@@ -1,0 +1,34 @@
+{
+  "donatePage": {
+    "thankYou": {
+      "title": "Dankie",
+      "body": "Jou toesegging is aangeteken. 'n Hineni-koördineerder sal jou kontak met veilige betalingsbesonderhede (EFT of kaart). Elke bydrae maak 'n werklike verskil."
+    },
+    "badge": "Ondersteun die register",
+    "title": "Ondersteun die Hineni-gemeenskapsvaardigheidsregister",
+    "intro1": "Baie vertroude lede van ons gemeenskap het onlangs werksgeleenthede verloor. Deur die Hineni-gemeenskapsvaardigheidsregister koppel ons mense weer aan werk, ondersteun ons huishoudings in nood, en versterk ons ons gemeenskap deur leer, waardigheid en geleentheid.",
+    "intro2": "Jou skenking help ons om die register in stand te hou, keuring en verwysingskontroles te doen, mense met geleenthede te verbind, en 'n sterker toekoms vir almal te bou.",
+    "sponsor": {
+      "title": "Borg 'n Keuringskontrole",
+      "body": "Help ons om nog een persoon veilig goed te keur deur die administrasie, dokumentnasien en verwysingskontroles te borg wat nodig is voordat hulle gelys kan word (~R250)."
+    },
+    "form": {
+      "amountLabel": "Kies 'n bedrag (ZAR)",
+      "customPlaceholder": "Of tik 'n eie bedrag in",
+      "frequencyLabel": "Frekwensie",
+      "onceOff": "Eenmalig",
+      "monthly": "Maandelikse ondersteuner",
+      "purposeLabel": "Doel",
+      "purposeGeneral": "Algemene ondersteuning",
+      "purposeSponsor": "Borg 'n keuringskontrole",
+      "nameLabel": "Jou naam (opsioneel)",
+      "emailLabel": "E-pos (opsioneel)",
+      "phoneLabel": "Foon (opsioneel)",
+      "messageLabel": "Boodskap (opsioneel)",
+      "anonymous": "Lys my anoniem op die Ondersteunersmuur",
+      "submit": "Belowe skenking",
+      "followUp": "'n Hineni-koördineerder sal opvolg met betalingsinstruksies. Kaartverwerking sal binnekort geaktiveer word.",
+      "checkError": "Kontroleer asseblief jou besonderhede."
+    }
+  }
+}

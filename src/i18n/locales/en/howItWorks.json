@@ -1,0 +1,41 @@
+{
+  "howItWorks": {
+    "title": "How it works",
+    "intro": "{{platform}} is a simple community noticeboard. Whether you are looking for work or looking for help, the process is straightforward.",
+    "seeking": {
+      "heading": "I am looking for work",
+      "step1Title": "1. Create your profile",
+      "step1Body": "Sign up and tell the community what you can do. Add your skills, a short description, and the areas you work in. It only takes a few minutes.",
+      "step2Title": "2. Get discovered",
+      "step2Body": "Your profile appears in the local directory where people can browse by skill and location. No paperwork or approvals needed.",
+      "step3Title": "3. Receive contact requests",
+      "step3Body": "When someone is interested, they send a contact request. Your telephone number is never shown on the noticeboard. It is only shared with a person after you approve their request, and you can withdraw that approval at any time."
+    },
+    "hiring": {
+      "heading": "I am looking for a service",
+      "step1Title": "1. Browse local skills",
+      "step1Body": "Search or browse profiles by skill type and town. See what people offer and read their descriptions before reaching out.",
+      "step2Title": "2. Request contact details",
+      "step2Body": "Found someone suitable? Send a contact request. They are notified and decide whether to share their telephone number with you. Nobody else can see it.",
+      "step3Title": "3. Connect directly",
+      "step3Body": "Once the worker shares their details, you contact each other directly and agree on the work. The platform simply made the introduction."
+    },
+    "managing": {
+      "heading": "Managing your listing",
+      "editTitle": "Edit your listing",
+      "editBody": "Go to <strong>My Listing</strong> to update your skills, description, photo or contact details at any time. Changes appear immediately on the noticeboard.",
+      "pauseTitle": "Pause or unpause your listing",
+      "pauseBody": "Pausing hides your listing from the noticeboard without deleting anything. Unpause it whenever you are ready to take work again.",
+      "archiveTitle": "Archive and reactivate",
+      "archiveBody": "Archiving removes your listing from public view but keeps all your data safe. You can reactivate it whenever you want — perfect for seasonal work or short breaks.",
+      "deleteTitle": "Delete permanently",
+      "deleteBody": "Deleting is separate from pausing and cannot be undone. You will be asked to confirm twice before anything is removed.",
+      "requestsTitle": "Handle contact requests",
+      "requestsBody": "When someone asks for your details, you will see it under <strong>People Interested In Me</strong> on <strong>My Profile</strong>. You decide whether to approve or decline each request. Your telephone number is only released to a person you have approved, and you can withdraw it again at any time.",
+      "notificationsTitle": "Check your profile regularly",
+      "notificationsBody": "We do not send SMS messages. New contact requests and updates appear under <strong>Notifications</strong> on <strong>My Profile</strong>, so please check it regularly."
+    },
+    "disclaimer": "{{platform}} is a noticeboard only. We do not employ, vet or recommend anyone. Please carry out your own checks before entering into any agreement.",
+    "disclaimerLink": "Read the full disclaimer"
+  }
+}

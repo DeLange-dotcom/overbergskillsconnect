@@ -1,0 +1,54 @@
+{
+  "skills": {
+    "Domestic Worker": "Domestic Worker",
+    "Cleaning & housekeeping": "Cleaning & housekeeping",
+    "Childcare": "Childcare",
+    "Eldercare": "Eldercare",
+    "Cooking": "Cooking",
+    "Gardening": "Gardening",
+    "Painting": "Painting",
+    "Plumbing": "Plumbing",
+    "Electrical": "Electrical",
+    "Building & handyman": "Building & handyman",
+    "Carpentry": "Carpentry",
+    "Farm work": "Farm work",
+    "Driving": "Driving",
+    "Tutoring": "Tutoring",
+    "Hairdressing": "Hairdressing",
+    "Sewing": "Sewing",
+    "Admin & office": "Admin & office",
+    "IT & computers": "IT & computers",
+    "Security": "Security",
+    "Other": "Other"
+  },
+  "experience": {
+    "lt1": "Less than 1 year",
+    "1_2": "1–2 years",
+    "3_5": "3–5 years",
+    "6_10": "6–10 years",
+    "10plus": "10+ years"
+  },
+  "availability": {
+    "Full-time": "Full-time",
+    "Part-time": "Part-time",
+    "Weekends": "Weekends",
+    "Once-off / project": "Once-off / project",
+    "Flexible": "Flexible"
+  },
+  "listingStatus": {
+    "active": "Active",
+    "paused": "Paused",
+    "archived": "Archived",
+    "suspended": "Suspended",
+    "removed": "Removed",
+    "pending": "Pending review"
+  },
+  "requestStatus": {
+    "pending": "Waiting for approval",
+    "approved": "Approved",
+    "declined": "Declined",
+    "revoked": "Access withdrawn",
+    "expired": "Expired"
+  },
+  "otherTown": "Other (type my town)"
+}

@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { Mail } from "lucide-react";
 import { PageHeader } from "@/components/site/PageHeader";
+import { PLATFORM_NAME } from "@/lib/brand";
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
@@ -19,11 +20,15 @@ function ContactPage() {
   return (
     <SiteLayout>
       <div className="max-w-xl mx-auto px-4 sm:px-6 py-12">
-        <PageHeader eyebrow="Contact Us" title={t("contact.title")} intro={t("contact.intro")} />
+        <PageHeader
+          eyebrow={t("contactPage.eyebrow")}
+          title={t("contactPage.title")}
+          intro={t("contactPage.intro", { platform: PLATFORM_NAME })}
+        />
         <div className="p-6 osc-card">
           <div className="flex items-center gap-3 mb-3">
             <Mail className="size-5 text-brand-orange" />
-            <span className="font-medium">Email</span>
+            <span className="font-medium">{t("contactPage.emailLabel")}</span>
           </div>
           <a
             href="mailto:hello@khulisagroup.com"

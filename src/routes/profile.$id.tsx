@@ -6,15 +6,18 @@ import { SiteLayout } from "@/components/site/SiteLayout";
 import { FavouriteButton } from "@/components/site/FavouriteButton";
 import { DisclaimerBanner } from "@/components/site/DisclaimerBanner";
 import { supabase } from "@/integrations/supabase/client";
-import { REPORT_REASONS, experienceLabel, type SkillExperience } from "@/lib/noticeboard";
+import { REPORT_REASONS, type SkillExperience } from "@/lib/noticeboard";
 import { toast } from "sonner";
+import { useTranslation } from "react-i18next";
+import i18n from "@/i18n";
+import { useLabels } from "@/i18n/labels";
 
 export const Route = createFileRoute("/profile/$id")({
   component: ProfilePage,
   errorComponent: ({ error }) => (
     <SiteLayout>
       <div className="max-w-xl mx-auto px-4 py-16 text-center">
-        <h1 className="osc-heading text-2xl mb-2">Something went wrong</h1>
+        <h1 className="osc-heading text-2xl mb-2">{i18n.t("publicProfile.error.title")}</h1>
         <p className="text-brand-dark/70">{(error as Error).message}</p>
       </div>
     </SiteLayout>
@@ -22,9 +25,9 @@ export const Route = createFileRoute("/profile/$id")({
   notFoundComponent: () => (
     <SiteLayout>
       <div className="max-w-xl mx-auto px-4 py-16 text-center">
-        <h1 className="osc-heading text-2xl mb-2">Listing not found</h1>
+        <h1 className="osc-heading text-2xl mb-2">{i18n.t("publicProfile.notFound.title")}</h1>
         <Link to="/find-help" className="text-brand-primary underline">
-          Back to the noticeboard
+          {i18n.t("publicProfile.notFound.backLink")}
         </Link>
       </div>
     </SiteLayout>
@@ -47,6 +50,8 @@ type Row = {
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
 function ProfilePage() {
+  const { t } = useTranslation();
+  const { experienceLabel, availabilityLabel } = useLabels();
   const { id } = Route.useParams();
   const [contactOpen, setContactOpen] = useState(false);
   const [reportOpen, setReportOpen] = useState(false);
@@ -68,7 +73,7 @@ function ProfilePage() {
   if (isLoading) {
     return (
       <SiteLayout>
-        <div className="max-w-2xl mx-auto px-4 py-16 text-center text-brand-dark/50">Loading…</div>
+        <div className="max-w-2xl mx-auto px-4 py-16 text-center text-brand-dark/50">{t("publicProfile.loading")}</div>
       </SiteLayout>
     );
   }
@@ -82,7 +87,7 @@ function ProfilePage() {
           to="/find-help"
           className="inline-flex items-center gap-1.5 text-sm text-brand-dark/60 hover:text-brand-primary mb-6"
         >
-          <ArrowLeft className="size-4" /> Back to noticeboard
+          <ArrowLeft className="size-4" /> {t("publicProfile.backToNoticeboard")}
         </Link>
 
         <div className="bg-white border border-brand-dark/5 rounded-3xl p-6 sm:p-8">
@@ -101,7 +106,7 @@ function ProfilePage() {
               </div>
               {data.availability && (
                 <div className="flex items-center gap-1.5 text-sm text-brand-dark/60 mt-1">
-                  <Calendar className="size-4" /> {data.availability}
+                  <Calendar className="size-4" /> {availabilityLabel(data.availability)}
                 </div>
               )}
             </div>
@@ -109,7 +114,7 @@ function ProfilePage() {
 
           <div className="mt-6">
             <h2 className="text-sm font-semibold uppercase tracking-wide text-brand-dark/50 mb-2">
-              Skills
+              {t("publicProfile.skillsHeading")}
             </h2>
             <ul className="space-y-1.5">
               {(data.skill_experience?.length
@@ -120,7 +125,9 @@ function ProfilePage() {
                 return (
                   <li key={s.skill} className="text-brand-dark/85">
                     <span className="font-medium">{s.skill}</span>
-                    {label && <span className="text-brand-dark/60"> — {label} experience</span>}
+                    {label && (
+                      <span className="text-brand-dark/60"> — {label} {t("publicProfile.experienceSuffix")}</span>
+                    )}
                   </li>
                 );
               })}
@@ -137,13 +144,13 @@ function ProfilePage() {
               onClick={() => setContactOpen(true)}
               className="inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-brand-primary text-white font-medium hover:brightness-110"
             >
-              <MessageCircle className="size-4" /> Request Contact
+              <MessageCircle className="size-4" /> {t("publicProfile.requestContact")}
             </button>
             <button
               onClick={() => setReportOpen(true)}
               className="inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl border border-brand-dark/15 text-sm text-brand-dark/70 hover:bg-brand-soft"
             >
-              <Flag className="size-4" /> Report this profile
+              <Flag className="size-4" /> {t("publicProfile.reportProfile")}
             </button>
             <FavouriteButton profileId={data.id} className="sm:col-span-2" />
           </div>
@@ -171,6 +178,7 @@ function ContactDialog({
   name: string;
   onClose: () => void;
 }) {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [submitting, setSubmitting] = useState(false);
   const [sent, setSent] = useState(false);
@@ -197,7 +205,7 @@ function ContactDialog({
   async function submit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     if (!consent) {
-      toast.error("Please tick the consent box to continue.");
+      toast.error(t("publicProfile.contactDialog.consentRequired"));
       return;
     }
     setSubmitting(true);
@@ -213,13 +221,11 @@ function ContactDialog({
     if (error) {
       const msg = error.message ?? "";
       if (msg.includes("rate_limited")) {
-        toast.error(
-          "You've reached the limit of 5 contact requests in 24 hours. Please try again later.",
-        );
+        toast.error(t("publicProfile.contactDialog.rateLimited"));
       } else if (msg.includes("consent_required")) {
-        toast.error("Please tick the consent box to continue.");
+        toast.error(t("publicProfile.contactDialog.consentRequired"));
       } else {
-        toast.error(msg || "Could not send your request.");
+        toast.error(msg || t("publicProfile.contactDialog.genericError"));
       }
       return;
     }
@@ -229,7 +235,7 @@ function ContactDialog({
   if (!authChecked) {
     return (
       <Modal onClose={onClose}>
-        <div className="py-6 text-center text-brand-dark/60 text-sm">Loading…</div>
+        <div className="py-6 text-center text-brand-dark/60 text-sm">{t("publicProfile.contactDialog.loading")}</div>
       </Modal>
     );
   }
@@ -237,10 +243,9 @@ function ContactDialog({
   if (!signedIn) {
     return (
       <Modal onClose={onClose}>
-        <h2 className="font-heading text-xl font-semibold mb-2">Sign in to continue</h2>
+        <h2 className="font-heading text-xl font-semibold mb-2">{t("publicProfile.contactDialog.signInTitle")}</h2>
         <p className="text-sm text-brand-dark/70 mb-5">
-          Create a free account or sign in so {name} can reply, and so you can track your contact
-          requests from your dashboard.
+          {t("publicProfile.contactDialog.signInBody", { name })}
         </p>
         <div className="flex gap-2 justify-end">
           <button
@@ -248,7 +253,7 @@ function ContactDialog({
             onClick={onClose}
             className="px-4 py-2.5 rounded-xl border border-brand-dark/10"
           >
-            Cancel
+            {t("publicProfile.contactDialog.cancel")}
           </button>
           <button
             type="button"
@@ -260,7 +265,7 @@ function ContactDialog({
             }
             className="px-4 py-2.5 rounded-xl bg-brand-primary text-white"
           >
-            Sign in
+            {t("publicProfile.contactDialog.signIn")}
           </button>
         </div>
       </Modal>
@@ -274,11 +279,9 @@ function ContactDialog({
           <div className="mx-auto size-14 rounded-full bg-emerald-100 grid place-items-center mb-3">
             <CheckCircle2 className="size-7 text-emerald-600" />
           </div>
-          <h2 className="font-heading text-xl font-semibold mb-2">Request sent</h2>
+          <h2 className="font-heading text-xl font-semibold mb-2">{t("publicProfile.contactDialog.sentTitle")}</h2>
           <p className="text-sm text-brand-dark/70 mb-5">
-            Your request has been sent successfully. {name} can choose whether to share their
-            contact details. You can check the status any time from your profile dashboard. The
-            advertiser will also see an in-app notification when they sign in.
+            {t("publicProfile.contactDialog.sentBody", { name })}
           </p>
           <div className="flex flex-col sm:flex-row gap-2">
             <button
@@ -286,14 +289,14 @@ function ContactDialog({
               onClick={() => navigate({ to: "/profile" })}
               className="flex-1 px-4 py-3 rounded-xl bg-brand-primary text-white font-medium"
             >
-              View My Profile
+              {t("publicProfile.contactDialog.viewMyProfile")}
             </button>
             <button
               type="button"
               onClick={onClose}
               className="flex-1 px-4 py-3 rounded-xl border border-brand-dark/15"
             >
-              Continue Browsing
+              {t("publicProfile.contactDialog.continueBrowsing")}
             </button>
           </div>
         </div>
@@ -303,29 +306,29 @@ function ContactDialog({
 
   return (
     <Modal onClose={onClose}>
-      <h2 className="font-heading text-xl font-semibold mb-1">Request contact details</h2>
+      <h2 className="font-heading text-xl font-semibold mb-1">{t("publicProfile.contactDialog.title")}</h2>
       <p className="text-sm text-brand-dark/60 mb-4">
-        {name} will choose whether to share their phone number.
+        {t("publicProfile.contactDialog.subtitle", { name })}
       </p>
       <form onSubmit={submit} className="space-y-3">
         <input
           required
           name="name"
           defaultValue={userName}
-          placeholder="Your name"
+          placeholder={t("publicProfile.contactDialog.namePlaceholder")}
           className="w-full px-4 py-3 border border-brand-dark/10 rounded-xl"
         />
         <input
           required
           name="contact"
           defaultValue={userPhone}
-          placeholder="Your phone or WhatsApp"
+          placeholder={t("publicProfile.contactDialog.contactPlaceholder")}
           className="w-full px-4 py-3 border border-brand-dark/10 rounded-xl"
         />
         <textarea
           name="message"
           rows={3}
-          placeholder="Briefly, what help are you looking for?"
+          placeholder={t("publicProfile.contactDialog.messagePlaceholder")}
           className="w-full px-4 py-3 border border-brand-dark/10 rounded-xl"
           spellCheck
         />
@@ -337,8 +340,7 @@ function ContactDialog({
             className="mt-0.5 size-4 shrink-0"
           />
           <span>
-            I agree that my name and contact details will be shared with {name} so they can respond
-            to my request. Any phone number they choose to share will be visible to me for 30 days.
+            {t("publicProfile.contactDialog.consentLabel", { name })}
           </span>
         </label>
         <div className="flex gap-2 justify-end pt-1">
@@ -347,14 +349,14 @@ function ContactDialog({
             onClick={onClose}
             className="px-4 py-2.5 rounded-xl border border-brand-dark/10"
           >
-            Cancel
+            {t("publicProfile.contactDialog.cancel")}
           </button>
           <button
             type="submit"
             disabled={submitting || !consent}
             className="px-4 py-2.5 rounded-xl bg-brand-primary text-white disabled:opacity-60"
           >
-            {submitting ? "Sending…" : "Send request"}
+            {submitting ? t("publicProfile.contactDialog.sending") : t("publicProfile.contactDialog.send")}
           </button>
         </div>
       </form>
@@ -363,6 +365,7 @@ function ContactDialog({
 }
 
 function ReportDialog({ profileId, onClose }: { profileId: string; onClose: () => void }) {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [authChecked, setAuthChecked] = useState(false);
   const [signedIn, setSignedIn] = useState(false);
@@ -384,7 +387,7 @@ function ReportDialog({ profileId, onClose }: { profileId: string; onClose: () =
   async function submit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     if (!reason) {
-      toast.error("Please select a reason.");
+      toast.error(t("publicProfile.reportDialog.reasonRequired"));
       return;
     }
     setSubmitting(true);
@@ -400,15 +403,15 @@ function ReportDialog({ profileId, onClose }: { profileId: string; onClose: () =
       toast.error(error.message);
       return;
     }
-    toast.success("Thank you. Khulisa admins will review this report.");
+    toast.success(t("publicProfile.reportDialog.success"));
     onClose();
   }
 
   if (!authChecked) {
     return (
       <Modal onClose={onClose}>
-        <h2 className="font-heading text-xl font-semibold mb-2">Checking your account</h2>
-        <p className="text-sm text-brand-dark/60">Please wait a moment.</p>
+        <h2 className="font-heading text-xl font-semibold mb-2">{t("publicProfile.reportDialog.checkingAccount")}</h2>
+        <p className="text-sm text-brand-dark/60">{t("publicProfile.reportDialog.pleaseWait")}</p>
       </Modal>
     );
   }
@@ -416,10 +419,9 @@ function ReportDialog({ profileId, onClose }: { profileId: string; onClose: () =
   if (!signedIn) {
     return (
       <Modal onClose={onClose}>
-        <h2 className="font-heading text-xl font-semibold mb-2">Sign in to report a profile</h2>
+        <h2 className="font-heading text-xl font-semibold mb-2">{t("publicProfile.reportDialog.signInTitle")}</h2>
         <p className="text-sm text-brand-dark/60 mb-5">
-          Reports are reviewed by admins. Signing in helps prevent false reports and gives the
-          review team a clearer audit trail.
+          {t("publicProfile.reportDialog.signInBody")}
         </p>
         <div className="flex gap-2 justify-end">
           <button
@@ -427,7 +429,7 @@ function ReportDialog({ profileId, onClose }: { profileId: string; onClose: () =
             onClick={onClose}
             className="px-4 py-2.5 rounded-xl border border-brand-dark/10"
           >
-            Cancel
+            {t("publicProfile.reportDialog.cancel")}
           </button>
           <button
             type="button"
@@ -439,7 +441,7 @@ function ReportDialog({ profileId, onClose }: { profileId: string; onClose: () =
             }
             className="px-4 py-2.5 rounded-xl bg-brand-primary text-white"
           >
-            Sign in
+            {t("publicProfile.reportDialog.signIn")}
           </button>
         </div>
       </Modal>
@@ -448,9 +450,9 @@ function ReportDialog({ profileId, onClose }: { profileId: string; onClose: () =
 
   return (
     <Modal onClose={onClose}>
-      <h2 className="font-heading text-xl font-semibold mb-1">Report this profile</h2>
+      <h2 className="font-heading text-xl font-semibold mb-1">{t("publicProfile.reportDialog.title")}</h2>
       <p className="text-sm text-brand-dark/60 mb-4">
-        Khulisa admins will review reports and may remove profiles that breach our Terms.
+        {t("publicProfile.reportDialog.subtitle")}
       </p>
       <form onSubmit={submit} className="space-y-3">
         <div className="space-y-2">
@@ -463,20 +465,20 @@ function ReportDialog({ profileId, onClose }: { profileId: string; onClose: () =
                 checked={reason === r.value}
                 onChange={() => setReason(r.value)}
               />
-              {r.label}
+              {t(`publicProfile.reportDialog.reasons.${r.value}`, { defaultValue: r.label })}
             </label>
           ))}
         </div>
         <textarea
           name="details"
           rows={3}
-          placeholder="Optional details"
+          placeholder={t("publicProfile.reportDialog.detailsPlaceholder")}
           className="w-full px-4 py-3 border border-brand-dark/10 rounded-xl"
           spellCheck="true"
         />
         <input
           name="reporter_contact"
-          placeholder="Your contact (optional, so we can follow up)"
+          placeholder={t("publicProfile.reportDialog.contactPlaceholder")}
           className="w-full px-4 py-3 border border-brand-dark/10 rounded-xl"
         />
         <div className="flex gap-2 justify-end pt-1">
@@ -485,14 +487,14 @@ function ReportDialog({ profileId, onClose }: { profileId: string; onClose: () =
             onClick={onClose}
             className="px-4 py-2.5 rounded-xl border border-brand-dark/10"
           >
-            Cancel
+            {t("publicProfile.reportDialog.cancel")}
           </button>
           <button
             type="submit"
             disabled={submitting}
             className="px-4 py-2.5 rounded-xl bg-red-600 text-white disabled:opacity-60"
           >
-            {submitting ? "Sending…" : "Submit report"}
+            {submitting ? t("publicProfile.reportDialog.sending") : t("publicProfile.reportDialog.submit")}
           </button>
         </div>
       </form>

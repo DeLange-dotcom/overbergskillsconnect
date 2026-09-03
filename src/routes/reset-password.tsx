@@ -4,12 +4,14 @@ import { SiteLayout } from "@/components/site/SiteLayout";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
+import { useTranslation } from "react-i18next";
+import i18n from "@/i18n";
 
 export const Route = createFileRoute("/reset-password")({
   head: () => ({
     meta: [
-      { title: "Reset password — Hineni" },
-      { name: "description", content: "Set a new password for your Hineni account." },
+      { title: i18n.t("auth.resetPassword.meta.title") },
+      { name: "description", content: i18n.t("auth.resetPassword.meta.description") },
     ],
   }),
   component: ResetPasswordPage,
@@ -18,6 +20,7 @@ export const Route = createFileRoute("/reset-password")({
 type Status = "checking" | "ready" | "invalid";
 
 function ResetPasswordPage() {
+  const { t } = useTranslation();
   const [busy, setBusy] = useState(false);
   const [status, setStatus] = useState<Status>("checking");
   const [resendEmail, setResendEmail] = useState("");
@@ -81,17 +84,17 @@ function ResetPasswordPage() {
     const password = fd.get("password") as string;
     const confirm = fd.get("confirm") as string;
     if (password !== confirm) {
-      toast.error("Passwords don't match.");
+      toast.error(t("auth.resetPassword.toasts.passwordsDontMatch"));
       return;
     }
     setBusy(true);
     try {
       const { error } = await supabase.auth.updateUser({ password });
       if (error) throw error;
-      toast.success("Password updated. You're signed in.");
+      toast.success(t("auth.resetPassword.toasts.passwordUpdated"));
       window.location.replace("/admin");
     } catch (err) {
-      toast.error(err instanceof Error ? err.message : "Could not update password");
+      toast.error(err instanceof Error ? err.message : t("auth.resetPassword.toasts.couldNotUpdatePassword"));
     } finally {
       setBusy(false);
     }
@@ -107,9 +110,9 @@ function ResetPasswordPage() {
       });
       if (error) throw error;
       setResent(true);
-      toast.success("New reset link sent. Open it as soon as it arrives.");
+      toast.success(t("auth.resetPassword.toasts.newResetLinkSent"));
     } catch (err) {
-      toast.error(err instanceof Error ? err.message : "Could not send reset email");
+      toast.error(err instanceof Error ? err.message : t("auth.resetPassword.toasts.couldNotSendResetEmail"));
     } finally {
       setResending(false);
     }
@@ -118,29 +121,27 @@ function ResetPasswordPage() {
   return (
     <SiteLayout>
       <div className="max-w-md mx-auto px-4 sm:px-6 py-14">
-        <h1 className="osc-heading text-3xl mb-2">Set a new password</h1>
+        <h1 className="osc-heading text-3xl mb-2">{t("auth.resetPassword.heading")}</h1>
 
         {status === "checking" && (
-          <p className="text-brand-dark/60 text-sm mb-8">Verifying your reset link…</p>
+          <p className="text-brand-dark/60 text-sm mb-8">{t("auth.resetPassword.verifying")}</p>
         )}
 
         {status === "invalid" && (
           <div className="space-y-5">
             <div className="p-4 rounded-xl bg-amber-50 border border-amber-200 text-sm text-amber-900 space-y-2">
-              <p className="font-semibold">This reset link is no longer valid.</p>
+              <p className="font-semibold">{t("auth.resetPassword.invalid.title")}</p>
               <p>
-                Reset links can only be opened once and expire quickly. Email providers like Gmail
-                sometimes preview links automatically, which uses them up before you click.
+                {t("auth.resetPassword.invalid.explanation")}
               </p>
               <p className="font-medium">
-                Request a fresh link below and open it in your browser as soon as it arrives.
+                {t("auth.resetPassword.invalid.callToAction")}
               </p>
             </div>
 
             {resent ? (
               <div className="p-4 rounded-xl bg-brand-soft text-sm text-brand-dark/80">
-                If an account exists for that email, a new reset link is on its way. Open it right
-                away — don't hover or preview it first.
+                {t("auth.resetPassword.invalid.sentMessage")}
               </div>
             ) : (
               <form onSubmit={resend} className="space-y-3">
@@ -149,7 +150,7 @@ function ResetPasswordPage() {
                   required
                   value={resendEmail}
                   onChange={(e) => setResendEmail(e.target.value)}
-                  placeholder="Your email"
+                  placeholder={t("auth.resetPassword.invalid.emailPlaceholder")}
                   className="w-full px-4 py-3 border border-brand-dark/10 rounded-xl"
                 />
                 <button
@@ -158,13 +159,13 @@ function ResetPasswordPage() {
                   className="w-full inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-brand-primary text-white font-medium disabled:opacity-60"
                 >
                   {resending && <Loader2 className="size-4 animate-spin" />}
-                  Send a new reset link
+                  {t("auth.resetPassword.invalid.sendButton")}
                 </button>
               </form>
             )}
 
             <Link to="/auth" className="text-brand-primary hover:underline text-sm">
-              Back to sign in
+              {t("auth.resetPassword.invalid.backToSignIn")}
             </Link>
           </div>
         )}
@@ -172,7 +173,7 @@ function ResetPasswordPage() {
         {status === "ready" && (
           <>
             <p className="text-brand-dark/60 text-sm mb-8">
-              Choose a strong new password for your account.
+              {t("auth.resetPassword.ready.intro")}
             </p>
             <form onSubmit={submit} className="space-y-3">
               <input
@@ -180,7 +181,7 @@ function ResetPasswordPage() {
                 type="password"
                 required
                 minLength={6}
-                placeholder="New password"
+                placeholder={t("auth.resetPassword.ready.newPasswordPlaceholder")}
                 className="w-full px-4 py-3 border border-brand-dark/10 rounded-xl"
               />
               <input
@@ -188,7 +189,7 @@ function ResetPasswordPage() {
                 type="password"
                 required
                 minLength={6}
-                placeholder="Confirm new password"
+                placeholder={t("auth.resetPassword.ready.confirmPasswordPlaceholder")}
                 className="w-full px-4 py-3 border border-brand-dark/10 rounded-xl"
               />
               <button
@@ -197,7 +198,7 @@ function ResetPasswordPage() {
                 className="w-full inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-brand-primary text-white font-medium disabled:opacity-60"
               >
                 {busy && <Loader2 className="size-4 animate-spin" />}
-                Update password
+                {t("auth.resetPassword.ready.updateButton")}
               </button>
             </form>
           </>

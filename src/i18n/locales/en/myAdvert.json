@@ -1,0 +1,80 @@
+{
+  "myAdvert": {
+    "loading": "Loading…",
+    "notCreated": {
+      "title": "My Listing",
+      "body": "You haven't created your advert yet.",
+      "create": "Create My Listing"
+    },
+    "page": {
+      "title": "My Listing",
+      "subtitle": "Update any field and your advert changes immediately.",
+      "preview": "Preview"
+    },
+    "archivedNotice": "Your listing is <bold>archived</bold> and hidden from public search. Use <italic>Reactivate listing</italic> below to bring it back live.",
+    "status": {
+      "pausedNotShown": "Paused — not shown to anyone",
+      "live": "Live on the noticeboard",
+      "pausedInfo": "Pausing keeps everything saved. Nothing is deleted.",
+      "liveInfo": "People can find you and ask for your number."
+    },
+    "pause": "Pause my listing",
+    "unpause": "Unpause my listing",
+    "form": {
+      "name": "Name",
+      "skillsTitle": "What work can you do?",
+      "skillsSubtitle": "Add, remove or change a skill and its experience level, then save your changes.",
+      "availability": "Availability",
+      "availabilityPlaceholder": "Select…",
+      "description": "Short description",
+      "photoUrl": "Photo URL",
+      "photoUrlPlaceholder": "https://…",
+      "photoUrlHelp": "Leave blank to remove your photo.",
+      "phone": "Telephone number (kept private)",
+      "phoneHelp": "Only shared when you approve a request.",
+      "save": "Save changes",
+      "saving": "Saving…",
+      "previewMobile": "Preview my public listing"
+    },
+    "toasts": {
+      "atLeastOneSkill": "Please add at least one skill.",
+      "chooseExperience": "Please choose how much experience you have for each skill.",
+      "updated": "Advert updated",
+      "listingPaused": "Your listing is paused.",
+      "listingLive": "Your listing is live again.",
+      "pauseError": "Sorry, we could not change your listing. Please try again.",
+      "removed": "Advert removed",
+      "reactivated": "Listing reactivated",
+      "archived": "Listing archived"
+    },
+    "reactivate": "Reactivate listing",
+    "archive": "Archive my listing",
+    "archiveConfirm": "Archive your listing? It will be hidden from public search but can be reactivated any time.",
+    "deleteSection": {
+      "title": "Delete my listing",
+      "body": "This is permanent. Your listing and its skills are removed for good. If you only want a break, use <bold>Pause my listing</bold> instead — nothing is lost.",
+      "button": "Delete my listing permanently"
+    },
+    "deleteDialog": {
+      "title": "Permanently delete your listing?",
+      "body": "This cannot be undone. To keep your details for later, choose Cancel and use <bold>Pause my listing</bold> instead.",
+      "ack": "Yes, I understand my listing will be deleted for good.",
+      "cancel": "Cancel",
+      "confirm": "Delete permanently"
+    },
+    "incoming": {
+      "title": "People Interested In Me",
+      "loading": "Loading…",
+      "empty": "No one has asked for your contact details yet.",
+      "requested": "Requested {{date}}",
+      "approved": "Approved",
+      "declined": "Declined",
+      "approveWhatsapp": "Approve & WhatsApp",
+      "declineWhatsapp": "Decline & WhatsApp",
+      "approvedWhatsappToast": "Approved. WhatsApp is opening so you can send your contact details.",
+      "declinedWhatsappToast": "Declined. WhatsApp is opening so you can send the update.",
+      "approvedToast": "Request approved.",
+      "declinedToast": "Request declined."
+    }
+  }
+}

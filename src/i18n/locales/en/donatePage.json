@@ -1,0 +1,34 @@
+{
+  "donatePage": {
+    "thankYou": {
+      "title": "Thank you",
+      "body": "Your pledge has been recorded. A Hineni coordinator will reach out with secure payment details (EFT or card). Every contribution makes a real difference."
+    },
+    "badge": "Support the register",
+    "title": "Support the Hineni Community Skills Register",
+    "intro1": "Many trusted members of our community have recently lost work opportunities. Through the Hineni Community Skills Register we reconnect people with employment, support households in need, and strengthen our community through learning, dignity and opportunity.",
+    "intro2": "Your donation helps us maintain the register, conduct vetting and reference checks, connect people with opportunities, and build a stronger future for everyone.",
+    "sponsor": {
+      "title": "Sponsor a Vetting Check",
+      "body": "Help us safely approve one more person by sponsoring the administration, document review and reference checks needed before they can be listed (~R250)."
+    },
+    "form": {
+      "amountLabel": "Choose an amount (ZAR)",
+      "customPlaceholder": "Or enter a custom amount",
+      "frequencyLabel": "Frequency",
+      "onceOff": "Once-off",
+      "monthly": "Monthly supporter",
+      "purposeLabel": "Purpose",
+      "purposeGeneral": "General support",
+      "purposeSponsor": "Sponsor a vetting check",
+      "nameLabel": "Your name (optional)",
+      "emailLabel": "Email (optional)",
+      "phoneLabel": "Phone (optional)",
+      "messageLabel": "Message (optional)",
+      "anonymous": "List me anonymously on the Supporter Wall",
+      "submit": "Pledge donation",
+      "followUp": "A Hineni coordinator will follow up with payment instructions. Card processing will be enabled shortly.",
+      "checkError": "Please check your details."
+    }
+  }
+}

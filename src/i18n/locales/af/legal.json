@@ -1,0 +1,255 @@
+{
+  "legal": {
+    "bilingualNotice": "Hierdie bladsy is beskikbaar in Engels en Afrikaans. Indien daar enige verskil in interpretasie tussen die twee weergawes is, geld die Engelse weergawe.",
+    "disclaimerText": "Overberg Skills Connect is 'n digitale gemeenskapskennisgewingbord. Khulisa werk nie mense in diens nie, werf nie werkers nie, beveel nie mense aan nie, keur nie mense nie, hou nie toesig nie en waarborg nie enige persoon wat hierdie platform gebruik nie. Gebruikers is self ten volle verantwoordelik om hul eie navrae te doen, verwysings te bekom, polisieklaringsertifikate aan te vra waar toepaslik, kwalifikasies te verifieer en enige ooreenkomste aan te gaan. Khulisa aanvaar geen verantwoordelikheid vir enige verlies, besering, skade, geskil of eis wat voortspruit uit kennismakings wat deur hierdie platform gemaak word nie.",
+    "legalDisclaimerText": "Hineni onderneem redelike verifikasie-, keurings- en beskermingsmaatreëls. Hineni kan egter nie die gedrag van derde partye waarborg nie en aanvaar geen aanspreeklikheid vir besering, verlies, skade, wangedrag, kriminele bedrywighede of geskille wat voortspruit uit interaksies tussen deelnemers, mentors, werkgewers, leerlingskapverskaffers of ander gebruikers van die platform nie. Deelname geskied op die individu se eie risiko en onderworpe aan toepaslike Suid-Afrikaanse reg.",
+    "legalDisclaimerAckLabel": "Ek het hierdie vrywaring gelees en verstaan, en aanvaar die bepalings daarvan.",
+    "terms": {
+      "meta": {
+        "title": "Gebruiksbepalings — {{platform}}",
+        "description": "{{platform}} se gebruiksbepalings."
+      },
+      "heading": "Gebruiksbepalings",
+      "effectiveDate": "Datum van inwerkingtreding: 4 Augustus 2026",
+      "section1": {
+        "title": "1. Wat hierdie platform is",
+        "p1": "{{platform}} (\"die platform\") is 'n digitale gemeenskapskennisgewingbord wat besit en bedryf word deur {{owner}}. Dit bestaan om mense wat vaardighede aanbied en mense wat hulp soek, in staat te stel om mekaar in hul plaaslike gemeenskap te vind."
+      },
+      "section2": {
+        "title": "2. Wat Khulisa nie is nie",
+        "item1": "{{platform}} is slegs 'n gemeenskapskennisgewingbord.",
+        "item2": "Khulisa is nie 'n werkgewer nie.",
+        "item3": "Khulisa is nie 'n arbeidsmakelaar nie.",
+        "item4": "Khulisa is nie 'n werwingsagentskap nie.",
+        "item5": "Khulisa verifieer nie gebruikers nie.",
+        "item6": "Khulisa verifieer nie kwalifikasies nie.",
+        "item7": "Khulisa verifieer nie ervaring nie.",
+        "item8": "Khulisa verifieer nie verwysings nie.",
+        "item9": "Khulisa beveel nie enige persoon aan nie.",
+        "item10": "Khulisa waarborg nie beskikbaarheid, geskiktheid, veiligheid, betaling of werkskwaliteit nie."
+      },
+      "section3": {
+        "title": "3. Jou verantwoordelikhede",
+        "p1": "Gebruikers is uitsluitlik verantwoordelik om hul eie kontroles te doen voordat hulle enige ooreenkoms aangaan. Dit sluit in die verifiëring van identiteit, verwysings, kwalifikasies en werkspermitte waar van toepassing, en die verkryging van 'n polisieklaringsertifikaat waar toepaslik.",
+        "p2": "Gebruikers is verantwoordelik om betaling en werksomstandighede ooreen te kom, en om te voldoen aan alle toepaslike wetlike verpligtinge, insluitend arbeids-, belasting- en immigrasiereg.",
+        "p3": "As jy kontak of werk deur WhatsApp, telefoon of enige ander kanaal reël, is daardie reëling tussen die betrokke gebruikers. Hou jou eie rekords en deel nie sensitiewe dokumente tensy jy seker is dit is nodig en wettig nie."
+      },
+      "section4": {
+        "title": "4. Kennisgewings en gedrag",
+        "p1": "Jy mag slegs inligting plaas wat waar en akkuraat is, en jy moet 18 jaar of ouer wees om 'n kennisgewing te publiseer. Khulisa mag kennisgewings verwyder wat hierdie Bepalings oortree, misleidend, bedrieglik, aanstootlik, onwettig of andersins onvanpas is.",
+        "p2": "Jy mag nie die platform gebruik om te teister, te dreig, te diskrimineer, kontakbesonderhede te ontgin, spam te stuur, jou vir iemand anders voor te doen, inligting onwettig te versamel, of te probeer om sekuriteitsbeheermaatreëls te omseil nie."
+      },
+      "section5": {
+        "title": "5. Privaatheid en kontakbesonderhede",
+        "p1": "Telefoonnommers word privaat gestoor en word slegs met 'n ander gebruiker gedeel sodra jy hul versoek uitdruklik goedgekeur het. Sien ons {{link}}.",
+        "privacyLink": "Privaatheidsbeleid",
+        "p2": "Die huidige WhatsApp-integrasie is handmatig. Die toepassing mag WhatsApp oopmaak met 'n voorbereide boodskap, maar die gebruiker moet daardie boodskap self hersien en stuur."
+      },
+      "section6": {
+        "title": "6. Verslae en moderering",
+        "p1": "Gebruikers kan kennisgewings rapporteer wat onveilig, misleidend of aanstootlik voorkom. Verslae word deur administrateurs hersien. Khulisa mag inhoud of rekeninge verberg, wysig, opskort of verwyder waar nodig om gebruikers te beskerm, aan die wet te voldoen, of die platform verantwoordelik te bedryf."
+      },
+      "section7": {
+        "title": "7. Beperking van aanspreeklikheid",
+        "p1": "Tot die maksimum mate wat deur Suid-Afrikaanse reg toegelaat word, aanvaar {{owner}} geen aanspreeklikheid vir enige verlies, besering, skade, geskil of eis wat voortspruit uit kennismakings wat deur hierdie platform gemaak word nie. Sien ons {{link}}.",
+        "disclaimerLink": "Vrywaring"
+      },
+      "section8": {
+        "title": "8. Intellektuele eiendom"
+      },
+      "section9": {
+        "title": "9. Toepaslike reg",
+        "p1": "Hierdie Bepalings word beheer deur die wette van die Republiek van Suid-Afrika."
+      }
+    },
+    "privacy": {
+      "meta": {
+        "title": "Privaatheidsbeleid — {{platform}}",
+        "description": "Hoe {{platform}} jou persoonlike inligting hanteer."
+      },
+      "heading": "Privaatheidsbeleid",
+      "effectiveDate": "Datum van inwerkingtreding: 4 Augustus 2026",
+      "section1": {
+        "title": "1. Wie ons is",
+        "p1": "{{platform}} (\"ons\") word bedryf deur {{owner}}, die verantwoordelike party vir doeleindes van die Wet op die Beskerming van Persoonlike Inligting, 2013 (POPIA)."
+      },
+      "section2": {
+        "title": "2. Watter inligting ons versamel",
+        "item1": "Rekeningbesonderhede soos jou e-posadres en aanmeldinligting.",
+        "item2": "Kennisgewingbesonderhede wat jy verskaf, insluitend naam, dorp of area, vaardighede, ervaring, beskikbaarheid, beskrywing en 'n opsionele profielfoto.",
+        "item3": "Jou telefoon- of WhatsApp-nommer, privaat gestoor tensy jy 'n kontakversoek goedkeur.",
+        "item4": "Kontakversoekbesonderhede, insluitend die versoeker se naam, kontaknommer, boodskap, status en besluitsdatum.",
+        "item5": "Verslae wat oor kennisgewings ingedien word, insluitend rede, besonderhede, die rapporteerder se rekening en opsionele kontakbesonderhede.",
+        "item6": "Tegniese rekords wat nodig is om die platform te bedryf en te beveilig, soos tydstempels, kennisgewings en stelsellogboeke.",
+        "p1": "Sommige toekomstige gedeeltes van die toepassing verwys na identiteitskontroles, ouertoestemming, verwysings, polisieklaringsertifikate, werkspermitte, jeugprogramme of beskermingsrekords. Daardie gedeeltes is nie in werking vir hierdie bekendstelling nie. Indien hulle later geaktiveer word, moet hierdie beleid opgedateer word voordat daardie inligting versamel word."
+      },
+      "section3": {
+        "title": "3. Waarom en hoe ons dit gebruik",
+        "p1": "Ons gebruik persoonlike inligting om die vaardighede-kennisgewingbord te bedryf, kennisgewings te publiseer, kontakversoeke te ontvang en te bestuur, kennisgewings binne die toepassing te vertoon, verslae te hanteer, misbruik te voorkom, rekords van gebruikerskeuses te hou, en om op ondersteunings-, regstellings- of verwyderingsversoeke te reageer.",
+        "p2": "Ons verwerk hierdie inligting omdat dit nodig is om die platform te verskaf, omdat gebruikers toestem tot spesifieke deel-aksies, omdat ons 'n gewettigde belang in veiligheid en misbruikvoorkoming het, en omdat Suid-Afrikaanse reg van ons mag vereis om sekere rekords te hou of bekend te maak."
+      },
+      "section4": {
+        "title": "4. Kontakbesonderhede en WhatsApp",
+        "p1Pre": "Jou telefoonnommer word ",
+        "p1Strong": "nooit publiek vertoon nie",
+        "p1Post": ". Dit word slegs met 'n ander gebruiker gedeel wanneer jy hul kontakversoek uitdruklik goedkeur. Jy kan enige versoek weier.",
+        "p2": "Hierdie bekendstelling gebruik handmatige WhatsApp-skakels. Wanneer 'n kontakversoek goedgekeur of geweier word, mag die toepassing WhatsApp oopmaak met 'n voorbereide boodskap vir die gebruiker om te hersien en te stuur. WhatsApp-boodskappe word deur WhatsApp/Meta hanteer onder hul eie bepalings en privaatheidsbeleide."
+      },
+      "section5": {
+        "title": "5. Deel met diensverskaffers",
+        "p1": "Ons verkoop nie persoonlike inligting nie. Ons mag beperkte inligting deel met diensverskaffers wat ons help om die platform te bedryf, soos huisvesting, verifikasie, databasis-, e-pos-, analise-, sekuriteits- of kommunikasiedienste. Ons mag ook inligting bekend maak waar dit deur die wet, hofbevel, reguleerdersversoek vereis word, of om gebruikers teen skade, bedrog of misbruik te beskerm."
+      },
+      "section6": {
+        "title": "6. Sekuriteit en behoud",
+        "p1": "Ons gebruik toegangsbeheer, private databasisreëls, veilige huisvesting en administratiewe beperkings om persoonlike inligting te beskerm. Geen aanlynstelsel is volkome veilig nie, dus moet gebruikers vermy om sensitiewe besonderhede in openbare beskrywings te plaas.",
+        "p2": "Ons hou aktiewe kennisgewing- en rekeningrekords solank hulle nodig is om die platform te verskaf. Kontakversoekrekords word hersien en mag verwyder word sodra hulle nie meer nodig is vir die kontakproses, geskilhantering of wetlike rekordhouding nie. Hersiene verslae mag langer behou word waar dit nodig is vir veiligheid, misbruikvoorkoming of nakoming."
+      },
+      "section7": {
+        "title": "7. Wysiging of verwydering van jou inligting",
+        "p1Pre": "Jy kan jou kennisgewing verberg of ontverberg vanaf jou private bestuurskakel of rekening. Om 'n kennisgewing permanent te verwyder, verwydering te versoek, toegang tot jou inligting te versoek, of jou inligting reg te stel, kontak ons met die besonderhede op die ",
+        "contactLink": "Kontak Ons",
+        "p1Post": " bladsy."
+      },
+      "section8": {
+        "title": "8. Jou regte",
+        "p1": "Onder POPIA mag jy toegang tot jou persoonlike inligting versoek, ons vra om dit reg te stel of te verwyder, beswaar maak teen sekere verwerking, toestemming terugtrek waar verwerking van toestemming afhang, en kla by die Inligtingsreguleerder. Kontak ons eers sodat ons kan help."
+      },
+      "section9": {
+        "title": "9. Kinders en spesiale persoonlike inligting",
+        "p1": "Die openbare kennisgewingbord is vir volwassenes bedoel. Gebruikers mag nie 'n ander persoon se identiteitsdokumente, mediese besonderhede, kriminele geskiedenis, kinderinligting of ander sensitiewe inligting indien nie, tensy 'n aktiewe funksie dit spesifiek vereis en die nodige toestemming en beskermingsmaatreëls in plek is."
+      },
+      "section10": {
+        "title": "10. Sekuriteitsvoorvalle",
+        "p1": "Indien ons redelikerwys glo dat persoonlike inligting deur 'n ongemagtigde persoon verkry of geraadpleeg is, sal ons die voorval assesseer en die kennisgewingstappe neem wat deur POPIA vereis word."
+      },
+      "section11": {
+        "title": "11. Kontak",
+        "p1Pre": "Vir privaatheidsvrae, gebruik asseblief ons ",
+        "contactLink": "Kontak Ons",
+        "p1Post": " bladsy. Jy kan ook die Inligtingsreguleerder van Suid-Afrika kontak indien jy glo jou POPIA-regte nie gerespekteer is nie."
+      }
+    },
+    "disclaimer": {
+      "meta": {
+        "title": "Vrywaring — Overberg Skills Connect",
+        "description": "Overberg Skills Connect is slegs 'n digitale gemeenskapskennisgewingbord."
+      },
+      "heading": "Vrywaring",
+      "p1": "Overberg Skills Connect is 'n digitale gemeenskapskennisgewingbord. Dit bestaan slegs om mense wat vaardighede aanbied en mense wat hulp soek, in staat te stel om mekaar te vind. Ons is nie 'n werwer, werkgewer, arbeidsmakelaar, agentskap of toesighouer nie.",
+      "p2": "Ons keur nie, verifieer nie, beveel nie aan nie, en waarborg nie enige persoon wat op hierdie platform gelys is nie. Ons verifieer nie identiteite, kwalifikasies, verwysings, ervaring, werkspermitte of polisieklaring nie. Ons bevestig nie die akkuraatheid van enige inligting wat geplaas is nie.",
+      "p3": "Jy is verantwoordelik om jou eie navrae te doen voordat jy enige ooreenkoms aangaan. Dit sluit in — maar is nie beperk tot nie — die verifiëring van identiteitsdokumente, die aanvra van verwysings, die aanvra van 'n polisieklaringsertifikaat waar toepaslik, die skriftelike ooreenkoms van betaling en werksomstandighede, en die nakoming van alle toepaslike wette.",
+      "p4": "Khulisa Group, Overberg Skills Connect en enige verwante partye aanvaar geen verantwoordelikheid vir enige verlies, besering, skade, geskil of eis wat voortspruit uit kennismakings wat deur hierdie platform gemaak word nie.",
+      "seeAlsoPre": "Sien ook ons ",
+      "termsLink": "Gebruiksbepalings",
+      "seeAlsoAnd": " en ",
+      "privacyLink": "Privaatheidsbeleid",
+      "seeAlsoPost": "."
+    },
+    "safeguarding": {
+      "meta": {
+        "title": "Beskermingsbeleid — Hineni",
+        "description": "Hineni se Beskermingsbeleid dek werwing, mentorskap, leerlingskappe, gedrag, verslagdoening en digitale veiligheid vir jong mense en kwesbare volwassenes."
+      },
+      "badge": "Beskerming",
+      "versionLine": "Weergawe {{version}} · Laas opgedateer {{updated}}",
+      "heading": "Hineni Beskermingsbeleid",
+      "intro": "Hierdie beleid stel Hineni se verbintenis uiteen tot die veiligheid, waardigheid en welstand van elke jong persoon, kwesbare volwassene en deelnemer wat by ons programme betrokke is, insluitend leerlingskappe, mentorskappe, werkplasings en gemeenskapsaktiwiteite.",
+      "print": "Druk beleid",
+      "download": "Laai PDF af",
+      "downloadTitle": "Gebruik jou blaaier se 'Stoor as PDF'-opsie",
+      "s1": {
+        "title": "Doel",
+        "p1": "Die doel van hierdie beleid is om te verseker dat almal wat aan Hineni se aktiwiteite deelneem — insluitend leerlinge, mentees, mentors, vrywilligers, werkgewers, leerlingskapverskaffers, personeel en gemeenskapsvennote — beskerm word teen skade, misbruik, uitbuiting, diskriminasie en verwaarlosing."
+      },
+      "s2": {
+        "title": "Omvang",
+        "p1": "Hierdie beleid is van toepassing op:",
+        "item1": "Alle Hineni-personeel, vrywilligers, mentors en raadslede.",
+        "item2": "Alle leerlinge, mentees, jong mense en kwesbare volwassenes wat by Hineni betrokke is.",
+        "item3": "Alle werkgewers, plase, besighede, NPO's en huishoudings wat geleenthede deur Hineni aanbied.",
+        "item4": "Alle digitale interaksies op die Hineni-platform."
+      },
+      "s3": {
+        "title": "Verbintenis tot veiligheid",
+        "p1": "Hineni is verbind tot die skep van veilige, respekvolle en inklusiewe omgewings. Ons erken ons sorgplig teenoor kinders en kwesbare volwassenes en ons voldoen aan toepaslike Suid-Afrikaanse reg, insluitend:",
+        "item1": "Die Kinderwet, 38 van 2005;",
+        "item2": "Die Wet op die Beskerming van Persoonlike Inligting (POPIA), 4 van 2013;",
+        "item3": "Die Strafregwysigingswet (Seksuele Misdrywe en Verwante Aangeleenthede), 32 van 2007;",
+        "item4": "Die Wet op Basiese Diensvoorwaardes en verwante arbeidswetgewing wat jong werkers reguleer;",
+        "item5": "Die Sektorkode oor die voorkoming van kinderarbeid."
+      },
+      "s4": {
+        "title": "Definisies",
+        "item1Term": "Kind / Jong persoon:",
+        "item1": "Enige persoon onder die ouderdom van 18.",
+        "item2Term": "Kwesbare volwassene:",
+        "item2": "Enige volwassene wat, weens gestremdheid, siekte of omstandighede, addisionele beskerming benodig.",
+        "item3Term": "Misbruik:",
+        "item3": "Enige handeling of versuim wat fisiese, emosionele, seksuele, finansiële of sielkundige skade veroorsaak.",
+        "item4Term": "Beskerming:",
+        "item4": "Die proaktiewe maatreëls wat geneem word om mense teen skade te beskerm."
+      },
+      "s5": {
+        "title": "Werwing en keuring",
+        "p1": "Alle mentors, vrywilligers en individue wat plasings aanbied, mag onderworpe wees aan:",
+        "item1": "Identiteitsverifikasie;",
+        "item2": "Verwysingskontroles (minstens twee verwysings vir mentors);",
+        "item3": "'n Polisieklaringsertifikaat (PKS) waar toepaslik;",
+        "item4": "Onderhoude en 'n ondertekende beskermingsverklaring;",
+        "item5": "Periodieke herverifikasie (tipies elke 12 maande)."
+      },
+      "s6": {
+        "title": "Gedragskode",
+        "p1": "Elke deelnemer onderneem om:",
+        "item1": "Ander met waardigheid, regverdigheid en respek te behandel;",
+        "item2": "Enige vorm van teistering, boelie-gedrag, diskriminasie of uitbuiting te vermy;",
+        "item3": "Toepaslike professionele grense te alle tye te handhaaf;",
+        "item4": "Nooit eksplisiete materiaal te deel of aan te vra nie;",
+        "item5": "Nooit alkohol, tabak of onwettige middels aan 'n jong persoon te verskaf nie;",
+        "item6": "Nooit alleen in private omgewings te ontmoet sonder voorafgoedkeuring en 'n ouer/voog se skriftelike toestemming nie."
+      },
+      "s7": {
+        "title": "Mentorskapsriglyne",
+        "item1": "Mentorskapsessies moet in veilige, openbare of gesuperviseerde omgewings plaasvind.",
+        "item2": "Aanlynsessies moet op goedgekeurde platforms gedoen word met toepaslike volwassenes bewus daarvan.",
+        "item3": "Kommunikasie tussen mentors en minderjariges moet deursigtig wees en, waar redelik, aan 'n ouer/voog gekopieer word.",
+        "item4": "Mentors mag nie geld, geskenke van waarde of lenings gee of ontvang nie.",
+        "item5": "Enige bekommernis, hoe klein ook al, moet onverwyld aan Hineni gerapporteer word."
+      },
+      "s8": {
+        "title": "Standaarde vir leerlingskappe en werkplasings",
+        "item1": "Plasings moet aan Suid-Afrikaanse arbeidswetgewing voldoen, insluitend beperkings op ure, omstandighede en tipes werk wat aan jong werkers toegelaat word.",
+        "item2": "Persone onder 15 mag nie in diens geneem word nie. Persone van 15–17 mag slegs geskikte, ouderdomstoepaslike werk doen, en slegs gedurende skoolvakansies tensy andersins wettiglik toegelaat.",
+        "item3": "Gesondheids- en veiligheidsrisiko's moet geassesseer word voordat enige plasing begin.",
+        "item4": "Geen jong persoon mag blootgestel word aan gevaarlike masjinerie, chemikalieë, hoogtes of werk wat hul fisiese of morele ontwikkeling kan skaad nie.",
+        "item5": "Gasheer-instansies moet voldoende toesig, inleiding en redelike ondersteuning deurgaans verskaf.",
+        "item6": "Hineni behou die reg voor om enige plasing op te skort of te beëindig waar standaarde nie nagekom word nie."
+      },
+      "s9": {
+        "title": "Rapportering van bekommernisse",
+        "p1": "Enige bekommernis, bewering of voorval wat met 'n beskermingsaangeleentheid verband hou, moet onmiddellik aan Hineni gerapporteer word:",
+        "emailLabel": "E-pos:",
+        "emergency": "In 'n noodgeval, kontak eers die Suid-Afrikaanse Polisiediens (10111) of Childline Suid-Afrika (0800 055 555)."
+      },
+      "s10": {
+        "title": "Vertroulikheid",
+        "p1": "Alle verslae word met gepaste vertroulikheid hanteer. Inligting word slegs gedeel met diegene wat dit nodig het om die persoon in gevaar te beskerm, en in ooreenstemming met POPIA en verpligte rapporteringspligte onder Suid-Afrikaanse reg."
+      },
+      "s11": {
+        "title": "Digitale veiligheid",
+        "item1": "Persoonlike data word verwerk in lyn met POPIA en Hineni se Privaatheidskennisgewing.",
+        "item2": "Foto's of video's van jong mense word slegs met uitdruklike, ingeligte toestemming gebruik.",
+        "item3": "Gebruikers moet nie persoonlike kontakbesonderhede met vreemdelinge via die platform deel nie.",
+        "item4": "Verdagte rekeninge of boodskappe moet aan Hineni gerapporteer word."
+      },
+      "s12": {
+        "title": "Oortredings en toepassing",
+        "p1": "Oortredings van hierdie beleid kan lei tot opskorting, verwydering van die platform, verwysing na die relevante owerhede en, waar toepaslik, strafregtelike vervolging. Hineni werk ten volle saam met wetstoepassing en statutêre kinderbeskermingsagentskappe."
+      },
+      "s13": {
+        "title": "Vrywaring",
+        "p1": "Hineni onderneem redelike verifikasie-, keurings- en beskermingsmaatreëls. Hineni kan egter nie die gedrag van derde partye waarborg nie en aanvaar geen aanspreeklikheid vir besering, verlies, skade, wangedrag, kriminele bedrywighede of geskille wat voortspruit uit interaksies tussen deelnemers, mentors, werkgewers, leerlingskapverskaffers of ander gebruikers van die platform nie. Deelname geskied op die individu se eie risiko en onderworpe aan toepaslike Suid-Afrikaanse reg."
+      }
+    }
+  }
+}
