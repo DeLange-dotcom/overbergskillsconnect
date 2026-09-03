@@ -30,6 +30,7 @@ import { Route as SafeguardingPolicyRouteImport } from './routes/safeguarding-po
 import { Route as TermsRouteImport } from './routes/terms'
 import { Route as UnavailableRouteImport } from './routes/unavailable'
 import { Route as YouthRouteImport } from './routes/youth'
+import { Route as AuthenticatedAdminRouteRouteImport } from './routes/_authenticated/admin/route'
 import { Route as AuthenticatedMyAdvertRouteImport } from './routes/_authenticated/my-advert'
 import { Route as AuthenticatedMyRequestsRouteImport } from './routes/_authenticated/my-requests'
 import { Route as AuthenticatedProfileRouteImport } from './routes/_authenticated/profile'
@@ -171,6 +172,11 @@ const YouthRoute = YouthRouteImport.update({
   path: '/youth',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedAdminRouteRoute = AuthenticatedAdminRouteRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedMyAdvertRoute = AuthenticatedMyAdvertRouteImport.update({
   id: '/my-advert',
   path: '/my-advert',
@@ -282,27 +288,27 @@ const YouthRegisterRoute = YouthRegisterRouteImport.update({
   getParentRoute: () => YouthRoute,
 } as any)
 const AuthenticatedAdminIndexRoute = AuthenticatedAdminIndexRouteImport.update({
-  id: '/admin/',
-  path: '/admin/',
-  getParentRoute: () => AuthenticatedRouteRoute,
+  id: '/',
+  path: '/',
+  getParentRoute: () => AuthenticatedAdminRouteRoute,
 } as any)
 const AuthenticatedAdminApprenticeshipsRoute =
   AuthenticatedAdminApprenticeshipsRouteImport.update({
-    id: '/admin/apprenticeships',
-    path: '/admin/apprenticeships',
-    getParentRoute: () => AuthenticatedRouteRoute,
+    id: '/apprenticeships',
+    path: '/apprenticeships',
+    getParentRoute: () => AuthenticatedAdminRouteRoute,
   } as any)
 const AuthenticatedAdminNoticeboardRoute =
   AuthenticatedAdminNoticeboardRouteImport.update({
-    id: '/admin/noticeboard',
-    path: '/admin/noticeboard',
-    getParentRoute: () => AuthenticatedRouteRoute,
+    id: '/noticeboard',
+    path: '/noticeboard',
+    getParentRoute: () => AuthenticatedAdminRouteRoute,
   } as any)
 const AuthenticatedAdminYouthOpportunitiesRoute =
   AuthenticatedAdminYouthOpportunitiesRouteImport.update({
-    id: '/admin/youth-opportunities',
-    path: '/admin/youth-opportunities',
-    getParentRoute: () => AuthenticatedRouteRoute,
+    id: '/youth-opportunities',
+    path: '/youth-opportunities',
+    getParentRoute: () => AuthenticatedAdminRouteRoute,
   } as any)
 const AuthenticatedYouthPortfolioRoute =
   AuthenticatedYouthPortfolioRouteImport.update({
@@ -327,27 +333,27 @@ const YouthParentConsentTokenRoute = YouthParentConsentTokenRouteImport.update({
 } as any)
 const AuthenticatedAdminApprenticesIdRoute =
   AuthenticatedAdminApprenticesIdRouteImport.update({
-    id: '/admin/apprentices/$id',
-    path: '/admin/apprentices/$id',
-    getParentRoute: () => AuthenticatedRouteRoute,
+    id: '/apprentices/$id',
+    path: '/apprentices/$id',
+    getParentRoute: () => AuthenticatedAdminRouteRoute,
   } as any)
 const AuthenticatedAdminProvidersIdRoute =
   AuthenticatedAdminProvidersIdRouteImport.update({
-    id: '/admin/providers/$id',
-    path: '/admin/providers/$id',
-    getParentRoute: () => AuthenticatedRouteRoute,
+    id: '/providers/$id',
+    path: '/providers/$id',
+    getParentRoute: () => AuthenticatedAdminRouteRoute,
   } as any)
 const AuthenticatedAdminYouthIndexRoute =
   AuthenticatedAdminYouthIndexRouteImport.update({
-    id: '/admin/youth/',
-    path: '/admin/youth/',
-    getParentRoute: () => AuthenticatedRouteRoute,
+    id: '/youth/',
+    path: '/youth/',
+    getParentRoute: () => AuthenticatedAdminRouteRoute,
   } as any)
 const AuthenticatedAdminYouthIdRoute =
   AuthenticatedAdminYouthIdRouteImport.update({
-    id: '/admin/youth/$id',
-    path: '/admin/youth/$id',
-    getParentRoute: () => AuthenticatedRouteRoute,
+    id: '/youth/$id',
+    path: '/youth/$id',
+    getParentRoute: () => AuthenticatedAdminRouteRoute,
   } as any)
 const LovableEmailAuthPreviewRoute = LovableEmailAuthPreviewRouteImport.update({
   id: '/lovable/email/auth/preview',
@@ -387,6 +393,7 @@ export interface FileRoutesByFullPath {
   '/terms': typeof TermsRoute
   '/unavailable': typeof UnavailableRoute
   '/youth': typeof YouthRouteWithChildren
+  '/admin': typeof AuthenticatedAdminRouteRouteWithChildren
   '/my-advert': typeof AuthenticatedMyAdvertRoute
   '/my-requests': typeof AuthenticatedMyRequestsRoute
   '/profile': typeof AuthenticatedProfileRoute
@@ -503,6 +510,7 @@ export interface FileRoutesById {
   '/terms': typeof TermsRoute
   '/unavailable': typeof UnavailableRoute
   '/youth': typeof YouthRouteWithChildren
+  '/_authenticated/admin': typeof AuthenticatedAdminRouteRouteWithChildren
   '/_authenticated/my-advert': typeof AuthenticatedMyAdvertRoute
   '/_authenticated/my-requests': typeof AuthenticatedMyRequestsRoute
   '/_authenticated/profile': typeof AuthenticatedProfileRoute
@@ -563,6 +571,7 @@ export interface FileRouteTypes {
     | '/terms'
     | '/unavailable'
     | '/youth'
+    | '/admin'
     | '/my-advert'
     | '/my-requests'
     | '/profile'
@@ -678,6 +687,7 @@ export interface FileRouteTypes {
     | '/terms'
     | '/unavailable'
     | '/youth'
+    | '/_authenticated/admin'
     | '/_authenticated/my-advert'
     | '/_authenticated/my-requests'
     | '/_authenticated/profile'
@@ -900,6 +910,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof YouthRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/admin': {
+      id: '/_authenticated/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AuthenticatedAdminRouteRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/my-advert': {
       id: '/_authenticated/my-advert'
       path: '/my-advert'
@@ -1049,31 +1066,31 @@ declare module '@tanstack/react-router' {
     }
     '/_authenticated/admin/': {
       id: '/_authenticated/admin/'
-      path: '/admin'
+      path: '/'
       fullPath: '/admin/'
       preLoaderRoute: typeof AuthenticatedAdminIndexRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
+      parentRoute: typeof AuthenticatedAdminRouteRoute
     }
     '/_authenticated/admin/apprenticeships': {
       id: '/_authenticated/admin/apprenticeships'
-      path: '/admin/apprenticeships'
+      path: '/apprenticeships'
       fullPath: '/admin/apprenticeships'
       preLoaderRoute: typeof AuthenticatedAdminApprenticeshipsRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
+      parentRoute: typeof AuthenticatedAdminRouteRoute
     }
     '/_authenticated/admin/noticeboard': {
       id: '/_authenticated/admin/noticeboard'
-      path: '/admin/noticeboard'
+      path: '/noticeboard'
       fullPath: '/admin/noticeboard'
       preLoaderRoute: typeof AuthenticatedAdminNoticeboardRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
+      parentRoute: typeof AuthenticatedAdminRouteRoute
     }
     '/_authenticated/admin/youth-opportunities': {
       id: '/_authenticated/admin/youth-opportunities'
-      path: '/admin/youth-opportunities'
+      path: '/youth-opportunities'
       fullPath: '/admin/youth-opportunities'
       preLoaderRoute: typeof AuthenticatedAdminYouthOpportunitiesRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
+      parentRoute: typeof AuthenticatedAdminRouteRoute
     }
     '/_authenticated/youth/portfolio': {
       id: '/_authenticated/youth/portfolio'
@@ -1105,31 +1122,31 @@ declare module '@tanstack/react-router' {
     }
     '/_authenticated/admin/apprentices/$id': {
       id: '/_authenticated/admin/apprentices/$id'
-      path: '/admin/apprentices/$id'
+      path: '/apprentices/$id'
       fullPath: '/admin/apprentices/$id'
       preLoaderRoute: typeof AuthenticatedAdminApprenticesIdRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
+      parentRoute: typeof AuthenticatedAdminRouteRoute
     }
     '/_authenticated/admin/providers/$id': {
       id: '/_authenticated/admin/providers/$id'
-      path: '/admin/providers/$id'
+      path: '/providers/$id'
       fullPath: '/admin/providers/$id'
       preLoaderRoute: typeof AuthenticatedAdminProvidersIdRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
+      parentRoute: typeof AuthenticatedAdminRouteRoute
     }
     '/_authenticated/admin/youth/': {
       id: '/_authenticated/admin/youth/'
-      path: '/admin/youth'
+      path: '/youth'
       fullPath: '/admin/youth/'
       preLoaderRoute: typeof AuthenticatedAdminYouthIndexRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
+      parentRoute: typeof AuthenticatedAdminRouteRoute
     }
     '/_authenticated/admin/youth/$id': {
       id: '/_authenticated/admin/youth/$id'
-      path: '/admin/youth/$id'
+      path: '/youth/$id'
       fullPath: '/admin/youth/$id'
       preLoaderRoute: typeof AuthenticatedAdminYouthIdRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
+      parentRoute: typeof AuthenticatedAdminRouteRoute
     }
     '/lovable/email/auth/preview': {
       id: '/lovable/email/auth/preview'
@@ -1155,14 +1172,10 @@ declare module '@tanstack/react-router' {
   }
 }
 
-interface AuthenticatedRouteRouteChildren {
-  AuthenticatedMyAdvertRoute: typeof AuthenticatedMyAdvertRoute
-  AuthenticatedMyRequestsRoute: typeof AuthenticatedMyRequestsRoute
-  AuthenticatedProfileRoute: typeof AuthenticatedProfileRoute
+interface AuthenticatedAdminRouteRouteChildren {
   AuthenticatedAdminApprenticeshipsRoute: typeof AuthenticatedAdminApprenticeshipsRoute
   AuthenticatedAdminNoticeboardRoute: typeof AuthenticatedAdminNoticeboardRoute
   AuthenticatedAdminYouthOpportunitiesRoute: typeof AuthenticatedAdminYouthOpportunitiesRoute
-  AuthenticatedYouthPortfolioRoute: typeof AuthenticatedYouthPortfolioRoute
   AuthenticatedAdminIndexRoute: typeof AuthenticatedAdminIndexRoute
   AuthenticatedAdminApprenticesIdRoute: typeof AuthenticatedAdminApprenticesIdRoute
   AuthenticatedAdminProvidersIdRoute: typeof AuthenticatedAdminProvidersIdRoute
@@ -1170,21 +1183,39 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedAdminYouthIndexRoute: typeof AuthenticatedAdminYouthIndexRoute
 }
 
+const AuthenticatedAdminRouteRouteChildren: AuthenticatedAdminRouteRouteChildren =
+  {
+    AuthenticatedAdminApprenticeshipsRoute:
+      AuthenticatedAdminApprenticeshipsRoute,
+    AuthenticatedAdminNoticeboardRoute: AuthenticatedAdminNoticeboardRoute,
+    AuthenticatedAdminYouthOpportunitiesRoute:
+      AuthenticatedAdminYouthOpportunitiesRoute,
+    AuthenticatedAdminIndexRoute: AuthenticatedAdminIndexRoute,
+    AuthenticatedAdminApprenticesIdRoute: AuthenticatedAdminApprenticesIdRoute,
+    AuthenticatedAdminProvidersIdRoute: AuthenticatedAdminProvidersIdRoute,
+    AuthenticatedAdminYouthIdRoute: AuthenticatedAdminYouthIdRoute,
+    AuthenticatedAdminYouthIndexRoute: AuthenticatedAdminYouthIndexRoute,
+  }
+
+const AuthenticatedAdminRouteRouteWithChildren =
+  AuthenticatedAdminRouteRoute._addFileChildren(
+    AuthenticatedAdminRouteRouteChildren,
+  )
+
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedAdminRouteRoute: typeof AuthenticatedAdminRouteRouteWithChildren
+  AuthenticatedMyAdvertRoute: typeof AuthenticatedMyAdvertRoute
+  AuthenticatedMyRequestsRoute: typeof AuthenticatedMyRequestsRoute
+  AuthenticatedProfileRoute: typeof AuthenticatedProfileRoute
+  AuthenticatedYouthPortfolioRoute: typeof AuthenticatedYouthPortfolioRoute
+}
+
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedAdminRouteRoute: AuthenticatedAdminRouteRouteWithChildren,
   AuthenticatedMyAdvertRoute: AuthenticatedMyAdvertRoute,
   AuthenticatedMyRequestsRoute: AuthenticatedMyRequestsRoute,
   AuthenticatedProfileRoute: AuthenticatedProfileRoute,
-  AuthenticatedAdminApprenticeshipsRoute:
-    AuthenticatedAdminApprenticeshipsRoute,
-  AuthenticatedAdminNoticeboardRoute: AuthenticatedAdminNoticeboardRoute,
-  AuthenticatedAdminYouthOpportunitiesRoute:
-    AuthenticatedAdminYouthOpportunitiesRoute,
   AuthenticatedYouthPortfolioRoute: AuthenticatedYouthPortfolioRoute,
-  AuthenticatedAdminIndexRoute: AuthenticatedAdminIndexRoute,
-  AuthenticatedAdminApprenticesIdRoute: AuthenticatedAdminApprenticesIdRoute,
-  AuthenticatedAdminProvidersIdRoute: AuthenticatedAdminProvidersIdRoute,
-  AuthenticatedAdminYouthIdRoute: AuthenticatedAdminYouthIdRoute,
-  AuthenticatedAdminYouthIndexRoute: AuthenticatedAdminYouthIndexRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =
