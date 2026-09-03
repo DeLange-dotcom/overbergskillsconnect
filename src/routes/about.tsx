@@ -83,9 +83,12 @@ export default function About() {
               <p className="mt-1 text-sm font-semibold uppercase tracking-wide text-brand-navy/55">
                 {t("aboutPage.hineni.role")}
               </p>
-              {/* Approved Hineni Call logo asset is not present in the project — position reserved. */}
-              <div className="mt-4 flex h-20 items-center justify-center rounded-xl border border-dashed border-brand-navy/15 bg-brand-cream text-xs uppercase tracking-wider text-brand-navy/45">
-                {t("aboutPage.hineni.logoPlaceholder")}
+              <div className="mt-4 overflow-hidden rounded-xl bg-[#9ACD32]">
+                <img
+                  src={hineniLogoAsset.url}
+                  alt={t("aboutPage.hineni.logoAlt", "Hineni Call logo")}
+                  className="h-24 w-full object-contain sm:h-28"
+                />
               </div>
               <h2 className="osc-heading mt-5 text-2xl">{t("aboutPage.hineni.heading")}</h2>
               <div className="mt-3 space-y-3 leading-relaxed text-brand-navy/80">
