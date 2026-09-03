@@ -42,10 +42,15 @@ const toneStyles = {
 
 export default function About() {
   const { t } = useTranslation();
-  const introParas = t("aboutPage.intro", { returnObjects: true }) as string[];
-  const hineniBody = t("aboutPage.hineni.body", { returnObjects: true }) as string[];
-  const khulisaBody = t("aboutPage.khulisa.body", { returnObjects: true }) as string[];
-  const platformBody = t("aboutPage.platform.body", { returnObjects: true }) as string[];
+  const list = (key: string): string[] => {
+    const value = t(key, { returnObjects: true });
+    return Array.isArray(value) ? (value as string[]) : [];
+  };
+  const introParas = list("aboutPage.intro");
+  const hineniBody = list("aboutPage.hineni.body");
+  const khulisaBody = list("aboutPage.khulisa.body");
+  const platformBody = list("aboutPage.platform.body");
+
   const emphasisIndex = 3;
 
   return (
