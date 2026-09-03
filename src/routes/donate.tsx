@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useTranslation } from "react-i18next";
 import { useState } from "react";
 import { z } from "zod";
 import { SiteLayout } from "@/components/site/SiteLayout";
@@ -40,6 +41,7 @@ const schema = z.object({
 });
 
 function Donate() {
+  const { t } = useTranslation();
   const search = Route.useSearch();
   const [amount, setAmount] = useState<number>(search.amount ?? 250);
   const [custom, setCustom] = useState<string>("");
@@ -63,7 +65,7 @@ function Donate() {
     };
     const parsed = schema.safeParse(raw);
     if (!parsed.success) {
-      toast.error(parsed.error.issues[0]?.message ?? "Please check your details.");
+      toast.error(parsed.error.issues[0]?.message ?? t("donatePage.form.checkError"));
       setSubmitting(false);
       return;
     }
@@ -92,10 +94,9 @@ function Donate() {
       <SiteLayout>
         <div className="max-w-2xl mx-auto px-4 sm:px-6 py-16 text-center">
           <CheckCircle2 className="size-16 text-brand-primary mx-auto mb-6" />
-          <h1 className="osc-heading text-3xl mb-3">Thank you</h1>
+          <h1 className="osc-heading text-3xl mb-3">{t("donatePage.thankYou.title")}</h1>
           <p className="text-brand-dark/70 max-w-md mx-auto mb-6">
-            Your pledge has been recorded. A Hineni coordinator will reach out with secure payment
-            details (EFT or card). Every contribution makes a real difference.
+            {t("donatePage.thankYou.body")}
           </p>
         </div>
       </SiteLayout>
@@ -106,19 +107,16 @@ function Donate() {
     <SiteLayout>
       <div className="max-w-3xl mx-auto px-4 sm:px-6 py-10 sm:py-14">
         <span className="inline-block px-3 py-1 rounded-full bg-brand-accent/10 text-xs uppercase tracking-widest text-brand-accent font-semibold">
-          Support the register
+          {t("donatePage.badge")}
         </span>
         <h1 className="osc-heading text-3xl sm:text-4xl mt-4 mb-4">
-          Support the Hineni Community Skills Register
+          {t("donatePage.title")}
         </h1>
         <p className="text-brand-dark/75 leading-relaxed mb-4">
-          Many trusted members of our community have recently lost work opportunities. Through the
-          Hineni Community Skills Register we reconnect people with employment, support households
-          in need, and strengthen our community through learning, dignity and opportunity.
+          {t("donatePage.intro1")}
         </p>
         <p className="text-brand-dark/75 leading-relaxed mb-8">
-          Your donation helps us maintain the register, conduct vetting and reference checks,
-          connect people with opportunities, and build a stronger future for everyone.
+          {t("donatePage.intro2")}
         </p>
 
         <div className="bg-brand-soft border border-brand-dark/5 rounded-2xl p-5 sm:p-7 mb-8">
@@ -127,10 +125,9 @@ function Donate() {
               <Heart className="size-5 text-brand-accent" />
             </div>
             <div>
-              <h2 className="font-heading text-xl font-semibold mb-1">Sponsor a Vetting Check</h2>
+              <h2 className="font-heading text-xl font-semibold mb-1">{t("donatePage.sponsor.title")}</h2>
               <p className="text-sm text-brand-dark/70">
-                Help us safely approve one more person by sponsoring the administration, document
-                review and reference checks needed before they can be listed (~R250).
+                {t("donatePage.sponsor.body")}
               </p>
             </div>
           </div>
@@ -141,7 +138,7 @@ function Donate() {
           className="bg-white border border-brand-dark/5 rounded-2xl p-5 sm:p-7 space-y-5"
         >
           <div>
-            <div className="text-sm font-medium mb-2">Choose an amount (ZAR)</div>
+            <div className="text-sm font-medium mb-2">{t("donatePage.form.amountLabel")}</div>
             <div className="grid grid-cols-4 gap-2">
               {SUGGESTED.map((v) => (
                 <button
@@ -164,46 +161,46 @@ function Donate() {
             <input
               value={custom}
               onChange={(e) => setCustom(e.target.value.replace(/[^0-9]/g, ""))}
-              placeholder="Or enter a custom amount"
+              placeholder={t("donatePage.form.customPlaceholder")}
               inputMode="numeric"
               className="mt-3 w-full px-4 py-3 border border-brand-dark/10 rounded-xl"
             />
           </div>
 
           <div>
-            <div className="text-sm font-medium mb-2">Frequency</div>
+            <div className="text-sm font-medium mb-2">{t("donatePage.form.frequencyLabel")}</div>
             <div className="flex gap-2">
-              <Radio name="frequency" value="once_off" defaultChecked label="Once-off" />
-              <Radio name="frequency" value="monthly" label="Monthly supporter" />
+              <Radio name="frequency" value="once_off" defaultChecked label={t("donatePage.form.onceOff")} />
+              <Radio name="frequency" value="monthly" label={t("donatePage.form.monthly")} />
             </div>
           </div>
 
           <div>
-            <div className="text-sm font-medium mb-2">Purpose</div>
+            <div className="text-sm font-medium mb-2">{t("donatePage.form.purposeLabel")}</div>
             <div className="flex gap-2">
               <Radio
                 name="purpose"
                 value="general"
                 defaultChecked={search.purpose !== "sponsor_vetting"}
-                label="General support"
+                label={t("donatePage.form.purposeGeneral")}
               />
               <Radio
                 name="purpose"
                 value="sponsor_vetting"
                 defaultChecked={search.purpose === "sponsor_vetting"}
-                label="Sponsor a vetting check"
+                label={t("donatePage.form.purposeSponsor")}
               />
             </div>
           </div>
 
           <div className="grid sm:grid-cols-2 gap-4">
-            <Input label="Your name (optional)" name="donor_name" />
-            <Input label="Email (optional)" name="email" type="email" />
-            <Input label="Phone (optional)" name="phone" type="tel" />
+            <Input label={t("donatePage.form.nameLabel")} name="donor_name" />
+            <Input label={t("donatePage.form.emailLabel")} name="email" type="email" />
+            <Input label={t("donatePage.form.phoneLabel")} name="phone" type="tel" />
           </div>
 
           <div>
-            <Label>Message (optional)</Label>
+            <Label>{t("donatePage.form.messageLabel")}</Label>
             <textarea
               name="message"
               rows={3}
@@ -214,7 +211,7 @@ function Donate() {
 
           <label className="flex items-start gap-2 text-sm">
             <input type="checkbox" name="anonymous" className="mt-1 accent-brand-primary" />
-            <span>List me anonymously on the Supporter Wall</span>
+            <span>{t("donatePage.form.anonymous")}</span>
           </label>
 
           <button
@@ -223,11 +220,10 @@ function Donate() {
             className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-brand-accent text-white font-medium hover:brightness-110 disabled:opacity-60"
           >
             {submitting && <Loader2 className="size-4 animate-spin" />}
-            Pledge donation
+            {t("donatePage.form.submit")}
           </button>
           <p className="text-xs text-brand-dark/50">
-            A Hineni coordinator will follow up with payment instructions. Card processing will be
-            enabled shortly.
+            {t("donatePage.form.followUp")}
           </p>
         </form>
       </div>

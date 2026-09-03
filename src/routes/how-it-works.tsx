@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useTranslation, Trans } from "react-i18next";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { UserPlus, Search, MessageCircle, ShieldAlert, Settings, Eye, Archive, Trash2, Bell } from "lucide-react";
 import { Link } from "@tanstack/react-router";
@@ -17,83 +18,67 @@ export const Route = createFileRoute("/how-it-works")({
 });
 
 function HowItWorks() {
+  const { t } = useTranslation();
   return (
     <SiteLayout>
       <div className="max-w-3xl mx-auto px-4 sm:px-6 py-12 sm:py-16">
-        <h1 className="text-4xl font-heading font-bold mb-4">How it works</h1>
+        <h1 className="text-4xl font-heading font-bold mb-4">{t("howItWorks.title")}</h1>
         <p className="text-lg text-brand-dark/70 mb-12">
-          {PLATFORM_NAME} is a simple community noticeboard. Whether you are looking for work or
-          looking for help, the process is straightforward.
+          {t("howItWorks.intro", { platform: PLATFORM_NAME })}
         </p>
 
         <div className="grid gap-10 md:grid-cols-2 mb-12">
           <div className="p-6 rounded-2xl bg-brand-soft border border-brand-dark/5">
-            <h2 className="font-heading text-xl font-semibold mb-6">I am looking for work</h2>
+            <h2 className="font-heading text-xl font-semibold mb-6">{t("howItWorks.seeking.heading")}</h2>
             <ol className="space-y-8">
-              <Card icon={<UserPlus />} title="1. Create your profile">
-                Sign up and tell the community what you can do. Add your skills, a short
-                description, and the areas you work in. It only takes a few minutes.
+              <Card icon={<UserPlus />} title={t("howItWorks.seeking.step1Title")}>
+                {t("howItWorks.seeking.step1Body")}
               </Card>
-              <Card icon={<Search />} title="2. Get discovered">
-                Your profile appears in the local directory where people can browse by skill and
-                location. No paperwork or approvals needed.
+              <Card icon={<Search />} title={t("howItWorks.seeking.step2Title")}>
+                {t("howItWorks.seeking.step2Body")}
               </Card>
-              <Card icon={<MessageCircle />} title="3. Receive contact requests">
-                When someone is interested, they send a contact request. Your telephone number is
-                never shown on the noticeboard. It is only shared with a person after you approve
-                their request, and you can withdraw that approval at any time.
+              <Card icon={<MessageCircle />} title={t("howItWorks.seeking.step3Title")}>
+                {t("howItWorks.seeking.step3Body")}
               </Card>
             </ol>
           </div>
 
           <div className="p-6 rounded-2xl bg-brand-sky/10 border border-brand-dark/5">
-            <h2 className="font-heading text-xl font-semibold mb-6">I am looking for a service</h2>
+            <h2 className="font-heading text-xl font-semibold mb-6">{t("howItWorks.hiring.heading")}</h2>
             <ol className="space-y-8">
-              <Card icon={<Search />} title="1. Browse local skills">
-                Search or browse profiles by skill type and town. See what people offer and read
-                their descriptions before reaching out.
+              <Card icon={<Search />} title={t("howItWorks.hiring.step1Title")}>
+                {t("howItWorks.hiring.step1Body")}
               </Card>
-              <Card icon={<MessageCircle />} title="2. Request contact details">
-                Found someone suitable? Send a contact request. They are notified and decide
-                whether to share their telephone number with you. Nobody else can see it.
+              <Card icon={<MessageCircle />} title={t("howItWorks.hiring.step2Title")}>
+                {t("howItWorks.hiring.step2Body")}
               </Card>
-              <Card icon={<HandshakeIcon />} title="3. Connect directly">
-                Once the worker shares their details, you contact each other directly and agree on
-                the work. The platform simply made the introduction.
+              <Card icon={<HandshakeIcon />} title={t("howItWorks.hiring.step3Title")}>
+                {t("howItWorks.hiring.step3Body")}
               </Card>
             </ol>
           </div>
         </div>
 
         <div className="p-6 rounded-2xl bg-white border border-brand-dark/5 mb-10">
-          <h2 className="font-heading text-xl font-semibold mb-6">Managing your listing</h2>
+          <h2 className="font-heading text-xl font-semibold mb-6">{t("howItWorks.managing.heading")}</h2>
           <ol className="space-y-8">
-            <Card icon={<Settings />} title="Edit your listing">
-              Go to <strong>My Listing</strong> to update your skills, description, photo or
-              contact details at any time. Changes appear immediately on the noticeboard.
+            <Card icon={<Settings />} title={t("howItWorks.managing.editTitle")}>
+              <Trans i18nKey="howItWorks.managing.editBody" components={{ strong: <strong /> }} />
             </Card>
-            <Card icon={<Eye />} title="Pause or unpause your listing">
-              Pausing hides your listing from the noticeboard without deleting anything. Unpause it
-              whenever you are ready to take work again.
+            <Card icon={<Eye />} title={t("howItWorks.managing.pauseTitle")}>
+              {t("howItWorks.managing.pauseBody")}
             </Card>
-            <Card icon={<Archive />} title="Archive and reactivate">
-              Archiving removes your listing from public view but keeps all your data safe. You
-              can reactivate it whenever you want — perfect for seasonal work or short breaks.
+            <Card icon={<Archive />} title={t("howItWorks.managing.archiveTitle")}>
+              {t("howItWorks.managing.archiveBody")}
             </Card>
-            <Card icon={<Trash2 />} title="Delete permanently">
-              Deleting is separate from pausing and cannot be undone. You will be asked to confirm
-              twice before anything is removed.
+            <Card icon={<Trash2 />} title={t("howItWorks.managing.deleteTitle")}>
+              {t("howItWorks.managing.deleteBody")}
             </Card>
-            <Card icon={<MessageCircle />} title="Handle contact requests">
-              When someone asks for your details, you will see it under <strong>People Interested
-              In Me</strong> on <strong>My Profile</strong>. You decide whether to approve or
-              decline each request. Your telephone number is only released to a person you have
-              approved, and you can withdraw it again at any time.
+            <Card icon={<MessageCircle />} title={t("howItWorks.managing.requestsTitle")}>
+              <Trans i18nKey="howItWorks.managing.requestsBody" components={{ strong: <strong /> }} />
             </Card>
-            <Card icon={<Bell />} title="Check your profile regularly">
-              We do not send SMS messages. New contact requests and updates appear under{" "}
-              <strong>Notifications</strong> on <strong>My Profile</strong>, so please check it
-              regularly.
+            <Card icon={<Bell />} title={t("howItWorks.managing.notificationsTitle")}>
+              <Trans i18nKey="howItWorks.managing.notificationsBody" components={{ strong: <strong /> }} />
             </Card>
           </ol>
         </div>
@@ -101,10 +86,9 @@ function HowItWorks() {
         <div className="mt-8 flex items-start gap-3 p-4 rounded-2xl border border-brand-dark/10 bg-white">
           <ShieldAlert className="size-5 text-amber-600 shrink-0 mt-0.5" />
           <p className="text-xs text-brand-dark/70 leading-relaxed">
-            {PLATFORM_NAME} is a noticeboard only. We do not employ, vet or recommend anyone.
-            Please carry out your own checks before entering into any agreement.{" "}
+            {t("howItWorks.disclaimer", { platform: PLATFORM_NAME })}{" "}
             <Link to="/disclaimer" className="underline hover:text-brand-primary">
-              Read the full disclaimer
+              {t("howItWorks.disclaimerLink")}
             </Link>
             .
           </p>

@@ -1,0 +1,33 @@
+{
+  "meta": {
+    "title": "Blaai deur Plaaslike Vaardighede — Overberg Skills Connect",
+    "description": "Blaai deur plaaslike mense wat dienste aanbied op die Overberg Skills Connect kennisgewingbord. Soek volgens dorp en vaardigheid."
+  },
+  "eyebrow": "Vind Plaaslike Hulp",
+  "title": "Watter hulp soek jy?",
+  "intro": "Tik die soort werk wat jy soek, en kies dan 'n area as jy die soektog wil vernou.",
+  "searchPlaceholder": "bv. Tuinier",
+  "searchAriaLabel": "Watter hulp soek jy?",
+  "areaLabel": "Area (opsioneel)",
+  "anyAreaLabel": "Alle Overberg-areas",
+  "clearSearch": "Maak soektog skoon",
+  "loading": "Laai tans…",
+  "peopleFound_one": "{{count}} persoon gevind",
+  "peopleFound_other": "{{count}} mense gevind",
+  "noResults": "Niemand pas nog by hierdie soektog nie. Probeer 'n ander woord of kies “Alle Overberg-areas”.",
+  "beFirst": "Wees die eerste om te adverteer.",
+  "experienceSuffix": "ervaring",
+  "moreSkills_one": "+{{count}} meer vaardigheid",
+  "moreSkills_other": "+{{count}} meer vaardighede",
+  "locationSelect": {
+    "townOrArea": "Dorp of area",
+    "selectArea": "Kies jou area…",
+    "otherAreaPlaceholder": "Tik jou area, bv. Protem",
+    "otherAreaAriaLabel": "Ander Overberg-area",
+    "otherOption": "Ander Overberg-area"
+  },
+  "shortNotice": {
+    "text": "Hierdie is 'n gemeenskap-kennisgewingbord. Ons keur of beveel niemand aan nie. Maak asseblief self seker.",
+    "readMore": "Lees die volledige kennisgewing"
+  }
+}

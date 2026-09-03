@@ -1,0 +1,54 @@
+{
+  "skills": {
+    "Domestic Worker": "Huiswerker",
+    "Cleaning & housekeeping": "Skoonmaak & huishouding",
+    "Childcare": "Kinderversorging",
+    "Eldercare": "Sorg vir bejaardes",
+    "Cooking": "Kook",
+    "Gardening": "Tuinwerk",
+    "Painting": "Verfwerk",
+    "Plumbing": "Loodgieterswerk",
+    "Electrical": "Elektriese werk",
+    "Building & handyman": "Bouwerk & handearbeid",
+    "Carpentry": "Skrynwerk",
+    "Farm work": "Plaaswerk",
+    "Driving": "Bestuur",
+    "Tutoring": "Onderrig / bystand met skoolwerk",
+    "Hairdressing": "Haarkappery",
+    "Sewing": "Naaldwerk",
+    "Admin & office": "Admin & kantoorwerk",
+    "IT & computers": "IT & rekenaars",
+    "Security": "Sekuriteit",
+    "Other": "Ander"
+  },
+  "experience": {
+    "lt1": "Minder as 1 jaar",
+    "1_2": "1–2 jaar",
+    "3_5": "3–5 jaar",
+    "6_10": "6–10 jaar",
+    "10plus": "10+ jaar"
+  },
+  "availability": {
+    "Full-time": "Voltyds",
+    "Part-time": "Deeltyds",
+    "Weekends": "Naweke",
+    "Once-off / project": "Eenmalig / projek",
+    "Flexible": "Buigsaam"
+  },
+  "listingStatus": {
+    "active": "Aktief",
+    "paused": "Op pouse",
+    "archived": "Geargiveer",
+    "suspended": "Opgeskort",
+    "removed": "Verwyder",
+    "pending": "Wag vir nasien"
+  },
+  "requestStatus": {
+    "pending": "Wag vir goedkeuring",
+    "approved": "Goedgekeur",
+    "declined": "Afgekeur",
+    "revoked": "Toegang teruggetrek",
+    "expired": "Verval"
+  },
+  "otherTown": "Ander (tik my dorp)"
+}

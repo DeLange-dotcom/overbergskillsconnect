@@ -1,0 +1,31 @@
+{
+  "helpPage": {
+    "eyebrow": "Need Help?",
+    "title": "Need help using {{platform}}?",
+    "intro": "Here is how it works, step by step.",
+    "advertise": {
+      "heading": "How to advertise your skills",
+      "step1": "Create a free account.",
+      "step2": "Choose the skills you offer.",
+      "step3": "Add your area and contact number.",
+      "step4": "Publish your listing.",
+      "step5": "Your telephone number stays private until you approve someone's request.",
+      "cta": "Advertise My Skills"
+    },
+    "find": {
+      "heading": "How to find someone",
+      "step1": "Search for the help you need.",
+      "step2": "Choose a service provider.",
+      "step3": "Request their contact details.",
+      "step4": "The service provider decides whether to share their number.",
+      "step5": "If they accept, the Call and WhatsApp options will appear in My Profile.",
+      "cta": "Find Local Help"
+    },
+    "stuck": {
+      "heading": "Still stuck?",
+      "body": "If you cannot create an account or publish your listing, you can ask a person for help.",
+      "placeholder": "Support contact details will be published here shortly. In the meantime, please use the contact page.",
+      "cta": "Contact Us"
+    }
+  }
+}

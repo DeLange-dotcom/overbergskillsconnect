@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useTranslation } from "react-i18next";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import {
   SAFEGUARDING_CONTACT_EMAIL,
@@ -22,26 +23,26 @@ export const Route = createFileRoute("/safeguarding-policy")({
 });
 
 function SafeguardingPolicy() {
+  const { t } = useTranslation();
   return (
     <SiteLayout>
       <article className="max-w-3xl mx-auto px-4 sm:px-6 py-10 sm:py-14 print:py-0">
         <div className="flex flex-wrap items-center gap-3 mb-3 print:hidden">
           <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-brand-primary/10 text-brand-primary text-xs font-semibold">
-            <ShieldCheck className="size-3.5" /> Safeguarding
+            <ShieldCheck className="size-3.5" /> {t("legal.safeguarding.badge")}
           </span>
           <span className="text-xs uppercase tracking-widest text-brand-dark/50">
-            Version {SAFEGUARDING_POLICY_VERSION} · Last updated {SAFEGUARDING_LAST_UPDATED}
+            {t("legal.safeguarding.versionLine", {
+              version: SAFEGUARDING_POLICY_VERSION,
+              updated: SAFEGUARDING_LAST_UPDATED,
+            })}
           </span>
         </div>
 
         <h1 className="osc-heading text-3xl sm:text-4xl mb-4">
-          Hineni Safeguarding Policy
+          {t("legal.safeguarding.heading")}
         </h1>
-        <p className="text-brand-dark/70 mb-6 leading-relaxed">
-          This policy sets out Hineni's commitment to the safety, dignity and wellbeing of every
-          young person, vulnerable adult and participant who engages with our programmes, including
-          apprenticeships, mentorships, work placements and community activities.
-        </p>
+        <p className="text-brand-dark/70 mb-6 leading-relaxed">{t("legal.safeguarding.intro")}</p>
 
         <div className="flex flex-wrap gap-2 mb-10 print:hidden">
           <button
@@ -49,163 +50,126 @@ function SafeguardingPolicy() {
             onClick={() => window.print()}
             className="px-4 py-2 rounded-xl bg-white border border-brand-dark/10 text-sm inline-flex items-center gap-2 hover:bg-brand-soft"
           >
-            <Printer className="size-4" /> Print policy
+            <Printer className="size-4" /> {t("legal.safeguarding.print")}
           </button>
           <button
             type="button"
             onClick={() => window.print()}
             className="px-4 py-2 rounded-xl bg-white border border-brand-dark/10 text-sm inline-flex items-center gap-2 hover:bg-brand-soft"
-            title="Use your browser's 'Save as PDF' option"
+            title={t("legal.safeguarding.downloadTitle")}
           >
-            <Download className="size-4" /> Download PDF
+            <Download className="size-4" /> {t("legal.safeguarding.download")}
           </button>
         </div>
 
-        <Section n={1} title="Purpose">
-          <p>
-            The purpose of this policy is to ensure that everyone who participates in Hineni's
-            activities — including apprentices, mentees, mentors, volunteers, employers,
-            apprenticeship providers, staff and community partners — is protected from harm, abuse,
-            exploitation, discrimination and neglect.
-          </p>
+        <Section n={1} title={t("legal.safeguarding.s1.title")}>
+          <p>{t("legal.safeguarding.s1.p1")}</p>
         </Section>
 
-        <Section n={2} title="Scope">
-          <p>This policy applies to:</p>
+        <Section n={2} title={t("legal.safeguarding.s2.title")}>
+          <p>{t("legal.safeguarding.s2.p1")}</p>
           <ul className="list-disc pl-5 space-y-1">
-            <li>All Hineni staff, volunteers, mentors and board members.</li>
-            <li>All apprentices, mentees, young people and vulnerable adults engaging with Hineni.</li>
-            <li>All employers, farms, businesses, NPOs and households offering opportunities through Hineni.</li>
-            <li>All digital interactions on the Hineni platform.</li>
+            <ListItems t={t} prefix="legal.safeguarding.s2" items={["item1", "item2", "item3", "item4"]} />
           </ul>
         </Section>
 
-        <Section n={3} title="Commitment to safety">
-          <p>
-            Hineni is committed to creating safe, respectful and inclusive environments. We
-            recognise our duty of care toward children and vulnerable adults and we comply with
-            applicable South African law, including:
-          </p>
+        <Section n={3} title={t("legal.safeguarding.s3.title")}>
+          <p>{t("legal.safeguarding.s3.p1")}</p>
           <ul className="list-disc pl-5 space-y-1">
-            <li>The Children's Act, 38 of 2005;</li>
-            <li>The Protection of Personal Information Act (POPIA), 4 of 2013;</li>
-            <li>The Criminal Law (Sexual Offences and Related Matters) Amendment Act, 32 of 2007;</li>
-            <li>The Basic Conditions of Employment Act and related labour legislation governing young workers;</li>
-            <li>The Sector Code on the prevention of child labour.</li>
+            <ListItems t={t} prefix="legal.safeguarding.s3" items={["item1", "item2", "item3", "item4", "item5"]} />
           </ul>
         </Section>
 
-        <Section n={4} title="Definitions">
+        <Section n={4} title={t("legal.safeguarding.s4.title")}>
           <ul className="list-disc pl-5 space-y-1">
-            <li><strong>Child / Young person:</strong> Any person under the age of 18.</li>
-            <li><strong>Vulnerable adult:</strong> Any adult who, by reason of disability, illness or circumstance, requires additional protection.</li>
-            <li><strong>Abuse:</strong> Any act or omission that causes physical, emotional, sexual, financial or psychological harm.</li>
-            <li><strong>Safeguarding:</strong> The proactive measures taken to protect people from harm.</li>
+            <li><strong>{t("legal.safeguarding.s4.item1Term")}</strong> {t("legal.safeguarding.s4.item1")}</li>
+            <li><strong>{t("legal.safeguarding.s4.item2Term")}</strong> {t("legal.safeguarding.s4.item2")}</li>
+            <li><strong>{t("legal.safeguarding.s4.item3Term")}</strong> {t("legal.safeguarding.s4.item3")}</li>
+            <li><strong>{t("legal.safeguarding.s4.item4Term")}</strong> {t("legal.safeguarding.s4.item4")}</li>
           </ul>
         </Section>
 
-        <Section n={5} title="Recruitment and vetting">
-          <p>All mentors, volunteers and individuals offering placements may be subject to:</p>
+        <Section n={5} title={t("legal.safeguarding.s5.title")}>
+          <p>{t("legal.safeguarding.s5.p1")}</p>
           <ul className="list-disc pl-5 space-y-1">
-            <li>Identity verification;</li>
-            <li>Reference checks (minimum two references for mentors);</li>
-            <li>A Police Clearance Certificate (PCC) where appropriate;</li>
-            <li>Interviews and a signed safeguarding declaration;</li>
-            <li>Periodic re-verification (typically every 12 months).</li>
+            <ListItems t={t} prefix="legal.safeguarding.s5" items={["item1", "item2", "item3", "item4", "item5"]} />
           </ul>
         </Section>
 
-        <Section n={6} title="Code of conduct">
-          <p>Every participant agrees to:</p>
+        <Section n={6} title={t("legal.safeguarding.s6.title")}>
+          <p>{t("legal.safeguarding.s6.p1")}</p>
           <ul className="list-disc pl-5 space-y-1">
-            <li>Treat others with dignity, fairness and respect;</li>
-            <li>Avoid any form of harassment, bullying, discrimination or exploitation;</li>
-            <li>Maintain appropriate professional boundaries at all times;</li>
-            <li>Never share or request explicit material;</li>
-            <li>Never provide alcohol, tobacco or illegal substances to a young person;</li>
-            <li>Never meet alone in private settings without prior approval and a parent/guardian's written consent.</li>
+            <ListItems t={t} prefix="legal.safeguarding.s6" items={["item1", "item2", "item3", "item4", "item5", "item6"]} />
           </ul>
         </Section>
 
-        <Section n={7} title="Mentoring guidelines">
+        <Section n={7} title={t("legal.safeguarding.s7.title")}>
           <ul className="list-disc pl-5 space-y-1">
-            <li>Mentoring sessions should take place in safe, public or supervised settings.</li>
-            <li>Online sessions should be conducted on approved platforms with appropriate adults aware.</li>
-            <li>Communication between mentors and minors must be transparent and copied to a parent/guardian where reasonable.</li>
-            <li>Mentors must not give or receive money, gifts of value or loans.</li>
-            <li>Any concern, however minor, must be reported to Hineni without delay.</li>
+            <ListItems t={t} prefix="legal.safeguarding.s7" items={["item1", "item2", "item3", "item4", "item5"]} />
           </ul>
         </Section>
 
-        <Section n={8} title="Apprenticeship and work placement standards">
+        <Section n={8} title={t("legal.safeguarding.s8.title")}>
           <ul className="list-disc pl-5 space-y-1">
-            <li>Placements must comply with South African labour legislation, including limits on the hours, conditions and types of work permitted for young workers.</li>
-            <li>Persons under 15 may not be employed. Persons aged 15–17 may only undertake suitable, age-appropriate work and only during school holidays unless otherwise lawfully permitted.</li>
-            <li>Health and safety risks must be assessed before any placement begins.</li>
-            <li>No young person may be exposed to hazardous machinery, chemicals, heights or work that could harm their physical or moral development.</li>
-            <li>Hosts must provide adequate supervision, induction and reasonable support throughout.</li>
-            <li>Hineni reserves the right to suspend or end any placement where standards are not met.</li>
+            <ListItems t={t} prefix="legal.safeguarding.s8" items={["item1", "item2", "item3", "item4", "item5", "item6"]} />
           </ul>
         </Section>
 
-        <Section n={9} title="Reporting concerns">
-          <p>
-            Any concern, allegation or incident relating to a safeguarding matter must be reported
-            immediately to Hineni:
-          </p>
+        <Section n={9} title={t("legal.safeguarding.s9.title")}>
+          <p>{t("legal.safeguarding.s9.p1")}</p>
           <p className="mt-2">
-            Email:{" "}
+            {t("legal.safeguarding.s9.emailLabel")}{" "}
             <a href={`mailto:${SAFEGUARDING_CONTACT_EMAIL}`} className="underline text-brand-primary">
               {SAFEGUARDING_CONTACT_EMAIL}
             </a>
           </p>
-          <p className="mt-2">
-            In an emergency, contact the South African Police Service (10111) or Childline South
-            Africa (0800 055 555) first.
-          </p>
+          <p className="mt-2">{t("legal.safeguarding.s9.emergency")}</p>
         </Section>
 
-        <Section n={10} title="Confidentiality">
-          <p>
-            All reports are treated with appropriate confidentiality. Information is shared only
-            with those who need it to protect the person at risk, and in accordance with POPIA and
-            mandatory reporting duties under South African law.
-          </p>
+        <Section n={10} title={t("legal.safeguarding.s10.title")}>
+          <p>{t("legal.safeguarding.s10.p1")}</p>
         </Section>
 
-        <Section n={11} title="Digital safety">
+        <Section n={11} title={t("legal.safeguarding.s11.title")}>
           <ul className="list-disc pl-5 space-y-1">
-            <li>Personal data is processed in line with POPIA and Hineni's Privacy Notice.</li>
-            <li>Photos or videos of young people are only used with explicit, informed consent.</li>
-            <li>Users should not share personal contact details with strangers via the platform.</li>
-            <li>Suspicious accounts or messages must be reported to Hineni.</li>
+            <ListItems t={t} prefix="legal.safeguarding.s11" items={["item1", "item2", "item3", "item4"]} />
           </ul>
         </Section>
 
-        <Section n={12} title="Breaches and enforcement">
-          <p>
-            Breaches of this policy may result in suspension, removal from the platform, referral
-            to the relevant authorities and, where appropriate, criminal prosecution. Hineni
-            cooperates fully with law-enforcement and statutory child-protection agencies.
-          </p>
+        <Section n={12} title={t("legal.safeguarding.s12.title")}>
+          <p>{t("legal.safeguarding.s12.p1")}</p>
         </Section>
 
-        <Section n={13} title="Disclaimer">
-          <p>
-            Hineni undertakes reasonable verification, vetting and safeguarding measures. However,
-            Hineni cannot guarantee the conduct of third parties and accepts no liability for
-            injury, loss, damage, misconduct, criminal activity or disputes arising from
-            interactions between participants, mentors, employers, apprenticeship providers or
-            other users of the platform. Participation is undertaken at the individual's own risk
-            and subject to applicable South African law.
-          </p>
+        <Section n={13} title={t("legal.safeguarding.s13.title")}>
+          <p>{t("legal.safeguarding.s13.p1")}</p>
         </Section>
 
         <p className="text-xs text-brand-dark/50 mt-12">
-          Version {SAFEGUARDING_POLICY_VERSION} · Last updated {SAFEGUARDING_LAST_UPDATED}
+          {t("legal.safeguarding.versionLine", {
+            version: SAFEGUARDING_POLICY_VERSION,
+            updated: SAFEGUARDING_LAST_UPDATED,
+          })}
         </p>
       </article>
     </SiteLayout>
+  );
+}
+
+function ListItems({
+  t,
+  prefix,
+  items,
+}: {
+  t: (key: string) => string;
+  prefix: string;
+  items: string[];
+}) {
+  return (
+    <>
+      {items.map((item) => (
+        <li key={item}>{t(`${prefix}.${item}`)}</li>
+      ))}
+    </>
   );
 }
 

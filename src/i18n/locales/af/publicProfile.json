@@ -1,0 +1,71 @@
+{
+  "notFound": {
+    "title": "Kennisgewing nie gevind nie",
+    "backLink": "Terug na die kennisgewingbord"
+  },
+  "error": {
+    "title": "Iets het verkeerd geloop"
+  },
+  "loading": "Laai tans…",
+  "backToNoticeboard": "Terug na kennisgewingbord",
+  "skillsHeading": "Vaardighede",
+  "experienceSuffix": "ervaring",
+  "requestContact": "Vra Kontakbesonderhede",
+  "reportProfile": "Rapporteer hierdie profiel",
+  "favourite": {
+    "signInToSave": "Teken in om mense by jou gunstelinge te stoor.",
+    "removeError": "Kon nie van gunstelinge verwyder nie.",
+    "removed": "Verwyder uit My Gunstelinge.",
+    "saveError": "Kon nie by gunstelinge stoor nie.",
+    "saved": "Gestoor by My Gunstelinge.",
+    "removeAriaLabel": "Verwyder uit My Gunstelinge",
+    "saveAriaLabel": "Stoor by My Gunstelinge",
+    "savedLabel": "Gestoor",
+    "saveLabel": "Stoor"
+  },
+  "contactDialog": {
+    "loading": "Laai tans…",
+    "signInTitle": "Teken in om voort te gaan",
+    "signInBody": "Skep 'n gratis rekening of teken in sodat {{name}} kan antwoord, en sodat jy jou kontakversoeke op jou paneelbord kan volg.",
+    "cancel": "Kanselleer",
+    "signIn": "Teken in",
+    "sentTitle": "Versoek gestuur",
+    "sentBody": "Jou versoek is suksesvol gestuur. {{name}} kies self of hulle hul kontakbesonderhede wil deel. Jy kan enige tyd die status op jou profielpaneelbord nagaan. Die adverteerder sal ook 'n kennisgewing in die app sien wanneer hulle inteken.",
+    "viewMyProfile": "Bekyk My Profiel",
+    "continueBrowsing": "Gaan Voort Blaai",
+    "title": "Vra kontakbesonderhede",
+    "subtitle": "{{name}} kies self of hulle hul foonnommer wil deel.",
+    "namePlaceholder": "Jou naam",
+    "contactPlaceholder": "Jou foon- of WhatsApp-nommer",
+    "messagePlaceholder": "Vertel kortliks watter hulp jy soek",
+    "consentLabel": "Ek stem saam dat my naam en kontakbesonderhede met {{name}} gedeel word sodat hulle op my versoek kan reageer. Enige foonnommer wat hulle kies om te deel, sal vir 30 dae vir my sigbaar wees.",
+    "sending": "Stuur tans…",
+    "send": "Stuur versoek",
+    "consentRequired": "Merk asseblief die toestemmingsblokkie om voort te gaan.",
+    "rateLimited": "Jy het die perk van 5 kontakversoeke in 24 uur bereik. Probeer asseblief later weer.",
+    "genericError": "Kon nie jou versoek stuur nie."
+  },
+  "reportDialog": {
+    "checkingAccount": "Besig om jou rekening na te gaan",
+    "pleaseWait": "Wag asseblief 'n oomblik.",
+    "signInTitle": "Teken in om 'n profiel te rapporteer",
+    "signInBody": "Rapporte word deur admins nagegaan. Deur in te teken help jy om vals rapporte te voorkom en gee dit die oorsigspan 'n duideliker rekord.",
+    "cancel": "Kanselleer",
+    "signIn": "Teken in",
+    "title": "Rapporteer hierdie profiel",
+    "subtitle": "Khulisa-admins sal rapporte nagaan en kan profiele verwyder wat ons Bepalings oortree.",
+    "detailsPlaceholder": "Opsionele besonderhede",
+    "contactPlaceholder": "Jou kontak (opsioneel, sodat ons kan opvolg)",
+    "sending": "Stuur tans…",
+    "submit": "Dien rapport in",
+    "reasonRequired": "Kies asseblief 'n rede.",
+    "success": "Dankie. Khulisa-admins sal hierdie rapport nagaan.",
+    "reasons": {
+      "spam": "Gemors (spam)",
+      "fraud": "Bedrog",
+      "offensive": "Aanstootlike Inhoud",
+      "false_information": "Vals Inligting",
+      "inappropriate": "Onvanpaste Gedrag"
+    }
+  }
+}

@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useTranslation } from "react-i18next";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { HINENI_DONATION_URL, PLATFORM_NAME } from "@/lib/brand";
 import { PageHeader } from "@/components/site/PageHeader";
@@ -26,31 +27,11 @@ export const Route = createFileRoute("/about")({
   component: About,
 });
 
-const futureCards = [
-  {
-    icon: Sparkles,
-    title: "Youth Club",
-    copy: "A future space for younger people to discover activities, skills development, mentoring and opportunities to become more involved in their communities.",
-    tone: "green",
-  },
-  {
-    icon: Hammer,
-    title: "Apprenticeships & Mentoring",
-    copy: "Connecting people who want to learn with local tradespeople, businesses and experienced community members who can help develop practical skills.",
-    tone: "orange",
-  },
-  {
-    icon: GraduationCap,
-    title: "Knowledge Guardians",
-    copy: "Recognising people who hold valuable practical, traditional and specialist knowledge — and creating opportunities for that knowledge to be shared with the next generation.",
-    tone: "navy",
-  },
-  {
-    icon: HandHeart,
-    title: "Sponsors",
-    copy: "Creating opportunities for businesses, organisations and individuals to support skills development, learning, apprenticeships and community opportunity across the Overberg.",
-    tone: "green",
-  },
+const futureCardKeys = [
+  { key: "youthClub", icon: Sparkles, tone: "green" },
+  { key: "apprenticeships", icon: Hammer, tone: "orange" },
+  { key: "knowledgeGuardians", icon: GraduationCap, tone: "navy" },
+  { key: "sponsors", icon: HandHeart, tone: "green" },
 ] as const;
 
 const toneStyles = {
@@ -60,37 +41,33 @@ const toneStyles = {
 } as const;
 
 export default function About() {
+  const { t } = useTranslation();
+  const list = (key: string): string[] => {
+    const value = t(key, { returnObjects: true });
+    return Array.isArray(value) ? (value as string[]) : [];
+  };
+  const introParas = list("aboutPage.intro");
+  const hineniBody = list("aboutPage.hineni.body");
+  const khulisaBody = list("aboutPage.khulisa.body");
+  const platformBody = list("aboutPage.platform.body");
+
+  const emphasisIndex = 3;
+
   return (
     <SiteLayout>
       {/* 1. Introduction */}
       <section className="px-4 sm:px-6 py-12 sm:py-16">
         <div className="mx-auto max-w-3xl">
           <PageHeader
-            eyebrow={`About ${PLATFORM_NAME}`}
-            title="Connecting local skills with local opportunity"
+            eyebrow={t("aboutPage.eyebrow", { platform: PLATFORM_NAME })}
+            title={t("aboutPage.heroTitle")}
           />
           <div className="space-y-5 text-base sm:text-lg leading-relaxed text-brand-navy/80">
-            <p>
-              Overberg Skills Connect is a Hineni Call community initiative created to make it
-              easier for people across the Overberg to share their skills, find local help and
-              connect with opportunities.
-            </p>
-            <p>
-              Across our communities, people have valuable practical skills, experience and
-              knowledge — but finding the right person for a job often still depends on word of
-              mouth.
-            </p>
-            <p>
-              At the same time, households, businesses and organisations are often looking for
-              people locally who can help.
-            </p>
-            <p className="font-medium text-brand-navy">
-              Overberg Skills Connect brings the two together.
-            </p>
-            <p>
-              People can create a skills profile showing what they can do, while people looking for
-              help can search locally and request contact.
-            </p>
+            {introParas.map((p, i) => (
+              <p key={i} className={i === emphasisIndex ? "font-medium text-brand-navy" : undefined}>
+                {p}
+              </p>
+            ))}
           </div>
         </div>
       </section>
@@ -101,62 +78,49 @@ export default function About() {
           <div className="grid gap-6 md:grid-cols-2">
             {/* Hineni */}
             <div className="osc-card p-6 sm:p-8">
-              <span className="osc-eyebrow">Hineni Call</span>
+              <span className="osc-eyebrow">{t("aboutPage.hineni.eyebrow")}</span>
               <p className="mt-1 text-sm font-semibold uppercase tracking-wide text-brand-navy/55">
-                Community &amp; Programme
+                {t("aboutPage.hineni.role")}
               </p>
               {/* Approved Hineni Call logo asset is not present in the project — position reserved. */}
               <div className="mt-4 flex h-20 items-center justify-center rounded-xl border border-dashed border-brand-navy/15 bg-brand-cream text-xs uppercase tracking-wider text-brand-navy/45">
-                Hineni Call logo
+                {t("aboutPage.hineni.logoPlaceholder")}
               </div>
-              <h2 className="osc-heading mt-5 text-2xl">Connecting people and opportunity</h2>
+              <h2 className="osc-heading mt-5 text-2xl">{t("aboutPage.hineni.heading")}</h2>
               <div className="mt-3 space-y-3 leading-relaxed text-brand-navy/80">
-                <p>
-                  Hineni Call is at the heart of the community side of Overberg Skills Connect.
-                </p>
-                <p>
-                  Hineni works directly with communities to encourage participation, help people
-                  register their skills, promote opportunities and support the day-to-day community
-                  engagement around the platform.
-                </p>
-                <p>The aim is simple:</p>
-                <p className="font-medium text-brand-navy">
-                  Make local skills more visible and local opportunity more accessible.
-                </p>
+                {hineniBody.map((p, i) => (
+                  <p key={i} className={i === hineniBody.length - 1 ? "font-medium text-brand-navy" : undefined}>
+                    {p}
+                  </p>
+                ))}
               </div>
             </div>
 
             {/* Khulisa */}
             <div className="osc-card p-6 sm:p-8">
-              <span className="osc-eyebrow">Khulisa Group</span>
+              <span className="osc-eyebrow">{t("aboutPage.khulisa.eyebrow")}</span>
               <p className="mt-1 text-sm font-semibold uppercase tracking-wide text-brand-navy/55">
-                Technology &amp; Development
+                {t("aboutPage.khulisa.role")}
               </p>
               {/* Approved Khulisa Group logo asset is not present in the project — position reserved. */}
               <div className="mt-4 flex h-20 items-center justify-center rounded-xl border border-dashed border-brand-navy/15 bg-brand-cream text-xs uppercase tracking-wider text-brand-navy/45">
-                Khulisa Group logo
+                {t("aboutPage.khulisa.logoPlaceholder")}
               </div>
-              <h2 className="osc-heading mt-5 text-2xl">Made possible with Khulisa Group</h2>
+              <h2 className="osc-heading mt-5 text-2xl">{t("aboutPage.khulisa.heading")}</h2>
               <div className="mt-3 space-y-3 leading-relaxed text-brand-navy/80">
-                <p>
-                  The Overberg Skills Connect digital platform was developed by Khulisa Group (Pty)
-                  Ltd, Hineni Call&apos;s technology and development partner.
-                </p>
-                <p>
-                  Khulisa provides the technology behind Skills Connect and continues to support the
-                  development of the platform as it grows.
-                </p>
+                {khulisaBody.map((p, i) => (
+                  <p key={i}>{p}</p>
+                ))}
               </div>
             </div>
           </div>
 
           <div className="mt-6 rounded-2xl border-l-4 border-brand-orange bg-brand-cream p-6 text-center">
             <p className="text-lg font-medium text-brand-navy">
-              Together, Hineni Call brings the community connection and Khulisa Group provides the
-              technology that enables it.
+              {t("aboutPage.partnership.statement")}
             </p>
             <p className="mt-3 text-sm uppercase tracking-wider text-brand-navy/55">
-              Overberg Skills Connect · A Hineni Call initiative · Powered by Khulisa Group
+              {t("aboutPage.partnership.tagline")}
             </p>
           </div>
         </div>
@@ -165,20 +129,18 @@ export default function About() {
       {/* 5 + 6. What's coming next */}
       <section className="px-4 sm:px-6 py-12 sm:py-16">
         <div className="mx-auto max-w-5xl">
-          <span className="osc-eyebrow">What&apos;s coming next</span>
+          <span className="osc-eyebrow">{t("aboutPage.future.eyebrow")}</span>
           <h2 className="osc-heading mt-2 text-2xl sm:text-3xl">
-            Growing beyond the skills directory
+            {t("aboutPage.future.heading")}
           </h2>
           <p className="mt-3 max-w-2xl leading-relaxed text-brand-navy/75">
-            Overberg Skills Connect is being developed beyond the current skills directory. Future
-            phases are intended to create more ways for people to learn, share knowledge and connect
-            with opportunity.
+            {t("aboutPage.future.intro")}
           </p>
 
           <div className="mt-8 grid gap-5 sm:grid-cols-2">
-            {futureCards.map((card) => (
+            {futureCardKeys.map((card) => (
               <div
-                key={card.title}
+                key={card.key}
                 className="rounded-2xl border border-brand-navy/10 bg-white p-6 shadow-sm"
               >
                 <div className="flex items-start justify-between gap-4">
@@ -189,11 +151,13 @@ export default function About() {
                     <card.icon className="size-6" />
                   </span>
                   <span className="rounded-full bg-brand-neutral px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-brand-navy/60">
-                    Coming next
+                    {t("aboutPage.future.badge")}
                   </span>
                 </div>
-                <h3 className="osc-heading mt-4 text-xl">{card.title}</h3>
-                <p className="mt-2 leading-relaxed text-brand-navy/75">{card.copy}</p>
+                <h3 className="osc-heading mt-4 text-xl">{t(`aboutPage.future.cards.${card.key}.title`)}</h3>
+                <p className="mt-2 leading-relaxed text-brand-navy/75">
+                  {t(`aboutPage.future.cards.${card.key}.copy`)}
+                </p>
               </div>
             ))}
           </div>
@@ -204,14 +168,13 @@ export default function About() {
       <section className="bg-brand-navy px-4 sm:px-6 py-12 sm:py-16">
         <div className="mx-auto max-w-3xl text-center">
           <span className="text-xs font-semibold uppercase tracking-wider text-brand-green">
-            Support Hineni Call
+            {t("aboutPage.support.eyebrow")}
           </span>
           <h2 className="mt-2 font-heading text-2xl sm:text-3xl font-semibold text-brand-cream">
-            Help us create more local opportunities
+            {t("aboutPage.support.heading")}
           </h2>
           <p className="mx-auto mt-4 max-w-2xl leading-relaxed text-brand-cream/80">
-            Your support helps Hineni Call continue its work connecting people, developing
-            opportunities and strengthening communities across the Overberg.
+            {t("aboutPage.support.body")}
           </p>
           <div className="mt-7">
             {HINENI_DONATION_URL ? (
@@ -221,7 +184,7 @@ export default function About() {
                 rel="noopener noreferrer"
                 className="osc-btn osc-btn-primary px-7 py-3 text-base"
               >
-                Support Hineni Call
+                {t("aboutPage.support.cta")}
               </a>
             ) : (
               <>
@@ -231,10 +194,10 @@ export default function About() {
                   aria-disabled="true"
                   className="osc-btn osc-btn-primary px-7 py-3 text-base opacity-60"
                 >
-                  Support Hineni Call
+                  {t("aboutPage.support.cta")}
                 </button>
                 <p className="mt-3 text-sm text-brand-cream/70">
-                  Hineni Call&apos;s secure donation link will be added here soon.
+                  {t("aboutPage.support.comingSoon")}
                 </p>
               </>
             )}
@@ -245,29 +208,21 @@ export default function About() {
       {/* 9. Community platform / safety */}
       <section className="px-4 sm:px-6 py-12 sm:py-16">
         <div className="mx-auto max-w-3xl">
-          <span className="osc-eyebrow">A community connection platform</span>
+          <span className="osc-eyebrow">{t("aboutPage.platform.eyebrow")}</span>
           <div className="mt-3 space-y-3 leading-relaxed text-brand-navy/80">
-            <p>
-              Overberg Skills Connect is a community noticeboard that helps local people offer their
-              skills and find local help.
-            </p>
-            <p>
-              It is not an employment or recruitment agency and does not employ, vet, recommend or
-              guarantee people listed on the platform.
-            </p>
-            <p>
-              Users should make their own enquiries and checks before agreeing to work or services.
-            </p>
+            {platformBody.map((p, i) => (
+              <p key={i}>{p}</p>
+            ))}
           </div>
           <div className="mt-6 flex flex-wrap gap-x-6 gap-y-2 text-brand-navy">
             <Link to="/terms" className="font-medium underline underline-offset-4">
-              Terms of Use
+              {t("aboutPage.platform.links.terms")}
             </Link>
             <Link to="/privacy" className="font-medium underline underline-offset-4">
-              Privacy Policy
+              {t("aboutPage.platform.links.privacy")}
             </Link>
             <Link to="/disclaimer" className="font-medium underline underline-offset-4">
-              Safety &amp; Disclaimer
+              {t("aboutPage.platform.links.disclaimer")}
             </Link>
           </div>
         </div>

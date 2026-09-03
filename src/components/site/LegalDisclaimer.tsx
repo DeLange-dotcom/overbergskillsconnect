@@ -1,5 +1,5 @@
 import { AlertTriangle } from "lucide-react";
-import { LEGAL_DISCLAIMER_TEXT } from "@/lib/safeguarding";
+import { useTranslation } from "react-i18next";
 
 export function LegalDisclaimer({
   checked,
@@ -10,11 +10,12 @@ export function LegalDisclaimer({
   onChange: (v: boolean) => void;
   error?: string;
 }) {
+  const { t } = useTranslation();
   return (
     <div className="rounded-2xl border border-brand-dark/10 bg-white p-4 sm:p-5">
       <div className="flex gap-3">
         <AlertTriangle className="size-5 text-brand-primary shrink-0 mt-0.5" />
-        <p className="text-sm text-brand-dark/80 leading-relaxed">{LEGAL_DISCLAIMER_TEXT}</p>
+        <p className="text-sm text-brand-dark/80 leading-relaxed">{t("legal.legalDisclaimerText")}</p>
       </div>
       <label className="mt-4 flex items-start gap-3 text-sm text-brand-dark/85">
         <input
@@ -24,7 +25,7 @@ export function LegalDisclaimer({
           required
           className="mt-1 size-4 accent-brand-primary shrink-0"
         />
-        <span>I have read and understood this disclaimer and accept its terms.</span>
+        <span>{t("legal.legalDisclaimerAckLabel")}</span>
       </label>
       {error && <p className="text-xs text-destructive mt-2">{error}</p>}
     </div>

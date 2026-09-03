@@ -1,0 +1,8 @@
+{
+  "contactPage": {
+    "eyebrow": "Contact Us",
+    "title": "Contact Us",
+    "intro": "Get in touch with the {{platform}} team.",
+    "emailLabel": "Email"
+  }
+}

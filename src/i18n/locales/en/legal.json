@@ -1,0 +1,255 @@
+{
+  "legal": {
+    "bilingualNotice": "This page is available in English and Afrikaans. If there is any difference in interpretation between the two versions, the English version prevails.",
+    "disclaimerText": "Overberg Skills Connect is a digital community noticeboard. Khulisa does not employ, recruit, recommend, vet, supervise or guarantee any person using this platform. Users are solely responsible for carrying out their own enquiries, obtaining references, requesting police clearance where appropriate, verifying qualifications and entering into any agreements. Khulisa accepts no responsibility for any loss, injury, damage, dispute or claim arising from introductions made through this platform.",
+    "legalDisclaimerText": "Hineni undertakes reasonable verification, vetting and safeguarding measures. However, Hineni cannot guarantee the conduct of third parties and accepts no liability for injury, loss, damage, misconduct, criminal activity or disputes arising from interactions between participants, mentors, employers, apprenticeship providers or other users of the platform. Participation is undertaken at the individual's own risk and subject to applicable South African law.",
+    "legalDisclaimerAckLabel": "I have read and understood this disclaimer and accept its terms.",
+    "terms": {
+      "meta": {
+        "title": "Terms of Use — {{platform}}",
+        "description": "{{platform}} terms of use."
+      },
+      "heading": "Terms of Use",
+      "effectiveDate": "Effective date: 4 August 2026",
+      "section1": {
+        "title": "1. What this platform is",
+        "p1": "{{platform}} (\"the platform\") is a digital community noticeboard owned and operated by {{owner}}. It exists to allow people offering skills and people looking for help to find each other in their local community."
+      },
+      "section2": {
+        "title": "2. What Khulisa is not",
+        "item1": "{{platform}} is a community noticeboard only.",
+        "item2": "Khulisa is not an employer.",
+        "item3": "Khulisa is not a labour broker.",
+        "item4": "Khulisa is not a recruitment agency.",
+        "item5": "Khulisa does not verify users.",
+        "item6": "Khulisa does not verify qualifications.",
+        "item7": "Khulisa does not verify experience.",
+        "item8": "Khulisa does not verify references.",
+        "item9": "Khulisa does not recommend any person.",
+        "item10": "Khulisa does not guarantee availability, suitability, safety, payment or work quality."
+      },
+      "section3": {
+        "title": "3. Your responsibilities",
+        "p1": "Users are solely responsible for conducting their own checks before entering into any agreement. This includes verifying identity, references, qualifications and work permits where applicable, and obtaining a police clearance certificate where appropriate.",
+        "p2": "Users are responsible for agreeing payment, work conditions and complying with all applicable legal obligations, including labour, tax and immigration law.",
+        "p3": "If you arrange contact or work through WhatsApp, telephone or any other channel, that arrangement is between the users involved. Keep your own records and do not share sensitive documents unless you are sure it is necessary and lawful."
+      },
+      "section4": {
+        "title": "4. Listings and conduct",
+        "p1": "You must only post information that is true and accurate, and you must be 18 or older to publish a listing. Khulisa may remove listings that breach these Terms, are misleading, fraudulent, offensive, illegal, or otherwise inappropriate.",
+        "p2": "You may not use the platform to harass, threaten, discriminate, scrape contact details, send spam, impersonate someone, collect information unlawfully, or attempt to bypass security controls."
+      },
+      "section5": {
+        "title": "5. Privacy and contact details",
+        "p1": "Telephone numbers are stored privately and are only shared with another user once you have explicitly approved their request. See our {{link}}.",
+        "privacyLink": "Privacy Policy",
+        "p2": "The current WhatsApp integration is manual. The app may open WhatsApp with a prepared message, but the user must review and send that message themselves."
+      },
+      "section6": {
+        "title": "6. Reports and moderation",
+        "p1": "Users can report listings that appear unsafe, misleading or abusive. Reports are reviewed by admins. Khulisa may hide, edit, suspend or remove content or accounts where needed to protect users, comply with the law, or operate the platform responsibly."
+      },
+      "section7": {
+        "title": "7. Limitation of liability",
+        "p1": "To the maximum extent permitted by South African law, {{owner}} accepts no liability for any loss, injury, damage, dispute or claim arising from introductions made through this platform. See our {{link}}.",
+        "disclaimerLink": "Disclaimer"
+      },
+      "section8": {
+        "title": "8. Intellectual property"
+      },
+      "section9": {
+        "title": "9. Governing law",
+        "p1": "These Terms are governed by the laws of the Republic of South Africa."
+      }
+    },
+    "privacy": {
+      "meta": {
+        "title": "Privacy Policy — {{platform}}",
+        "description": "How {{platform}} handles your personal information."
+      },
+      "heading": "Privacy Policy",
+      "effectiveDate": "Effective date: 4 August 2026",
+      "section1": {
+        "title": "1. Who we are",
+        "p1": "{{platform}} (\"we\", \"us\") is operated by {{owner}}, the responsible party for the purposes of the Protection of Personal Information Act, 2013 (POPIA)."
+      },
+      "section2": {
+        "title": "2. What information we collect",
+        "item1": "Account details such as your email address and sign-in information.",
+        "item2": "Listing details you provide, including name, town or area, skills, experience, availability, description and optional profile photograph.",
+        "item3": "Your telephone or WhatsApp number, stored privately unless you approve a contact request.",
+        "item4": "Contact request details, including requester name, contact number, message, status and decision date.",
+        "item5": "Reports submitted about listings, including reason, details, reporter account and optional contact details.",
+        "item6": "Technical records needed to run and secure the platform, such as timestamps, notifications and system logs.",
+        "p1": "Some future sections of the app refer to identity checks, parent consent, references, police clearance certificates, work permits, youth programmes or safeguarding records. Those sections are not live for this launch. If they are enabled later, this policy must be updated before that information is collected."
+      },
+      "section3": {
+        "title": "3. Why and how we use it",
+        "p1": "We use personal information to operate the skills noticeboard, publish listings, receive and manage contact requests, show in-app notifications, handle reports, prevent misuse, keep records of user choices, and respond to support, correction or deletion requests.",
+        "p2": "We process this information because it is needed to provide the platform, because users consent to specific sharing actions, because we have a legitimate interest in safety and abuse prevention, and because South African law may require us to keep or disclose certain records."
+      },
+      "section4": {
+        "title": "4. Contact details and WhatsApp",
+        "p1Pre": "Your telephone number is ",
+        "p1Strong": "never displayed publicly",
+        "p1Post": ". It is only shared with another user when you explicitly approve their contact request. You can decline any request.",
+        "p2": "This launch uses manual WhatsApp links. When a contact request is approved or declined, the app may open WhatsApp with a prepared message for the user to review and send. WhatsApp messages are handled by WhatsApp/Meta under their own terms and privacy policies."
+      },
+      "section5": {
+        "title": "5. Sharing with service providers",
+        "p1": "We do not sell personal information. We may share limited information with service providers who help us operate the platform, such as hosting, authentication, database, email, analytics, security or communication services. We may also disclose information where required by law, court order, regulator request, or to protect users from harm, fraud or abuse."
+      },
+      "section6": {
+        "title": "6. Security and retention",
+        "p1": "We use access controls, private database rules, secure hosting and administrative restrictions to protect personal information. No online system is perfectly secure, so users should avoid posting sensitive details in public descriptions.",
+        "p2": "We keep active listing and account records while they are needed to provide the platform. Contact request records are reviewed and may be removed after they are no longer needed for the contact flow, dispute handling or legal record-keeping. Reviewed reports may be retained longer where needed for safety, abuse prevention or compliance."
+      },
+      "section7": {
+        "title": "7. Editing or removing your information",
+        "p1Pre": "You can hide or unhide your listing from your private management link or account. To permanently remove a listing, request deletion, request access to your information, or correct your information, contact us using the details on the ",
+        "contactLink": "Contact Us",
+        "p1Post": " page."
+      },
+      "section8": {
+        "title": "8. Your rights",
+        "p1": "Under POPIA you may request access to your personal information, ask us to correct or delete it, object to certain processing, withdraw consent where processing depends on consent, and complain to the Information Regulator. Contact us first so we can assist."
+      },
+      "section9": {
+        "title": "9. Children and special personal information",
+        "p1": "The public noticeboard is intended for adults. Users must not submit another person's identity documents, medical details, criminal history, child information, or other sensitive information unless a live feature specifically asks for it and the required consent and safeguards are in place."
+      },
+      "section10": {
+        "title": "10. Security incidents",
+        "p1": "If we reasonably believe that personal information has been accessed or acquired by an unauthorised person, we will assess the incident and take the notification steps required by POPIA."
+      },
+      "section11": {
+        "title": "11. Contact",
+        "p1Pre": "For privacy questions, please use our ",
+        "contactLink": "Contact Us",
+        "p1Post": " page. You may also contact the Information Regulator South Africa if you believe your POPIA rights have not been respected."
+      }
+    },
+    "disclaimer": {
+      "meta": {
+        "title": "Disclaimer — Overberg Skills Connect",
+        "description": "Overberg Skills Connect is a digital community noticeboard only."
+      },
+      "heading": "Disclaimer",
+      "p1": "Overberg Skills Connect is a digital community noticeboard. It exists only to help people offering skills and people looking for help to find each other. We are not a recruiter, employer, labour broker, agency or supervisor.",
+      "p2": "We do not vet, verify, recommend or guarantee any person listed on this platform. We do not verify identities, qualifications, references, experience, work permits or police clearance. We do not confirm the accuracy of any information posted.",
+      "p3": "You are responsible for carrying out your own enquiries before entering into any agreement. This includes — but is not limited to — verifying identity documents, requesting references, asking for a police clearance certificate where appropriate, agreeing payment and working conditions in writing, and complying with all applicable laws.",
+      "p4": "Khulisa Group, Overberg Skills Connect and any related parties accept no responsibility for any loss, injury, damage, dispute or claim arising from introductions made through this platform.",
+      "seeAlsoPre": "See also our ",
+      "termsLink": "Terms of Use",
+      "seeAlsoAnd": " and ",
+      "privacyLink": "Privacy Policy",
+      "seeAlsoPost": "."
+    },
+    "safeguarding": {
+      "meta": {
+        "title": "Safeguarding Policy — Hineni",
+        "description": "Hineni's Safeguarding Policy covering recruitment, mentoring, apprenticeships, conduct, reporting and digital safety for young people and vulnerable adults."
+      },
+      "badge": "Safeguarding",
+      "versionLine": "Version {{version}} · Last updated {{updated}}",
+      "heading": "Hineni Safeguarding Policy",
+      "intro": "This policy sets out Hineni's commitment to the safety, dignity and wellbeing of every young person, vulnerable adult and participant who engages with our programmes, including apprenticeships, mentorships, work placements and community activities.",
+      "print": "Print policy",
+      "download": "Download PDF",
+      "downloadTitle": "Use your browser's 'Save as PDF' option",
+      "s1": {
+        "title": "Purpose",
+        "p1": "The purpose of this policy is to ensure that everyone who participates in Hineni's activities — including apprentices, mentees, mentors, volunteers, employers, apprenticeship providers, staff and community partners — is protected from harm, abuse, exploitation, discrimination and neglect."
+      },
+      "s2": {
+        "title": "Scope",
+        "p1": "This policy applies to:",
+        "item1": "All Hineni staff, volunteers, mentors and board members.",
+        "item2": "All apprentices, mentees, young people and vulnerable adults engaging with Hineni.",
+        "item3": "All employers, farms, businesses, NPOs and households offering opportunities through Hineni.",
+        "item4": "All digital interactions on the Hineni platform."
+      },
+      "s3": {
+        "title": "Commitment to safety",
+        "p1": "Hineni is committed to creating safe, respectful and inclusive environments. We recognise our duty of care toward children and vulnerable adults and we comply with applicable South African law, including:",
+        "item1": "The Children's Act, 38 of 2005;",
+        "item2": "The Protection of Personal Information Act (POPIA), 4 of 2013;",
+        "item3": "The Criminal Law (Sexual Offences and Related Matters) Amendment Act, 32 of 2007;",
+        "item4": "The Basic Conditions of Employment Act and related labour legislation governing young workers;",
+        "item5": "The Sector Code on the prevention of child labour."
+      },
+      "s4": {
+        "title": "Definitions",
+        "item1Term": "Child / Young person:",
+        "item1": "Any person under the age of 18.",
+        "item2Term": "Vulnerable adult:",
+        "item2": "Any adult who, by reason of disability, illness or circumstance, requires additional protection.",
+        "item3Term": "Abuse:",
+        "item3": "Any act or omission that causes physical, emotional, sexual, financial or psychological harm.",
+        "item4Term": "Safeguarding:",
+        "item4": "The proactive measures taken to protect people from harm."
+      },
+      "s5": {
+        "title": "Recruitment and vetting",
+        "p1": "All mentors, volunteers and individuals offering placements may be subject to:",
+        "item1": "Identity verification;",
+        "item2": "Reference checks (minimum two references for mentors);",
+        "item3": "A Police Clearance Certificate (PCC) where appropriate;",
+        "item4": "Interviews and a signed safeguarding declaration;",
+        "item5": "Periodic re-verification (typically every 12 months)."
+      },
+      "s6": {
+        "title": "Code of conduct",
+        "p1": "Every participant agrees to:",
+        "item1": "Treat others with dignity, fairness and respect;",
+        "item2": "Avoid any form of harassment, bullying, discrimination or exploitation;",
+        "item3": "Maintain appropriate professional boundaries at all times;",
+        "item4": "Never share or request explicit material;",
+        "item5": "Never provide alcohol, tobacco or illegal substances to a young person;",
+        "item6": "Never meet alone in private settings without prior approval and a parent/guardian's written consent."
+      },
+      "s7": {
+        "title": "Mentoring guidelines",
+        "item1": "Mentoring sessions should take place in safe, public or supervised settings.",
+        "item2": "Online sessions should be conducted on approved platforms with appropriate adults aware.",
+        "item3": "Communication between mentors and minors must be transparent and copied to a parent/guardian where reasonable.",
+        "item4": "Mentors must not give or receive money, gifts of value or loans.",
+        "item5": "Any concern, however minor, must be reported to Hineni without delay."
+      },
+      "s8": {
+        "title": "Apprenticeship and work placement standards",
+        "item1": "Placements must comply with South African labour legislation, including limits on the hours, conditions and types of work permitted for young workers.",
+        "item2": "Persons under 15 may not be employed. Persons aged 15–17 may only undertake suitable, age-appropriate work and only during school holidays unless otherwise lawfully permitted.",
+        "item3": "Health and safety risks must be assessed before any placement begins.",
+        "item4": "No young person may be exposed to hazardous machinery, chemicals, heights or work that could harm their physical or moral development.",
+        "item5": "Hosts must provide adequate supervision, induction and reasonable support throughout.",
+        "item6": "Hineni reserves the right to suspend or end any placement where standards are not met."
+      },
+      "s9": {
+        "title": "Reporting concerns",
+        "p1": "Any concern, allegation or incident relating to a safeguarding matter must be reported immediately to Hineni:",
+        "emailLabel": "Email:",
+        "emergency": "In an emergency, contact the South African Police Service (10111) or Childline South Africa (0800 055 555) first."
+      },
+      "s10": {
+        "title": "Confidentiality",
+        "p1": "All reports are treated with appropriate confidentiality. Information is shared only with those who need it to protect the person at risk, and in accordance with POPIA and mandatory reporting duties under South African law."
+      },
+      "s11": {
+        "title": "Digital safety",
+        "item1": "Personal data is processed in line with POPIA and Hineni's Privacy Notice.",
+        "item2": "Photos or videos of young people are only used with explicit, informed consent.",
+        "item3": "Users should not share personal contact details with strangers via the platform.",
+        "item4": "Suspicious accounts or messages must be reported to Hineni."
+      },
+      "s12": {
+        "title": "Breaches and enforcement",
+        "p1": "Breaches of this policy may result in suspension, removal from the platform, referral to the relevant authorities and, where appropriate, criminal prosecution. Hineni cooperates fully with law-enforcement and statutory child-protection agencies."
+      },
+      "s13": {
+        "title": "Disclaimer",
+        "p1": "Hineni undertakes reasonable verification, vetting and safeguarding measures. However, Hineni cannot guarantee the conduct of third parties and accepts no liability for injury, loss, damage, misconduct, criminal activity or disputes arising from interactions between participants, mentors, employers, apprenticeship providers or other users of the platform. Participation is undertaken at the individual's own risk and subject to applicable South African law."
+      }
+    }
+  }
+}

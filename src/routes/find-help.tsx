@@ -2,12 +2,14 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { useMemo, useState } from "react";
 import { MapPin, Loader2, Search, Calendar } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { ShortNotice } from "@/components/site/ShortNotice";
 import { PageHeader } from "@/components/site/PageHeader";
 import { LocationSelect } from "@/components/site/LocationSelect";
 import { supabase } from "@/integrations/supabase/client";
-import { experienceLabel, type SkillExperience } from "@/lib/noticeboard";
+import { type SkillExperience } from "@/lib/noticeboard";
+import { useLabels } from "@/i18n/labels";
 
 
 export const Route = createFileRoute("/find-help")({
@@ -39,7 +41,7 @@ type Row = {
   created_at: string;
 };
 
-/** Quick shortcuts for the most commonly requested skills. */
+/** Quick shortcuts for the most commonly requested skills. Stored English values only. */
 const QUICK_SKILLS = [
   "Domestic Worker",
   "Gardening",
@@ -69,6 +71,8 @@ function skillRows(r: Row): SkillExperience[] {
 
 
 function FindHelp() {
+  const { t } = useTranslation();
+  const { skillLabel, availabilityLabel, experienceLabel } = useLabels();
   const [town, setTown] = useState("");
   const [q, setQ] = useState("");
 
@@ -107,9 +111,9 @@ function FindHelp() {
     <SiteLayout>
       <div className="max-w-6xl mx-auto px-4 sm:px-6 py-8 sm:py-14">
         <PageHeader
-          eyebrow="Find Local Help"
-          title="What help do you need?"
-          intro="Type the kind of work you need, then choose an area if you want to narrow it down."
+          eyebrow={t("findHelp.eyebrow")}
+          title={t("findHelp.title")}
+          intro={t("findHelp.intro")}
           className="mb-4"
         />
         <ShortNotice className="mb-6 max-w-2xl" />
@@ -120,8 +124,8 @@ function FindHelp() {
             <input
               value={q}
               onChange={(e) => setQ(e.target.value)}
-              placeholder="e.g. Gardener"
-              aria-label="What help do you need?"
+              placeholder={t("findHelp.searchPlaceholder")}
+              aria-label={t("findHelp.searchAriaLabel")}
               spellCheck="true"
               className="osc-input pl-12 py-4"
             />
@@ -139,18 +143,18 @@ function FindHelp() {
                     : "bg-white border-brand-navy/10 text-brand-navy hover:border-brand-green/50"
                 }`}
               >
-                {e}
+                {skillLabel(e)}
               </button>
             ))}
           </div>
           <div className="mt-4">
             <LocationSelect
               id="area"
-              label="Area (optional)"
+              label={t("findHelp.areaLabel")}
               value={town}
               onChange={setTown}
               allowAny
-              anyLabel="All Overberg areas"
+              anyLabel={t("findHelp.anyAreaLabel")}
             />
           </div>
           {(q || town) && (
@@ -162,15 +166,13 @@ function FindHelp() {
               }}
               className="mt-3 text-sm underline text-brand-dark/70"
             >
-              Clear search
+              {t("findHelp.clearSearch")}
             </button>
           )}
         </div>
 
         <p className="mb-4 text-sm text-brand-dark/60" aria-live="polite">
-          {isLoading
-            ? "Loading…"
-            : `${filtered.length} ${filtered.length === 1 ? "person" : "people"} found`}
+          {isLoading ? t("findHelp.loading") : t("findHelp.peopleFound", { count: filtered.length })}
         </p>
 
 
@@ -181,10 +183,10 @@ function FindHelp() {
           </div>
         ) : filtered.length === 0 ? (
           <div className="text-center py-20 text-brand-dark/60">
-            No one matches that search yet. Try a different word or choose “All Overberg areas”.{" "}
+            {t("findHelp.noResults")}{" "}
 
             <Link to="/advertise" className="text-brand-primary underline">
-              Be the first to advertise.
+              {t("findHelp.beFirst")}
             </Link>
           </div>
         ) : (
@@ -226,22 +228,22 @@ function FindHelp() {
                       const label = experienceLabel(s.experience_level);
                       return (
                         <li key={s.skill} className="text-brand-dark/80">
-                          <span className="font-medium">{s.skill}</span>
+                          <span className="font-medium">{skillLabel(s.skill)}</span>
                           {label && (
-                            <span className="text-brand-dark/60"> — {label} experience</span>
+                            <span className="text-brand-dark/60"> — {label} {t("findHelp.experienceSuffix")}</span>
                           )}
                         </li>
                       );
                     })}
                     {extra > 0 && (
-                      <li className="text-xs text-brand-dark/50">+{extra} more skills</li>
+                      <li className="text-xs text-brand-dark/50">{t("findHelp.moreSkills", { count: extra })}</li>
                     )}
                   </ul>
                   <p className="text-sm text-brand-dark/70 mb-3 line-clamp-3">{r.description}</p>
                   <div className="mt-auto flex items-center justify-between text-xs text-brand-dark/60">
                     {r.availability && (
                       <span className="inline-flex items-center gap-1">
-                        <Calendar className="size-3" /> {r.availability}
+                        <Calendar className="size-3" /> {availabilityLabel(r.availability)}
                       </span>
                     )}
                   </div>

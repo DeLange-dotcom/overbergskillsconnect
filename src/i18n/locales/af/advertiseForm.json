@@ -1,0 +1,70 @@
+{
+  "advertiseForm": {
+    "meta": {
+      "title": "Adverteer My Dienste — Overberg Skills Connect",
+      "description": "Plaas 'n gratis kennisgewingbord-lys vir jou vaardighede. Jou foonnommer bly privaat totdat jy 'n versoek goedkeur."
+    },
+    "toasts": {
+      "confirmAll": "Bevestig asseblief al vier verklarings om te publiseer.",
+      "addOneSkill": "Voeg asseblief ten minste een vaardigheid by.",
+      "chooseExperience": "Kies asseblief hoeveel ervaring jy vir elke vaardigheid het.",
+      "completeRequired": "Voltooi asseblief die vereiste velde.",
+      "publishError": "Kon jou lys nie publiseer nie.",
+      "published": "Jou advertensie is nou lewendig!"
+    },
+    "loading": "Laai tans…",
+    "signIn": {
+      "heading": "Meld aan om te adverteer",
+      "body": "Skep 'n gratis rekening sodat jy jou advertensie enige tyd kan opdateer of verwyder.",
+      "cta": "Meld aan of skep rekening"
+    },
+    "hasListing": {
+      "heading": "Jy het reeds 'n advertensie",
+      "body": "Jy kan dit enige tyd op jou paneelbord wysig of verwyder.",
+      "cta": "Gaan na My Lys"
+    },
+    "header": {
+      "eyebrow": "Adverteer My Vaardighede",
+      "title": "Wys jou vaardighede",
+      "intro": "Plaas 'n gratis lys op die gemeenskap se kennisgewingbord. Jou foonnommer bly privaat — dit word slegs gedeel wanneer jy 'n versoek goedkeur."
+    },
+    "fields": {
+      "name": "Naam",
+      "skillsHeading": "Watter werk kan jy doen?",
+      "skillsHelp": "Kies 'n vaardigheid, en sê dan hoeveel ervaring jy het. Jy kan soveel vaardighede byvoeg as wat jy wil.",
+      "availability": "Beskikbaarheid",
+      "selectPlaceholder": "Kies…",
+      "description": "Kort beskrywing",
+      "descriptionPlaceholder": "'n Paar sinne oor wat jy die beste doen.",
+      "phone": "Telefoonnommer (bly privaat)",
+      "phonePlaceholder": "bv. 082 123 4567",
+      "phoneHelp": "Dit word nooit publiek gewys nie. Dit word slegs gedeel wanneer jy 'n kontakversoek goedkeur."
+    },
+    "acks": {
+      "heading": "Bevestig asseblief die volgende voor jy publiseer:",
+      "age": "Ek is ouer as 18 jaar.",
+      "truthful": "Die inligting wat ek verskaf het, is waar en korrek.",
+      "termsPrefix": "Ek het die",
+      "termsLink": "Gebruiksbepalings",
+      "and": "en",
+      "privacyLink": "Privaatheidsbeleid",
+      "noticeboard": "Ek verstaan dat Overberg Skills Connect slegs 'n gemeenskap-kennisgewingbord is en dat enige reëlings wat getref word, uitsluitlik tussen my en ander gebruikers is."
+    },
+    "submit": {
+      "publishing": "Publiseer tans…",
+      "publish": "Publiseer my lys"
+    },
+    "skillEditor": {
+      "skillNumber": "Vaardigheid {{number}}",
+      "removeAria": "Verwyder vaardigheid {{number}}",
+      "remove": "Verwyder",
+      "chooseSkillAria": "Kies 'n vaardigheid",
+      "chooseSkill": "Kies 'n vaardigheid…",
+      "alreadyAdded": "(reeds bygevoeg)",
+      "customPlaceholder": "Tik jou vaardigheid, bv. Klipmuurbou",
+      "customHelp": "Mense kan ook vir hierdie vaardigheid soek.",
+      "experiencePrompt": "Hoeveel ervaring het jy met hierdie vaardigheid?",
+      "addAnother": "Voeg nog 'n vaardigheid by"
+    }
+  }
+}

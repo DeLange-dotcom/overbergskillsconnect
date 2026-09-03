@@ -1,11 +1,13 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { ShortNotice } from "@/components/site/ShortNotice";
 import { PageHeader } from "@/components/site/PageHeader";
 import { LocationSelect } from "@/components/site/LocationSelect";
 import { supabase } from "@/integrations/supabase/client";
 import { AVAILABILITY_OPTIONS } from "@/lib/noticeboard";
+import { useLabels } from "@/i18n/labels";
 import {
   SkillExperienceEditor,
   entriesToPayload,
@@ -31,6 +33,8 @@ export const Route = createFileRoute("/advertise")({
 });
 
 function Advertise() {
+  const { t } = useTranslation();
+  const { availabilityLabel } = useLabels();
   const navigate = useNavigate();
   const [authChecked, setAuthChecked] = useState(false);
   const [signedIn, setSignedIn] = useState(false);
@@ -71,16 +75,16 @@ function Advertise() {
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     if (!acks.age || !acks.truthful || !acks.terms || !acks.noticeboard) {
-      toast.error("Please confirm all four declarations to publish.");
+      toast.error(t("advertiseForm.toasts.confirmAll"));
       return;
     }
     const skillExperience = entriesToPayload(entries);
     if (skillExperience.length === 0) {
-      toast.error("Please add at least one skill.");
+      toast.error(t("advertiseForm.toasts.addOneSkill"));
       return;
     }
     if (skillExperience.some((s) => !s.experience_level)) {
-      toast.error("Please choose how much experience you have for each skill.");
+      toast.error(t("advertiseForm.toasts.chooseExperience"));
       return;
     }
     setSubmitting(true);
@@ -100,7 +104,7 @@ function Advertise() {
 
     if (!payload.name || !payload.town || !payload.phone || !payload.description) {
       setSubmitting(false);
-      toast.error("Please complete the required fields.");
+      toast.error(t("advertiseForm.toasts.completeRequired"));
       return;
     }
 
@@ -110,10 +114,10 @@ function Advertise() {
 
     setSubmitting(false);
     if (error) {
-      toast.error(error.message ?? "Could not publish your listing.");
+      toast.error(error.message ?? t("advertiseForm.toasts.publishError"));
       return;
     }
-    toast.success("Your advert is now live!");
+    toast.success(t("advertiseForm.toasts.published"));
     navigate({ to: "/my-advert" });
   }
 
@@ -135,16 +139,16 @@ function Advertise() {
           <div className="text-5xl mb-4" aria-hidden>
             👋
           </div>
-          <h1 className="osc-heading text-3xl mb-3">Sign in to advertise</h1>
+          <h1 className="osc-heading text-3xl mb-3">{t("advertiseForm.signIn.heading")}</h1>
           <p className="text-brand-dark/70 mb-8">
-            Create a free account so you can update or remove your advert at any time.
+            {t("advertiseForm.signIn.body")}
           </p>
           <Link
             to="/auth"
             search={{ next: "/advertise" } as never}
             className="osc-btn osc-btn-primary px-6 py-3.5"
           >
-            Sign in or create account
+            {t("advertiseForm.signIn.cta")}
           </Link>
         </div>
       </SiteLayout>
@@ -158,15 +162,15 @@ function Advertise() {
           <div className="text-5xl mb-4" aria-hidden>
             ✅
           </div>
-          <h1 className="osc-heading text-3xl mb-3">You already have an advert</h1>
+          <h1 className="osc-heading text-3xl mb-3">{t("advertiseForm.hasListing.heading")}</h1>
           <p className="text-brand-dark/70 mb-8">
-            You can edit or remove it any time from your dashboard.
+            {t("advertiseForm.hasListing.body")}
           </p>
           <Link
             to="/my-advert"
             className="osc-btn osc-btn-primary px-6 py-3.5"
           >
-            Go to My Listing
+            {t("advertiseForm.hasListing.cta")}
           </Link>
         </div>
       </SiteLayout>
@@ -177,48 +181,47 @@ function Advertise() {
     <SiteLayout>
       <div className="max-w-2xl mx-auto px-4 sm:px-6 py-10 sm:py-14">
         <PageHeader
-          eyebrow="Advertise My Skills"
-          title="Make your skills visible"
-          intro="Post a free listing on the community noticeboard. Your phone number stays private — it is only shared when you approve a request."
+          eyebrow={t("advertiseForm.header.eyebrow")}
+          title={t("advertiseForm.header.title")}
+          intro={t("advertiseForm.header.intro")}
         />
         <ShortNotice className="mb-8" />
 
         <form onSubmit={onSubmit} className="space-y-5">
-          <Field label="Name" name="name" required />
+          <Field label={t("advertiseForm.fields.name")} name="name" required />
           <LocationSelect value={town} onChange={setTown} required />
 
           <div>
-            <h2 className="osc-heading text-xl">What work can you do?</h2>
+            <h2 className="osc-heading text-xl">{t("advertiseForm.fields.skillsHeading")}</h2>
             <p className="text-sm text-brand-dark/60 mt-1 mb-3">
-              Choose a skill, then say how much experience you have. You can add as many skills as
-              you like.
+              {t("advertiseForm.fields.skillsHelp")}
             </p>
             <SkillExperienceEditor entries={entries} onChange={setEntries} />
           </div>
 
 
           <div>
-            <Label>Availability</Label>
+            <Label>{t("advertiseForm.fields.availability")}</Label>
             <select
               name="availability"
               className="osc-input"
             >
-              <option value="">Select…</option>
+              <option value="">{t("advertiseForm.fields.selectPlaceholder")}</option>
               {AVAILABILITY_OPTIONS.map((a) => (
                 <option key={a} value={a}>
-                  {a}
+                  {availabilityLabel(a)}
                 </option>
               ))}
             </select>
           </div>
 
           <div>
-            <Label required>Short description</Label>
+            <Label required>{t("advertiseForm.fields.description")}</Label>
             <textarea
               name="description"
               required
               rows={4}
-              placeholder="A few sentences about what you do best."
+              placeholder={t("advertiseForm.fields.descriptionPlaceholder")}
               className="osc-input"
               spellCheck="true"
             />
@@ -226,38 +229,38 @@ function Advertise() {
 
 
           <Field
-            label="Telephone number (kept private)"
+            label={t("advertiseForm.fields.phone")}
             name="phone"
             type="tel"
             required
-            placeholder="e.g. 082 123 4567"
-            help="This is never shown publicly. It is only shared when you approve a contact request."
+            placeholder={t("advertiseForm.fields.phonePlaceholder")}
+            help={t("advertiseForm.fields.phoneHelp")}
           />
 
           <div className="space-y-3 p-5 osc-panel">
-            <p className="text-sm font-semibold">Before publishing, please confirm:</p>
+            <p className="text-sm font-semibold">{t("advertiseForm.acks.heading")}</p>
             <Ack
               checked={acks.age}
               onChange={(v) => setAcks((a) => ({ ...a, age: v }))}
-              label="I am over the age of 18."
+              label={t("advertiseForm.acks.age")}
             />
             <Ack
               checked={acks.truthful}
               onChange={(v) => setAcks((a) => ({ ...a, truthful: v }))}
-              label="The information I have provided is true and accurate."
+              label={t("advertiseForm.acks.truthful")}
             />
             <Ack
               checked={acks.terms}
               onChange={(v) => setAcks((a) => ({ ...a, terms: v }))}
               label={
                 <>
-                  I have read and accept the{" "}
+                  {t("advertiseForm.acks.termsPrefix")}{" "}
                   <Link to="/terms" className="underline">
-                    Terms of Use
+                    {t("advertiseForm.acks.termsLink")}
                   </Link>{" "}
-                  and{" "}
+                  {t("advertiseForm.acks.and")}{" "}
                   <Link to="/privacy" className="underline">
-                    Privacy Policy
+                    {t("advertiseForm.acks.privacyLink")}
                   </Link>
                   .
                 </>
@@ -266,7 +269,7 @@ function Advertise() {
             <Ack
               checked={acks.noticeboard}
               onChange={(v) => setAcks((a) => ({ ...a, noticeboard: v }))}
-              label="I understand that Overberg Skills Connect is a community noticeboard only and that any arrangements made are entirely between myself and other users."
+              label={t("advertiseForm.acks.noticeboard")}
             />
           </div>
 
@@ -275,7 +278,7 @@ function Advertise() {
             disabled={submitting}
             className="w-full py-3.5 rounded-xl bg-brand-primary text-white font-medium disabled:opacity-60"
           >
-            {submitting ? "Publishing…" : "Publish my listing"}
+            {submitting ? t("advertiseForm.submit.publishing") : t("advertiseForm.submit.publish")}
           </button>
         </form>
       </div>

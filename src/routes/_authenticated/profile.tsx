@@ -1,4 +1,5 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { useTranslation, Trans } from "react-i18next";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { SiteLayout } from "@/components/site/SiteLayout";
@@ -52,6 +53,7 @@ function firstName(full: string) {
 }
 
 function SignOutButton() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
 
@@ -66,12 +68,13 @@ function SignOutButton() {
       className="inline-flex items-center gap-2 px-3 py-2 rounded-lg border border-brand-dark/15 text-sm text-brand-dark/70 hover:bg-brand-soft hover:text-brand-primary transition shrink-0"
     >
       {loading ? <Loader2 className="size-4 animate-spin" /> : <LogOut className="size-4" />}
-      Sign Out
+      {t("account.signOut")}
     </button>
   );
 }
 
 function WelcomeCard() {
+  const { t } = useTranslation();
   const [show, setShow] = useState(false);
   useEffect(() => {
     try {
@@ -95,17 +98,17 @@ function WelcomeCard() {
   return (
     <section className="rounded-2xl border border-brand-primary/30 bg-brand-soft/70 p-5 sm:p-6">
       <div className="flex items-start justify-between gap-3">
-        <h2 className="osc-heading text-xl">Welcome to Overberg Skills Connect</h2>
+        <h2 className="osc-heading text-xl">{t("account.welcome.title")}</h2>
         <button
           onClick={dismiss}
-          aria-label="Dismiss welcome message"
+          aria-label={t("account.welcome.dismiss")}
           className="text-brand-dark/50 hover:text-brand-dark"
         >
           <X className="size-4" />
         </button>
       </div>
       <p className="text-sm text-brand-dark/70 mt-1">
-        You can now advertise your skills, find local help, or manage your profile.
+        {t("account.welcome.body")}
       </p>
       <div className="flex flex-wrap gap-2 mt-4">
         <Link
@@ -113,20 +116,20 @@ function WelcomeCard() {
           onClick={dismiss}
           className="px-4 py-2.5 rounded-xl bg-brand-primary text-white text-sm font-semibold"
         >
-          Advertise my skills
+          {t("account.welcome.advertise")}
         </Link>
         <Link
           to="/find-help"
           onClick={dismiss}
           className="px-4 py-2.5 rounded-xl border border-brand-dark/15 bg-white text-sm font-medium hover:bg-brand-soft"
         >
-          Find local help
+          {t("account.welcome.findHelp")}
         </Link>
         <button
           onClick={dismiss}
           className="px-4 py-2.5 rounded-xl border border-brand-dark/15 bg-white text-sm font-medium hover:bg-brand-soft"
         >
-          My Profile
+          {t("account.welcome.myProfile")}
         </button>
       </div>
     </section>
@@ -135,13 +138,14 @@ function WelcomeCard() {
 
 // ============ Main ============
 function MyProfile() {
+  const { t } = useTranslation();
   return (
     <SiteLayout>
       <div className="max-w-3xl mx-auto px-4 sm:px-6 py-8 sm:py-12 space-y-8">
         <header className="space-y-1">
-          <h1 className="osc-heading text-3xl sm:text-4xl">My Profile</h1>
+          <h1 className="osc-heading text-3xl sm:text-4xl">{t("account.page.title")}</h1>
           <p className="text-brand-dark/60">
-            Manage your details, your skills listing, and any service requests — all in one place.
+            {t("account.page.subtitle")}
           </p>
         </header>
 
@@ -159,7 +163,7 @@ function MyProfile() {
             to="/help"
             className="inline-flex items-center gap-2 px-3 py-2 rounded-lg border border-brand-dark/15 text-sm text-brand-dark/70 hover:bg-brand-soft hover:text-brand-primary transition"
           >
-            Need Help?
+            {t("account.needHelp")}
           </Link>
           <SignOutButton />
         </div>
@@ -212,6 +216,7 @@ type NotificationRow = {
 };
 
 function NotificationsSection() {
+  const { t } = useTranslation();
   const qc = useQueryClient();
   const { data, isLoading } = useQuery({
     queryKey: ["notifications"],
@@ -241,11 +246,11 @@ function NotificationsSection() {
   return (
     <Section
       icon="🔔"
-      title="Notifications"
+      title={t("account.notifications.title")}
       subtitle={
         unread > 0
-          ? `${unread} new — check your profile regularly, we do not send SMS messages`
-          : "Check your profile regularly. Updates appear here, not by SMS."
+          ? t("account.notifications.unread", { count: unread })
+          : t("account.notifications.checkRegularly")
       }
       right={
         unread > 0 && (
@@ -254,7 +259,7 @@ function NotificationsSection() {
             onClick={() => markAllRead.mutate()}
             className="text-xs text-brand-primary hover:underline"
           >
-            Mark all read
+            {t("account.notifications.markAllRead")}
           </button>
         )
       }
@@ -262,7 +267,7 @@ function NotificationsSection() {
       {isLoading ? (
         <Loader2 className="size-4 animate-spin text-brand-dark/40" />
       ) : items.length === 0 ? (
-        <p className="text-sm text-brand-dark/50">No notifications yet.</p>
+        <p className="text-sm text-brand-dark/50">{t("account.notifications.empty")}</p>
       ) : (
         <ul className="divide-y divide-brand-dark/5">
           {items.slice(0, 5).map((n) => (
@@ -284,7 +289,7 @@ function NotificationsSection() {
                   href={n.link}
                   className="text-xs text-brand-primary hover:underline shrink-0 mt-1"
                 >
-                  Open
+                  {t("account.notifications.open")}
                 </a>
               )}
             </li>
@@ -305,6 +310,7 @@ type MyDetails = {
 };
 
 function MyDetailsSection() {
+  const { t } = useTranslation();
   const qc = useQueryClient();
   const { data, isLoading } = useQuery({
     queryKey: ["my-details"],
@@ -339,7 +345,7 @@ function MyDetailsSection() {
       if (error) throw error;
     },
     onSuccess: () => {
-      toast.success("Details saved");
+      toast.success(t("account.details.savedToast"));
       setEditing(false);
       qc.invalidateQueries({ queryKey: ["my-details"] });
     },
@@ -349,8 +355,8 @@ function MyDetailsSection() {
   return (
     <Section
       icon="👤"
-      title="My Details"
-      subtitle="Your account information. Only you can see and edit this."
+      title={t("account.details.title")}
+      subtitle={t("account.details.subtitle")}
       right={
         !editing && (
           <button
@@ -358,7 +364,7 @@ function MyDetailsSection() {
             onClick={() => setEditing(true)}
             className="inline-flex items-center gap-1.5 text-xs text-brand-primary hover:underline"
           >
-            <Edit3 className="size-3.5" /> Edit
+            <Edit3 className="size-3.5" /> {t("account.details.edit")}
           </button>
         )
       }
@@ -373,17 +379,16 @@ function MyDetailsSection() {
           }}
           className="space-y-3"
         >
-          <Field label="Full name" value={fullName} onChange={setFullName} />
-          <LocationSelect value={town} onChange={setTown} label="Town or area" />
+          <Field label={t("account.details.fullName")} value={fullName} onChange={setFullName} />
+          <LocationSelect value={town} onChange={setTown} label={t("account.details.town")} />
           <Field
-            label="Telephone number (also used for WhatsApp)"
+            label={t("account.details.phone")}
             type="tel"
             value={phone}
             onChange={setPhone}
           />
           <div className="text-xs text-brand-dark/50">
-            Email: <span className="font-medium">{data?.email ?? "—"}</span> (managed by your
-            account sign-in)
+            {t("account.details.email")}: <span className="font-medium">{data?.email ?? "—"}</span> {t("account.details.emailManaged")}
           </div>
           <div className="flex gap-2 pt-2">
             <button
@@ -391,23 +396,23 @@ function MyDetailsSection() {
               disabled={save.isPending}
               className="px-4 py-2 rounded-lg bg-brand-primary text-white text-sm font-medium disabled:opacity-60"
             >
-              {save.isPending ? "Saving…" : "Save"}
+              {save.isPending ? t("account.details.saving") : t("account.details.save")}
             </button>
             <button
               type="button"
               onClick={() => setEditing(false)}
               className="px-4 py-2 rounded-lg border border-brand-dark/15 text-sm"
             >
-              Cancel
+              {t("account.details.cancel")}
             </button>
           </div>
         </form>
       ) : (
         <dl className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-3 text-sm">
-          <Detail label="Full name" value={data?.full_name} />
-          <Detail label="Email" value={data?.email} />
-          <Detail label="Telephone / WhatsApp" value={data?.phone} />
-          <Detail label="Town or area" value={data?.town} />
+          <Detail label={t("account.details.fullName")} value={data?.full_name} />
+          <Detail label={t("account.details.email")} value={data?.email} />
+          <Detail label={t("account.details.phoneShort")} value={data?.phone} />
+          <Detail label={t("account.details.town")} value={data?.town} />
         </dl>
       )}
     </Section>
@@ -463,6 +468,7 @@ type MyListing = {
 };
 
 function MyListingSection() {
+  const { t } = useTranslation();
   const { data, isLoading } = useQuery({
     queryKey: ["my-advert"],
     queryFn: async (): Promise<MyListing | null> => {
@@ -475,7 +481,7 @@ function MyListingSection() {
 
   if (isLoading) {
     return (
-      <Section icon="🛠" title="My Skills Listing">
+      <Section icon="🛠" title={t("account.listing.title")}>
         <Loader2 className="size-4 animate-spin text-brand-dark/40" />
       </Section>
     );
@@ -485,25 +491,25 @@ function MyListingSection() {
     return (
       <Section
         icon="🛠"
-        title="My Skills Listing"
-        subtitle="Share your skills so people in your area can find you."
+        title={t("account.listing.title")}
+        subtitle={t("account.listing.subtitle")}
       >
-        <p className="text-sm text-brand-dark/60 mb-4">You have not advertised any skills yet.</p>
+        <p className="text-sm text-brand-dark/60 mb-4">{t("account.listing.empty")}</p>
         <Link
           to="/advertise"
           className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-brand-primary text-white font-medium"
         >
-          <Plus className="size-4" /> Create a Skills Listing
+          <Plus className="size-4" /> {t("account.listing.create")}
         </Link>
       </Section>
     );
   }
 
   const status = data.is_archived
-    ? { label: "Archived", cls: "bg-brand-dark/10 text-brand-dark/70" }
+    ? { label: t("account.listing.status.archived"), cls: "bg-brand-dark/10 text-brand-dark/70" }
     : data.is_hidden
-      ? { label: "Paused", cls: "bg-amber-100 text-amber-900" }
-      : { label: "Active", cls: "bg-emerald-100 text-emerald-800" };
+      ? { label: t("account.listing.status.paused"), cls: "bg-amber-100 text-amber-900" }
+      : { label: t("account.listing.status.active"), cls: "bg-emerald-100 text-emerald-800" };
 
   const publicUrl = data.public_listing_reference
     ? `/profile/${data.public_listing_reference}`
@@ -512,7 +518,7 @@ function MyListingSection() {
   return (
     <Section
       icon="🛠"
-      title="My Skills Listing"
+      title={t("account.listing.title")}
       right={
         <span className={`text-xs font-medium px-2.5 py-1 rounded-full ${status.cls}`}>
           {status.label}
@@ -522,7 +528,7 @@ function MyListingSection() {
       <div className="space-y-2 text-sm">
         <div className="font-heading font-semibold text-base">{data.name}</div>
         <div className="text-brand-dark/70">
-          <span className="font-medium">Area:</span> {data.town}
+          <span className="font-medium">{t("account.listing.area")}</span> {data.town}
         </div>
         {data.skills?.length > 0 && (
           <div className="flex flex-wrap gap-1.5">
@@ -535,7 +541,7 @@ function MyListingSection() {
         )}
         {data.description && <p className="text-brand-dark/70 line-clamp-3">{data.description}</p>}
         <div className="text-xs text-brand-dark/50 pt-1">
-          Created {fmtDate(data.created_at)} · Last activity {fmtDate(data.last_activity_at)}
+          {t("account.listing.created", { date: fmtDate(data.created_at), activity: fmtDate(data.last_activity_at) })}
         </div>
       </div>
 
@@ -544,7 +550,7 @@ function MyListingSection() {
           to="/my-advert"
           className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg bg-brand-primary text-white text-sm font-medium"
         >
-          <Edit3 className="size-4" /> Edit Listing
+          <Edit3 className="size-4" /> {t("account.listing.editListing")}
         </Link>
         {publicUrl && (
           <a
@@ -553,7 +559,7 @@ function MyListingSection() {
             rel="noopener noreferrer"
             className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg border border-brand-dark/15 text-sm hover:bg-brand-soft"
           >
-            <ExternalLink className="size-4" /> Preview
+            <ExternalLink className="size-4" /> {t("account.listing.preview")}
           </a>
         )}
         <Link
@@ -561,13 +567,13 @@ function MyListingSection() {
           className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg border border-brand-dark/15 text-sm hover:bg-brand-soft"
         >
           {data.is_hidden ? <Eye className="size-4" /> : <EyeOff className="size-4" />}
-          {data.is_hidden ? "Unpause my listing" : "Pause my listing"}
+          {data.is_hidden ? t("account.listing.unpause") : t("account.listing.pause")}
         </Link>
         <Link
           to="/my-advert"
           className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg border border-red-200 text-red-700 text-sm hover:bg-red-50"
         >
-          <Trash2 className="size-4" /> Delete my listing
+          <Trash2 className="size-4" /> {t("account.listing.deleteListing")}
         </Link>
       </div>
     </Section>
@@ -586,39 +592,40 @@ type IncomingRow = {
   expires_at: string | null;
 };
 
-function statusLabelIncoming(row: IncomingRow) {
+function statusLabelIncoming(row: IncomingRow, t: (k: string) => string) {
   const expired =
     row.status === "approved" &&
     !!row.expires_at &&
     new Date(row.expires_at).getTime() < Date.now();
   if (expired)
     return {
-      label: "Expired",
+      label: t("account.incoming.status.expired"),
       icon: <TimerOff className="size-3.5" />,
       cls: "bg-brand-dark/10 text-brand-dark/70",
     };
   if (row.status === "approved")
     return {
-      label: "Accepted",
+      label: t("account.incoming.status.accepted"),
       icon: <CheckCircle2 className="size-3.5" />,
       cls: "bg-emerald-100 text-emerald-800",
     };
   if (row.status === "declined")
     return {
-      label: "Declined",
+      label: t("account.incoming.status.declined"),
       icon: <XCircle className="size-3.5" />,
       cls: "bg-red-100 text-red-800",
     };
   if (row.status === "revoked")
     return {
-      label: "Revoked",
+      label: t("account.incoming.status.revoked"),
       icon: <ShieldOff className="size-3.5" />,
       cls: "bg-brand-dark/10 text-brand-dark/70",
     };
-  return { label: "New", icon: <Clock className="size-3.5" />, cls: "bg-amber-100 text-amber-900" };
+  return { label: t("account.incoming.status.new"), icon: <Clock className="size-3.5" />, cls: "bg-amber-100 text-amber-900" };
 }
 
 function PeopleInterestedSection() {
+  const { t } = useTranslation();
   const qc = useQueryClient();
   const { data, isLoading } = useQuery({
     queryKey: ["my-incoming-requests"],
@@ -639,7 +646,7 @@ function PeopleInterestedSection() {
       if (error) throw error;
     },
     onSuccess: (_d, vars) => {
-      toast.success(vars.decision === "approved" ? "Request accepted" : "Request declined");
+      toast.success(vars.decision === "approved" ? t("account.incoming.acceptedToast") : t("account.incoming.declinedToast"));
       qc.invalidateQueries({ queryKey: ["my-incoming-requests"] });
       qc.invalidateQueries({ queryKey: ["notifications"] });
     },
@@ -652,7 +659,7 @@ function PeopleInterestedSection() {
       if (error) throw error;
     },
     onSuccess: () => {
-      toast.success("Access revoked");
+      toast.success(t("account.incoming.revokedToast"));
       qc.invalidateQueries({ queryKey: ["my-incoming-requests"] });
     },
     onError: (e: Error) => toast.error(e.message),
@@ -663,24 +670,24 @@ function PeopleInterestedSection() {
   return (
     <Section
       icon="📩"
-      title="People Interested In My Services"
-      subtitle="Requests from people who want to hire or contact you."
+      title={t("account.incoming.title")}
+      subtitle={t("account.incoming.subtitle")}
     >
       {isLoading ? (
         <Loader2 className="size-4 animate-spin text-brand-dark/40" />
       ) : rows.length === 0 ? (
-        <p className="text-sm text-brand-dark/60">No one has requested your details yet.</p>
+        <p className="text-sm text-brand-dark/60">{t("account.incoming.empty")}</p>
       ) : (
         <ul className="space-y-3">
           {rows.map((r) => {
-            const s = statusLabelIncoming(r);
+            const s = statusLabelIncoming(r, t);
             return (
               <li key={r.id} className="border border-brand-dark/10 rounded-xl p-4">
                 <div className="flex items-start justify-between gap-3">
                   <div className="min-w-0">
                     <div className="font-semibold">{firstName(r.requester_name)}</div>
                     <div className="text-xs text-brand-dark/50">
-                      Submitted {fmtDate(r.created_at)}
+                      {t("account.incoming.submitted", { date: fmtDate(r.created_at) })}
                     </div>
                   </div>
                   <span
@@ -703,7 +710,7 @@ function PeopleInterestedSection() {
                       onClick={() => decide.mutate({ id: r.id, decision: "approved" })}
                       className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg bg-emerald-600 text-white text-sm font-medium disabled:opacity-60"
                     >
-                      <Check className="size-4" /> Accept Request
+                      <Check className="size-4" /> {t("account.incoming.accept")}
                     </button>
                     <button
                       type="button"
@@ -711,21 +718,22 @@ function PeopleInterestedSection() {
                       onClick={() => decide.mutate({ id: r.id, decision: "declined" })}
                       className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg border border-brand-dark/15 text-sm disabled:opacity-60"
                     >
-                      <X className="size-4" /> Decline Request
+                      <X className="size-4" /> {t("account.incoming.decline")}
                     </button>
                   </div>
                 )}
-                {r.status === "approved" && s.label === "Accepted" && (
+                {r.status === "approved" &&
+                  !(r.expires_at && new Date(r.expires_at).getTime() < Date.now()) && (
                   <div className="mt-2 flex items-center justify-between gap-3">
                     <p className="text-xs text-emerald-700">
-                      Your number is shared until {fmtDate(r.expires_at)}.
+                      {t("account.incoming.sharedUntil", { date: fmtDate(r.expires_at) })}
                     </p>
                     <button
                       type="button"
                       onClick={() => revoke.mutate(r.id)}
                       className="inline-flex items-center gap-1.5 text-xs text-red-700 hover:underline"
                     >
-                      <ShieldOff className="size-3.5" /> Revoke
+                      <ShieldOff className="size-3.5" /> {t("account.incoming.revoke")}
                     </button>
                   </div>
                 )}
@@ -751,21 +759,22 @@ type OutgoingRow = {
   expires_at: string | null;
 };
 
-function statusLabelOutgoing(row: OutgoingRow) {
+function statusLabelOutgoing(row: OutgoingRow, t: (k: string) => string) {
   const expired =
     row.status === "approved" &&
     !!row.expires_at &&
     new Date(row.expires_at).getTime() < Date.now();
-  if (expired) return { label: "Expired", cls: "bg-brand-dark/10 text-brand-dark/70" };
+  if (expired) return { label: t("account.outgoing.status.expired"), cls: "bg-brand-dark/10 text-brand-dark/70" };
   if (row.status === "approved")
-    return { label: "Accepted", cls: "bg-emerald-100 text-emerald-800" };
-  if (row.status === "declined") return { label: "Declined", cls: "bg-red-100 text-red-800" };
+    return { label: t("account.outgoing.status.accepted"), cls: "bg-emerald-100 text-emerald-800" };
+  if (row.status === "declined") return { label: t("account.outgoing.status.declined"), cls: "bg-red-100 text-red-800" };
   if (row.status === "revoked")
-    return { label: "Access ended", cls: "bg-brand-dark/10 text-brand-dark/70" };
-  return { label: "Awaiting Response", cls: "bg-amber-100 text-amber-900" };
+    return { label: t("account.outgoing.status.revoked"), cls: "bg-brand-dark/10 text-brand-dark/70" };
+  return { label: t("account.outgoing.status.pending"), cls: "bg-amber-100 text-amber-900" };
 }
 
 function MyServiceRequestsSection() {
+  const { t } = useTranslation();
   const { data, isLoading } = useQuery({
     queryKey: ["my-outgoing-requests"],
     queryFn: async (): Promise<OutgoingRow[]> => {
@@ -781,22 +790,22 @@ function MyServiceRequestsSection() {
   return (
     <Section
       icon="📨"
-      title="My Service Requests"
-      subtitle="Requests you've sent to service providers."
+      title={t("account.outgoing.title")}
+      subtitle={t("account.outgoing.subtitle")}
     >
       {isLoading ? (
         <Loader2 className="size-4 animate-spin text-brand-dark/40" />
       ) : rows.length === 0 ? (
         <div className="text-sm text-brand-dark/60">
-          You haven't sent any requests yet.{" "}
+          {t("account.outgoing.empty")}{" "}
           <Link to="/find-help" className="text-brand-primary hover:underline">
-            Browse local skills →
+            {t("account.outgoing.browse")}
           </Link>
         </div>
       ) : (
         <ul className="space-y-3">
           {rows.map((r) => {
-            const s = statusLabelOutgoing(r);
+            const s = statusLabelOutgoing(r, t);
             const accepted = r.status === "approved" && r.phone;
             return (
               <li key={r.id} className="border border-brand-dark/10 rounded-xl p-4">
@@ -809,7 +818,7 @@ function MyServiceRequestsSection() {
                       </div>
                     )}
                     <div className="text-xs text-brand-dark/50 mt-1">
-                      Submitted {fmtDate(r.created_at)}
+                      {t("account.outgoing.submitted", { date: fmtDate(r.created_at) })}
                     </div>
                   </div>
                   <span
@@ -821,18 +830,17 @@ function MyServiceRequestsSection() {
 
                 {r.status === "pending" && (
                   <p className="mt-3 text-sm text-brand-dark/70">
-                    Waiting for the service provider to respond.
+                    {t("account.outgoing.waiting")}
                   </p>
                 )}
 
                 {accepted && (
                   <div className="mt-3 p-3 rounded-lg bg-emerald-50 border border-emerald-200 space-y-2">
                     <p className="text-sm font-medium text-emerald-900">
-                      Your service request has been accepted. You may now contact the service
-                      provider directly.
+                      {t("account.outgoing.acceptedMessage")}
                     </p>
                     <div className="text-sm">
-                      <span className="text-brand-dark/60">Telephone:</span>{" "}
+                      <span className="text-brand-dark/60">{t("account.outgoing.telephone")}</span>{" "}
                       <span className="font-semibold">{r.phone}</span>
                     </div>
                     <div className="flex flex-wrap gap-2 pt-1">
@@ -840,23 +848,23 @@ function MyServiceRequestsSection() {
                         href={`tel:${r.phone}`}
                         className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg bg-brand-primary text-white text-sm font-medium"
                       >
-                        <Phone className="size-4" /> Call
+                        <Phone className="size-4" /> {t("account.outgoing.call")}
                       </a>
                       <a
                         href={whatsappHref(
                           r.phone!,
-                          `Hi ${firstName(r.worker_name)}, I'm reaching out via Overberg Skills Connect about my service request.`,
+                          t("account.outgoing.whatsappMessage", { name: firstName(r.worker_name) }),
                         )}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg bg-emerald-600 text-white text-sm font-medium"
                       >
-                        <MessageCircle className="size-4" /> WhatsApp
+                        <MessageCircle className="size-4" /> {t("account.outgoing.whatsapp")}
                       </a>
                     </div>
                     {r.expires_at && (
                       <p className="text-[11px] text-emerald-800/70">
-                        Access expires {fmtDate(r.expires_at)}.
+                        {t("account.outgoing.accessExpires", { date: fmtDate(r.expires_at) })}
                       </p>
                     )}
                   </div>
@@ -864,13 +872,13 @@ function MyServiceRequestsSection() {
 
                 {r.status === "declined" && (
                   <p className="mt-3 text-sm text-brand-dark/70">
-                    This service provider is not available for this request.
+                    {t("account.outgoing.notAvailable")}
                   </p>
                 )}
 
                 {r.status === "revoked" && (
                   <p className="mt-3 text-sm text-brand-dark/70">
-                    The service provider ended access to their contact details.
+                    {t("account.outgoing.accessEndedMessage")}
                   </p>
                 )}
               </li>
@@ -896,6 +904,7 @@ type FavouriteRow = {
 };
 
 function MyFavouritesSection() {
+  const { t } = useTranslation();
   const qc = useQueryClient();
   const { data, isLoading } = useQuery({
     queryKey: ["my-favourites"],
@@ -910,7 +919,7 @@ function MyFavouritesSection() {
     mutationFn: async (profileId: string) => {
       const { data: sess } = await supabase.auth.getSession();
       const uid = sess.session?.user.id;
-      if (!uid) throw new Error("Please sign in again.");
+      if (!uid) throw new Error(t("account.favourites.signInAgain"));
       const { error } = await supabase
         .from("noticeboard_favourites")
         .delete()
@@ -919,10 +928,10 @@ function MyFavouritesSection() {
       if (error) throw error;
     },
     onSuccess: () => {
-      toast.success("Removed from My Favourites.");
+      toast.success(t("account.favourites.removedToast"));
       qc.invalidateQueries({ queryKey: ["my-favourites"] });
     },
-    onError: () => toast.error("Sorry, we could not remove that. Please try again."),
+    onError: () => toast.error(t("account.favourites.removeError")),
   });
 
   const rows = data ?? [];
@@ -930,20 +939,20 @@ function MyFavouritesSection() {
   return (
     <Section
       icon="❤️"
-      title="My Favourites"
-      subtitle="People you have saved. Only you can see this list."
+      title={t("account.favourites.title")}
+      subtitle={t("account.favourites.subtitle")}
     >
       {isLoading ? (
         <Loader2 className="size-4 animate-spin text-brand-dark/40" />
       ) : rows.length === 0 ? (
         <div className="text-sm text-brand-dark/60">
-          You have not saved anyone yet. Open someone&apos;s listing and tap{" "}
+          {t("account.favourites.emptyPrefix")}{" "}
           <span className="inline-flex items-center gap-1 font-medium">
-            <Heart className="size-3.5" /> Save
+            <Heart className="size-3.5" /> {t("account.favourites.save")}
           </span>{" "}
-          to keep them here.{" "}
+          {t("account.favourites.emptySuffix")}{" "}
           <Link to="/find-help" className="text-brand-primary underline">
-            Find local help
+            {t("account.favourites.findHelp")}
           </Link>
           .
         </div>
@@ -971,7 +980,7 @@ function MyFavouritesSection() {
                 </div>
                 {!r.is_available && (
                   <div className="text-xs text-amber-700 mt-1">
-                    This listing is not available at the moment.
+                    {t("account.favourites.notAvailable")}
                   </div>
                 )}
                 <div className="flex flex-wrap gap-2 mt-2">
@@ -980,14 +989,14 @@ function MyFavouritesSection() {
                     params={{ id: r.public_listing_reference ?? r.profile_id }}
                     className="px-3 py-2 rounded-lg bg-brand-primary text-white text-xs font-medium"
                   >
-                    Open listing
+                    {t("account.favourites.openListing")}
                   </Link>
                   <button
                     type="button"
                     onClick={() => remove.mutate(r.profile_id)}
                     className="px-3 py-2 rounded-lg border border-brand-dark/15 text-xs"
                   >
-                    Remove
+                    {t("account.favourites.remove")}
                   </button>
                 </div>
               </div>
@@ -1001,6 +1010,7 @@ function MyFavouritesSection() {
 
 // ============ Account (permanent deletion) ============
 function AccountSection() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const qc = useQueryClient();
   const [open, setOpen] = useState(false);
@@ -1013,33 +1023,32 @@ function AccountSection() {
     const { error } = await supabase.rpc("delete_my_account_data");
     if (error) {
       setBusy(false);
-      toast.error("Sorry, we could not delete your account. Please try again or contact support.");
+      toast.error(t("account.accountManagement.deleteError"));
       return;
     }
     await qc.cancelQueries();
     qc.clear();
     await supabase.auth.signOut();
     setBusy(false);
-    toast.success("Your account and listing have been deleted.");
+    toast.success(t("account.accountManagement.deletedToast"));
     navigate({ to: "/", replace: true });
   }
 
   return (
     <Section
       icon="⚙️"
-      title="My Account"
-      subtitle="Close your account and remove your information."
+      title={t("account.accountManagement.title")}
+      subtitle={t("account.accountManagement.subtitle")}
     >
       <p className="text-sm text-brand-dark/70 mb-4">
-        Deleting your account removes your skills listing, your saved favourites and your personal
-        details. This cannot be undone. If you only want a break, pause your listing instead.
+        {t("account.accountManagement.body")}
       </p>
       <button
         type="button"
         onClick={() => setOpen(true)}
         className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg border border-red-200 text-red-700 text-sm font-medium hover:bg-red-50"
       >
-        <Trash2 className="size-4" /> Delete my account
+        <Trash2 className="size-4" /> {t("account.accountManagement.deleteAccount")}
       </button>
 
       {open && (
@@ -1049,10 +1058,9 @@ function AccountSection() {
           aria-modal="true"
         >
           <div className="bg-white rounded-2xl shadow-xl max-w-md w-full p-6">
-            <h2 className="osc-heading text-xl mb-2">Delete your account?</h2>
+            <h2 className="osc-heading text-xl mb-2">{t("account.accountManagement.confirmTitle")}</h2>
             <p className="text-sm text-brand-dark/70 mb-4">
-              Step 1 of 2. Everything below will be removed permanently: your listing, your skills,
-              your favourites and your personal details.
+              {t("account.accountManagement.confirmBody")}
             </p>
             <label className="flex items-start gap-2.5 text-sm mb-4 cursor-pointer">
               <input
@@ -1061,12 +1069,12 @@ function AccountSection() {
                 onChange={(e) => setAck(e.target.checked)}
                 className="mt-1 size-4"
               />
-              <span>I understand this cannot be undone.</span>
+              <span>{t("account.accountManagement.confirmAck")}</span>
             </label>
             {ack && (
               <div className="mb-4">
                 <label className="block text-sm font-medium mb-1" htmlFor="confirm-delete">
-                  Step 2 of 2 — type <strong>DELETE</strong> to confirm
+                  {t("account.accountManagement.confirmStep2")} <strong>DELETE</strong> {t("account.accountManagement.confirmDelete")}
                 </label>
                 <input
                   id="confirm-delete"
@@ -1087,7 +1095,7 @@ function AccountSection() {
                 }}
                 className="px-4 py-2 rounded-lg border border-brand-dark/15 text-sm"
               >
-                Cancel
+                {t("account.accountManagement.cancel")}
               </button>
               <button
                 type="button"
@@ -1095,7 +1103,7 @@ function AccountSection() {
                 onClick={deleteAccount}
                 className="px-4 py-2 rounded-lg bg-red-600 text-white text-sm disabled:opacity-40"
               >
-                {busy ? "Deleting…" : "Delete my account"}
+                {busy ? t("account.accountManagement.deleting") : t("account.accountManagement.deleteAccount")}
               </button>
             </div>
           </div>

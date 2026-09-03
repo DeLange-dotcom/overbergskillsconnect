@@ -1,0 +1,71 @@
+{
+  "notFound": {
+    "title": "Listing not found",
+    "backLink": "Back to the noticeboard"
+  },
+  "error": {
+    "title": "Something went wrong"
+  },
+  "loading": "Loading…",
+  "backToNoticeboard": "Back to noticeboard",
+  "skillsHeading": "Skills",
+  "experienceSuffix": "experience",
+  "requestContact": "Request Contact",
+  "reportProfile": "Report this profile",
+  "favourite": {
+    "signInToSave": "Sign in to save people to your favourites.",
+    "removeError": "Could not remove from favourites.",
+    "removed": "Removed from My Favourites.",
+    "saveError": "Could not save to favourites.",
+    "saved": "Saved to My Favourites.",
+    "removeAriaLabel": "Remove from My Favourites",
+    "saveAriaLabel": "Save to My Favourites",
+    "savedLabel": "Saved",
+    "saveLabel": "Save"
+  },
+  "contactDialog": {
+    "loading": "Loading…",
+    "signInTitle": "Sign in to continue",
+    "signInBody": "Create a free account or sign in so {{name}} can reply, and so you can track your contact requests from your dashboard.",
+    "cancel": "Cancel",
+    "signIn": "Sign in",
+    "sentTitle": "Request sent",
+    "sentBody": "Your request has been sent successfully. {{name}} can choose whether to share their contact details. You can check the status any time from your profile dashboard. The advertiser will also see an in-app notification when they sign in.",
+    "viewMyProfile": "View My Profile",
+    "continueBrowsing": "Continue Browsing",
+    "title": "Request contact details",
+    "subtitle": "{{name}} will choose whether to share their phone number.",
+    "namePlaceholder": "Your name",
+    "contactPlaceholder": "Your phone or WhatsApp",
+    "messagePlaceholder": "Briefly, what help are you looking for?",
+    "consentLabel": "I agree that my name and contact details will be shared with {{name}} so they can respond to my request. Any phone number they choose to share will be visible to me for 30 days.",
+    "sending": "Sending…",
+    "send": "Send request",
+    "consentRequired": "Please tick the consent box to continue.",
+    "rateLimited": "You've reached the limit of 5 contact requests in 24 hours. Please try again later.",
+    "genericError": "Could not send your request."
+  },
+  "reportDialog": {
+    "checkingAccount": "Checking your account",
+    "pleaseWait": "Please wait a moment.",
+    "signInTitle": "Sign in to report a profile",
+    "signInBody": "Reports are reviewed by admins. Signing in helps prevent false reports and gives the review team a clearer audit trail.",
+    "cancel": "Cancel",
+    "signIn": "Sign in",
+    "title": "Report this profile",
+    "subtitle": "Khulisa admins will review reports and may remove profiles that breach our Terms.",
+    "detailsPlaceholder": "Optional details",
+    "contactPlaceholder": "Your contact (optional, so we can follow up)",
+    "sending": "Sending…",
+    "submit": "Submit report",
+    "reasonRequired": "Please select a reason.",
+    "success": "Thank you. Khulisa admins will review this report.",
+    "reasons": {
+      "spam": "Spam",
+      "fraud": "Fraud",
+      "offensive": "Offensive Content",
+      "false_information": "False Information",
+      "inappropriate": "Inappropriate Behaviour"
+    }
+  }
+}

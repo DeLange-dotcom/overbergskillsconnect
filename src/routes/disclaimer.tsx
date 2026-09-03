@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useTranslation } from "react-i18next";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { DisclaimerBanner } from "@/components/site/DisclaimerBanner";
 
@@ -16,38 +17,23 @@ export const Route = createFileRoute("/disclaimer")({
 });
 
 function DisclaimerPage() {
+  const { t } = useTranslation();
   return (
     <SiteLayout>
       <div className="max-w-3xl mx-auto px-4 sm:px-6 py-12 prose prose-sm">
-        <h1 className="osc-heading text-3xl mb-6">Disclaimer</h1>
+        <h1 className="osc-heading text-3xl mb-6">{t("legal.disclaimer.heading")}</h1>
         <DisclaimerBanner />
         <div className="mt-8 space-y-4 text-brand-dark/80 leading-relaxed">
-          <p>
-            Overberg Skills Connect is a digital community noticeboard. It exists only to help people
-            offering skills and people looking for help to find each other. We are not a recruiter,
-            employer, labour broker, agency or supervisor.
-          </p>
-          <p>
-            We do not vet, verify, recommend or guarantee any person listed on this platform. We
-            do not verify identities, qualifications, references, experience, work permits or
-            police clearance. We do not confirm the accuracy of any information posted.
-          </p>
-          <p>
-            You are responsible for carrying out your own enquiries before entering into any
-            agreement. This includes — but is not limited to — verifying identity documents,
-            requesting references, asking for a police clearance certificate where appropriate,
-            agreeing payment and working conditions in writing, and complying with all applicable
-            laws.
-          </p>
-          <p>
-            Khulisa Group, Overberg Skills Connect and any related parties accept no responsibility for
-            any loss, injury, damage, dispute or claim arising from introductions made through this
-            platform.
-          </p>
+          <p>{t("legal.disclaimer.p1")}</p>
+          <p>{t("legal.disclaimer.p2")}</p>
+          <p>{t("legal.disclaimer.p3")}</p>
+          <p>{t("legal.disclaimer.p4")}</p>
           <p className="text-sm text-brand-dark/60">
-            See also our{" "}
-            <Link to="/terms" className="underline">Terms of Use</Link> and{" "}
-            <Link to="/privacy" className="underline">Privacy Policy</Link>.
+            {t("legal.disclaimer.seeAlsoPre")}
+            <Link to="/terms" className="underline">{t("legal.disclaimer.termsLink")}</Link>
+            {t("legal.disclaimer.seeAlsoAnd")}
+            <Link to="/privacy" className="underline">{t("legal.disclaimer.privacyLink")}</Link>
+            {t("legal.disclaimer.seeAlsoPost")}
           </p>
         </div>
       </div>

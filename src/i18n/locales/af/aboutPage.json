@@ -1,0 +1,84 @@
+{
+  "aboutPage": {
+    "eyebrow": "Meer oor {{platform}}",
+    "heroTitle": "Plaaslike vaardighede gekoppel aan plaaslike geleenthede",
+    "intro": [
+      "Overberg Skills Connect is 'n Hineni Call-gemeenskapsinisiatief wat geskep is om dit vir mense regoor die Overberg makliker te maak om hul vaardighede te deel, plaaslike hulp te vind en met geleenthede te verbind.",
+      "In ons gemeenskappe het mense waardevolle praktiese vaardighede, ervaring en kennis — maar om die regte persoon vir 'n werk te kry, hang dikwels steeds af van wat mense vir mekaar oorvertel.",
+      "Terselfdertyd soek huishoudings, besighede en organisasies gereeld na mense naby wat kan help.",
+      "Overberg Skills Connect bring die twee bymekaar.",
+      "Mense kan 'n vaardigheidsprofiel skep wat wys wat hulle kan doen, terwyl mense wat hulp soek plaaslik kan soek en kontak kan aanvra."
+    ],
+    "introEmphasisIndex": 3,
+    "hineni": {
+      "eyebrow": "Hineni Call",
+      "role": "Gemeenskap & Program",
+      "logoPlaceholder": "Hineni Call-logo",
+      "heading": "Mense en geleenthede bymekaarbring",
+      "body": [
+        "Hineni Call is die hart van die gemeenskapskant van Overberg Skills Connect.",
+        "Hineni werk direk met gemeenskappe om deelname aan te moedig, mense te help om hul vaardighede te registreer, geleenthede te bevorder en die daaglikse gemeenskapsbetrokkenheid rondom die platform te ondersteun.",
+        "Die doel is eenvoudig:",
+        "Maak plaaslike vaardighede meer sigbaar en plaaslike geleenthede meer toeganklik."
+      ]
+    },
+    "khulisa": {
+      "eyebrow": "Khulisa Group",
+      "role": "Tegnologie & Ontwikkeling",
+      "logoPlaceholder": "Khulisa Group-logo",
+      "heading": "Moontlik gemaak deur Khulisa Group",
+      "body": [
+        "Die Overberg Skills Connect-digitale platform is ontwikkel deur Khulisa Group (Pty) Ltd, Hineni Call se tegnologie- en ontwikkelingsvennoot.",
+        "Khulisa verskaf die tegnologie agter Skills Connect en bly die ontwikkeling van die platform ondersteun namate dit groei."
+      ]
+    },
+    "partnership": {
+      "statement": "Saam bring Hineni Call die gemeenskapskoppeling en verskaf Khulisa Group die tegnologie wat dit moontlik maak.",
+      "tagline": "Overberg Skills Connect · 'n Hineni Call-inisiatief · Aangedryf deur Khulisa Group"
+    },
+    "future": {
+      "eyebrow": "Wat volgende kom",
+      "heading": "Groei verby die vaardigheidsgids",
+      "intro": "Overberg Skills Connect word verder ontwikkel as net die huidige vaardigheidsgids. Toekomstige fases is bedoel om meer maniere te skep vir mense om te leer, kennis te deel en met geleenthede te verbind.",
+      "badge": "Kom binnekort",
+      "cards": {
+        "youthClub": {
+          "title": "Jeugklub",
+          "copy": "'n Toekomstige ruimte vir jonger mense om aktiwiteite, vaardigheidsontwikkeling, mentorskap en geleenthede te ontdek om meer betrokke te raak in hul gemeenskappe."
+        },
+        "apprenticeships": {
+          "title": "Vakleerlingskappe & Mentorskap",
+          "copy": "Verbind mense wat wil leer met plaaslike ambagsmanne, besighede en ervare gemeenskapslede wat kan help om praktiese vaardighede te ontwikkel."
+        },
+        "knowledgeGuardians": {
+          "title": "Kennisbewaarders",
+          "copy": "Erkenning gee aan mense wat waardevolle praktiese, tradisionele en gespesialiseerde kennis dra — en geleenthede skep vir daardie kennis om met die volgende generasie gedeel te word."
+        },
+        "sponsors": {
+          "title": "Borge",
+          "copy": "Skep geleenthede vir besighede, organisasies en individue om vaardigheidsontwikkeling, leer, vakleerlingskappe en gemeenskapsgeleenthede regoor die Overberg te ondersteun."
+        }
+      }
+    },
+    "support": {
+      "eyebrow": "Ondersteun Hineni Call",
+      "heading": "Help ons om meer plaaslike geleenthede te skep",
+      "body": "Jou ondersteuning help Hineni Call om voort te gaan met sy werk om mense te verbind, geleenthede te ontwikkel en gemeenskappe regoor die Overberg te versterk.",
+      "cta": "Ondersteun Hineni Call",
+      "comingSoon": "Hineni Call se veilige skenkingskakel sal binnekort hier bygevoeg word."
+    },
+    "platform": {
+      "eyebrow": "'n Gemeenskapskoppelingsplatform",
+      "body": [
+        "Overberg Skills Connect is 'n gemeenskapskennisgewingbord wat plaaslike mense help om hul vaardighede aan te bied en plaaslike hulp te vind.",
+        "Dit is nie 'n werksbemiddelings- of werwingsagentskap nie en werf, keur, beveel of waarborg nie mense wat op die platform gelys is nie.",
+        "Gebruikers moet hul eie navrae en kontroles doen voordat hulle instem tot werk of dienste."
+      ],
+      "links": {
+        "terms": "Gebruiksvoorwaardes",
+        "privacy": "Privaatheidsbeleid",
+        "disclaimer": "Veiligheid & Vrywaring"
+      }
+    }
+  }
+}

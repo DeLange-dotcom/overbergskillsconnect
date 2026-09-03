@@ -30,14 +30,15 @@ export function Footer() {
           <Link to="/" className="inline-flex flex-col items-start gap-0.5">
             <img
               src={logoAsset.url}
-              alt="Overberg Skills Connect — A Hineni Call Initiative, powered by Khulisa Group"
+              alt={t("shell.brand.logoAlt")}
               className="h-9 sm:h-11 w-auto brightness-0 invert"
             />
             <span className="flex items-center gap-1 text-[8px] sm:text-[9px] uppercase tracking-[0.14em] leading-none whitespace-nowrap">
-              <span className="font-semibold text-brand-green">A Hineni Call Initiative</span>
+              <span className="font-semibold text-brand-green">{t("shell.brand.initiative")}</span>
               <span className="text-white/25">·</span>
-              <span className="text-white/60">Powered by Khulisa Group</span>
+              <span className="text-white/60">{t("shell.brand.poweredBy")}</span>
             </span>
+
           </Link>
         </div>
         <div className="text-sm md:text-right">
@@ -45,8 +46,9 @@ export function Footer() {
             {t("footer.information")}
           </div>
           <ul className="flex flex-wrap gap-x-4 gap-y-1.5 text-white/75 md:justify-end">
-            <li><Link to="/help" className="font-semibold text-brand-green hover:underline">Need Help?</Link></li>
-            <li><Link to="/how-it-works" className="hover:text-white">How It Works</Link></li>
+            <li><Link to="/help" className="font-semibold text-brand-green hover:underline">{t("shell.nav.help")}</Link></li>
+            <li><Link to="/how-it-works" className="hover:text-white">{t("shell.nav.howItWorks")}</Link></li>
+
             <li><Link to="/about" className="hover:text-white">{t("footer.about")}</Link></li>
             <li><Link to="/terms" className="hover:text-white">{t("footer.terms")}</Link></li>
             <li><Link to="/privacy" className="hover:text-white">{t("footer.privacy")}</Link></li>

@@ -35,3 +35,5 @@
 
 ## G. Testing
 - [ ] Tests A–R, S–Y
+
+- [ ] Mobile header fix: compact My Profile button, burger visible, no overflow at 320-430px

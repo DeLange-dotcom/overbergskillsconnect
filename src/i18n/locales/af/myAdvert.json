@@ -1,0 +1,80 @@
+{
+  "myAdvert": {
+    "loading": "Laai tans…",
+    "notCreated": {
+      "title": "My Lys",
+      "body": "Jy het nog nie jou advertensie geskep nie.",
+      "create": "Skep My Lys"
+    },
+    "page": {
+      "title": "My Lys",
+      "subtitle": "Verander enige veld en jou advertensie word onmiddellik bygewerk.",
+      "preview": "Voorskou"
+    },
+    "archivedNotice": "Jou lys is <bold>geargiveer</bold> en versteek van openbare soektogte. Gebruik <italic>Aktiveer lys weer</italic> hieronder om dit weer lewendig te maak.",
+    "status": {
+      "pausedNotShown": "Tydelik gestop — nie sigbaar vir enigiemand nie",
+      "live": "Lewendig op die kennisgewingbord",
+      "pausedInfo": "As jy tydelik stop, bly alles gestoor. Niks word geskrap nie.",
+      "liveInfo": "Mense kan jou vind en jou nommer aanvra."
+    },
+    "pause": "Stop my lys tydelik",
+    "unpause": "Aktiveer my lys weer",
+    "form": {
+      "name": "Naam",
+      "skillsTitle": "Watter werk kan jy doen?",
+      "skillsSubtitle": "Voeg by, verwyder of verander 'n vaardigheid en die ervaringsvlak, stoor dan jou veranderinge.",
+      "availability": "Beskikbaarheid",
+      "availabilityPlaceholder": "Kies…",
+      "description": "Kort beskrywing",
+      "photoUrl": "Foto-URL",
+      "photoUrlPlaceholder": "https://…",
+      "photoUrlHelp": "Los leeg om jou foto te verwyder.",
+      "phone": "Telefoonnommer (bly privaat)",
+      "phoneHelp": "Word net gedeel wanneer jy 'n versoek goedkeur.",
+      "save": "Stoor veranderinge",
+      "saving": "Stoor tans…",
+      "previewMobile": "Voorskou my openbare lys"
+    },
+    "toasts": {
+      "atLeastOneSkill": "Voeg asseblief ten minste een vaardigheid by.",
+      "chooseExperience": "Kies asseblief hoeveel ervaring jy vir elke vaardigheid het.",
+      "updated": "Advertensie opgedateer",
+      "listingPaused": "Jou lys is tydelik gestop.",
+      "listingLive": "Jou lys is weer lewendig.",
+      "pauseError": "Jammer, ons kon jou lys nie verander nie. Probeer asseblief weer.",
+      "removed": "Advertensie verwyder",
+      "reactivated": "Lys geaktiveer",
+      "archived": "Lys geargiveer"
+    },
+    "reactivate": "Aktiveer lys weer",
+    "archive": "Argiveer my lys",
+    "archiveConfirm": "Argiveer jou lys? Dit sal versteek word van openbare soektogte, maar kan enige tyd weer geaktiveer word.",
+    "deleteSection": {
+      "title": "Skrap my lys",
+      "body": "Dit is permanent. Jou lys en die vaardighede word permanent verwyder. As jy net 'n blaaskans wil hê, gebruik eerder <bold>Stop my lys tydelik</bold> — niks gaan verlore nie.",
+      "button": "Skrap my lys permanent"
+    },
+    "deleteDialog": {
+      "title": "Skrap jou lys permanent?",
+      "body": "Dit kan nie ongedaan gemaak word nie. Om jou besonderhede vir later te hou, kies Kanselleer en gebruik eerder <bold>Stop my lys tydelik</bold>.",
+      "ack": "Ja, ek verstaan my lys sal permanent geskrap word.",
+      "cancel": "Kanselleer",
+      "confirm": "Skrap permanent"
+    },
+    "incoming": {
+      "title": "Mense Wat In My Belangstel",
+      "loading": "Laai tans…",
+      "empty": "Niemand het nog jou kontakbesonderhede aangevra nie.",
+      "requested": "Aangevra {{date}}",
+      "approved": "Goedgekeur",
+      "declined": "Afgewys",
+      "approveWhatsapp": "Keur goed & WhatsApp",
+      "declineWhatsapp": "Wys af & WhatsApp",
+      "approvedWhatsappToast": "Goedgekeur. WhatsApp maak oop sodat jy jou kontakbesonderhede kan stuur.",
+      "declinedWhatsappToast": "Afgewys. WhatsApp maak oop sodat jy die opdatering kan stuur.",
+      "approvedToast": "Versoek goedgekeur.",
+      "declinedToast": "Versoek afgewys."
+    }
+  }
+}

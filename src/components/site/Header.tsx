@@ -20,13 +20,14 @@ export function Header() {
 
   // Simple, plain-language navigation
   const NAV = [
-    { to: "/", label: "Home" },
-    { to: "/find-help", label: "Find Local Help" },
-    { to: "/advertise", label: "Advertise My Skills" },
-    { to: "/how-it-works", label: "How It Works" },
-    { to: "/about", label: "About" },
-    { to: "/help", label: "Need Help?" },
+    { to: "/", label: t("shell.nav.home") },
+    { to: "/find-help", label: t("shell.nav.findHelp") },
+    { to: "/advertise", label: t("shell.nav.advertise") },
+    { to: "/how-it-works", label: t("shell.nav.howItWorks") },
+    { to: "/about", label: t("shell.nav.about") },
+    { to: "/help", label: t("shell.nav.help") },
   ];
+
 
   useEffect(() => {
     let mounted = true;
@@ -58,19 +59,22 @@ export function Header() {
 
   return (
     <header className="border-b border-brand-dark/5 bg-brand-page sticky top-0 z-40 backdrop-blur">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-5 sm:py-6 flex items-center justify-between gap-3">
-        <Link to="/" className="flex flex-col items-start gap-2 sm:gap-2.5 shrink-0 min-w-0">
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 py-4 sm:py-6 grid grid-cols-[minmax(0,1fr)_auto] items-center gap-2 sm:flex sm:justify-between sm:gap-3">
+        <Link to="/" className="flex flex-col items-start gap-1.5 sm:gap-2.5 min-w-0">
           <img
             src={logoAsset.url}
-            alt="Overberg Skills Connect — A Hineni Call Initiative, powered by Khulisa Group"
-            className="h-9 sm:h-11 w-auto"
+            alt={t("shell.brand.logoAlt")}
+            className="h-8 sm:h-11 w-auto max-w-full"
           />
-          <span className="flex items-center gap-1 text-[8px] sm:text-[9px] uppercase tracking-[0.14em] leading-none whitespace-nowrap">
-            <span className="font-semibold text-brand-green">A Hineni Call Initiative</span>
-            <span className="text-brand-navy/25">·</span>
-            <span className="text-brand-navy/60">Powered by Khulisa Group</span>
+          <span className="flex flex-wrap items-center gap-x-1 gap-y-0.5 max-w-full text-[7px] sm:text-[9px] uppercase tracking-[0.1em] sm:tracking-[0.14em] leading-tight sm:whitespace-nowrap">
+            <span className="font-semibold text-brand-green">{t("shell.brand.initiative")}</span>
+            <span className="text-brand-navy/25 shrink-0">·</span>
+            <span className="text-brand-navy/60">{t("shell.brand.poweredBy")}</span>
           </span>
+
+
         </Link>
+
 
 
 
@@ -88,17 +92,17 @@ export function Header() {
           ))}
         </nav>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
           <LanguageSelector className="hidden sm:block" />
           {signedIn ? (
             <Link
               to="/profile"
-              className="inline-flex relative items-center gap-2 px-3 sm:px-4 py-2.5 rounded-full bg-brand-green text-white text-sm font-semibold whitespace-nowrap shadow-sm hover:bg-brand-primary/90 transition"
+              className="inline-flex relative items-center gap-1.5 sm:gap-2 px-2.5 sm:px-4 py-2 sm:py-2.5 rounded-full bg-brand-green text-white text-xs sm:text-sm font-semibold whitespace-nowrap shadow-sm hover:bg-brand-primary/90 transition"
             >
-              <UserRound className="size-4" />
-              My Profile
+              <UserRound className="size-4 shrink-0" />
+              <span>{t("shell.nav.myProfile")}</span>
               {unread > 0 && (
-                <span className="inline-flex items-center justify-center min-w-[20px] h-5 px-1.5 rounded-full bg-white text-brand-primary text-[11px] font-bold">
+                <span className="inline-flex items-center justify-center min-w-[18px] h-4 sm:h-5 px-1 sm:px-1.5 rounded-full bg-white text-brand-primary text-[10px] sm:text-[11px] font-bold">
                   {unread > 9 ? "9+" : unread}
                 </span>
               )}
@@ -106,19 +110,21 @@ export function Header() {
           ) : (
             <Link
               to="/auth"
-              className="inline-flex px-3 sm:px-4 py-2.5 rounded-full border border-brand-navy/15 text-sm font-medium whitespace-nowrap text-brand-dark/80 hover:bg-brand-soft hover:text-brand-primary transition"
+              className="inline-flex px-2.5 sm:px-4 py-2 sm:py-2.5 rounded-full border border-brand-navy/15 text-xs sm:text-sm font-medium whitespace-nowrap text-brand-dark/80 hover:bg-brand-soft hover:text-brand-primary transition"
             >
-              Sign In
+              {t("shell.nav.signIn")}
             </Link>
+
           )}
           <button
             onClick={() => setOpen((v) => !v)}
-            className="md:hidden size-11 rounded-full bg-brand-soft grid place-items-center relative"
+            className="md:hidden size-10 sm:size-11 shrink-0 rounded-full bg-brand-soft grid place-items-center relative"
             aria-label={t("nav.toggleMenu")}
           >
             {open ? <X className="size-5" /> : <Menu className="size-5" />}
           </button>
         </div>
+
       </div>
 
       {open && (
@@ -131,7 +137,7 @@ export function Header() {
                 className="relative px-4 py-3.5 rounded-xl bg-brand-primary text-white font-semibold shadow flex items-center justify-between"
               >
                 <span className="inline-flex items-center gap-2">
-                  <UserRound className="size-5" /> My Profile
+                  <UserRound className="size-5" /> {t("shell.nav.myProfile")}
                 </span>
                 {unread > 0 && (
                   <span className="inline-flex items-center justify-center min-w-[22px] h-5 px-1.5 rounded-full bg-white text-brand-primary text-[11px] font-bold">
@@ -162,7 +168,7 @@ export function Header() {
                 }}
                 className="px-4 py-3 rounded-xl border border-brand-dark/15 text-brand-dark/80 hover:bg-brand-soft flex items-center gap-2"
               >
-                <LogOut className="size-4" /> Sign Out
+                <LogOut className="size-4" /> {t("shell.nav.signOut")}
               </button>
             ) : (
               <Link
@@ -170,7 +176,8 @@ export function Header() {
                 onClick={() => setOpen(false)}
                 className="px-4 py-3.5 rounded-xl bg-brand-primary text-white font-semibold shadow text-center"
               >
-                Sign In / Create Account
+                {t("shell.nav.signInOrCreate")}
+
               </Link>
             )}
             <div className="px-1 pt-2">

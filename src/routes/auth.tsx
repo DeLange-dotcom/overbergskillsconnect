@@ -5,12 +5,14 @@ import { supabase } from "@/integrations/supabase/client";
 import { lovable } from "@/integrations/lovable/index";
 import { toast } from "sonner";
 import { Loader2, Check, X, Mail } from "lucide-react";
+import { useTranslation } from "react-i18next";
+import i18n from "@/i18n";
 
 export const Route = createFileRoute("/auth")({
   head: () => ({
     meta: [
-      { title: "Sign in — Overberg Skills Connect" },
-      { name: "description", content: "Sign in to the Overberg Skills Connect admin dashboard." },
+      { title: i18n.t("auth.meta.title") },
+      { name: "description", content: i18n.t("auth.meta.description") },
     ],
   }),
   component: AuthPage,
@@ -38,34 +40,35 @@ function passwordIsStrong(c: PwChecks) {
   return c.length && c.upper && c.lower && c.number && c.special;
 }
 
-function friendlyAuthError(msg: string): string {
+function friendlyAuthError(msg: string, t: (key: string) => string): string {
   const m = msg.toLowerCase();
   if (m.includes("password") && (m.includes("weak") || m.includes("short") || m.includes("characters") || m.includes("pwned") || m.includes("leaked"))) {
-    return "That password is too weak or has appeared in a known data breach. Please choose a stronger password that meets all the requirements shown.";
+    return t("auth.errors.weakOrBreachedPassword");
   }
   if (m.includes("invalid login") || m.includes("invalid credentials")) {
-    return "Email or password is incorrect.";
+    return t("auth.errors.invalidCredentials");
   }
   if (m.includes("email not confirmed")) {
-    return "Please verify your email first. Check your inbox (and spam folder) for the confirmation link.";
+    return t("auth.errors.emailNotConfirmed");
   }
   if (m.includes("user already registered") || m.includes("already registered")) {
-    return "An account already exists for that email. Try signing in instead, or reset your password.";
+    return t("auth.errors.alreadyRegistered");
   }
   if (m.includes("rate limit") || m.includes("too many")) {
-    return "Too many attempts. Please wait a minute and try again.";
+    return t("auth.errors.rateLimited");
   }
   if (m.includes("network") || m.includes("fetch")) {
-    return "We could not reach the server. Please check your internet connection and try again.";
+    return t("auth.errors.networkError");
   }
   if (m.includes("email") && m.includes("invalid")) {
-    return "That email address doesn't look right. Please check it and try again.";
+    return t("auth.errors.invalidEmail");
   }
   // Never show raw technical errors to users.
-  return "Something went wrong. Please try again, or use \u201cForgot password?\u201d if you cannot sign in.";
+  return t("auth.errors.generic");
 }
 
 function AuthPage() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [mode, setMode] = useState<"signin" | "signup" | "forgot">("signin");
   const [busy, setBusy] = useState(false);
@@ -118,7 +121,7 @@ function AuthPage() {
         window.history.replaceState({}, "", url.pathname + url.search);
         if (cancelled) return;
         if (error) {
-          toast.error("That verification link is invalid or has expired. Please request a new one below.");
+          toast.error(t("auth.toasts.invalidVerificationLink"));
           setMode("signin");
           return;
         }
@@ -133,17 +136,17 @@ function AuthPage() {
       if (cancelled) return;
       if (data.session) {
         if (verified || code) {
-          toast.success("Your email is verified. Welcome to Overberg Skills Connect!");
+          toast.success(t("auth.toasts.emailVerifiedWelcome"));
           markWelcome();
         }
         navigate({ to: nextDest(), replace: true });
       } else if (verified) {
-        toast.success("Email verified. Please sign in.");
+        toast.success(t("auth.toasts.emailVerifiedSignIn"));
         setMode("signin");
       }
     })();
     return () => { cancelled = true; };
-  }, [navigate]);
+  }, [navigate, t]);
 
   async function submit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -153,7 +156,7 @@ function AuthPage() {
 
     if (mode === "signup" && !passwordIsStrong(checkPassword(pw))) {
       setShowPwHints(true);
-      toast.error("Please choose a password that meets all the requirements.");
+      toast.error(t("auth.toasts.passwordRequirementsNotMet"));
       return;
     }
 
@@ -176,13 +179,13 @@ function AuthPage() {
         if (error) throw error;
         // If email confirmations are enabled, no session is returned yet.
         if (data.session) {
-          toast.success("Account created. You're signed in.");
+          toast.success(t("auth.toasts.accountCreatedSignedIn"));
           markWelcome();
           navigate({ to: nextDest(), replace: true });
         } else {
           setSignupEmail(email);
           setSignupSent(true);
-          toast.success("Check your email to confirm your account.");
+          toast.success(t("auth.toasts.checkEmailToConfirm"));
         }
       } else {
         const { error } = await supabase.auth.resetPasswordForEmail(email, {
@@ -190,11 +193,11 @@ function AuthPage() {
         });
         if (error) throw error;
         setResetSent(true);
-        toast.success("Password reset email sent. Check your inbox.");
+        toast.success(t("auth.toasts.passwordResetEmailSent"));
       }
     } catch (err) {
       const raw = err instanceof Error ? err.message : "Request failed";
-      toast.error(friendlyAuthError(raw));
+      toast.error(friendlyAuthError(raw, t));
     } finally {
       setBusy(false);
     }
@@ -210,9 +213,9 @@ function AuthPage() {
         options: { emailRedirectTo: `${window.location.origin}/auth?verified=1` },
       });
       if (error) throw error;
-      toast.success("Verification email resent. Please check your inbox and spam folder.");
+      toast.success(t("auth.toasts.verificationResent"));
     } catch (err) {
-      toast.error(err instanceof Error ? friendlyAuthError(err.message) : "Could not resend email");
+      toast.error(err instanceof Error ? friendlyAuthError(err.message, t) : t("auth.toasts.couldNotResendEmail"));
     } finally {
       setResending(false);
     }
@@ -225,7 +228,7 @@ function AuthPage() {
       redirect_uri: window.location.origin + "/auth" + (window.location.search || ""),
     });
     if (result.error) {
-      toast.error("Google sign-in failed.");
+      toast.error(t("auth.toasts.googleSignInFailed"));
       setBusy(false);
     }
   }
@@ -239,17 +242,19 @@ function AuthPage() {
           <div className="inline-flex items-center justify-center size-12 rounded-full bg-brand-cream mb-4">
             <Mail className="size-6 text-brand-orange" />
           </div>
-          <h1 className="osc-heading text-3xl mb-2">Confirm your email</h1>
+          <h1 className="osc-heading text-3xl mb-2">{t("auth.confirmEmail.heading")}</h1>
           <p className="text-brand-dark/70 text-sm mb-6">
-            We've sent a verification link to <strong>{signupEmail}</strong>. Click the link in
-            that email to activate your account.
+            {t("auth.confirmEmail.body", { email: signupEmail }).split(/(<strong>.*?<\/strong>)/g).map((part, i) => {
+              const match = part.match(/^<strong>(.*)<\/strong>$/);
+              return match ? <strong key={i}>{match[1]}</strong> : <span key={i}>{part}</span>;
+            })}
           </p>
           <div className="p-4 rounded-xl bg-amber-50 border border-amber-200 text-sm text-amber-900 mb-6">
-            <p className="font-semibold mb-1">Can't find it?</p>
+            <p className="font-semibold mb-1">{t("auth.confirmEmail.cantFindItTitle")}</p>
             <ul className="list-disc pl-5 space-y-1">
-              <li>Check your spam or junk folder.</li>
-              <li>Make sure the email address is correct.</li>
-              <li>Links expire — request a new one if needed.</li>
+              <li>{t("auth.confirmEmail.checkSpam")}</li>
+              <li>{t("auth.confirmEmail.checkAddress")}</li>
+              <li>{t("auth.confirmEmail.linksExpire")}</li>
             </ul>
           </div>
           <button
@@ -258,13 +263,13 @@ function AuthPage() {
             className="osc-btn osc-btn-primary w-full mb-3"
           >
             {resending && <Loader2 className="size-4 animate-spin" />}
-            Resend verification email
+            {t("auth.confirmEmail.resendButton")}
           </button>
           <button
             onClick={() => { setSignupSent(false); setMode("signin"); }}
             className="osc-btn osc-btn-outline w-full"
           >
-            Back to sign in
+            {t("auth.confirmEmail.backToSignIn")}
           </button>
           </div>
         </div>
@@ -276,14 +281,12 @@ function AuthPage() {
     <SiteLayout>
       <div className="max-w-md mx-auto px-4 sm:px-6 py-10 sm:py-14">
         <div className="osc-card p-6 sm:p-8">
-        <span className="osc-eyebrow">Overberg Skills Connect</span>
+        <span className="osc-eyebrow">{t("auth.eyebrow")}</span>
         <h1 className="osc-heading text-3xl mt-2 mb-2">
-          {mode === "signin" ? "Sign in" : mode === "signup" ? "Create account" : "Reset password"}
+          {mode === "signin" ? t("auth.headings.signin") : mode === "signup" ? t("auth.headings.signup") : t("auth.headings.forgot")}
         </h1>
         <p className="text-brand-navy/65 text-sm mb-8">
-          {mode === "forgot"
-            ? "Enter your email and we'll send you a link to set a new password."
-            : "Sign in or create a free account to advertise your skills, request contact details, and manage your activity."}
+          {mode === "forgot" ? t("auth.intro.forgot") : t("auth.intro.default")}
         </p>
 
         {mode !== "forgot" && (
@@ -293,14 +296,14 @@ function AuthPage() {
               disabled={busy}
               className="osc-btn osc-btn-outline w-full mb-4"
             >
-              <span className="font-medium">Continue with Google</span>
+              <span className="font-medium">{t("auth.google.continue")}</span>
             </button>
             <p className="text-xs text-brand-dark/60 -mt-2 mb-2 text-center">
-              Google is only used to sign you in. We do not access your emails, contacts or files.
+              {t("auth.google.reassurance")}
             </p>
             <div className="flex items-center gap-3 my-5">
               <div className="flex-1 h-px bg-brand-dark/10" />
-              <span className="text-xs text-brand-dark/40 uppercase tracking-widest">or</span>
+              <span className="text-xs text-brand-dark/40 uppercase tracking-widest">{t("auth.or")}</span>
               <div className="flex-1 h-px bg-brand-dark/10" />
             </div>
           </>
@@ -308,7 +311,7 @@ function AuthPage() {
 
         {mode === "forgot" && resetSent ? (
           <div className="p-4 rounded-xl bg-brand-soft text-sm text-brand-dark/80">
-            If an account exists for that email, a reset link is on its way. Check your inbox (and spam).
+            {t("auth.forgot.sentMessage")}
           </div>
         ) : (
           <form onSubmit={submit} className="space-y-3">
@@ -316,7 +319,7 @@ function AuthPage() {
               name="email"
               type="email"
               required
-              placeholder="Email"
+              placeholder={t("auth.form.emailPlaceholder")}
               autoComplete="email"
               className="osc-input"
             />
@@ -327,7 +330,7 @@ function AuthPage() {
                   type="password"
                   required
                   minLength={mode === "signup" ? 8 : 6}
-                  placeholder="Password"
+                  placeholder={t("auth.form.passwordPlaceholder")}
                   autoComplete={mode === "signup" ? "new-password" : "current-password"}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
@@ -341,17 +344,17 @@ function AuthPage() {
                     className="p-3 rounded-xl bg-brand-neutral border border-brand-navy/5 text-sm"
                   >
                     <p className="font-medium mb-2 text-brand-dark/80">
-                      Your password must include:
+                      {t("auth.form.requirementsTitle")}
                     </p>
                     <ul className="space-y-1">
-                      <PwRule ok={checks.length} label="At least 8 characters" />
-                      <PwRule ok={checks.upper} label="One uppercase letter (A–Z)" />
-                      <PwRule ok={checks.lower} label="One lowercase letter (a–z)" />
-                      <PwRule ok={checks.number} label="One number (0–9)" />
-                      <PwRule ok={checks.special} label="One special character (e.g. ! @ # ?)" />
+                      <PwRule ok={checks.length} label={t("auth.form.reqLength")} />
+                      <PwRule ok={checks.upper} label={t("auth.form.reqUpper")} />
+                      <PwRule ok={checks.lower} label={t("auth.form.reqLower")} />
+                      <PwRule ok={checks.number} label={t("auth.form.reqNumber")} />
+                      <PwRule ok={checks.special} label={t("auth.form.reqSpecial")} />
                     </ul>
                     <p className="mt-2 text-xs text-brand-dark/60">
-                      For your safety, common or breached passwords are also rejected.
+                      {t("auth.form.breachedNote")}
                     </p>
                   </div>
                 )}
@@ -363,7 +366,7 @@ function AuthPage() {
               className="osc-btn osc-btn-primary w-full"
             >
               {busy && <Loader2 className="size-4 animate-spin" />}
-              {mode === "signin" ? "Sign in" : mode === "signup" ? "Create account" : "Send reset link"}
+              {mode === "signin" ? t("auth.submit.signin") : mode === "signup" ? t("auth.submit.signup") : t("auth.submit.forgot")}
             </button>
           </form>
         )}
@@ -371,15 +374,13 @@ function AuthPage() {
           {mode !== "forgot" && (
             <div className="osc-panel-cream p-4 text-center">
               <p className="text-sm text-brand-dark/70 mb-3">
-                {mode === "signin"
-                  ? "New here? Creating an account is free and takes about a minute."
-                  : "Already have an account?"}
+                {mode === "signin" ? t("auth.switch.newHere") : t("auth.switch.alreadyHaveAccount")}
               </p>
               <button
                 onClick={() => { setMode(mode === "signin" ? "signup" : "signin"); setShowPwHints(false); }}
                 className="osc-btn osc-btn-primary w-full"
               >
-                {mode === "signin" ? "Create a free account" : "Sign in instead"}
+                {mode === "signin" ? t("auth.switch.createFreeAccount") : t("auth.switch.signInInstead")}
               </button>
             </div>
           )}
@@ -388,7 +389,7 @@ function AuthPage() {
               onClick={() => { setResetSent(false); setMode("forgot"); }}
               className="text-brand-primary hover:underline self-start"
             >
-              Forgot password?
+              {t("auth.links.forgotPassword")}
             </button>
           )}
           {mode === "forgot" && (
@@ -396,11 +397,11 @@ function AuthPage() {
               onClick={() => { setResetSent(false); setMode("signin"); }}
               className="text-brand-primary hover:underline self-start"
             >
-              Back to sign in
+              {t("auth.links.backToSignIn")}
             </button>
           )}
           <Link to="/help" className="text-brand-primary hover:underline self-start">
-            Need Help?
+            {t("auth.links.needHelp")}
           </Link>
         </div>
         </div>

@@ -1,0 +1,31 @@
+{
+  "helpPage": {
+    "eyebrow": "Hulp Nodig?",
+    "title": "Hulp nodig om {{platform}} te gebruik?",
+    "intro": "Hier is hoe dit werk, stap vir stap.",
+    "advertise": {
+      "heading": "Hoe om jou vaardighede te adverteer",
+      "step1": "Skep 'n gratis rekening.",
+      "step2": "Kies die vaardighede wat jy aanbied.",
+      "step3": "Voeg jou area en kontaknommer by.",
+      "step4": "Publiseer jou lys.",
+      "step5": "Jou telefoonnommer bly privaat totdat jy iemand se versoek goedkeur.",
+      "cta": "Adverteer My Vaardighede"
+    },
+    "find": {
+      "heading": "Hoe om iemand te vind",
+      "step1": "Soek vir die hulp wat jy nodig het.",
+      "step2": "Kies 'n diensverskaffer.",
+      "step3": "Vra vir hul kontakbesonderhede.",
+      "step4": "Die diensverskaffer besluit of hulle hul nommer wil deel.",
+      "step5": "As hulle instem, sal die Bel- en WhatsApp-opsies in My Profiel verskyn.",
+      "cta": "Vind Plaaslike Hulp"
+    },
+    "stuck": {
+      "heading": "Steeds vasgevang?",
+      "body": "As jy nie 'n rekening kan skep of jou lys kan publiseer nie, kan jy iemand vra om te help.",
+      "placeholder": "Kontakbesonderhede vir ondersteuning sal binnekort hier verskyn. Gebruik intussen asseblief die kontakbladsy.",
+      "cta": "Kontak Ons"
+    }
+  }
+}

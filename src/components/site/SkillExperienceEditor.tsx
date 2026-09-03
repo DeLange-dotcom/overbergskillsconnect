@@ -1,5 +1,7 @@
 import { Plus, X } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { EXPERIENCE_LEVELS, SKILL_CATEGORIES, type SkillExperience } from "@/lib/noticeboard";
+import { useLabels } from "@/i18n/labels";
 
 export type SkillEntry = {
   key: string;
@@ -60,6 +62,8 @@ export function SkillExperienceEditor({
   entries: SkillEntry[];
   onChange: (next: SkillEntry[]) => void;
 }) {
+  const { t } = useTranslation();
+  const { skillLabel, experienceLabel } = useLabels();
   const chosen = entries.map((e) => e.skill).filter((s) => s && s !== "Other");
 
   function update(key: string, patch: Partial<SkillEntry>) {
@@ -79,15 +83,17 @@ export function SkillExperienceEditor({
           className="p-4 rounded-2xl border border-brand-dark/10 bg-white space-y-3"
         >
           <div className="flex items-center justify-between gap-2">
-            <span className="text-sm font-semibold text-brand-dark/70">Skill {i + 1}</span>
+            <span className="text-sm font-semibold text-brand-dark/70">
+              {t("advertiseForm.skillEditor.skillNumber", { number: i + 1 })}
+            </span>
             {entries.length > 1 && (
               <button
                 type="button"
                 onClick={() => remove(e.key)}
                 className="inline-flex items-center gap-1 px-3 py-2 rounded-lg border border-red-200 text-red-700 text-sm"
-                aria-label={`Remove skill ${i + 1}`}
+                aria-label={t("advertiseForm.skillEditor.removeAria", { number: i + 1 })}
               >
-                <X className="size-4" /> Remove
+                <X className="size-4" /> {t("advertiseForm.skillEditor.remove")}
               </button>
             )}
           </div>
@@ -96,17 +102,19 @@ export function SkillExperienceEditor({
             value={e.skill}
             onChange={(ev) => update(e.key, { skill: ev.target.value, custom: "" })}
             className="w-full px-4 py-3.5 text-base border border-brand-dark/10 rounded-xl bg-white"
-            aria-label="Choose a skill"
+            aria-label={t("advertiseForm.skillEditor.chooseSkillAria")}
           >
-            <option value="">Choose a skill…</option>
+            <option value="">{t("advertiseForm.skillEditor.chooseSkill")}</option>
             {SKILL_CATEGORIES.map((s) => (
               <option
                 key={s}
                 value={s}
                 disabled={s !== "Other" && s !== e.skill && chosen.includes(s)}
               >
-                {s}
-                {s !== "Other" && s !== e.skill && chosen.includes(s) ? " (already added)" : ""}
+                {skillLabel(s)}
+                {s !== "Other" && s !== e.skill && chosen.includes(s)
+                  ? ` ${t("advertiseForm.skillEditor.alreadyAdded")}`
+                  : ""}
               </option>
             ))}
           </select>
@@ -117,19 +125,19 @@ export function SkillExperienceEditor({
                 type="text"
                 value={e.custom}
                 onChange={(ev) => update(e.key, { custom: ev.target.value })}
-                placeholder="Type your skill, e.g. Stone wall building"
+                placeholder={t("advertiseForm.skillEditor.customPlaceholder")}
                 spellCheck
                 className="w-full px-4 py-3.5 text-base border border-brand-dark/10 rounded-xl"
               />
               <p className="text-xs text-brand-dark/60 mt-1">
-                People can search for this skill too.
+                {t("advertiseForm.skillEditor.customHelp")}
               </p>
             </div>
           )}
 
           {(e.skill && (e.skill !== "Other" || e.custom.trim())) && (
             <div>
-              <p className="text-sm font-medium mb-2">How much experience do you have with this skill?</p>
+              <p className="text-sm font-medium mb-2">{t("advertiseForm.skillEditor.experiencePrompt")}</p>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                 {EXPERIENCE_LEVELS.map((lvl) => {
                   const active = e.level === lvl.value;
@@ -145,7 +153,7 @@ export function SkillExperienceEditor({
                           : "bg-white border-brand-dark/10 hover:border-brand-primary/40")
                       }
                     >
-                      {lvl.label}
+                      {experienceLabel(lvl.value)}
                     </button>
                   );
                 })}
@@ -160,7 +168,7 @@ export function SkillExperienceEditor({
         onClick={() => onChange([...entries, newSkillEntry()])}
         className="w-full inline-flex items-center justify-center gap-2 px-4 py-3.5 rounded-xl border-2 border-dashed border-brand-primary/40 text-brand-primary font-medium"
       >
-        <Plus className="size-4" /> Add another skill
+        <Plus className="size-4" /> {t("advertiseForm.skillEditor.addAnother")}
       </button>
     </div>
   );

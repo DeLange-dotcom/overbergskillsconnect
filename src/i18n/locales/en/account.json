@@ -1,0 +1,137 @@
+{
+  "account": {
+    "signOut": "Sign Out",
+    "needHelp": "Need Help?",
+    "welcome": {
+      "title": "Welcome to Overberg Skills Connect",
+      "dismiss": "Dismiss welcome message",
+      "body": "You can now advertise your skills, find local help, or manage your profile.",
+      "advertise": "Advertise my skills",
+      "findHelp": "Find local help",
+      "myProfile": "My Profile"
+    },
+    "page": {
+      "title": "My Profile",
+      "subtitle": "Manage your details, your skills listing, and any service requests — all in one place."
+    },
+    "notifications": {
+      "title": "Notifications",
+      "unread": "{{count}} new — check your profile regularly, we do not send SMS messages",
+      "checkRegularly": "Check your profile regularly. Updates appear here, not by SMS.",
+      "markAllRead": "Mark all read",
+      "empty": "No notifications yet.",
+      "open": "Open"
+    },
+    "details": {
+      "title": "My Details",
+      "subtitle": "Your account information. Only you can see and edit this.",
+      "edit": "Edit",
+      "fullName": "Full name",
+      "town": "Town or area",
+      "phone": "Telephone number (also used for WhatsApp)",
+      "email": "Email",
+      "emailManaged": "(managed by your account sign-in)",
+      "save": "Save",
+      "saving": "Saving…",
+      "cancel": "Cancel",
+      "phoneShort": "Telephone / WhatsApp",
+      "savedToast": "Details saved"
+    },
+    "listing": {
+      "title": "My Skills Listing",
+      "subtitle": "Share your skills so people in your area can find you.",
+      "empty": "You have not advertised any skills yet.",
+      "create": "Create a Skills Listing",
+      "area": "Area:",
+      "created": "Created {{date}} · Last activity {{activity}}",
+      "editListing": "Edit Listing",
+      "preview": "Preview",
+      "unpause": "Unpause my listing",
+      "pause": "Pause my listing",
+      "deleteListing": "Delete my listing",
+      "status": {
+        "archived": "Archived",
+        "paused": "Paused",
+        "active": "Active"
+      }
+    },
+    "incoming": {
+      "title": "People Interested In My Services",
+      "subtitle": "Requests from people who want to hire or contact you.",
+      "empty": "No one has requested your details yet.",
+      "submitted": "Submitted {{date}}",
+      "accept": "Accept Request",
+      "decline": "Decline Request",
+      "sharedUntil": "Your number is shared until {{date}}.",
+      "revoke": "Revoke",
+      "revokedToast": "Access revoked",
+      "acceptedToast": "Request accepted",
+      "declinedToast": "Request declined",
+      "status": {
+        "expired": "Expired",
+        "accepted": "Accepted",
+        "declined": "Declined",
+        "revoked": "Revoked",
+        "new": "New"
+      }
+    },
+    "outgoing": {
+      "title": "My Service Requests",
+      "subtitle": "Requests you've sent to service providers.",
+      "empty": "You haven't sent any requests yet.",
+      "browse": "Browse local skills →",
+      "submitted": "Submitted {{date}}",
+      "waiting": "Waiting for the service provider to respond.",
+      "acceptedMessage": "Your service request has been accepted. You may now contact the service provider directly.",
+      "telephone": "Telephone:",
+      "call": "Call",
+      "whatsapp": "WhatsApp",
+      "accessExpires": "Access expires {{date}}.",
+      "notAvailable": "This service provider is not available for this request.",
+      "accessEndedMessage": "The service provider ended access to their contact details.",
+      "whatsappMessage": "Hi {{name}}, I'm reaching out via Overberg Skills Connect about my service request.",
+      "status": {
+        "expired": "Expired",
+        "accepted": "Accepted",
+        "declined": "Declined",
+        "revoked": "Access ended",
+        "pending": "Awaiting Response"
+      }
+    },
+    "favourites": {
+      "title": "My Favourites",
+      "subtitle": "People you have saved. Only you can see this list.",
+      "emptyPrefix": "You have not saved anyone yet. Open someone's listing and tap",
+      "save": "Save",
+      "emptySuffix": "to keep them here.",
+      "findHelp": "Find local help",
+      "notAvailable": "This listing is not available at the moment.",
+      "openListing": "Open listing",
+      "remove": "Remove",
+      "removedToast": "Removed from My Favourites.",
+      "removeError": "Sorry, we could not remove that. Please try again.",
+      "signInAgain": "Please sign in again."
+    },
+    "listingSection": {
+      "pauseNotShown": "Paused — not shown to anyone",
+      "liveOnNoticeboard": "Live on the noticeboard",
+      "pausedInfo": "Pausing keeps everything saved. Nothing is deleted.",
+      "liveInfo": "People can find you and ask for your number."
+    },
+    "accountManagement": {
+      "title": "My Account",
+      "subtitle": "Close your account and remove your information.",
+      "body": "Deleting your account removes your skills listing, your saved favourites and your personal details. This cannot be undone. If you only want a break, pause your listing instead.",
+      "deleteAccount": "Delete my account",
+      "deleteError": "Sorry, we could not delete your account. Please try again or contact support.",
+      "deletedToast": "Your account and listing have been deleted.",
+      "confirmTitle": "Delete your account?",
+      "confirmBody": "Step 1 of 2. Everything below will be removed permanently: your listing, your skills, your favourites and your personal details.",
+      "confirmAck": "I understand this cannot be undone.",
+      "confirmStep2": "Step 2 of 2 — type",
+      "confirmDelete": "to confirm",
+      "cancel": "Cancel",
+      "deleting": "Deleting…"
+    }
+  }
+}

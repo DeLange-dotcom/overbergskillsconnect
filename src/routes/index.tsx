@@ -39,9 +39,11 @@ function Home() {
             {t("home.title")}
           </h1>
           <p className="mt-4 text-lg md:text-xl font-semibold text-brand-navy/80">
-            Local skills. <span className="text-brand-green">Real connections.</span>{" "}
-            <span className="text-brand-orange">Stronger communities.</span>
+            {t("shell.home.strapline.skills")}{" "}
+            <span className="text-brand-green">{t("shell.home.strapline.connections")}</span>{" "}
+            <span className="text-brand-orange">{t("shell.home.strapline.communities")}</span>
           </p>
+
           <p className="mt-4 text-base text-brand-navy/65 leading-relaxed">
             {t("home.subtitle")}
           </p>

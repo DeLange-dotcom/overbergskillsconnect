@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useTranslation } from "react-i18next";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { PLATFORM_NAME, PLATFORM_OWNER, IP_OWNERSHIP_STATEMENT } from "@/lib/brand";
 
@@ -13,108 +14,81 @@ export const Route = createFileRoute("/terms")({
 });
 
 function Terms() {
+  const { t } = useTranslation();
   return (
     <SiteLayout>
       <div className="max-w-3xl mx-auto px-4 sm:px-6 py-12 space-y-6 text-brand-dark/85 leading-relaxed">
-        <h1 className="osc-heading text-3xl">Terms of Use</h1>
-        <p className="text-sm text-brand-dark/60">Effective date: 4 August 2026</p>
+        <h1 className="osc-heading text-3xl">{t("legal.terms.heading")}</h1>
+        <p className="text-sm text-brand-dark/60">{t("legal.terms.effectiveDate")}</p>
+        <p className="text-xs italic text-brand-dark/60 border-l-2 border-brand-dark/20 pl-3">
+          {t("legal.bilingualNotice")}
+        </p>
 
-        <Section title="1. What this platform is">
+        <Section title={t("legal.terms.section1.title")}>
           <p>
-            {PLATFORM_NAME} ("the platform") is a digital community noticeboard owned and operated
-            by {PLATFORM_OWNER}. It exists to allow people offering skills and people looking for
-            help to find each other in their local community.
+            {t("legal.terms.section1.p1", { platform: PLATFORM_NAME, owner: PLATFORM_OWNER })}
           </p>
         </Section>
 
-        <Section title="2. What Khulisa is not">
+        <Section title={t("legal.terms.section2.title")}>
           <ul className="list-disc pl-6 space-y-1">
-            <li>{PLATFORM_NAME} is a community noticeboard only.</li>
-            <li>Khulisa is not an employer.</li>
-            <li>Khulisa is not a labour broker.</li>
-            <li>Khulisa is not a recruitment agency.</li>
-            <li>Khulisa does not verify users.</li>
-            <li>Khulisa does not verify qualifications.</li>
-            <li>Khulisa does not verify experience.</li>
-            <li>Khulisa does not verify references.</li>
-            <li>Khulisa does not recommend any person.</li>
-            <li>
-              Khulisa does not guarantee availability, suitability, safety, payment or work quality.
-            </li>
+            <li>{t("legal.terms.section2.item1", { platform: PLATFORM_NAME })}</li>
+            <li>{t("legal.terms.section2.item2")}</li>
+            <li>{t("legal.terms.section2.item3")}</li>
+            <li>{t("legal.terms.section2.item4")}</li>
+            <li>{t("legal.terms.section2.item5")}</li>
+            <li>{t("legal.terms.section2.item6")}</li>
+            <li>{t("legal.terms.section2.item7")}</li>
+            <li>{t("legal.terms.section2.item8")}</li>
+            <li>{t("legal.terms.section2.item9")}</li>
+            <li>{t("legal.terms.section2.item10")}</li>
           </ul>
         </Section>
 
-        <Section title="3. Your responsibilities">
-          <p>
-            Users are solely responsible for conducting their own checks before entering into any
-            agreement. This includes verifying identity, references, qualifications and work permits
-            where applicable, and obtaining a police clearance certificate where appropriate.
-          </p>
-          <p>
-            Users are responsible for agreeing payment, work conditions and complying with all
-            applicable legal obligations, including labour, tax and immigration law.
-          </p>
-          <p>
-            If you arrange contact or work through WhatsApp, telephone or any other channel, that
-            arrangement is between the users involved. Keep your own records and do not share
-            sensitive documents unless you are sure it is necessary and lawful.
-          </p>
+        <Section title={t("legal.terms.section3.title")}>
+          <p>{t("legal.terms.section3.p1")}</p>
+          <p>{t("legal.terms.section3.p2")}</p>
+          <p>{t("legal.terms.section3.p3")}</p>
         </Section>
 
-        <Section title="4. Listings and conduct">
-          <p>
-            You must only post information that is true and accurate, and you must be 18 or older to
-            publish a listing. Khulisa may remove listings that breach these Terms, are misleading,
-            fraudulent, offensive, illegal, or otherwise inappropriate.
-          </p>
-          <p>
-            You may not use the platform to harass, threaten, discriminate, scrape contact details,
-            send spam, impersonate someone, collect information unlawfully, or attempt to bypass
-            security controls.
-          </p>
+        <Section title={t("legal.terms.section4.title")}>
+          <p>{t("legal.terms.section4.p1")}</p>
+          <p>{t("legal.terms.section4.p2")}</p>
         </Section>
 
-        <Section title="5. Privacy and contact details">
+        <Section title={t("legal.terms.section5.title")}>
           <p>
-            Telephone numbers are stored privately and are only shared with another user once you
-            have explicitly approved their request. See our{" "}
+            {t("legal.terms.section5.p1", {
+              link: "",
+            })}{" "}
             <Link to="/privacy" className="underline">
-              Privacy Policy
+              {t("legal.terms.section5.privacyLink")}
             </Link>
             .
           </p>
-          <p>
-            The current WhatsApp integration is manual. The app may open WhatsApp with a prepared
-            message, but the user must review and send that message themselves.
-          </p>
+          <p>{t("legal.terms.section5.p2")}</p>
         </Section>
 
-        <Section title="6. Reports and moderation">
-          <p>
-            Users can report listings that appear unsafe, misleading or abusive. Reports are
-            reviewed by admins. Khulisa may hide, edit, suspend or remove content or accounts where
-            needed to protect users, comply with the law, or operate the platform responsibly.
-          </p>
+        <Section title={t("legal.terms.section6.title")}>
+          <p>{t("legal.terms.section6.p1")}</p>
         </Section>
 
-        <Section title="7. Limitation of liability">
+        <Section title={t("legal.terms.section7.title")}>
           <p>
-            To the maximum extent permitted by South African law, {PLATFORM_OWNER} accepts no
-            liability for any loss, injury, damage, dispute or claim arising from introductions made
-            through this platform. See our{" "}
+            {t("legal.terms.section7.p1", { owner: PLATFORM_OWNER, link: "" })}{" "}
             <Link to="/disclaimer" className="underline">
-              Disclaimer
+              {t("legal.terms.section7.disclaimerLink")}
             </Link>
             .
           </p>
         </Section>
 
-        <Section title="8. Intellectual property">
+        <Section title={t("legal.terms.section8.title")}>
           <p>{IP_OWNERSHIP_STATEMENT}</p>
         </Section>
 
-        <Section title="9. Governing law">
-          <p>These Terms are governed by the laws of the Republic of South Africa.</p>
+        <Section title={t("legal.terms.section9.title")}>
+          <p>{t("legal.terms.section9.p1")}</p>
         </Section>
       </div>
     </SiteLayout>

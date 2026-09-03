@@ -1,0 +1,137 @@
+{
+  "account": {
+    "signOut": "Teken uit",
+    "needHelp": "Hulp nodig?",
+    "welcome": {
+      "title": "Welkom by Overberg Skills Connect",
+      "dismiss": "Maak welkomboodskap toe",
+      "body": "Jy kan nou jou vaardighede adverteer, plaaslike hulp soek, of jou profiel bestuur.",
+      "advertise": "Adverteer my vaardighede",
+      "findHelp": "Vind plaaslike hulp",
+      "myProfile": "My Profiel"
+    },
+    "page": {
+      "title": "My Profiel",
+      "subtitle": "Bestuur jou besonderhede, jou vaardigheidslys en enige diensversoeke — alles op een plek."
+    },
+    "notifications": {
+      "title": "Kennisgewings",
+      "unread": "{{count}} nuut — kyk gereeld na jou profiel, ons stuur nie SMS-boodskappe nie",
+      "checkRegularly": "Kyk gereeld na jou profiel. Opdaterings verskyn hier, nie per SMS nie.",
+      "markAllRead": "Merk alles as gelees",
+      "empty": "Nog geen kennisgewings nie.",
+      "open": "Maak oop"
+    },
+    "details": {
+      "title": "My Besonderhede",
+      "subtitle": "Jou rekeninginligting. Net jy kan dit sien en verander.",
+      "edit": "Verander",
+      "fullName": "Volle naam",
+      "town": "Dorp of area",
+      "phone": "Telefoonnommer (ook gebruik vir WhatsApp)",
+      "email": "E-pos",
+      "emailManaged": "(bestuur deur jou rekening se aanmelding)",
+      "save": "Stoor",
+      "saving": "Stoor tans…",
+      "cancel": "Kanselleer",
+      "phoneShort": "Telefoon / WhatsApp",
+      "savedToast": "Besonderhede gestoor"
+    },
+    "listing": {
+      "title": "My Vaardigheidslys",
+      "subtitle": "Deel jou vaardighede sodat mense in jou area jou kan vind.",
+      "empty": "Jy het nog nie vaardighede geadverteer nie.",
+      "create": "Skep 'n Vaardigheidslys",
+      "area": "Area:",
+      "created": "Geskep {{date}} · Laaste bedrywigheid {{activity}}",
+      "editListing": "Verander lys",
+      "preview": "Voorskou",
+      "unpause": "Aktiveer my lys weer",
+      "pause": "Stop my lys tydelik",
+      "deleteListing": "Skrap my lys",
+      "status": {
+        "archived": "Geargiveer",
+        "paused": "Tydelik gestop",
+        "active": "Aktief"
+      }
+    },
+    "incoming": {
+      "title": "Mense Wat Belangstel In My Dienste",
+      "subtitle": "Versoeke van mense wat jou wil huur of kontak.",
+      "empty": "Niemand het nog jou besonderhede aangevra nie.",
+      "submitted": "Ingedien {{date}}",
+      "accept": "Aanvaar versoek",
+      "decline": "Wys versoek af",
+      "sharedUntil": "Jou nommer word gedeel tot {{date}}.",
+      "revoke": "Trek terug",
+      "revokedToast": "Toegang teruggetrek",
+      "acceptedToast": "Versoek aanvaar",
+      "declinedToast": "Versoek afgewys",
+      "status": {
+        "expired": "Verval",
+        "accepted": "Aanvaar",
+        "declined": "Afgewys",
+        "revoked": "Teruggetrek",
+        "new": "Nuut"
+      }
+    },
+    "outgoing": {
+      "title": "My Diensversoeke",
+      "subtitle": "Versoeke wat jy aan diensverskaffers gestuur het.",
+      "empty": "Jy het nog geen versoeke gestuur nie.",
+      "browse": "Blaai deur plaaslike vaardighede →",
+      "submitted": "Ingedien {{date}}",
+      "waiting": "Wag vir die diensverskaffer om te reageer.",
+      "acceptedMessage": "Jou diensversoek is aanvaar. Jy kan nou die diensverskaffer direk kontak.",
+      "telephone": "Telefoon:",
+      "call": "Bel",
+      "whatsapp": "WhatsApp",
+      "accessExpires": "Toegang verval {{date}}.",
+      "notAvailable": "Hierdie diensverskaffer is nie beskikbaar vir hierdie versoek nie.",
+      "accessEndedMessage": "Die diensverskaffer het toegang tot hul kontakbesonderhede beëindig.",
+      "whatsappMessage": "Hallo {{name}}, ek kontak jou via Overberg Skills Connect oor my diensversoek.",
+      "status": {
+        "expired": "Verval",
+        "accepted": "Aanvaar",
+        "declined": "Afgewys",
+        "revoked": "Toegang beëindig",
+        "pending": "Wag vir antwoord"
+      }
+    },
+    "favourites": {
+      "title": "My Gunstelinge",
+      "subtitle": "Mense wat jy gestoor het. Net jy kan hierdie lys sien.",
+      "emptyPrefix": "Jy het nog niemand gestoor nie. Maak iemand se lys oop en tik",
+      "save": "Stoor",
+      "emptySuffix": "om hulle hier te hou.",
+      "findHelp": "Vind plaaslike hulp",
+      "notAvailable": "Hierdie lys is tans nie beskikbaar nie.",
+      "openListing": "Maak lys oop",
+      "remove": "Verwyder",
+      "removedToast": "Verwyder van My Gunstelinge.",
+      "removeError": "Jammer, ons kon dit nie verwyder nie. Probeer asseblief weer.",
+      "signInAgain": "Meld asseblief weer aan."
+    },
+    "accountManagement": {
+      "title": "My Rekening",
+      "subtitle": "Sluit jou rekening en verwyder jou inligting.",
+      "body": "Om jou rekening te skrap, verwyder jou vaardigheidslys, jou gestoorde gunstelinge en jou persoonlike besonderhede. Dit kan nie ongedaan gemaak word nie. As jy net 'n blaaskans wil hê, stop jou lys eerder tydelik.",
+      "deleteAccount": "Skrap my rekening",
+      "deleteError": "Jammer, ons kon jou rekening nie skrap nie. Probeer asseblief weer of kontak ondersteuning.",
+      "deletedToast": "Jou rekening en lys is geskrap.",
+      "confirmTitle": "Skrap jou rekening?",
+      "confirmBody": "Stap 1 van 2. Alles hieronder sal permanent verwyder word: jou lys, jou vaardighede, jou gunstelinge en jou persoonlike besonderhede.",
+      "confirmAck": "Ek verstaan dit kan nie ongedaan gemaak word nie.",
+      "confirmStep2": "Stap 2 van 2 — tik",
+      "confirmDelete": "om te bevestig",
+      "cancel": "Kanselleer",
+      "deleting": "Besig om te skrap…"
+    },
+    "listingSection": {
+      "pauseNotShown": "Tydelik gestop — nie sigbaar vir enigiemand nie",
+      "liveOnNoticeboard": "Lewendig op die kennisgewingbord",
+      "pausedInfo": "As jy tydelik stop, bly alles gestoor. Niks word geskrap nie.",
+      "liveInfo": "Mense kan jou vind en jou nommer aanvra."
+    }
+  }
+}
