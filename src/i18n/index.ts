@@ -20,7 +20,13 @@ function collect(modules: Record<string, unknown>, langDir: string): Dict {
   for (const [path, mod] of Object.entries(modules)) {
     const match = path.match(new RegExp(`/locales/${langDir}/([^/]+)\\.json$`));
     if (!match) continue;
-    out[match[1]] = mod as Dict;
+    const name = match[1];
+    const value = mod as Dict;
+    // Some files already wrap their content in the namespace key; unwrap those
+    // so both shapes resolve as `t("<namespace>.<key>")`.
+    const keys = Object.keys(value);
+    out[name] =
+      keys.length === 1 && keys[0] === name ? (value[name] as Dict) : value;
   }
   return out;
 }
