@@ -3,9 +3,11 @@ import { useQuery } from "@tanstack/react-query";
 import { useMemo, useState } from "react";
 import { MapPin, Loader2, Search, Calendar } from "lucide-react";
 import { SiteLayout } from "@/components/site/SiteLayout";
-import { DisclaimerBanner } from "@/components/site/DisclaimerBanner";
+import { ShortNotice } from "@/components/site/ShortNotice";
+import { LocationSelect } from "@/components/site/LocationSelect";
 import { supabase } from "@/integrations/supabase/client";
 import { experienceLabel, type SkillExperience } from "@/lib/noticeboard";
+
 
 export const Route = createFileRoute("/find-help")({
   head: () => ({
@@ -36,7 +38,17 @@ type Row = {
   created_at: string;
 };
 
-const EXAMPLES = ["Gardener", "Painter", "Domestic worker", "Plumber", "Carpenter"];
+/** Quick shortcuts for the most commonly requested skills. */
+const QUICK_SKILLS = [
+  "Domestic Worker",
+  "Gardening",
+  "Painting",
+  "Building & handyman",
+  "Childcare",
+  "Eldercare",
+  "Driving",
+  "Farm work",
+];
 
 /** Loose match so "Gardener" finds "Gardening" and "domestic worker" finds "Domestic Worker". */
 function looseMatch(skill: string, query: string) {
@@ -71,15 +83,18 @@ function FindHelp() {
     },
   });
 
+  // Live filtering: keyword AND area must both match.
   const filtered = useMemo(() => {
+    const keyword = q.trim().toLowerCase();
     return (data ?? []).filter((r) => {
-      if (town && !r.town.toLowerCase().includes(town.toLowerCase())) return false;
-      if (q) {
+      if (town && r.town.toLowerCase() !== town.toLowerCase()) return false;
+      if (keyword) {
+        // Skills only — a person is not returned just because their name or
+        // description happens to contain the word.
         const rows = skillRows(r);
-        const hay =
-          `${r.name} ${r.town} ${r.description} ${rows.map((s) => s.skill).join(" ")} ${r.category ?? ""}`.toLowerCase();
         const matched =
-          hay.includes(q.toLowerCase()) || rows.some((s) => looseMatch(s.skill, q));
+          rows.some((s) => looseMatch(s.skill, keyword)) ||
+          (r.category ? looseMatch(r.category, keyword) : false);
         if (!matched) return false;
       }
       return true;
@@ -91,10 +106,10 @@ function FindHelp() {
     <SiteLayout>
       <div className="max-w-6xl mx-auto px-4 sm:px-6 py-8 sm:py-14">
         <h1 className="text-3xl sm:text-4xl font-heading font-bold mb-2">What help do you need?</h1>
-        <p className="text-brand-dark/70 max-w-2xl mb-6">
-          Type what you are looking for. Overberg Skills Connect does not vet or recommend anyone —
-          please make your own checks before entering into any agreement.
+        <p className="text-brand-dark/70 max-w-2xl mb-4">
+          Type the kind of work you need, then choose an area if you want to narrow it down.
         </p>
+        <ShortNotice className="mb-6 max-w-2xl" />
 
         <div className="mb-6 p-4 sm:p-5 bg-brand-soft rounded-2xl">
           <div className="relative">
@@ -109,34 +124,52 @@ function FindHelp() {
             />
           </div>
           <div className="flex flex-wrap gap-2 mt-3">
-            {EXAMPLES.map((e) => (
+            {QUICK_SKILLS.map((e) => (
               <button
                 key={e}
                 type="button"
-                onClick={() => setQ(e)}
-                className="px-3 py-2 rounded-full bg-white border border-brand-dark/10 text-sm hover:border-brand-primary/40"
+                onClick={() => setQ(q.toLowerCase() === e.toLowerCase() ? "" : e)}
+                aria-pressed={q.toLowerCase() === e.toLowerCase()}
+                className={`px-3 py-2 rounded-full border text-sm transition ${
+                  q.toLowerCase() === e.toLowerCase()
+                    ? "bg-brand-primary text-white border-brand-primary"
+                    : "bg-white border-brand-dark/10 hover:border-brand-primary/40"
+                }`}
               >
                 {e}
               </button>
             ))}
           </div>
           <div className="mt-4">
-            <label className="text-sm font-medium text-brand-dark/70" htmlFor="area">
-              Area (optional)
-            </label>
-            <input
+            <LocationSelect
               id="area"
+              label="Area (optional)"
               value={town}
-              onChange={(e) => setTown(e.target.value)}
-              placeholder="e.g. Hermanus"
-              className="w-full mt-1 px-4 py-3.5 text-base rounded-xl bg-white border border-brand-dark/10"
+              onChange={setTown}
+              allowAny
+              anyLabel="All Overberg areas"
             />
           </div>
+          {(q || town) && (
+            <button
+              type="button"
+              onClick={() => {
+                setQ("");
+                setTown("");
+              }}
+              className="mt-3 text-sm underline text-brand-dark/70"
+            >
+              Clear search
+            </button>
+          )}
         </div>
 
-        <div className="mb-6">
-          <DisclaimerBanner compact />
-        </div>
+        <p className="mb-4 text-sm text-brand-dark/60" aria-live="polite">
+          {isLoading
+            ? "Loading…"
+            : `${filtered.length} ${filtered.length === 1 ? "person" : "people"} found`}
+        </p>
+
 
 
         {isLoading ? (
@@ -145,7 +178,8 @@ function FindHelp() {
           </div>
         ) : filtered.length === 0 ? (
           <div className="text-center py-20 text-brand-dark/60">
-            No listings match your filters yet.{" "}
+            No one matches that search yet. Try a different word or choose “All Overberg areas”.{" "}
+
             <Link to="/advertise" className="text-brand-primary underline">
               Be the first to advertise.
             </Link>

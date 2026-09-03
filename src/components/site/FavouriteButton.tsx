@@ -1,0 +1,103 @@
+import { useEffect, useState } from "react";
+import { Heart, Loader2 } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
+
+/**
+ * Private "save this person" control. Favourites are only ever visible to the
+ * person who saved them and never expose a phone number.
+ */
+export function FavouriteButton({
+  profileId,
+  className = "",
+  withLabel = true,
+}: {
+  profileId: string;
+  className?: string;
+  withLabel?: boolean;
+}) {
+  const [signedIn, setSignedIn] = useState<boolean | null>(null);
+  const [saved, setSaved] = useState(false);
+  const [busy, setBusy] = useState(false);
+
+  useEffect(() => {
+    let active = true;
+    (async () => {
+      const { data: sess } = await supabase.auth.getSession();
+      const uid = sess.session?.user.id;
+      if (!active) return;
+      if (!uid) {
+        setSignedIn(false);
+        return;
+      }
+      setSignedIn(true);
+      const { data } = await supabase
+        .from("noticeboard_favourites")
+        .select("id")
+        .eq("user_id", uid)
+        .eq("profile_id", profileId)
+        .maybeSingle();
+      if (active) setSaved(!!data);
+    })();
+    return () => {
+      active = false;
+    };
+  }, [profileId]);
+
+  if (signedIn === null) return null;
+
+  async function toggle() {
+    if (!signedIn) {
+      toast.info("Sign in to save people to your favourites.");
+      return;
+    }
+    setBusy(true);
+    const { data: sess } = await supabase.auth.getSession();
+    const uid = sess.session?.user.id;
+    if (!uid) {
+      setBusy(false);
+      return;
+    }
+    if (saved) {
+      const { error } = await supabase
+        .from("noticeboard_favourites")
+        .delete()
+        .eq("user_id", uid)
+        .eq("profile_id", profileId);
+      setBusy(false);
+      if (error) return toast.error("Could not remove from favourites.");
+      setSaved(false);
+      toast.success("Removed from My Favourites.");
+    } else {
+      const { error } = await supabase
+        .from("noticeboard_favourites")
+        .insert({ user_id: uid, profile_id: profileId });
+      setBusy(false);
+      if (error) return toast.error("Could not save to favourites.");
+      setSaved(true);
+      toast.success("Saved to My Favourites.");
+    }
+  }
+
+  return (
+    <button
+      type="button"
+      onClick={toggle}
+      disabled={busy}
+      aria-pressed={saved}
+      aria-label={saved ? "Remove from My Favourites" : "Save to My Favourites"}
+      className={`inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl border font-medium transition ${
+        saved
+          ? "bg-brand-primary/10 border-brand-primary/30 text-brand-primary"
+          : "bg-white border-brand-dark/10 text-brand-dark hover:border-brand-primary/40"
+      } ${className}`}
+    >
+      {busy ? (
+        <Loader2 className="size-4 animate-spin" />
+      ) : (
+        <Heart className={`size-4 ${saved ? "fill-current" : ""}`} />
+      )}
+      {withLabel && <span>{saved ? "Saved" : "Save"}</span>}
+    </button>
+  );
+}
