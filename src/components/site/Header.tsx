@@ -4,7 +4,7 @@ import { Menu, X, LogOut, UserRound } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { supabase } from "@/integrations/supabase/client";
 import { LanguageSelector } from "@/components/site/LanguageSelector";
-import overbergLogo from "@/assets/overberg-logo.png.asset.json";
+import { ConnectMark } from "@/components/brand/Logo";
 
 export function Header() {
   const { t } = useTranslation();
@@ -59,21 +59,18 @@ export function Header() {
   return (
     <header className="border-b border-brand-dark/5 bg-brand-page sticky top-0 z-40 backdrop-blur">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4 flex items-center justify-between gap-3">
-        <Link to="/" className="flex items-center gap-3 shrink-0">
-          <img
-            src={overbergLogo.url}
-            alt="Overberg Skills Connect"
-            className="h-10 sm:h-12 w-auto object-contain"
-          />
-          <div className="leading-tight hidden sm:block">
-            <div className="font-heading font-bold text-brand-primary text-lg">
-              Overberg Skills Connect
-            </div>
-            <div className="text-[10px] uppercase tracking-widest text-brand-dark/50">
-              {t("footer.poweredBy")}
-            </div>
-          </div>
+        <Link to="/" className="flex items-center gap-2.5 shrink-0">
+          <ConnectMark className="size-9 sm:size-10" />
+          <span className="leading-tight">
+            <span className="block font-heading text-[12.5px] sm:text-lg font-bold uppercase tracking-tight text-brand-navy">
+              Overberg <span className="text-brand-green">Skills</span> Connect
+            </span>
+            <span className="hidden sm:block text-[9px] font-medium uppercase tracking-[0.14em] text-brand-navy/55">
+              A Hineni Call Initiative · Powered by Khulisa Group
+            </span>
+          </span>
         </Link>
+
 
         <nav className="hidden md:flex items-center gap-6 text-sm whitespace-nowrap">
           {NAV.filter((n) => n.to !== "/help").map((n) => (
@@ -94,7 +91,7 @@ export function Header() {
           {signedIn ? (
             <Link
               to="/profile"
-              className="inline-flex relative items-center gap-2 px-3 sm:px-4 py-2.5 rounded-full bg-brand-primary text-white text-sm font-semibold shadow hover:bg-brand-primary/90 transition"
+              className="inline-flex relative items-center gap-2 px-3 sm:px-4 py-2.5 rounded-full bg-brand-green text-white text-sm font-semibold whitespace-nowrap shadow-sm hover:bg-brand-primary/90 transition"
             >
               <UserRound className="size-4" />
               My Profile
@@ -107,7 +104,7 @@ export function Header() {
           ) : (
             <Link
               to="/auth"
-              className="inline-flex px-3 sm:px-4 py-2.5 rounded-full border border-brand-dark/15 text-sm font-medium text-brand-dark/80 hover:bg-brand-soft hover:text-brand-primary transition"
+              className="inline-flex px-3 sm:px-4 py-2.5 rounded-full border border-brand-navy/15 text-sm font-medium whitespace-nowrap text-brand-dark/80 hover:bg-brand-soft hover:text-brand-primary transition"
             >
               Sign In
             </Link>
