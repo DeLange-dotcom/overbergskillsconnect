@@ -881,3 +881,226 @@ function MyServiceRequestsSection() {
     </Section>
   );
 }
+
+// ============ My Favourites ============
+type FavouriteRow = {
+  profile_id: string;
+  public_listing_reference: string | null;
+  name: string;
+  town: string;
+  skills: string[];
+  description: string;
+  photo_url: string | null;
+  is_available: boolean;
+  saved_at: string;
+};
+
+function MyFavouritesSection() {
+  const qc = useQueryClient();
+  const { data, isLoading } = useQuery({
+    queryKey: ["my-favourites"],
+    queryFn: async (): Promise<FavouriteRow[]> => {
+      const { data, error } = await supabase.rpc("noticeboard_my_favourites");
+      if (error) throw error;
+      return (data ?? []) as FavouriteRow[];
+    },
+  });
+
+  const remove = useMutation({
+    mutationFn: async (profileId: string) => {
+      const { data: sess } = await supabase.auth.getSession();
+      const uid = sess.session?.user.id;
+      if (!uid) throw new Error("Please sign in again.");
+      const { error } = await supabase
+        .from("noticeboard_favourites")
+        .delete()
+        .eq("user_id", uid)
+        .eq("profile_id", profileId);
+      if (error) throw error;
+    },
+    onSuccess: () => {
+      toast.success("Removed from My Favourites.");
+      qc.invalidateQueries({ queryKey: ["my-favourites"] });
+    },
+    onError: () => toast.error("Sorry, we could not remove that. Please try again."),
+  });
+
+  const rows = data ?? [];
+
+  return (
+    <Section
+      icon="❤️"
+      title="My Favourites"
+      subtitle="People you have saved. Only you can see this list."
+    >
+      {isLoading ? (
+        <Loader2 className="size-4 animate-spin text-brand-dark/40" />
+      ) : rows.length === 0 ? (
+        <div className="text-sm text-brand-dark/60">
+          You have not saved anyone yet. Open someone&apos;s listing and tap{" "}
+          <span className="inline-flex items-center gap-1 font-medium">
+            <Heart className="size-3.5" /> Save
+          </span>{" "}
+          to keep them here.{" "}
+          <Link to="/find-help" className="text-brand-primary underline">
+            Find local help
+          </Link>
+          .
+        </div>
+      ) : (
+        <ul className="space-y-3">
+          {rows.map((r) => (
+            <li
+              key={r.profile_id}
+              className="flex items-start gap-3 p-3 rounded-xl border border-brand-dark/10"
+            >
+              <div className="size-11 rounded-full bg-brand-soft overflow-hidden grid place-items-center text-brand-dark/40 shrink-0">
+                {r.photo_url ? (
+                  <img src={r.photo_url} alt="" className="size-full object-cover" />
+                ) : (
+                  <span className="font-semibold">{r.name?.[0] ?? "?"}</span>
+                )}
+              </div>
+              <div className="min-w-0 flex-1">
+                <div className="font-medium truncate">{r.name}</div>
+                <div className="flex items-center gap-1 text-xs text-brand-dark/60">
+                  <MapPin className="size-3" /> {r.town}
+                </div>
+                <div className="text-xs text-brand-dark/60 mt-1 line-clamp-1">
+                  {r.skills?.slice(0, 3).join(", ")}
+                </div>
+                {!r.is_available && (
+                  <div className="text-xs text-amber-700 mt-1">
+                    This listing is not available at the moment.
+                  </div>
+                )}
+                <div className="flex flex-wrap gap-2 mt-2">
+                  <Link
+                    to="/profile/$id"
+                    params={{ id: r.public_listing_reference ?? r.profile_id }}
+                    className="px-3 py-2 rounded-lg bg-brand-primary text-white text-xs font-medium"
+                  >
+                    Open listing
+                  </Link>
+                  <button
+                    type="button"
+                    onClick={() => remove.mutate(r.profile_id)}
+                    className="px-3 py-2 rounded-lg border border-brand-dark/15 text-xs"
+                  >
+                    Remove
+                  </button>
+                </div>
+              </div>
+            </li>
+          ))}
+        </ul>
+      )}
+    </Section>
+  );
+}
+
+// ============ Account (permanent deletion) ============
+function AccountSection() {
+  const navigate = useNavigate();
+  const qc = useQueryClient();
+  const [open, setOpen] = useState(false);
+  const [ack, setAck] = useState(false);
+  const [confirmText, setConfirmText] = useState("");
+  const [busy, setBusy] = useState(false);
+
+  async function deleteAccount() {
+    setBusy(true);
+    const { error } = await supabase.rpc("delete_my_account_data");
+    if (error) {
+      setBusy(false);
+      toast.error("Sorry, we could not delete your account. Please try again or contact support.");
+      return;
+    }
+    await qc.cancelQueries();
+    qc.clear();
+    await supabase.auth.signOut();
+    setBusy(false);
+    toast.success("Your account and listing have been deleted.");
+    navigate({ to: "/", replace: true });
+  }
+
+  return (
+    <Section
+      icon="⚙️"
+      title="My Account"
+      subtitle="Close your account and remove your information."
+    >
+      <p className="text-sm text-brand-dark/70 mb-4">
+        Deleting your account removes your skills listing, your saved favourites and your personal
+        details. This cannot be undone. If you only want a break, pause your listing instead.
+      </p>
+      <button
+        type="button"
+        onClick={() => setOpen(true)}
+        className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg border border-red-200 text-red-700 text-sm font-medium hover:bg-red-50"
+      >
+        <Trash2 className="size-4" /> Delete my account
+      </button>
+
+      {open && (
+        <div
+          className="fixed inset-0 z-50 bg-black/40 grid place-items-center p-4"
+          role="dialog"
+          aria-modal="true"
+        >
+          <div className="bg-white rounded-2xl shadow-xl max-w-md w-full p-6">
+            <h2 className="text-xl font-heading font-bold mb-2">Delete your account?</h2>
+            <p className="text-sm text-brand-dark/70 mb-4">
+              Step 1 of 2. Everything below will be removed permanently: your listing, your skills,
+              your favourites and your personal details.
+            </p>
+            <label className="flex items-start gap-2.5 text-sm mb-4 cursor-pointer">
+              <input
+                type="checkbox"
+                checked={ack}
+                onChange={(e) => setAck(e.target.checked)}
+                className="mt-1 size-4"
+              />
+              <span>I understand this cannot be undone.</span>
+            </label>
+            {ack && (
+              <div className="mb-4">
+                <label className="block text-sm font-medium mb-1" htmlFor="confirm-delete">
+                  Step 2 of 2 — type <strong>DELETE</strong> to confirm
+                </label>
+                <input
+                  id="confirm-delete"
+                  value={confirmText}
+                  onChange={(e) => setConfirmText(e.target.value)}
+                  className="w-full px-4 py-3 border border-brand-dark/15 rounded-xl"
+                  autoComplete="off"
+                />
+              </div>
+            )}
+            <div className="flex gap-3 justify-end">
+              <button
+                type="button"
+                onClick={() => {
+                  setOpen(false);
+                  setAck(false);
+                  setConfirmText("");
+                }}
+                className="px-4 py-2 rounded-lg border border-brand-dark/15 text-sm"
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                disabled={!ack || confirmText.trim().toUpperCase() !== "DELETE" || busy}
+                onClick={deleteAccount}
+                className="px-4 py-2 rounded-lg bg-red-600 text-white text-sm disabled:opacity-40"
+              >
+                {busy ? "Deleting…" : "Delete my account"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </Section>
+  );
+}
