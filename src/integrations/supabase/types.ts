@@ -3653,6 +3653,18 @@ export type Database = {
           user_id: string
         }[]
       }
+      admin_pending_contact_reminders: {
+        Args: never
+        Returns: {
+          created_at: string
+          id: string
+          profile_id: string
+          profile_name: string
+          profile_phone: string
+          public_listing_reference: string
+          requester_name: string
+        }[]
+      }
       admin_set_account_state: {
         Args: { _reason?: string; _state: string; _user_id: string }
         Returns: string
