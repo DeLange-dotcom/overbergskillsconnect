@@ -11,7 +11,7 @@ export function SiteLayout({ children }: { children: ReactNode }) {
         aria-hidden
         className="pointer-events-none fixed inset-0 z-0 flex items-center justify-center"
       >
-        <ConnectMark className="w-[min(70vw,720px)] opacity-[0.035] select-none" />
+        <ConnectMark className="w-[min(55vw,420px)] opacity-[0.025] select-none" />
       </div>
       <div className="relative z-10 flex flex-col flex-1 min-h-screen">
         <Header />
