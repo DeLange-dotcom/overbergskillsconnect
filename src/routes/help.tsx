@@ -44,7 +44,7 @@ function HelpPage() {
   const { t } = useTranslation();
   return (
     <SiteLayout>
-      <div className="max-w-2xl mx-auto px-4 sm:px-6 py-10 sm:py-14">
+      <div className="osc-container py-10 sm:py-14">
         <PageHeader
           eyebrow={t("helpPage.eyebrow")}
           title={t("helpPage.title", { platform: PLATFORM_NAME })}

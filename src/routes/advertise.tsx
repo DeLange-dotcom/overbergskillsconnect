@@ -179,7 +179,7 @@ function Advertise() {
 
   return (
     <SiteLayout>
-      <div className="max-w-2xl mx-auto px-4 sm:px-6 py-10 sm:py-14">
+      <div className="osc-container py-10 sm:py-14">
         <PageHeader
           eyebrow={t("advertiseForm.header.eyebrow")}
           title={t("advertiseForm.header.title")}

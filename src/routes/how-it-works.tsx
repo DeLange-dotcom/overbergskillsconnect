@@ -21,7 +21,7 @@ function HowItWorks() {
   const { t } = useTranslation();
   return (
     <SiteLayout>
-      <div className="max-w-3xl mx-auto px-4 sm:px-6 py-12 sm:py-16">
+      <div className="osc-container py-12 sm:py-16">
         <h1 className="text-4xl font-heading font-bold mb-4">{t("howItWorks.title")}</h1>
         <p className="text-lg text-brand-dark/70 mb-12">
           {t("howItWorks.intro", { platform: PLATFORM_NAME })}

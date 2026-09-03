@@ -26,7 +26,7 @@ function SafeguardingPolicy() {
   const { t } = useTranslation();
   return (
     <SiteLayout>
-      <article className="max-w-3xl mx-auto px-4 sm:px-6 py-10 sm:py-14 print:py-0">
+      <article className="osc-container py-10 sm:py-14 print:py-0">
         <div className="flex flex-wrap items-center gap-3 mb-3 print:hidden">
           <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-brand-primary/10 text-brand-primary text-xs font-semibold">
             <ShieldCheck className="size-3.5" /> {t("legal.safeguarding.badge")}

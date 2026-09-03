@@ -141,7 +141,7 @@ function MyProfile() {
   const { t } = useTranslation();
   return (
     <SiteLayout>
-      <div className="max-w-3xl mx-auto px-4 sm:px-6 py-8 sm:py-12 space-y-8">
+      <div className="osc-container py-8 sm:py-12 space-y-8">
         <header className="space-y-1">
           <h1 className="osc-heading text-3xl sm:text-4xl">{t("account.page.title")}</h1>
           <p className="text-brand-dark/60">

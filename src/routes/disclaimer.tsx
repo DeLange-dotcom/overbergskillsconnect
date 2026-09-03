@@ -20,7 +20,7 @@ function DisclaimerPage() {
   const { t } = useTranslation();
   return (
     <SiteLayout>
-      <div className="max-w-3xl mx-auto px-4 sm:px-6 py-12 prose prose-sm">
+      <div className="osc-container py-12 prose prose-sm max-w-none">
         <h1 className="osc-heading text-3xl mb-6">{t("legal.disclaimer.heading")}</h1>
         <DisclaimerBanner />
         <div className="mt-8 space-y-4 text-brand-dark/80 leading-relaxed">
