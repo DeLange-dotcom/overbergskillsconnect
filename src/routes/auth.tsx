@@ -403,6 +403,9 @@ function AuthPage() {
               Back to sign in
             </button>
           )}
+          <Link to="/help" className="text-brand-primary hover:underline self-start">
+            Need Help?
+          </Link>
         </div>
       </div>
     </SiteLayout>
