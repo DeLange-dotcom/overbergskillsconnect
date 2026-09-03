@@ -9,6 +9,11 @@ export const PLATFORM_TAGLINE =
 
 export const POWERED_BY_LINE = "Powered by Khulisa Group";
 export const GROUP_PLATFORM_LINE = "Powered by Khulisa Group";
+export const INITIATIVE_LINE = "A Hineni Call Initiative";
+export const BRAND_RELATIONSHIP_LINE =
+  "A Hineni Call Initiative · Powered by Khulisa Group";
+export const PLATFORM_OWNER_FORMAL = "Khulisa Group (Pty) Ltd";
+
 
 export const PROGRAMME_NAME = "Hineni Programme";
 export const PROGRAMME_BYLINE = "Hineni Programme powered by Khulisa Group";

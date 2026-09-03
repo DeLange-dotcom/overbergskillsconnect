@@ -5,9 +5,11 @@
 @custom-variant dark (&:is(.dark *));
 
 /*
- * Hineni Community Skills Register — Earthy Homestead design system.
- * Warm, trustworthy, community-focused. Playfair Display headings, Inter body.
+ * Overberg Skills Connect design system.
+ * Deep navy #0F1F2E, energetic green #4CAF2A, warm orange #F28C28,
+ * warm cream #FFF7EB, soft neutral #F2F4F7. Poppins throughout.
  */
+
 
 @theme inline {
   --radius-sm: calc(var(--radius) - 4px);
