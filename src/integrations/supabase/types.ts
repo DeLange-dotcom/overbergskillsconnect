@@ -1286,6 +1286,42 @@ export type Database = {
           },
         ]
       }
+      noticeboard_favourites: {
+        Row: {
+          created_at: string
+          id: string
+          profile_id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          profile_id: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          profile_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "noticeboard_favourites_profile_id_fkey"
+            columns: ["profile_id"]
+            isOneToOne: false
+            referencedRelation: "noticeboard_profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "noticeboard_favourites_profile_id_fkey"
+            columns: ["profile_id"]
+            isOneToOne: false
+            referencedRelation: "noticeboard_public"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       noticeboard_lifecycle_events: {
         Row: {
           created_at: string
@@ -2265,25 +2301,37 @@ export type Database = {
       }
       user_profiles: {
         Row: {
+          account_status: string
           created_at: string
           full_name: string | null
           phone: string | null
+          status_changed_at: string | null
+          status_changed_by: string | null
+          status_reason: string | null
           town: string | null
           updated_at: string
           user_id: string
         }
         Insert: {
+          account_status?: string
           created_at?: string
           full_name?: string | null
           phone?: string | null
+          status_changed_at?: string | null
+          status_changed_by?: string | null
+          status_reason?: string | null
           town?: string | null
           updated_at?: string
           user_id: string
         }
         Update: {
+          account_status?: string
           created_at?: string
           full_name?: string | null
           phone?: string | null
+          status_changed_at?: string | null
+          status_changed_by?: string | null
+          status_reason?: string | null
           town?: string | null
           updated_at?: string
           user_id?: string
@@ -3545,10 +3593,92 @@ export type Database = {
       }
     }
     Functions: {
+      admin_audit_trail: {
+        Args: { _limit?: number }
+        Returns: {
+          action: string
+          admin_email: string
+          created_at: string
+          details: Json
+          entity_id: string
+          entity_type: string
+          id: string
+        }[]
+      }
+      admin_contact_activity: {
+        Args: { _limit?: number; _q?: string }
+        Returns: {
+          created_at: string
+          decided_at: string
+          id: string
+          provider_name: string
+          provider_reference: string
+          requester_name: string
+          revoked_at: string
+          status: string
+        }[]
+      }
+      admin_list_listings: {
+        Args: { _q?: string; _status?: string }
+        Returns: {
+          created_at: string
+          id: string
+          last_activity_at: string
+          name: string
+          owner_email: string
+          phone: string
+          public_listing_reference: string
+          skills: string[]
+          status: string
+          town: string
+          updated_at: string
+          user_id: string
+        }[]
+      }
+      admin_list_users: {
+        Args: { _q?: string }
+        Returns: {
+          account_status: string
+          created_at: string
+          email: string
+          full_name: string
+          last_sign_in_at: string
+          listing_id: string
+          listing_name: string
+          listing_reference: string
+          listing_status: string
+          phone: string
+          roles: string[]
+          town: string
+          user_id: string
+        }[]
+      }
+      admin_set_account_state: {
+        Args: { _reason?: string; _state: string; _user_id: string }
+        Returns: string
+      }
+      admin_set_listing_state: {
+        Args: { _profile_id: string; _reason?: string; _state: string }
+        Returns: string
+      }
+      admin_set_role: {
+        Args: { _grant: boolean; _role: string; _user_id: string }
+        Returns: string
+      }
+      admin_write_audit: {
+        Args: {
+          _action: string
+          _details: Json
+          _entity_id: string
+          _entity_type: string
+        }
+        Returns: undefined
+      }
       delete_email: {
         Args: { message_id: number; queue_name: string }
         Returns: boolean
       }
+      delete_my_account_data: { Args: never; Returns: Json }
       email_queue_dispatch: { Args: never; Returns: undefined }
       enqueue_email: {
         Args: { payload: Json; queue_name: string }
@@ -3571,6 +3701,8 @@ export type Database = {
         }
         Returns: boolean
       }
+      is_admin: { Args: { _uid?: string }; Returns: boolean }
+      is_super_admin: { Args: { _uid?: string }; Returns: boolean }
       lookup_feedback_request: {
         Args: { _token: string }
         Returns: {
@@ -3600,6 +3732,7 @@ export type Database = {
         }
         Returns: number
       }
+      normalise_town: { Args: { _town: string }; Returns: string }
       noticeboard_admin_stats: { Args: never; Returns: Json }
       noticeboard_claim_listing: {
         Args: { _manage_token: string }
@@ -3629,6 +3762,20 @@ export type Database = {
         Returns: string
       }
       noticeboard_my_delete: { Args: never; Returns: boolean }
+      noticeboard_my_favourites: {
+        Args: never
+        Returns: {
+          description: string
+          is_available: boolean
+          name: string
+          photo_url: string
+          profile_id: string
+          public_listing_reference: string
+          saved_at: string
+          skills: string[]
+          town: string
+        }[]
+      }
       noticeboard_my_incoming_requests: {
         Args: never
         Returns: {
@@ -3684,6 +3831,10 @@ export type Database = {
         }[]
       }
       noticeboard_my_revoke: { Args: { _request_id: string }; Returns: string }
+      noticeboard_my_set_paused: {
+        Args: { _paused: boolean }
+        Returns: boolean
+      }
       noticeboard_my_update: { Args: { _payload: Json }; Returns: string }
       noticeboard_owner_decide: {
         Args: { _decision: string; _manage_token: string; _request_id: string }
@@ -3765,6 +3916,15 @@ export type Database = {
           _token: string
         }
         Returns: string
+      }
+      sync_user_profile_core: {
+        Args: {
+          _full_name: string
+          _phone: string
+          _town: string
+          _uid: string
+        }
+        Returns: undefined
       }
       upsert_my_profile: {
         Args: { _full_name: string; _phone: string; _town: string }
