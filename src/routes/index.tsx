@@ -30,28 +30,32 @@ function Home() {
   const { t } = useTranslation();
   return (
     <SiteLayout>
-      <section className="px-4 sm:px-6 pt-16 pb-20">
+      <section className="px-4 sm:px-6 pt-14 pb-20">
         <div className="max-w-3xl mx-auto text-center">
-          <span className="inline-block px-3 py-1 rounded-full bg-brand-soft text-xs uppercase tracking-widest text-brand-primary font-semibold">
+          <span className="inline-block px-3 py-1 rounded-full bg-brand-green/10 text-xs uppercase tracking-widest text-brand-green font-semibold">
             {t("home.eyebrow")}
           </span>
-          <h1 className="mt-6 text-4xl md:text-5xl font-heading font-bold leading-tight text-brand-dark">
+          <h1 className="mt-6 text-4xl md:text-5xl font-heading font-bold leading-tight text-brand-navy">
             {t("home.title")}
           </h1>
-          <p className="mt-5 text-lg text-brand-dark/70 leading-relaxed">
+          <p className="mt-4 text-lg md:text-xl font-semibold text-brand-navy/80">
+            Local skills. <span className="text-brand-green">Real connections.</span>{" "}
+            <span className="text-brand-orange">Stronger communities.</span>
+          </p>
+          <p className="mt-4 text-base text-brand-navy/65 leading-relaxed">
             {t("home.subtitle")}
           </p>
 
           <div className="mt-10 grid gap-4 sm:grid-cols-2">
             <Link
               to="/advertise"
-              className="group rounded-3xl p-8 bg-brand-field text-primary-foreground shadow-lg shadow-brand-field/25 hover:shadow-brand-field/35 hover:scale-[1.02] transition text-left"
+              className="group rounded-3xl p-8 bg-brand-green text-white shadow-sm hover:shadow-lg hover:-translate-y-0.5 transition text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-navy focus-visible:ring-offset-2"
             >
               <div className="flex items-center justify-between">
                 <span className="text-xs font-bold uppercase tracking-wider opacity-90">
                   {t("home.lookingForWork")}
                 </span>
-                <span className="size-10 rounded-full bg-white/15 grid place-items-center">
+                <span className="size-10 rounded-full bg-white/20 grid place-items-center">
                   <Briefcase className="size-5" />
                 </span>
               </div>
@@ -61,13 +65,13 @@ function Home() {
 
             <Link
               to="/find-help"
-              className="group rounded-3xl p-8 bg-brand-sky text-primary-foreground shadow-lg shadow-brand-sky/25 hover:shadow-brand-sky/35 hover:scale-[1.02] transition text-left"
+              className="group rounded-3xl p-8 bg-brand-navy text-white shadow-sm hover:shadow-lg hover:-translate-y-0.5 transition text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-green focus-visible:ring-offset-2"
             >
               <div className="flex items-center justify-between">
                 <span className="text-xs font-bold uppercase tracking-wider opacity-90">
                   {t("home.lookingForSomeone")}
                 </span>
-                <span className="size-10 rounded-full bg-white/15 grid place-items-center">
+                <span className="size-10 rounded-full bg-brand-orange/90 grid place-items-center">
                   <Search className="size-5" />
                 </span>
               </div>
@@ -75,6 +79,7 @@ function Home() {
               <p className="mt-1 text-sm opacity-90">{t("home.browseDesc")}</p>
             </Link>
           </div>
+
 
           <div className="mt-10 flex items-start gap-3 text-left p-4 rounded-2xl border border-brand-dark/10 bg-white max-w-2xl mx-auto">
             <ShieldAlert className="size-5 text-amber-600 shrink-0 mt-0.5" />
