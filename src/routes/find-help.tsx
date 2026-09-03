@@ -3,9 +3,11 @@ import { useQuery } from "@tanstack/react-query";
 import { useMemo, useState } from "react";
 import { MapPin, Loader2, Search, Calendar } from "lucide-react";
 import { SiteLayout } from "@/components/site/SiteLayout";
-import { DisclaimerBanner } from "@/components/site/DisclaimerBanner";
+import { ShortNotice } from "@/components/site/ShortNotice";
+import { LocationSelect } from "@/components/site/LocationSelect";
 import { supabase } from "@/integrations/supabase/client";
 import { experienceLabel, type SkillExperience } from "@/lib/noticeboard";
+
 
 export const Route = createFileRoute("/find-help")({
   head: () => ({
