@@ -174,7 +174,7 @@ function UsersTab({ superAdmin }: { superAdmin: boolean }) {
   const { data, isLoading } = useQuery({
     queryKey: ["admin-users", q],
     queryFn: async (): Promise<AdminUser[]> => {
-      const { data, error } = await supabase.rpc("admin_list_users", { _q: q || null });
+      const { data, error } = await supabase.rpc("admin_list_users", { _q: q || undefined });
       if (error) throw error;
       return (data ?? []) as AdminUser[];
     },
@@ -187,7 +187,7 @@ function UsersTab({ superAdmin }: { superAdmin: boolean }) {
     const { error } = await supabase.rpc("admin_set_account_state", {
       _user_id: userId,
       _state: state,
-      _reason: reason,
+      _reason: reason ?? undefined,
     });
     if (error) {
       toast.error(
@@ -348,8 +348,8 @@ function ListingsTab() {
     queryKey: ["admin-listings", q, status],
     queryFn: async (): Promise<AdminListing[]> => {
       const { data, error } = await supabase.rpc("admin_list_listings", {
-        _q: q || null,
-        _status: status || null,
+        _q: q || undefined,
+        _status: status || undefined,
       });
       if (error) throw error;
       return (data ?? []) as AdminListing[];
@@ -363,7 +363,7 @@ function ListingsTab() {
     const { error } = await supabase.rpc("admin_set_listing_state", {
       _profile_id: id,
       _state: state,
-      _reason: reason,
+      _reason: reason ?? undefined,
     });
     if (error) {
       toast.error("You are not allowed to make that change.");
@@ -472,7 +472,7 @@ function RequestsTab() {
     queryKey: ["admin-activity", q],
     queryFn: async (): Promise<ActivityRow[]> => {
       const { data, error } = await supabase.rpc("admin_contact_activity", {
-        _q: q || null,
+        _q: q || undefined,
         _limit: 200,
       });
       if (error) throw error;
@@ -531,7 +531,7 @@ function RolesTab() {
   const { data, isLoading } = useQuery({
     queryKey: ["admin-users", q],
     queryFn: async (): Promise<AdminUser[]> => {
-      const { data, error } = await supabase.rpc("admin_list_users", { _q: q || null });
+      const { data, error } = await supabase.rpc("admin_list_users", { _q: q || undefined });
       if (error) throw error;
       return (data ?? []) as AdminUser[];
     },
