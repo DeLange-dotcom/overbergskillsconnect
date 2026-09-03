@@ -61,7 +61,7 @@ function SignOutButton() {
       className="inline-flex items-center gap-2 px-3 py-2 rounded-lg border border-brand-dark/15 text-sm text-brand-dark/70 hover:bg-brand-soft hover:text-brand-primary transition shrink-0"
     >
       {loading ? <Loader2 className="size-4 animate-spin" /> : <LogOut className="size-4" />}
-      Sign out
+      Sign Out
     </button>
   );
 }
@@ -147,7 +147,13 @@ function MyProfile() {
         <PeopleInterestedSection />
         <MyServiceRequestsSection />
 
-        <div className="pt-4 border-t border-brand-dark/10">
+        <div className="pt-4 border-t border-brand-dark/10 flex flex-wrap items-center gap-3">
+          <Link
+            to="/help"
+            className="inline-flex items-center gap-2 px-3 py-2 rounded-lg border border-brand-dark/15 text-sm text-brand-dark/70 hover:bg-brand-soft hover:text-brand-primary transition"
+          >
+            Need Help?
+          </Link>
           <SignOutButton />
         </div>
       </div>

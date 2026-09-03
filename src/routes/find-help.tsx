@@ -5,7 +5,6 @@ import { MapPin, Loader2, Search, Calendar } from "lucide-react";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { DisclaimerBanner } from "@/components/site/DisclaimerBanner";
 import { supabase } from "@/integrations/supabase/client";
-import { SKILL_CATEGORIES } from "@/lib/noticeboard";
 
 export const Route = createFileRoute("/find-help")({
   head: () => ({
@@ -35,9 +34,10 @@ type Row = {
   created_at: string;
 };
 
+const EXAMPLES = ["Gardener", "Painter", "Domestic worker", "Plumber", "Carpenter"];
+
 function FindHelp() {
   const [town, setTown] = useState("");
-  const [skill, setSkill] = useState("");
   const [q, setQ] = useState("");
 
   const { data, isLoading } = useQuery({
@@ -55,64 +55,65 @@ function FindHelp() {
   const filtered = useMemo(() => {
     return (data ?? []).filter((r) => {
       if (town && !r.town.toLowerCase().includes(town.toLowerCase())) return false;
-      if (skill && !r.skills.includes(skill)) return false;
       if (q) {
-        const hay = `${r.name} ${r.town} ${r.description} ${r.skills.join(" ")}`.toLowerCase();
+        const hay = `${r.name} ${r.town} ${r.description} ${r.skills.join(" ")} ${r.category ?? ""}`.toLowerCase();
         if (!hay.includes(q.toLowerCase())) return false;
       }
       return true;
     });
-  }, [data, town, skill, q]);
+  }, [data, town, q]);
 
   return (
     <SiteLayout>
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 py-10 sm:py-14">
-        <h1 className="text-3xl sm:text-4xl font-heading font-bold mb-3">Looking for a service?</h1>
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 py-8 sm:py-14">
+        <h1 className="text-3xl sm:text-4xl font-heading font-bold mb-2">What help do you need?</h1>
         <p className="text-brand-dark/70 max-w-2xl mb-6">
-          Browse local people offering services. Overberg Skills Connect does not vet or recommend anyone
-          — please make your own checks before entering into any agreement.
+          Type what you are looking for. Overberg Skills Connect does not vet or recommend anyone —
+          please make your own checks before entering into any agreement.
         </p>
+
+        <div className="mb-6 p-4 sm:p-5 bg-brand-soft rounded-2xl">
+          <div className="relative">
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 size-5 text-brand-dark/40" />
+            <input
+              value={q}
+              onChange={(e) => setQ(e.target.value)}
+              placeholder="e.g. Gardener"
+              aria-label="What help do you need?"
+              spellCheck="true"
+              className="w-full pl-12 pr-4 py-4 text-base rounded-xl bg-white border border-brand-dark/10"
+            />
+          </div>
+          <div className="flex flex-wrap gap-2 mt-3">
+            {EXAMPLES.map((e) => (
+              <button
+                key={e}
+                type="button"
+                onClick={() => setQ(e)}
+                className="px-3 py-2 rounded-full bg-white border border-brand-dark/10 text-sm hover:border-brand-primary/40"
+              >
+                {e}
+              </button>
+            ))}
+          </div>
+          <div className="mt-4">
+            <label className="text-sm font-medium text-brand-dark/70" htmlFor="area">
+              Area (optional)
+            </label>
+            <input
+              id="area"
+              value={town}
+              onChange={(e) => setTown(e.target.value)}
+              placeholder="e.g. Hermanus"
+              className="w-full mt-1 px-4 py-3.5 text-base rounded-xl bg-white border border-brand-dark/10"
+            />
+          </div>
+        </div>
 
         <div className="mb-6">
           <DisclaimerBanner compact />
         </div>
 
-        <div className="grid sm:grid-cols-3 gap-3 mb-8 p-4 bg-brand-soft rounded-2xl">
-          <div>
-            <label className="text-xs uppercase tracking-wider text-brand-dark/60">Search</label>
-            <div className="relative mt-1">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-brand-dark/40" />
-              <input
-                value={q}
-                onChange={(e) => setQ(e.target.value)}
-                placeholder="name, skill, town…"
-                className="w-full pl-9 pr-3 py-2.5 rounded-lg bg-white border border-brand-dark/10"
-              />
-            </div>
-          </div>
-          <div>
-            <label className="text-xs uppercase tracking-wider text-brand-dark/60">Town</label>
-            <input
-              value={town}
-              onChange={(e) => setTown(e.target.value)}
-              placeholder="e.g. Hermanus"
-              className="w-full mt-1 px-3 py-2.5 rounded-lg bg-white border border-brand-dark/10"
-            />
-          </div>
-          <div>
-            <label className="text-xs uppercase tracking-wider text-brand-dark/60">Skill</label>
-            <select
-              value={skill}
-              onChange={(e) => setSkill(e.target.value)}
-              className="w-full mt-1 px-3 py-2.5 rounded-lg bg-white border border-brand-dark/10"
-            >
-              <option value="">All skills</option>
-              {SKILL_CATEGORIES.map((s) => (
-                <option key={s} value={s}>{s}</option>
-              ))}
-            </select>
-          </div>
-        </div>
 
         {isLoading ? (
           <div className="grid place-items-center py-20 text-brand-dark/50">

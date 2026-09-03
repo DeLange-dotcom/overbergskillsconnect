@@ -1,4 +1,4 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { supabase } from "@/integrations/supabase/client";
@@ -403,6 +403,9 @@ function AuthPage() {
               Back to sign in
             </button>
           )}
+          <Link to="/help" className="text-brand-primary hover:underline self-start">
+            Need Help?
+          </Link>
         </div>
       </div>
     </SiteLayout>

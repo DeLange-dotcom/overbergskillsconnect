@@ -105,7 +105,7 @@ function Advertise() {
       description: String(fd.get("description") || "").trim(),
       availability: String(fd.get("availability") || "").trim() || null,
       years_experience: fd.get("years_experience") ? Number(fd.get("years_experience")) : null,
-      photo_url: String(fd.get("photo_url") || "").trim() || null,
+      
       skills: finalSkills,
       category: finalSkills[0] ?? null,
       accepted_terms: true,
@@ -283,7 +283,6 @@ function Advertise() {
             />
           </div>
 
-          <Field label="Optional photo URL" name="photo_url" placeholder="https://…" type="url" />
 
           <Field
             label="Telephone number (kept private)"

@@ -1,4 +1,5 @@
 export const SKILL_CATEGORIES = [
+  "Domestic Worker",
   "Cleaning & housekeeping",
   "Childcare",
   "Eldercare",
@@ -8,6 +9,7 @@ export const SKILL_CATEGORIES = [
   "Plumbing",
   "Electrical",
   "Building & handyman",
+  "Carpentry",
   "Farm work",
   "Driving",
   "Tutoring",
@@ -15,6 +17,7 @@ export const SKILL_CATEGORIES = [
   "Sewing",
   "Admin & office",
   "IT & computers",
+  "Security",
   "Other",
 ] as const;
 
