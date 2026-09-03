@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { SiteLayout } from "@/components/site/SiteLayout";
-import { UserPlus, Search, MessageCircle, ShieldAlert, Settings, Eye, Archive, Trash2 } from "lucide-react";
+import { UserPlus, Search, MessageCircle, ShieldAlert, Settings, Eye, Archive, Trash2, Bell } from "lucide-react";
 import { Link } from "@tanstack/react-router";
 import { PLATFORM_NAME } from "@/lib/brand";
 
@@ -39,8 +39,9 @@ function HowItWorks() {
                 location. No paperwork or approvals needed.
               </Card>
               <Card icon={<MessageCircle />} title="3. Receive contact requests">
-                When someone is interested, they send a contact request through the platform. You
-                choose whether to share your details. Your private information is never public.
+                When someone is interested, they send a contact request. Your telephone number is
+                never shown on the noticeboard. It is only shared with a person after you approve
+                their request, and you can withdraw that approval at any time.
               </Card>
             </ol>
           </div>
@@ -53,8 +54,8 @@ function HowItWorks() {
                 their descriptions before reaching out.
               </Card>
               <Card icon={<MessageCircle />} title="2. Request contact details">
-                Found someone suitable? Send a contact request. They will be notified and can choose
-                to share their phone number or email with you.
+                Found someone suitable? Send a contact request. They are notified and decide
+                whether to share their telephone number with you. Nobody else can see it.
               </Card>
               <Card icon={<HandshakeIcon />} title="3. Connect directly">
                 Once the worker shares their details, you contact each other directly and agree on
@@ -71,22 +72,28 @@ function HowItWorks() {
               Go to <strong>My Listing</strong> to update your skills, description, photo or
               contact details at any time. Changes appear immediately on the noticeboard.
             </Card>
-            <Card icon={<Eye />} title="Hide or show your listing">
-              Temporarily hide your profile from public search without deleting it. When you are
-              ready, make it visible again with one click.
+            <Card icon={<Eye />} title="Pause or unpause your listing">
+              Pausing hides your listing from the noticeboard without deleting anything. Unpause it
+              whenever you are ready to take work again.
             </Card>
             <Card icon={<Archive />} title="Archive and reactivate">
               Archiving removes your listing from public view but keeps all your data safe. You
               can reactivate it whenever you want — perfect for seasonal work or short breaks.
             </Card>
             <Card icon={<Trash2 />} title="Delete permanently">
-              If you no longer need your profile, you can delete it permanently. This removes
-              all your data from the platform.
+              Deleting is separate from pausing and cannot be undone. You will be asked to confirm
+              twice before anything is removed.
             </Card>
             <Card icon={<MessageCircle />} title="Handle contact requests">
               When someone asks for your details, you will see it under <strong>People Interested
-              In Me</strong> on your My Listing page. You decide whether to approve or decline
-              each request. Your phone number and email are never shown publicly.
+              In Me</strong> on <strong>My Profile</strong>. You decide whether to approve or
+              decline each request. Your telephone number is only released to a person you have
+              approved, and you can withdraw it again at any time.
+            </Card>
+            <Card icon={<Bell />} title="Check your profile regularly">
+              We do not send SMS messages. New contact requests and updates appear under{" "}
+              <strong>Notifications</strong> on <strong>My Profile</strong>, so please check it
+              regularly.
             </Card>
           </ol>
         </div>
