@@ -52,10 +52,17 @@ function friendlyAuthError(msg: string): string {
   if (m.includes("user already registered") || m.includes("already registered")) {
     return "An account already exists for that email. Try signing in instead, or reset your password.";
   }
-  if (m.includes("rate limit")) {
+  if (m.includes("rate limit") || m.includes("too many")) {
     return "Too many attempts. Please wait a minute and try again.";
   }
-  return msg;
+  if (m.includes("network") || m.includes("fetch")) {
+    return "We could not reach the server. Please check your internet connection and try again.";
+  }
+  if (m.includes("email") && m.includes("invalid")) {
+    return "That email address doesn't look right. Please check it and try again.";
+  }
+  // Never show raw technical errors to users.
+  return "Something went wrong. Please try again, or use \u201cForgot password?\u201d if you cannot sign in.";
 }
 
 function AuthPage() {
@@ -72,12 +79,22 @@ function AuthPage() {
   const checks = useMemo(() => checkPassword(password), [password]);
   const strong = passwordIsStrong(checks);
 
+  function markWelcome() {
+    try {
+      if (typeof window !== "undefined" && !localStorage.getItem("osc_welcomed")) {
+        localStorage.setItem("osc_show_welcome", "1");
+      }
+    } catch {
+      /* storage unavailable */
+    }
+  }
+
   function nextDest(): string {
-    if (typeof window === "undefined") return "/my-advert";
+    if (typeof window === "undefined") return "/profile";
     const params = new URLSearchParams(window.location.search);
     const n = params.get("next");
-    if (n && n.startsWith("/")) return n;
-    return "/my-advert";
+    if (n && n.startsWith("/") && !n.startsWith("//")) return n;
+    return "/profile";
   }
 
   // Handle email verification callback (code exchange) and post-verification UX
@@ -116,7 +133,8 @@ function AuthPage() {
       if (cancelled) return;
       if (data.session) {
         if (verified || code) {
-          toast.success("Email verified — you're signed in.");
+          toast.success("Your email is verified. Welcome to Overberg Skills Connect!");
+          markWelcome();
         }
         navigate({ to: nextDest(), replace: true });
       } else if (verified) {
@@ -144,6 +162,7 @@ function AuthPage() {
       if (mode === "signin") {
         const { error } = await supabase.auth.signInWithPassword({ email, password: pw });
         if (error) throw error;
+        markWelcome();
         navigate({ to: nextDest(), replace: true });
       } else if (mode === "signup") {
         const { data, error } = await supabase.auth.signUp({
@@ -158,6 +177,7 @@ function AuthPage() {
         // If email confirmations are enabled, no session is returned yet.
         if (data.session) {
           toast.success("Account created. You're signed in.");
+          markWelcome();
           navigate({ to: nextDest(), replace: true });
         } else {
           setSignupEmail(email);
@@ -200,6 +220,7 @@ function AuthPage() {
 
   async function google() {
     setBusy(true);
+    markWelcome();
     const result = await lovable.auth.signInWithOAuth("google", {
       redirect_uri: window.location.origin + "/auth" + (window.location.search || ""),
     });
@@ -266,7 +287,7 @@ function AuthPage() {
         <p className="text-brand-dark/60 text-sm mb-8">
           {mode === "forgot"
             ? "Enter your email and we'll send you a link to set a new password."
-            : "Admins and programme coordinators use this area. The public site doesn't require an account."}
+            : "Sign in or create a free account to advertise your skills, request contact details, and manage your activity."}
         </p>
 
         {mode !== "forgot" && (
@@ -278,6 +299,9 @@ function AuthPage() {
             >
               <span className="font-medium">Continue with Google</span>
             </button>
+            <p className="text-xs text-brand-dark/60 -mt-2 mb-2 text-center">
+              Google is only used to sign you in. We do not access your emails, contacts or files.
+            </p>
             <div className="flex items-center gap-3 my-5">
               <div className="flex-1 h-px bg-brand-dark/10" />
               <span className="text-xs text-brand-dark/40 uppercase tracking-widest">or</span>
@@ -349,12 +373,19 @@ function AuthPage() {
         )}
         <div className="mt-4 flex flex-col gap-2 text-sm">
           {mode !== "forgot" && (
-            <button
-              onClick={() => { setMode(mode === "signin" ? "signup" : "signin"); setShowPwHints(false); }}
-              className="text-brand-primary hover:underline self-start"
-            >
-              {mode === "signin" ? "Need an account? Sign up" : "Have an account? Sign in"}
-            </button>
+            <div className="rounded-xl border border-brand-primary/30 bg-brand-soft/60 p-4 text-center">
+              <p className="text-sm text-brand-dark/70 mb-3">
+                {mode === "signin"
+                  ? "New here? Creating an account is free and takes about a minute."
+                  : "Already have an account?"}
+              </p>
+              <button
+                onClick={() => { setMode(mode === "signin" ? "signup" : "signin"); setShowPwHints(false); }}
+                className="w-full px-4 py-3 rounded-xl bg-brand-primary text-white font-semibold shadow-md hover:opacity-95"
+              >
+                {mode === "signin" ? "Create a free account" : "Sign in instead"}
+              </button>
+            </div>
           )}
           {mode === "signin" && (
             <button
