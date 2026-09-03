@@ -35,9 +35,10 @@ type Row = {
   created_at: string;
 };
 
+const EXAMPLES = ["Gardener", "Painter", "Domestic worker", "Plumber", "Carpenter"];
+
 function FindHelp() {
   const [town, setTown] = useState("");
-  const [skill, setSkill] = useState("");
   const [q, setQ] = useState("");
 
   const { data, isLoading } = useQuery({
