@@ -62,7 +62,7 @@ export function Header() {
         <Link to="/" className="flex items-center gap-2.5 shrink-0">
           <ConnectMark className="size-9 sm:size-10" />
           <span className="leading-tight">
-            <span className="block font-heading text-[15px] sm:text-lg font-bold uppercase tracking-tight text-brand-navy">
+            <span className="block font-heading text-[12.5px] sm:text-lg font-bold uppercase tracking-tight text-brand-navy">
               Overberg <span className="text-brand-green">Skills</span> Connect
             </span>
             <span className="hidden sm:block text-[9px] font-medium uppercase tracking-[0.14em] text-brand-navy/55">
@@ -91,7 +91,7 @@ export function Header() {
           {signedIn ? (
             <Link
               to="/profile"
-              className="inline-flex relative items-center gap-2 px-3 sm:px-4 py-2.5 rounded-full bg-brand-primary text-white text-sm font-semibold shadow hover:bg-brand-primary/90 transition"
+              className="inline-flex relative items-center gap-2 px-3 sm:px-4 py-2.5 rounded-full bg-brand-green text-white text-sm font-semibold whitespace-nowrap shadow-sm hover:bg-brand-primary/90 transition"
             >
               <UserRound className="size-4" />
               My Profile
@@ -104,7 +104,7 @@ export function Header() {
           ) : (
             <Link
               to="/auth"
-              className="inline-flex px-3 sm:px-4 py-2.5 rounded-full border border-brand-dark/15 text-sm font-medium text-brand-dark/80 hover:bg-brand-soft hover:text-brand-primary transition"
+              className="inline-flex px-3 sm:px-4 py-2.5 rounded-full border border-brand-navy/15 text-sm font-medium whitespace-nowrap text-brand-dark/80 hover:bg-brand-soft hover:text-brand-primary transition"
             >
               Sign In
             </Link>
