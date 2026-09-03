@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteLayout } from "@/components/site/SiteLayout";
+import { PageHeader } from "@/components/site/PageHeader";
 
 export const Route = createFileRoute("/help")({
   head: () => ({
@@ -29,7 +30,7 @@ const SUPPORT_PHONE: string | null = null;
 function Step({ n, children }: { n: number; children: React.ReactNode }) {
   return (
     <li className="flex gap-3">
-      <span className="size-7 shrink-0 rounded-full bg-brand-primary text-white grid place-items-center text-sm font-bold">
+      <span className="size-7 shrink-0 rounded-full bg-brand-green text-white grid place-items-center text-sm font-bold">
         {n}
       </span>
       <span className="pt-0.5 text-brand-dark/80">{children}</span>
@@ -41,15 +42,14 @@ function HelpPage() {
   return (
     <SiteLayout>
       <div className="max-w-2xl mx-auto px-4 sm:px-6 py-10 sm:py-14">
-        <h1 className="text-3xl sm:text-4xl font-heading font-bold mb-3">
-          Need help using Overberg Skills Connect?
-        </h1>
-        <p className="text-brand-dark/70 mb-8">
-          Here is how it works, step by step.
-        </p>
+        <PageHeader
+          eyebrow="Need Help?"
+          title="Need help using Overberg Skills Connect?"
+          intro="Here is how it works, step by step."
+        />
 
         <section className="rounded-2xl border border-brand-dark/10 bg-white p-5 sm:p-6 mb-6">
-          <h2 className="text-xl font-heading font-bold mb-4">How to advertise your skills</h2>
+          <h2 className="osc-heading text-xl mb-4">How to advertise your skills</h2>
           <ol className="space-y-3 text-base">
             <Step n={1}>Create a free account.</Step>
             <Step n={2}>Choose the skills you offer.</Step>
@@ -68,7 +68,7 @@ function HelpPage() {
         </section>
 
         <section className="rounded-2xl border border-brand-dark/10 bg-white p-5 sm:p-6 mb-6">
-          <h2 className="text-xl font-heading font-bold mb-4">How to find someone</h2>
+          <h2 className="osc-heading text-xl mb-4">How to find someone</h2>
           <ol className="space-y-3 text-base">
             <Step n={1}>Search for the help you need.</Step>
             <Step n={2}>Choose a service provider.</Step>
@@ -87,7 +87,7 @@ function HelpPage() {
         </section>
 
         <section className="rounded-2xl border border-brand-dark/10 bg-brand-soft/60 p-5 sm:p-6">
-          <h2 className="text-xl font-heading font-bold mb-2">Still stuck?</h2>
+          <h2 className="osc-heading text-xl mb-2">Still stuck?</h2>
           <p className="text-brand-dark/75 text-base">
             If you cannot create an account or publish your listing, you can ask a person for help.
           </p>

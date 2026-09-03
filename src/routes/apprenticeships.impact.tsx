@@ -30,7 +30,7 @@ function Impact() {
   return (
     <SiteLayout>
       <div className="max-w-5xl mx-auto px-4 sm:px-6 py-12">
-        <h1 className="text-3xl sm:text-4xl font-heading font-bold mb-3">Impact Dashboard</h1>
+        <h1 className="osc-heading text-3xl sm:text-4xl mb-3">Impact Dashboard</h1>
         <p className="text-brand-dark/70 mb-8">A live view of activity in the Apprenticeships &amp; Mentorships programme.</p>
         {!s ? (
           <div className="py-20 text-center text-brand-dark/50"><Loader2 className="size-6 animate-spin inline" /></div>

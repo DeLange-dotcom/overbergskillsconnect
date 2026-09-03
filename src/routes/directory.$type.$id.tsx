@@ -134,7 +134,7 @@ function ProfilePage() {
             </div>
             <div className="flex-1 min-w-0">
               <div className="flex flex-wrap items-center gap-3 mb-2">
-                <h1 className="text-3xl font-heading font-bold">{firstName}</h1>
+                <h1 className="osc-heading text-3xl">{firstName}</h1>
                 <VerificationBadge level={level} size="lg" />
               </div>
               <div className="flex flex-wrap items-center gap-4 text-sm text-brand-dark/70">

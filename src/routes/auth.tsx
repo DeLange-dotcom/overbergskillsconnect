@@ -235,10 +235,11 @@ function AuthPage() {
     return (
       <SiteLayout>
         <div className="max-w-md mx-auto px-4 sm:px-6 py-14">
-          <div className="inline-flex items-center justify-center size-12 rounded-full bg-brand-soft mb-4">
-            <Mail className="size-6 text-brand-primary" />
+          <div className="osc-card p-6 sm:p-7">
+          <div className="inline-flex items-center justify-center size-12 rounded-full bg-brand-cream mb-4">
+            <Mail className="size-6 text-brand-orange" />
           </div>
-          <h1 className="text-3xl font-heading font-bold mb-2">Confirm your email</h1>
+          <h1 className="osc-heading text-3xl mb-2">Confirm your email</h1>
           <p className="text-brand-dark/70 text-sm mb-6">
             We've sent a verification link to <strong>{signupEmail}</strong>. Click the link in
             that email to activate your account.
@@ -254,17 +255,18 @@ function AuthPage() {
           <button
             onClick={resendVerification}
             disabled={resending}
-            className="w-full inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-brand-primary text-white font-medium disabled:opacity-60 mb-3"
+            className="osc-btn osc-btn-primary w-full mb-3"
           >
             {resending && <Loader2 className="size-4 animate-spin" />}
             Resend verification email
           </button>
           <button
             onClick={() => { setSignupSent(false); setMode("signin"); }}
-            className="w-full px-4 py-3 rounded-xl border border-brand-dark/10 hover:bg-brand-soft"
+            className="osc-btn osc-btn-outline w-full"
           >
             Back to sign in
           </button>
+          </div>
         </div>
       </SiteLayout>
     );
@@ -272,19 +274,13 @@ function AuthPage() {
 
   return (
     <SiteLayout>
-      <div className="max-w-md mx-auto px-4 sm:px-6 py-14">
-        <div className="mb-6">
-          <div className="text-xs uppercase tracking-widest text-brand-primary font-semibold">
-            Overberg Skills Connect
-          </div>
-          <p className="text-sm text-brand-dark/60 mt-1">
-            Supporting Skills, Mentorship, Apprenticeships and Community Opportunities
-          </p>
-        </div>
-        <h1 className="text-3xl font-heading font-bold mb-2">
+      <div className="max-w-md mx-auto px-4 sm:px-6 py-10 sm:py-14">
+        <div className="osc-card p-6 sm:p-8">
+        <span className="osc-eyebrow">Overberg Skills Connect</span>
+        <h1 className="osc-heading text-3xl mt-2 mb-2">
           {mode === "signin" ? "Sign in" : mode === "signup" ? "Create account" : "Reset password"}
         </h1>
-        <p className="text-brand-dark/60 text-sm mb-8">
+        <p className="text-brand-navy/65 text-sm mb-8">
           {mode === "forgot"
             ? "Enter your email and we'll send you a link to set a new password."
             : "Sign in or create a free account to advertise your skills, request contact details, and manage your activity."}
@@ -295,7 +291,7 @@ function AuthPage() {
             <button
               onClick={google}
               disabled={busy}
-              className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl border border-brand-dark/10 hover:bg-brand-soft mb-4"
+              className="osc-btn osc-btn-outline w-full mb-4"
             >
               <span className="font-medium">Continue with Google</span>
             </button>
@@ -322,7 +318,7 @@ function AuthPage() {
               required
               placeholder="Email"
               autoComplete="email"
-              className="w-full px-4 py-3 border border-brand-dark/10 rounded-xl"
+              className="osc-input"
             />
             {mode !== "forgot" && (
               <>
@@ -336,13 +332,13 @@ function AuthPage() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   onFocus={() => mode === "signup" && setShowPwHints(true)}
-                  className="w-full px-4 py-3 border border-brand-dark/10 rounded-xl"
+                  className="osc-input"
                   aria-describedby={mode === "signup" ? "pw-requirements" : undefined}
                 />
                 {mode === "signup" && (showPwHints || password.length > 0) && (
                   <div
                     id="pw-requirements"
-                    className="p-3 rounded-xl bg-brand-soft/60 border border-brand-dark/5 text-sm"
+                    className="p-3 rounded-xl bg-brand-neutral border border-brand-navy/5 text-sm"
                   >
                     <p className="font-medium mb-2 text-brand-dark/80">
                       Your password must include:
@@ -364,7 +360,7 @@ function AuthPage() {
             <button
               type="submit"
               disabled={busy || (mode === "signup" && !strong)}
-              className="w-full inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-brand-primary text-white font-medium disabled:opacity-60"
+              className="osc-btn osc-btn-primary w-full"
             >
               {busy && <Loader2 className="size-4 animate-spin" />}
               {mode === "signin" ? "Sign in" : mode === "signup" ? "Create account" : "Send reset link"}
@@ -373,7 +369,7 @@ function AuthPage() {
         )}
         <div className="mt-4 flex flex-col gap-2 text-sm">
           {mode !== "forgot" && (
-            <div className="rounded-xl border border-brand-primary/30 bg-brand-soft/60 p-4 text-center">
+            <div className="osc-panel-cream p-4 text-center">
               <p className="text-sm text-brand-dark/70 mb-3">
                 {mode === "signin"
                   ? "New here? Creating an account is free and takes about a minute."
@@ -381,7 +377,7 @@ function AuthPage() {
               </p>
               <button
                 onClick={() => { setMode(mode === "signin" ? "signup" : "signin"); setShowPwHints(false); }}
-                className="w-full px-4 py-3 rounded-xl bg-brand-primary text-white font-semibold shadow-md hover:opacity-95"
+                className="osc-btn osc-btn-primary w-full"
               >
                 {mode === "signin" ? "Create a free account" : "Sign in instead"}
               </button>
@@ -406,6 +402,7 @@ function AuthPage() {
           <Link to="/help" className="text-brand-primary hover:underline self-start">
             Need Help?
           </Link>
+        </div>
         </div>
       </div>
     </SiteLayout>

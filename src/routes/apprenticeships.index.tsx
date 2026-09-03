@@ -105,7 +105,7 @@ function Hub() {
       </section>
 
       <section className="max-w-5xl mx-auto px-4 sm:px-6 py-10">
-        <h2 className="text-2xl font-heading font-bold mb-2">The Learning Pathway</h2>
+        <h2 className="osc-heading text-2xl mb-2">The Learning Pathway</h2>
         <p className="text-brand-dark/70 mb-6 text-sm">
           Every journey is different — start anywhere along the path.
         </p>
@@ -115,7 +115,7 @@ function Hub() {
       <section className="bg-brand-soft/50 py-12">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center">
           <Award className="size-10 text-brand-accent mx-auto mb-4" />
-          <h2 className="text-2xl font-heading font-bold mb-3">
+          <h2 className="osc-heading text-2xl mb-3">
             Master Craftspeople &amp; Knowledge Keepers
           </h2>
           <p className="text-brand-dark/70 max-w-2xl mx-auto mb-6">

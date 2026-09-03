@@ -43,7 +43,7 @@ function ViewRequest() {
     return (
       <SiteLayout>
         <div className="max-w-md mx-auto px-4 py-16 text-center">
-          <h1 className="text-2xl font-heading font-bold mb-2">Request not found</h1>
+          <h1 className="osc-heading text-2xl mb-2">Request not found</h1>
           <Link to="/find-help" className="text-brand-primary underline">
             Back to the noticeboard
           </Link>
@@ -55,7 +55,7 @@ function ViewRequest() {
   return (
     <SiteLayout>
       <div className="max-w-md mx-auto px-4 sm:px-6 py-10">
-        <h1 className="text-2xl font-heading font-bold mb-1">Request to {data.profile_name}</h1>
+        <h1 className="osc-heading text-2xl mb-1">Request to {data.profile_name}</h1>
         <p className="text-sm text-brand-dark/60 mb-6">{data.profile_town}</p>
 
         {data.status === "pending" && (

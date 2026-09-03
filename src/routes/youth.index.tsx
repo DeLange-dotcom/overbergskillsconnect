@@ -67,7 +67,7 @@ function YouthHub() {
       </section>
 
       <section className="max-w-4xl mx-auto px-4 sm:px-6 py-10">
-        <h2 className="text-2xl font-heading font-bold mb-2">The pathway</h2>
+        <h2 className="osc-heading text-2xl mb-2">The pathway</h2>
         <p className="text-brand-dark/70 mb-6 text-sm">
           Every young person grows at their own pace. Hineni walks alongside you.
         </p>

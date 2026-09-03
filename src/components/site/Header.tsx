@@ -59,13 +59,19 @@ export function Header() {
   return (
     <header className="border-b border-brand-dark/5 bg-brand-page sticky top-0 z-40 backdrop-blur">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4 flex items-center justify-between gap-3">
-        <Link to="/" className="flex items-center gap-2.5 shrink-0">
+        <Link to="/" className="flex flex-col items-start gap-0.5 shrink-0 min-w-0">
           <img
             src={logoAsset.url}
             alt="Overberg Skills Connect — A Hineni Call Initiative, powered by Khulisa Group"
-            className="h-10 sm:h-12 w-auto"
+            className="h-9 sm:h-11 w-auto"
           />
+          <span className="flex items-center gap-1 text-[8px] sm:text-[9px] uppercase tracking-[0.14em] leading-none whitespace-nowrap">
+            <span className="font-semibold text-brand-green">A Hineni Call Initiative</span>
+            <span className="text-brand-navy/25">·</span>
+            <span className="text-brand-navy/60">Powered by Khulisa Group</span>
+          </span>
         </Link>
+
 
 
         <nav className="hidden md:flex items-center gap-6 text-sm whitespace-nowrap">

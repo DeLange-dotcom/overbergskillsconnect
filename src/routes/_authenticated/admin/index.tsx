@@ -75,7 +75,7 @@ function AdminDashboard() {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
         <div className="flex flex-wrap items-start justify-between gap-3 mb-6">
           <div>
-            <h1 className="text-3xl sm:text-4xl font-heading font-bold">Administration</h1>
+            <h1 className="osc-heading text-3xl sm:text-4xl">Administration</h1>
             <p className="text-brand-dark/60 text-sm mt-1">
               Operational tools for managing members, listings and support enquiries.
             </p>

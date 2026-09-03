@@ -115,7 +115,7 @@ function RequestSupport() {
       <SiteLayout>
         <div className="max-w-2xl mx-auto px-4 sm:px-6 py-16 text-center">
           <CheckCircle2 className="size-16 text-brand-primary mx-auto mb-6" />
-          <h1 className="text-3xl font-heading font-bold mb-3">Request received</h1>
+          <h1 className="osc-heading text-3xl mb-3">Request received</h1>
           <p className="text-brand-dark/70 mb-8 max-w-md mx-auto">
             Thank you. A Hineni coordinator will be in touch soon to help match you with the right
             vetted person.
@@ -136,7 +136,7 @@ function RequestSupport() {
   return (
     <SiteLayout>
       <div className="max-w-2xl mx-auto px-4 sm:px-6 py-10 sm:py-14">
-        <h1 className="text-3xl font-heading font-bold mb-3">Request support</h1>
+        <h1 className="osc-heading text-3xl mb-3">Request support</h1>
         <p className="text-brand-dark/70 mb-8">
           Tell us what help you need. We will personally find a vetted community member for you.
         </p>

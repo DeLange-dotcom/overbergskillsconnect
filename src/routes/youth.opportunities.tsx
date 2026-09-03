@@ -104,7 +104,7 @@ function OpportunityBoard() {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 py-10 sm:py-14">
         <div className="flex flex-wrap items-end justify-between gap-3 mb-4">
           <div>
-            <h1 className="text-3xl sm:text-4xl font-heading font-bold mb-2">Opportunity Board</h1>
+            <h1 className="osc-heading text-3xl sm:text-4xl mb-2">Opportunity Board</h1>
             <p className="text-brand-dark/70 max-w-2xl">
               Approved opportunities for young people aged 15–25. All applications are facilitated through Hineni.
             </p>

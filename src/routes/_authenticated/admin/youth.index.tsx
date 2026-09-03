@@ -25,7 +25,7 @@ function AdminYouthList() {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 py-8">
         <div className="flex items-end justify-between mb-6 flex-wrap gap-3">
           <div>
-            <h1 className="text-3xl font-heading font-bold">Youth registrations</h1>
+            <h1 className="osc-heading text-3xl">Youth registrations</h1>
             <p className="text-sm text-brand-dark/60">
               Review applications, approve, or hold for follow-up.
             </p>

@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { Mail } from "lucide-react";
+import { PageHeader } from "@/components/site/PageHeader";
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
@@ -18,11 +19,10 @@ function ContactPage() {
   return (
     <SiteLayout>
       <div className="max-w-xl mx-auto px-4 sm:px-6 py-12">
-        <h1 className="text-3xl font-heading font-bold mb-3">{t("contact.title")}</h1>
-        <p className="text-brand-dark/70 mb-8">{t("contact.intro")}</p>
-        <div className="p-6 rounded-2xl border border-brand-dark/10 bg-white">
+        <PageHeader eyebrow="Contact Us" title={t("contact.title")} intro={t("contact.intro")} />
+        <div className="p-6 osc-card">
           <div className="flex items-center gap-3 mb-3">
-            <Mail className="size-5 text-brand-primary" />
+            <Mail className="size-5 text-brand-orange" />
             <span className="font-medium">Email</span>
           </div>
           <a

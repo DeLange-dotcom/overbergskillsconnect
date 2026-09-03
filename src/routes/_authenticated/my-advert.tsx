@@ -77,7 +77,7 @@ function MyAdvert() {
           <div className="text-5xl mb-4" aria-hidden>
             📝
           </div>
-          <h1 className="text-3xl font-heading font-bold mb-3">My Listing</h1>
+          <h1 className="osc-heading text-3xl mb-3">My Listing</h1>
           <p className="text-brand-dark/70 mb-8">You haven't created your advert yet.</p>
           <Link
             to="/advertise"
@@ -218,7 +218,7 @@ function MyAdvertEditor({
       <div className="max-w-2xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
         <div className="flex items-start justify-between gap-3 mb-6">
           <div>
-            <h1 className="text-3xl sm:text-4xl font-heading font-bold">My Listing</h1>
+            <h1 className="osc-heading text-3xl sm:text-4xl">My Listing</h1>
             <p className="text-brand-dark/60 text-sm mt-1">
               Update any field and your advert changes immediately.
             </p>
@@ -277,7 +277,7 @@ function MyAdvertEditor({
           <LocationSelect value={town} onChange={setTown} required />
 
           <div>
-            <h2 className="text-xl font-heading font-bold">What work can you do?</h2>
+            <h2 className="osc-heading text-xl">What work can you do?</h2>
             <p className="text-sm text-brand-dark/60 mt-1 mb-3">
               Add, remove or change a skill and its experience level, then save your changes.
             </p>
@@ -418,7 +418,7 @@ function MyAdvertEditor({
             aria-modal="true"
           >
             <div className="bg-white rounded-2xl shadow-xl max-w-md w-full p-6">
-              <h2 className="text-xl font-heading font-bold mb-2">
+              <h2 className="osc-heading text-xl mb-2">
                 Permanently delete your listing?
               </h2>
               <p className="text-brand-dark/70 mb-4">
@@ -559,7 +559,7 @@ function IncomingRequests({ listing }: { listing: MyListing }) {
 
   return (
     <section className="mb-8">
-      <h2 className="text-xl font-heading font-bold mb-3">People Interested In Me</h2>
+      <h2 className="osc-heading text-xl mb-3">People Interested In Me</h2>
       {isLoading ? (
         <div className="text-sm text-brand-dark/60">Loading…</div>
       ) : rows.length === 0 ? (

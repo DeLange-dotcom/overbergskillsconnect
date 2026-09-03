@@ -67,7 +67,7 @@ function Mentors() {
       <div className="max-w-5xl mx-auto px-4 sm:px-6 py-10">
         <div className="flex flex-wrap items-end justify-between gap-4 mb-6">
           <div>
-            <h1 className="text-3xl sm:text-4xl font-heading font-bold">Find a Mentor</h1>
+            <h1 className="osc-heading text-3xl sm:text-4xl">Find a Mentor</h1>
             <p className="text-brand-dark/70 mt-2">Contact is brokered through Hineni — your details and theirs stay private.</p>
           </div>
           <Link to="/apprenticeships/become-mentor" className="px-5 py-2.5 rounded-full bg-brand-accent text-white text-sm font-medium hover:brightness-110">

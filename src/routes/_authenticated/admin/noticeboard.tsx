@@ -248,7 +248,7 @@ function NoticeboardAdmin() {
     return (
       <SiteLayout>
         <div className="max-w-md mx-auto px-4 py-16 text-center">
-          <h1 className="text-2xl font-heading font-bold mb-2">Admin access required</h1>
+          <h1 className="osc-heading text-2xl mb-2">Admin access required</h1>
           <Link to="/" className="text-brand-primary underline">
             Go home
           </Link>
@@ -261,7 +261,7 @@ function NoticeboardAdmin() {
     <SiteLayout>
       <div className="max-w-6xl mx-auto px-4 sm:px-6 py-8">
         <header className="mb-6">
-          <h1 className="text-3xl font-heading font-bold">Noticeboard Administration</h1>
+          <h1 className="osc-heading text-3xl">Noticeboard Administration</h1>
           <p className="text-sm text-brand-dark/60 mt-1">
             Platform management — not an endorsement of any worker listed.
           </p>

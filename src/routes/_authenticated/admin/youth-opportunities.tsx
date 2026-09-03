@@ -35,7 +35,7 @@ function AdminYouthOpportunities() {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 py-8">
         <div className="flex items-end justify-between mb-6 flex-wrap gap-3">
           <div>
-            <h1 className="text-3xl font-heading font-bold">Youth opportunities</h1>
+            <h1 className="osc-heading text-3xl">Youth opportunities</h1>
             <p className="text-sm text-brand-dark/60">Review and approve organisations' postings.</p>
           </div>
           <Link to="/admin/youth" className="px-4 py-2 rounded-xl border border-brand-dark/10 text-sm hover:bg-brand-soft">

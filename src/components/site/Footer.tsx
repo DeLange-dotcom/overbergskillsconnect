@@ -24,25 +24,21 @@ export function Footer() {
   }, []);
 
   return (
-    <footer className="mt-20 bg-brand-navy text-white">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 py-12 grid gap-10 md:grid-cols-2">
+    <footer className="mt-14 bg-brand-navy text-white">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 py-6 flex flex-col gap-5 md:flex-row md:items-start md:justify-between">
         <div>
           <Logo onDark showRelationship={false} />
-          <p className="mt-4 text-sm text-white/70 max-w-sm leading-relaxed">
-            {t("footer.tagline")}
-          </p>
-          <div className="mt-4 space-y-1">
-            <div className="text-[11px] font-semibold uppercase tracking-[0.16em] text-brand-green">
-              A Hineni Call Initiative
-            </div>
-            <div className="text-[11px] uppercase tracking-[0.16em] text-white/55">
-              Powered by Khulisa Group
-            </div>
+          <div className="mt-2 flex flex-wrap items-center gap-x-2 gap-y-1 text-[10px] uppercase tracking-[0.14em]">
+            <span className="font-semibold text-brand-green">A Hineni Call Initiative</span>
+            <span className="text-white/25">·</span>
+            <span className="text-white/60">Powered by Khulisa Group</span>
           </div>
         </div>
-        <div className="text-sm md:justify-self-end">
-          <div className="font-semibold mb-3 text-white">{t("footer.information")}</div>
-          <ul className="space-y-2.5 text-white/75">
+        <div className="text-sm md:text-right">
+          <div className="text-[11px] font-semibold uppercase tracking-[0.14em] text-white/50 mb-2">
+            {t("footer.information")}
+          </div>
+          <ul className="flex flex-wrap gap-x-4 gap-y-1.5 text-white/75 md:justify-end">
             <li><Link to="/help" className="font-semibold text-brand-green hover:underline">Need Help?</Link></li>
             <li><Link to="/how-it-works" className="hover:text-white">How It Works</Link></li>
             <li><Link to="/about" className="hover:text-white">{t("footer.about")}</Link></li>
@@ -54,7 +50,7 @@ export function Footer() {
               <li>
                 <Link
                   to="/admin"
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/10 text-white text-xs font-semibold hover:bg-white/20 transition"
+                  className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/10 text-white text-xs font-semibold hover:bg-white/20 transition"
                 >
                   🛠 Admin
                 </Link>
@@ -63,11 +59,11 @@ export function Footer() {
           </ul>
         </div>
       </div>
-      <div className="border-t border-white/10 py-6 px-4 sm:px-6 space-y-3">
-        <p className="max-w-5xl mx-auto text-[11px] leading-relaxed text-white/45 text-center">
+      <div className="border-t border-white/10 py-3 px-4 sm:px-6">
+        <p className="max-w-5xl mx-auto text-[10px] leading-relaxed text-white/40 text-center">
           {IP_OWNERSHIP_STATEMENT}
         </p>
-        <div className="text-center text-xs text-white/55">
+        <div className="mt-1 text-center text-[11px] text-white/50">
           {t("footer.copyright")}
         </div>
       </div>

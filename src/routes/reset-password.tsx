@@ -118,7 +118,7 @@ function ResetPasswordPage() {
   return (
     <SiteLayout>
       <div className="max-w-md mx-auto px-4 sm:px-6 py-14">
-        <h1 className="text-3xl font-heading font-bold mb-2">Set a new password</h1>
+        <h1 className="osc-heading text-3xl mb-2">Set a new password</h1>
 
         {status === "checking" && (
           <p className="text-brand-dark/60 text-sm mb-8">Verifying your reset link…</p>

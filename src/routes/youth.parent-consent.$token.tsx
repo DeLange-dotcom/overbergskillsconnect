@@ -98,7 +98,7 @@ function ParentConsentPage() {
       <SiteLayout>
         <div className="max-w-lg mx-auto px-4 py-16 text-center">
           <ShieldAlert className="size-12 text-destructive mx-auto mb-4" />
-          <h1 className="text-2xl font-heading font-bold mb-2">Invalid or expired link</h1>
+          <h1 className="osc-heading text-2xl mb-2">Invalid or expired link</h1>
           <p className="text-brand-dark/70 mb-6">
             This consent link is not valid. Please ask the young person to share the original email or contact Hineni.
           </p>
@@ -113,7 +113,7 @@ function ParentConsentPage() {
       <SiteLayout>
         <div className="max-w-lg mx-auto px-4 py-16 text-center">
           <CheckCircle2 className="size-14 text-brand-primary mx-auto mb-4" />
-          <h1 className="text-2xl font-heading font-bold mb-2">Consent received</h1>
+          <h1 className="osc-heading text-2xl mb-2">Consent received</h1>
           <p className="text-brand-dark/70 mb-6">
             Thank you. {info.applicant_first_name}'s registration will be reviewed by a Hineni coordinator.
           </p>
@@ -126,7 +126,7 @@ function ParentConsentPage() {
   return (
     <SiteLayout>
       <div className="max-w-2xl mx-auto px-4 sm:px-6 py-10 sm:py-14">
-        <h1 className="text-3xl font-heading font-bold mb-2">Parent / Guardian Consent</h1>
+        <h1 className="osc-heading text-3xl mb-2">Parent / Guardian Consent</h1>
         <p className="text-brand-dark/70 mb-6">
           You are being asked to consent to <strong>{info.applicant_full_name}</strong> registering on the
           Hineni Youth Opportunities Hub.
