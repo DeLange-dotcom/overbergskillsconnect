@@ -1,12 +1,18 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { DisclaimerBanner } from "@/components/site/DisclaimerBanner";
 import { supabase } from "@/integrations/supabase/client";
-import { SKILL_CATEGORIES, AVAILABILITY_OPTIONS } from "@/lib/noticeboard";
+import { AVAILABILITY_OPTIONS } from "@/lib/noticeboard";
+import {
+  SkillExperienceEditor,
+  entriesToPayload,
+  newSkillEntry,
+  type SkillEntry,
+} from "@/components/site/SkillExperienceEditor";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
+
 
 export const Route = createFileRoute("/advertise")({
   head: () => ({
@@ -23,14 +29,12 @@ export const Route = createFileRoute("/advertise")({
 });
 
 function Advertise() {
-  const { t } = useTranslation();
   const navigate = useNavigate();
   const [authChecked, setAuthChecked] = useState(false);
   const [signedIn, setSignedIn] = useState(false);
   const [hasListing, setHasListing] = useState(false);
   const [submitting, setSubmitting] = useState(false);
-  const [skills, setSkills] = useState<string[]>([]);
-  const [otherSkills, setOtherSkills] = useState("");
+  const [entries, setEntries] = useState<SkillEntry[]>([newSkillEntry()]);
   const [acks, setAcks] = useState({
     age: false,
     truthful: false,
@@ -61,52 +65,32 @@ function Advertise() {
     };
   }, []);
 
-  const hasOther = skills.includes("Other");
-
-  function toggleSkill(s: string) {
-    setSkills((prev) => {
-      const next = prev.includes(s) ? prev.filter((x) => x !== s) : [...prev, s];
-      if (s === "Other" && prev.includes(s)) {
-        // deselecting Other – clear the custom text
-        setOtherSkills("");
-      }
-      return next;
-    });
-  }
-
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     if (!acks.age || !acks.truthful || !acks.terms || !acks.noticeboard) {
       toast.error("Please confirm all four declarations to publish.");
       return;
     }
-    if (skills.length === 0) {
-      toast.error("Choose at least one skill.");
+    const skillExperience = entriesToPayload(entries);
+    if (skillExperience.length === 0) {
+      toast.error("Please add at least one skill.");
       return;
     }
-    const customSkills = hasOther
-      ? otherSkills
-          .split(",")
-          .map((s) => s.trim())
-          .filter(Boolean)
-      : [];
-    if (hasOther && customSkills.length === 0) {
-      toast.error("Please specify your skill(s) for the Other option.");
+    if (skillExperience.some((s) => !s.experience_level)) {
+      toast.error("Please choose how much experience you have for each skill.");
       return;
     }
     setSubmitting(true);
     const fd = new FormData(e.currentTarget);
-    // Replace literal "Other" with the custom values so the array stays searchable
-    const finalSkills = [...skills.filter((s) => s !== "Other"), ...customSkills];
+    const finalSkills = skillExperience.map((s) => s.skill);
     const payload = {
       name: String(fd.get("name") || "").trim(),
       town: String(fd.get("town") || "").trim(),
       phone: String(fd.get("phone") || "").trim(),
       description: String(fd.get("description") || "").trim(),
       availability: String(fd.get("availability") || "").trim() || null,
-      years_experience: fd.get("years_experience") ? Number(fd.get("years_experience")) : null,
-      
       skills: finalSkills,
+      skill_experience: skillExperience,
       category: finalSkills[0] ?? null,
       accepted_terms: true,
     };
@@ -129,6 +113,7 @@ function Advertise() {
     toast.success("Your advert is now live!");
     navigate({ to: "/my-advert" });
   }
+
 
   if (!authChecked) {
     return (
@@ -202,59 +187,14 @@ function Advertise() {
           <Field label="Town or area" name="town" required placeholder="e.g. Hermanus" />
 
           <div>
-            <Label required>Skills</Label>
-            <p className="text-xs text-brand-dark/60 mt-1 mb-2">{t("advertise.skillsHelp")}</p>
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 mt-2">
-              {SKILL_CATEGORIES.map((s) => {
-                const active = skills.includes(s);
-                return (
-                  <button
-                    key={s}
-                    type="button"
-                    onClick={() => toggleSkill(s)}
-                    className={
-                      "px-3 py-2 rounded-xl text-sm border text-left " +
-                      (active
-                        ? "bg-brand-primary text-white border-brand-primary"
-                        : "bg-white border-brand-dark/10 hover:border-brand-primary/40")
-                    }
-                  >
-                    {s}
-                  </button>
-                );
-              })}
-            </div>
-            <div
-              className={
-                "grid transition-all duration-300 ease-out " +
-                (hasOther ? "grid-rows-[1fr] opacity-100 mt-3" : "grid-rows-[0fr] opacity-0")
-              }
-            >
-              <div className="overflow-hidden">
-                <Label required>Please specify your skill(s)</Label>
-                <input
-                  type="text"
-                  value={otherSkills}
-                  onChange={(e) => setOtherSkills(e.target.value)}
-                  required={hasOther}
-                  placeholder="e.g. Upholstery, Drone Operator, Beekeeper, Piano Teacher, Stone Mason..."
-                  spellCheck
-                  className="w-full px-4 py-3 border border-brand-dark/10 rounded-xl"
-                />
-                <p className="text-xs text-brand-dark/60 mt-1">
-                  Separate multiple skills with commas.
-                </p>
-              </div>
-            </div>
+            <h2 className="text-xl font-heading font-bold">What work can you do?</h2>
+            <p className="text-sm text-brand-dark/60 mt-1 mb-3">
+              Choose a skill, then say how much experience you have. You can add as many skills as
+              you like.
+            </p>
+            <SkillExperienceEditor entries={entries} onChange={setEntries} />
           </div>
 
-          <Field
-            label="Years of experience"
-            name="years_experience"
-            type="number"
-            min={0}
-            max={70}
-          />
 
           <div>
             <Label>Availability</Label>

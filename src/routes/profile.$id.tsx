@@ -5,7 +5,7 @@ import { MapPin, Calendar, Flag, MessageCircle, ArrowLeft, CheckCircle2 } from "
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { DisclaimerBanner } from "@/components/site/DisclaimerBanner";
 import { supabase } from "@/integrations/supabase/client";
-import { REPORT_REASONS } from "@/lib/noticeboard";
+import { REPORT_REASONS, experienceLabel, type SkillExperience } from "@/lib/noticeboard";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/profile/$id")({
@@ -36,6 +36,7 @@ type Row = {
   name: string;
   town: string;
   skills: string[];
+  skill_experience?: SkillExperience[] | null;
   years_experience: number | null;
   availability: string | null;
   description: string;
@@ -100,22 +101,31 @@ function ProfilePage() {
               {data.availability && (
                 <div className="flex items-center gap-1.5 text-sm text-brand-dark/60 mt-1">
                   <Calendar className="size-4" /> {data.availability}
-                  {data.years_experience != null && ` · ${data.years_experience} yrs experience`}
                 </div>
               )}
             </div>
           </div>
 
-          <div className="flex flex-wrap gap-1.5 mt-5">
-            {data.skills.map((s) => (
-              <span
-                key={s}
-                className="text-xs px-2.5 py-1 rounded-full bg-brand-soft text-brand-dark/80"
-              >
-                {s}
-              </span>
-            ))}
+          <div className="mt-6">
+            <h2 className="text-sm font-semibold uppercase tracking-wide text-brand-dark/50 mb-2">
+              Skills
+            </h2>
+            <ul className="space-y-1.5">
+              {(data.skill_experience?.length
+                ? data.skill_experience
+                : data.skills.map((s) => ({ skill: s, experience_level: null }))
+              ).map((s) => {
+                const label = experienceLabel(s.experience_level);
+                return (
+                  <li key={s.skill} className="text-brand-dark/85">
+                    <span className="font-medium">{s.skill}</span>
+                    {label && <span className="text-brand-dark/60"> — {label} experience</span>}
+                  </li>
+                );
+              })}
+            </ul>
           </div>
+
 
           <p className="mt-5 text-brand-dark/80 leading-relaxed whitespace-pre-line">
             {data.description}

@@ -5,6 +5,7 @@ import { MapPin, Loader2, Search, Calendar } from "lucide-react";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { DisclaimerBanner } from "@/components/site/DisclaimerBanner";
 import { supabase } from "@/integrations/supabase/client";
+import { experienceLabel, type SkillExperience } from "@/lib/noticeboard";
 
 export const Route = createFileRoute("/find-help")({
   head: () => ({
@@ -26,6 +27,7 @@ type Row = {
   name: string;
   town: string;
   skills: string[];
+  skill_experience?: SkillExperience[] | null;
   category: string | null;
   years_experience: number | null;
   availability: string | null;
@@ -35,6 +37,23 @@ type Row = {
 };
 
 const EXAMPLES = ["Gardener", "Painter", "Domestic worker", "Plumber", "Carpenter"];
+
+/** Loose match so "Gardener" finds "Gardening" and "domestic worker" finds "Domestic Worker". */
+function looseMatch(skill: string, query: string) {
+  const a = skill.toLowerCase();
+  const b = query.trim().toLowerCase();
+  if (!b) return false;
+  if (a.includes(b) || b.includes(a)) return true;
+  const stem = (v: string) => v.replace(/(ing|er|ers|s)$/i, "");
+  return stem(a).startsWith(stem(b)) || stem(b).startsWith(stem(a));
+}
+
+function skillRows(r: Row): SkillExperience[] {
+  return r.skill_experience?.length
+    ? r.skill_experience
+    : r.skills.map((s) => ({ skill: s, experience_level: null }));
+}
+
 
 function FindHelp() {
   const [town, setTown] = useState("");
@@ -56,12 +75,17 @@ function FindHelp() {
     return (data ?? []).filter((r) => {
       if (town && !r.town.toLowerCase().includes(town.toLowerCase())) return false;
       if (q) {
-        const hay = `${r.name} ${r.town} ${r.description} ${r.skills.join(" ")} ${r.category ?? ""}`.toLowerCase();
-        if (!hay.includes(q.toLowerCase())) return false;
+        const rows = skillRows(r);
+        const hay =
+          `${r.name} ${r.town} ${r.description} ${rows.map((s) => s.skill).join(" ")} ${r.category ?? ""}`.toLowerCase();
+        const matched =
+          hay.includes(q.toLowerCase()) || rows.some((s) => looseMatch(s.skill, q));
+        if (!matched) return false;
       }
       return true;
     });
   }, [data, town, q]);
+
 
   return (
     <SiteLayout>
@@ -128,51 +152,68 @@ function FindHelp() {
           </div>
         ) : (
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-            {filtered.map((r) => (
-              <Link
-                key={r.id}
-                to="/profile/$id"
-                params={{ id: r.public_listing_reference ?? r.id }}
-                className="bg-white border border-brand-dark/5 rounded-2xl p-5 flex flex-col hover:border-brand-primary/30 hover:shadow-sm transition"
-              >
-                <div className="flex items-start gap-3 mb-3">
-                  <div className="size-14 rounded-full bg-brand-soft overflow-hidden grid place-items-center text-brand-dark/40 shrink-0">
-                    {r.photo_url ? (
-                      <img src={r.photo_url} alt="" className="size-full object-cover" />
-                    ) : (
-                      <span className="text-lg font-semibold">{r.name?.[0] ?? "?"}</span>
-                    )}
-                  </div>
-                  <div className="min-w-0 flex-1">
-                    <h3 className="font-heading text-lg font-semibold truncate">{r.name}</h3>
-                    <div className="flex items-center gap-1.5 text-xs text-brand-dark/60 mt-0.5">
-                      <MapPin className="size-3" /> {r.town}
+            {filtered.map((r) => {
+              const rows = skillRows(r);
+              // Show the skill the person searched for first, then a couple of others
+              const ordered = q
+                ? [...rows].sort(
+                    (a, b) => Number(looseMatch(b.skill, q)) - Number(looseMatch(a.skill, q)),
+                  )
+                : rows;
+              const shown = ordered.slice(0, 3);
+              const extra = ordered.length - shown.length;
+              return (
+                <Link
+                  key={r.id}
+                  to="/profile/$id"
+                  params={{ id: r.public_listing_reference ?? r.id }}
+                  className="bg-white border border-brand-dark/5 rounded-2xl p-5 flex flex-col hover:border-brand-primary/30 hover:shadow-sm transition"
+                >
+                  <div className="flex items-start gap-3 mb-3">
+                    <div className="size-14 rounded-full bg-brand-soft overflow-hidden grid place-items-center text-brand-dark/40 shrink-0">
+                      {r.photo_url ? (
+                        <img src={r.photo_url} alt="" className="size-full object-cover" />
+                      ) : (
+                        <span className="text-lg font-semibold">{r.name?.[0] ?? "?"}</span>
+                      )}
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <h3 className="font-heading text-lg font-semibold truncate">{r.name}</h3>
+                      <div className="flex items-center gap-1.5 text-xs text-brand-dark/60 mt-0.5">
+                        <MapPin className="size-3" /> {r.town}
+                      </div>
                     </div>
                   </div>
-                </div>
-                <div className="flex flex-wrap gap-1.5 mb-3">
-                  {r.skills.slice(0, 4).map((s) => (
-                    <span
-                      key={s}
-                      className="text-[11px] px-2 py-0.5 rounded-full bg-brand-soft text-brand-dark/80"
-                    >
-                      {s}
-                    </span>
-                  ))}
-                </div>
-                <p className="text-sm text-brand-dark/70 mb-3 line-clamp-3">{r.description}</p>
-                <div className="mt-auto flex items-center justify-between text-xs text-brand-dark/60">
-                  {r.availability && (
-                    <span className="inline-flex items-center gap-1">
-                      <Calendar className="size-3" /> {r.availability}
-                    </span>
-                  )}
-                  {r.years_experience != null && <span>{r.years_experience} yrs exp.</span>}
-                </div>
-              </Link>
-            ))}
+                  <ul className="mb-3 space-y-0.5 text-sm">
+                    {shown.map((s) => {
+                      const label = experienceLabel(s.experience_level);
+                      return (
+                        <li key={s.skill} className="text-brand-dark/80">
+                          <span className="font-medium">{s.skill}</span>
+                          {label && (
+                            <span className="text-brand-dark/60"> — {label} experience</span>
+                          )}
+                        </li>
+                      );
+                    })}
+                    {extra > 0 && (
+                      <li className="text-xs text-brand-dark/50">+{extra} more skills</li>
+                    )}
+                  </ul>
+                  <p className="text-sm text-brand-dark/70 mb-3 line-clamp-3">{r.description}</p>
+                  <div className="mt-auto flex items-center justify-between text-xs text-brand-dark/60">
+                    {r.availability && (
+                      <span className="inline-flex items-center gap-1">
+                        <Calendar className="size-3" /> {r.availability}
+                      </span>
+                    )}
+                  </div>
+                </Link>
+              );
+            })}
           </div>
         )}
+
       </div>
     </SiteLayout>
   );
