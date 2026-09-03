@@ -45,51 +45,64 @@
   --color-brand-sky: var(--brand-sky);
   --color-brand-field: var(--brand-field);
   --color-brand-canola: var(--brand-canola);
+  --color-brand-navy: var(--brand-navy);
+  --color-brand-green: var(--brand-green);
+  --color-brand-orange: var(--brand-orange);
+  --color-brand-cream: var(--brand-cream);
+  --color-brand-neutral: var(--brand-neutral);
 
-  --font-heading: "Playfair Display", ui-serif, Georgia, serif;
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-heading: "Poppins", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Poppins", ui-sans-serif, system-ui, sans-serif;
 }
 
 :root {
   --radius: 0.875rem;
 
-  /* Overberg poster palette — canola yellow, field green, crane blue, cream, charcoal */
-  --brand-primary: oklch(0.50 0.11 130);   /* field green  ~ #4E6B2C */
-  --brand-accent: oklch(0.83 0.15 92);     /* canola yellow ~ #E8C547 */
-  --brand-dark: oklch(0.25 0.01 90);       /* poster charcoal ~ #1F1F1F */
-  --brand-soft: oklch(0.94 0.03 92);       /* cream ~ #F4ECD8 */
-  --brand-page: oklch(0.985 0.008 92);     /* warm off-white */
-  --brand-sky: oklch(0.62 0.07 245);       /* crane blue ~ #6E8FB3 */
-  --brand-field: oklch(0.50 0.11 130);     /* alias of field green */
-  --brand-canola: oklch(0.83 0.15 92);     /* alias of canola yellow */
+  /* Overberg Skills Connect brand — navy, energetic green, warm orange */
+  --brand-navy: #0f1f2e;
+  --brand-green: #4caf2a;
+  --brand-orange: #f28c28;
+  --brand-cream: #fff7eb;
+  --brand-neutral: #f2f4f7;
+
+  /* Semantic brand aliases (kept for existing components) */
+  --brand-primary: var(--brand-green);
+  --brand-accent: var(--brand-orange);
+  --brand-dark: var(--brand-navy);
+  --brand-soft: var(--brand-cream);
+  --brand-page: #ffffff;
+  --brand-sky: var(--brand-navy);
+  --brand-field: var(--brand-green);
+  --brand-canola: var(--brand-orange);
 
   --background: var(--brand-page);
-  --foreground: var(--brand-dark);
+  --foreground: var(--brand-navy);
 
-  --card: oklch(1 0 0);
-  --card-foreground: var(--brand-dark);
-  --popover: oklch(1 0 0);
-  --popover-foreground: var(--brand-dark);
+  --card: #ffffff;
+  --card-foreground: var(--brand-navy);
+  --popover: #ffffff;
+  --popover-foreground: var(--brand-navy);
 
-  --primary: var(--brand-primary);
-  --primary-foreground: oklch(0.985 0.008 92);
+  --primary: var(--brand-green);
+  --primary-foreground: #ffffff;
 
-  --secondary: var(--brand-soft);
-  --secondary-foreground: var(--brand-dark);
+  --secondary: var(--brand-neutral);
+  --secondary-foreground: var(--brand-navy);
 
-  --muted: var(--brand-soft);
-  --muted-foreground: oklch(0.45 0.02 90);
+  --muted: var(--brand-neutral);
+  --muted-foreground: #566476;
 
-  --accent: var(--brand-accent);
-  --accent-foreground: var(--brand-dark);
+  --accent: var(--brand-orange);
+  --accent-foreground: var(--brand-navy);
 
   --destructive: oklch(0.55 0.21 27);
   --destructive-foreground: oklch(0.99 0 0);
 
-  --border: oklch(0.25 0.01 90 / 0.08);
-  --input: oklch(0.25 0.01 90 / 0.12);
-  --ring: var(--brand-primary);
+  --border: oklch(0.25 0.03 240 / 0.10);
+  --input: oklch(0.25 0.03 240 / 0.16);
+  --ring: var(--brand-green);
 }
+
 
 .dark {
   /* Dark mode kept conservative — same palette deepened */
