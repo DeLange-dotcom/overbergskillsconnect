@@ -126,17 +126,12 @@ function NoticeboardAdmin() {
 
   useEffect(() => {
     (async () => {
-      const { data } = await supabase.auth.getUser();
-      if (!data.user) return setIsAdmin(false);
-      const { data: role } = await supabase
-        .from("user_roles")
-        .select("role")
-        .eq("user_id", data.user.id)
-        .eq("role", "admin")
-        .maybeSingle();
-      setIsAdmin(!!role);
+      // Role check happens in the database, so it covers every admin role.
+      const { data, error } = await supabase.rpc("is_admin");
+      setIsAdmin(!error && data === true);
     })();
   }, []);
+
 
   const stats = useQuery({
     queryKey: ["nb_admin_stats"],
