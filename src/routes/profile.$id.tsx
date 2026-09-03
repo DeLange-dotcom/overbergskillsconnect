@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { MapPin, Calendar, Flag, MessageCircle, ArrowLeft, CheckCircle2 } from "lucide-react";
 import { SiteLayout } from "@/components/site/SiteLayout";
+import { FavouriteButton } from "@/components/site/FavouriteButton";
 import { DisclaimerBanner } from "@/components/site/DisclaimerBanner";
 import { supabase } from "@/integrations/supabase/client";
 import { REPORT_REASONS, experienceLabel, type SkillExperience } from "@/lib/noticeboard";
@@ -144,6 +145,7 @@ function ProfilePage() {
             >
               <Flag className="size-4" /> Report this profile
             </button>
+            <FavouriteButton profileId={data.id} className="sm:col-span-2" />
           </div>
         </div>
 
