@@ -2,8 +2,8 @@ import { Link } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
 import { useEffect, useState } from "react";
 import { IP_OWNERSHIP_STATEMENT } from "@/lib/brand";
-import { Logo } from "@/components/brand/Logo";
 import { supabase } from "@/integrations/supabase/client";
+import logoAsset from "@/assets/osc-logo-header.png.asset.json";
 
 export function Footer() {
   const { t } = useTranslation();
