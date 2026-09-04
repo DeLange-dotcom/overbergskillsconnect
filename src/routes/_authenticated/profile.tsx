@@ -255,6 +255,7 @@ type NotificationRow = {
   title: string;
   body: string | null;
   link: string | null;
+  related_id: string | null;
   read_at: string | null;
   created_at: string;
 };
@@ -262,18 +263,21 @@ type NotificationRow = {
 function NotificationsSection() {
   const { t } = useTranslation();
   const qc = useQueryClient();
+  const { openRequest } = useContext(RequestFocusContext);
   const { data, isLoading } = useQuery({
     queryKey: ["notifications"],
     queryFn: async (): Promise<NotificationRow[]> => {
       const { data, error } = await supabase
         .from("notifications")
-        .select("id,type,title,body,link,read_at,created_at")
+        .select("id,type,title,body,link,related_id,read_at,created_at")
         .order("created_at", { ascending: false })
         .limit(20);
       if (error) throw error;
       return (data ?? []) as NotificationRow[];
     },
     refetchInterval: 30000,
+    refetchOnWindowFocus: true,
+    refetchOnMount: "always",
   });
 
   const markAllRead = useMutation({
@@ -281,7 +285,14 @@ function NotificationsSection() {
       const { error } = await supabase.rpc("notifications_mark_all_read");
       if (error) throw error;
     },
-    onSuccess: () => qc.invalidateQueries({ queryKey: ["notifications"] }),
+    onSuccess: async () => {
+      const now = new Date().toISOString();
+      qc.setQueryData<NotificationRow[]>(["notifications"], (old) =>
+        (old ?? []).map((n) => (n.read_at ? n : { ...n, read_at: now })),
+      );
+      await qc.invalidateQueries({ queryKey: ["notifications"] });
+    },
+    onError: () => toast.error(t("account.notifications.markAllReadError")),
   });
 
   const items = data ?? [];
@@ -300,10 +311,14 @@ function NotificationsSection() {
         unread > 0 && (
           <button
             type="button"
+            disabled={markAllRead.isPending}
             onClick={() => markAllRead.mutate()}
-            className="text-xs text-brand-primary hover:underline"
+            className="text-xs text-brand-primary hover:underline disabled:opacity-50 disabled:no-underline inline-flex items-center gap-1"
           >
-            {t("account.notifications.markAllRead")}
+            {markAllRead.isPending && <Loader2 className="size-3 animate-spin" />}
+            {markAllRead.isPending
+              ? t("account.notifications.markingRead")
+              : t("account.notifications.markAllRead")}
           </button>
         )
       }
@@ -314,30 +329,45 @@ function NotificationsSection() {
         <p className="text-sm text-brand-dark/50">{t("account.notifications.empty")}</p>
       ) : (
         <ul className="divide-y divide-brand-dark/5">
-          {items.slice(0, 5).map((n) => (
-            <li key={n.id} className="py-2.5 flex items-start gap-3">
-              <span
-                className={
-                  "mt-1 size-2 rounded-full shrink-0 " +
-                  (n.read_at ? "bg-brand-dark/20" : "bg-brand-primary")
-                }
-                aria-hidden
-              />
-              <div className="min-w-0 flex-1">
-                <div className="text-sm font-medium">{n.title}</div>
-                {n.body && <div className="text-sm text-brand-dark/70">{n.body}</div>}
-                <div className="text-[11px] text-brand-dark/40 mt-0.5">{fmtDate(n.created_at)}</div>
-              </div>
-              {n.link && (
-                <a
-                  href={n.link}
-                  className="text-xs text-brand-primary hover:underline shrink-0 mt-1"
-                >
-                  {t("account.notifications.open")}
-                </a>
-              )}
-            </li>
-          ))}
+          {items.slice(0, 5).map((n) => {
+            const isInterest =
+              n.type === "interest_received" ||
+              (n.link ?? "").startsWith("/profile");
+            return (
+              <li key={n.id} className="py-2.5 flex items-start gap-3">
+                <span
+                  className={
+                    "mt-1 size-2 rounded-full shrink-0 " +
+                    (n.read_at ? "bg-brand-dark/20" : "bg-brand-primary")
+                  }
+                  aria-hidden
+                />
+                <div className="min-w-0 flex-1">
+                  <div className="text-sm font-medium">{n.title}</div>
+                  {n.body && <div className="text-sm text-brand-dark/70">{n.body}</div>}
+                  <div className="text-[11px] text-brand-dark/40 mt-0.5">{fmtDate(n.created_at)}</div>
+                </div>
+                {isInterest ? (
+                  <button
+                    type="button"
+                    onClick={() => openRequest(n.related_id)}
+                    className="text-xs font-medium text-brand-primary hover:underline shrink-0 mt-1"
+                  >
+                    {t("account.notifications.openRequest")}
+                  </button>
+                ) : (
+                  n.link && (
+                    <a
+                      href={n.link}
+                      className="text-xs text-brand-primary hover:underline shrink-0 mt-1"
+                    >
+                      {t("account.notifications.open")}
+                    </a>
+                  )
+                )}
+              </li>
+            );
+          })}
         </ul>
       )}
     </Section>
