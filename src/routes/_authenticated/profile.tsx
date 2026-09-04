@@ -213,6 +213,7 @@ function MyProfile() {
       </div>
 
     </SiteLayout>
+    </RequestFocusContext.Provider>
   );
 }
 
