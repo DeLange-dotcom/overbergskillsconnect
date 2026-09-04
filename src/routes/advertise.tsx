@@ -61,10 +61,20 @@ function Advertise() {
         return;
       }
       setSignedIn(true);
-      const { data } = await supabase.rpc("noticeboard_my_listing");
+      const [{ data }, { data: profileData }] = await Promise.all([
+        supabase.rpc("noticeboard_my_listing"),
+        supabase.rpc("get_my_profile"),
+      ]);
       const existing = Array.isArray(data) ? data[0] : data;
+      const profile = (Array.isArray(profileData) ? profileData[0] : profileData) as
+        | { full_name: string | null; town: string | null; phone: string | null }
+        | undefined;
       if (mounted) {
         setHasListing(!!existing);
+        if (profile) {
+          setPrefill({ name: profile.full_name ?? "", phone: profile.phone ?? "" });
+          if (profile.town) setTown(profile.town);
+        }
         setAuthChecked(true);
       }
     })();
