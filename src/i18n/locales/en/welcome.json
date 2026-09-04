@@ -1,0 +1,20 @@
+{
+  "welcome": {
+    "meta": {
+      "title": "Welcome — Overberg Skills Connect",
+      "description": "Choose whether you want to offer your skills or find someone local who can help."
+    },
+    "eyebrow": "Welcome",
+    "heading": "What would you like to do?",
+    "intro": "You can change your mind at any time from My Profile.",
+    "offer": {
+      "title": "Offer my skills",
+      "body": "Create a free skills listing so local people can find you."
+    },
+    "find": {
+      "title": "Find someone",
+      "body": "Browse local people offering skills and services."
+    },
+    "skip": "Skip for now — go to My Profile"
+  }
+}

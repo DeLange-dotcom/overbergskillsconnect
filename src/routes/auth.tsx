@@ -92,12 +92,29 @@ function AuthPage() {
     }
   }
 
-  function nextDest(): string {
-    if (typeof window === "undefined") return "/profile";
+  function explicitNext(): string | null {
+    if (typeof window === "undefined") return null;
     const params = new URLSearchParams(window.location.search);
     const n = params.get("next");
     if (n && n.startsWith("/") && !n.startsWith("//")) return n;
-    return "/profile";
+    return null;
+  }
+
+  // Someone who just created their account (or has never seen the choice)
+  // gets the "what would you like to do?" screen once.
+  function isFirstTime(createdAt?: string | null): boolean {
+    if (typeof window === "undefined") return false;
+    try {
+      if (localStorage.getItem("osc_welcomed") === "1") return false;
+    } catch {
+      /* storage unavailable */
+    }
+    if (!createdAt) return false;
+    return Date.now() - new Date(createdAt).getTime() < 15 * 60 * 1000;
+  }
+
+  function nextDest(createdAt?: string | null): string {
+    return explicitNext() ?? (isFirstTime(createdAt) ? "/welcome" : "/profile");
   }
 
   // Handle email verification callback (code exchange) and post-verification UX
@@ -139,7 +156,7 @@ function AuthPage() {
           toast.success(t("auth.toasts.emailVerifiedWelcome"));
           markWelcome();
         }
-        navigate({ to: nextDest(), replace: true });
+        navigate({ to: nextDest(data.session.user?.created_at), replace: true });
       } else if (verified) {
         toast.success(t("auth.toasts.emailVerifiedSignIn"));
         setMode("signin");
@@ -163,10 +180,10 @@ function AuthPage() {
     setBusy(true);
     try {
       if (mode === "signin") {
-        const { error } = await supabase.auth.signInWithPassword({ email, password: pw });
+        const { data, error } = await supabase.auth.signInWithPassword({ email, password: pw });
         if (error) throw error;
         markWelcome();
-        navigate({ to: nextDest(), replace: true });
+        navigate({ to: nextDest(data.user?.created_at), replace: true });
       } else if (mode === "signup") {
         const { data, error } = await supabase.auth.signUp({
           email,
@@ -181,7 +198,7 @@ function AuthPage() {
         if (data.session) {
           toast.success(t("auth.toasts.accountCreatedSignedIn"));
           markWelcome();
-          navigate({ to: nextDest(), replace: true });
+          navigate({ to: nextDest(data.user?.created_at ?? new Date().toISOString()), replace: true });
         } else {
           setSignupEmail(email);
           setSignupSent(true);

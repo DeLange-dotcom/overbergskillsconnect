@@ -53,7 +53,10 @@
         "archived": "Archived",
         "paused": "Paused",
         "active": "Active"
-      }
+      },
+      "notVisible": "Your account is registered, but your skills are not yet visible to the community.",
+      "notVisibleHelp": "That is perfectly fine if you joined to find someone. Whenever you are ready, add your skills so local people can find you.",
+      "addMySkills": "Add my skills"
     },
     "incoming": {
       "title": "People Interested In My Services",

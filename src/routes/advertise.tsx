@@ -39,6 +39,7 @@ function Advertise() {
   const [authChecked, setAuthChecked] = useState(false);
   const [signedIn, setSignedIn] = useState(false);
   const [hasListing, setHasListing] = useState(false);
+  const [prefill, setPrefill] = useState<{ name: string; phone: string }>({ name: "", phone: "" });
   const [submitting, setSubmitting] = useState(false);
   const [entries, setEntries] = useState<SkillEntry[]>([newSkillEntry()]);
   const [town, setTown] = useState("");
@@ -60,10 +61,20 @@ function Advertise() {
         return;
       }
       setSignedIn(true);
-      const { data } = await supabase.rpc("noticeboard_my_listing");
+      const [{ data }, { data: profileData }] = await Promise.all([
+        supabase.rpc("noticeboard_my_listing"),
+        supabase.rpc("get_my_profile"),
+      ]);
       const existing = Array.isArray(data) ? data[0] : data;
+      const profile = (Array.isArray(profileData) ? profileData[0] : profileData) as
+        | { full_name: string | null; town: string | null; phone: string | null }
+        | undefined;
       if (mounted) {
         setHasListing(!!existing);
+        if (profile) {
+          setPrefill({ name: profile.full_name ?? "", phone: profile.phone ?? "" });
+          if (profile.town) setTown(profile.town);
+        }
         setAuthChecked(true);
       }
     })();
@@ -188,7 +199,7 @@ function Advertise() {
         <ShortNotice className="mb-8" />
 
         <form onSubmit={onSubmit} className="space-y-5 max-w-2xl">
-          <Field label={t("advertiseForm.fields.name")} name="name" required />
+          <Field label={t("advertiseForm.fields.name")} name="name" required defaultValue={prefill.name} />
           <LocationSelect value={town} onChange={setTown} required />
 
           <div>
@@ -235,6 +246,7 @@ function Advertise() {
             required
             placeholder={t("advertiseForm.fields.phonePlaceholder")}
             help={t("advertiseForm.fields.phoneHelp")}
+            defaultValue={prefill.phone}
           />
 
           <div className="space-y-3 p-5 osc-panel">
@@ -304,6 +316,7 @@ function Field({
   help,
   min,
   max,
+  defaultValue,
 }: {
   label: string;
   name: string;
@@ -313,6 +326,7 @@ function Field({
   help?: string;
   min?: number;
   max?: number;
+  defaultValue?: string;
 }) {
   return (
     <div>
@@ -324,6 +338,7 @@ function Field({
         placeholder={placeholder}
         min={min}
         max={max}
+        defaultValue={defaultValue}
         spellCheck={!type || ["text", "search", "email"].includes(type)}
         className="w-full px-4 py-3 border border-brand-dark/10 rounded-xl"
       />

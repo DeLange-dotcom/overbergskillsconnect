@@ -29,6 +29,7 @@ import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as SafeguardingPolicyRouteImport } from './routes/safeguarding-policy'
 import { Route as TermsRouteImport } from './routes/terms'
 import { Route as UnavailableRouteImport } from './routes/unavailable'
+import { Route as WelcomeRouteImport } from './routes/welcome'
 import { Route as YouthRouteImport } from './routes/youth'
 import { Route as AuthenticatedAdminRouteRouteImport } from './routes/_authenticated/admin/route'
 import { Route as AuthenticatedMyAdvertRouteImport } from './routes/_authenticated/my-advert'
@@ -165,6 +166,11 @@ const TermsRoute = TermsRouteImport.update({
 const UnavailableRoute = UnavailableRouteImport.update({
   id: '/unavailable',
   path: '/unavailable',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const WelcomeRoute = WelcomeRouteImport.update({
+  id: '/welcome',
+  path: '/welcome',
   getParentRoute: () => rootRouteImport,
 } as any)
 const YouthRoute = YouthRouteImport.update({
@@ -392,6 +398,7 @@ export interface FileRoutesByFullPath {
   '/safeguarding-policy': typeof SafeguardingPolicyRoute
   '/terms': typeof TermsRoute
   '/unavailable': typeof UnavailableRoute
+  '/welcome': typeof WelcomeRoute
   '/youth': typeof YouthRouteWithChildren
   '/admin': typeof AuthenticatedAdminRouteRouteWithChildren
   '/my-advert': typeof AuthenticatedMyAdvertRoute
@@ -450,6 +457,7 @@ export interface FileRoutesByTo {
   '/safeguarding-policy': typeof SafeguardingPolicyRoute
   '/terms': typeof TermsRoute
   '/unavailable': typeof UnavailableRoute
+  '/welcome': typeof WelcomeRoute
   '/my-advert': typeof AuthenticatedMyAdvertRoute
   '/my-requests': typeof AuthenticatedMyRequestsRoute
   '/profile': typeof AuthenticatedProfileRoute
@@ -509,6 +517,7 @@ export interface FileRoutesById {
   '/safeguarding-policy': typeof SafeguardingPolicyRoute
   '/terms': typeof TermsRoute
   '/unavailable': typeof UnavailableRoute
+  '/welcome': typeof WelcomeRoute
   '/youth': typeof YouthRouteWithChildren
   '/_authenticated/admin': typeof AuthenticatedAdminRouteRouteWithChildren
   '/_authenticated/my-advert': typeof AuthenticatedMyAdvertRoute
@@ -570,6 +579,7 @@ export interface FileRouteTypes {
     | '/safeguarding-policy'
     | '/terms'
     | '/unavailable'
+    | '/welcome'
     | '/youth'
     | '/admin'
     | '/my-advert'
@@ -628,6 +638,7 @@ export interface FileRouteTypes {
     | '/safeguarding-policy'
     | '/terms'
     | '/unavailable'
+    | '/welcome'
     | '/my-advert'
     | '/my-requests'
     | '/profile'
@@ -686,6 +697,7 @@ export interface FileRouteTypes {
     | '/safeguarding-policy'
     | '/terms'
     | '/unavailable'
+    | '/welcome'
     | '/youth'
     | '/_authenticated/admin'
     | '/_authenticated/my-advert'
@@ -747,6 +759,7 @@ export interface RootRouteChildren {
   SafeguardingPolicyRoute: typeof SafeguardingPolicyRoute
   TermsRoute: typeof TermsRoute
   UnavailableRoute: typeof UnavailableRoute
+  WelcomeRoute: typeof WelcomeRoute
   YouthRoute: typeof YouthRouteWithChildren
   FeedbackTokenRoute: typeof FeedbackTokenRoute
   MentorsInterestRoute: typeof MentorsInterestRoute
@@ -901,6 +914,13 @@ declare module '@tanstack/react-router' {
       path: '/unavailable'
       fullPath: '/unavailable'
       preLoaderRoute: typeof UnavailableRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/welcome': {
+      id: '/welcome'
+      path: '/welcome'
+      fullPath: '/welcome'
+      preLoaderRoute: typeof WelcomeRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/youth': {
@@ -1297,6 +1317,7 @@ const rootRouteChildren: RootRouteChildren = {
   SafeguardingPolicyRoute: SafeguardingPolicyRoute,
   TermsRoute: TermsRoute,
   UnavailableRoute: UnavailableRoute,
+  WelcomeRoute: WelcomeRoute,
   YouthRoute: YouthRouteWithChildren,
   FeedbackTokenRoute: FeedbackTokenRoute,
   MentorsInterestRoute: MentorsInterestRoute,

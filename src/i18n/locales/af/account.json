@@ -53,7 +53,10 @@
         "archived": "Geargiveer",
         "paused": "Tydelik gestop",
         "active": "Aktief"
-      }
+      },
+      "notVisible": "Jou rekening is geregistreer, maar jou vaardighede is nog nie vir die gemeenskap sigbaar nie.",
+      "notVisibleHelp": "Dit is heeltemal reg as jy aangesluit het om iemand te vind. Wanneer jy gereed is, voeg jou vaardighede by sodat plaaslike mense jou kan vind.",
+      "addMySkills": "Voeg my vaardighede by"
     },
     "incoming": {
       "title": "Mense Wat Belangstel In My Dienste",

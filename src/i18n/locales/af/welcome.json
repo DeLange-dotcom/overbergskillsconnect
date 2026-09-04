@@ -1,0 +1,20 @@
+{
+  "welcome": {
+    "meta": {
+      "title": "Welkom — Overberg Skills Connect",
+      "description": "Kies of jy jou vaardighede wil aanbied of iemand plaaslik wil vind wat kan help."
+    },
+    "eyebrow": "Welkom",
+    "heading": "Wat wil jy graag doen?",
+    "intro": "Jy kan enige tyd van plan verander by My Profiel.",
+    "offer": {
+      "title": "Bied my vaardighede aan",
+      "body": "Skep 'n gratis vaardigheidslys sodat plaaslike mense jou kan vind."
+    },
+    "find": {
+      "title": "Vind iemand",
+      "body": "Blaai deur plaaslike mense wat vaardighede en dienste aanbied."
+    },
+    "skip": "Slaan vir eers oor — gaan na My Profiel"
+  }
+}
