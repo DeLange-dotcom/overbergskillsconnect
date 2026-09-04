@@ -39,6 +39,7 @@ function Advertise() {
   const [authChecked, setAuthChecked] = useState(false);
   const [signedIn, setSignedIn] = useState(false);
   const [hasListing, setHasListing] = useState(false);
+  const [prefill, setPrefill] = useState<{ name: string; phone: string }>({ name: "", phone: "" });
   const [submitting, setSubmitting] = useState(false);
   const [entries, setEntries] = useState<SkillEntry[]>([newSkillEntry()]);
   const [town, setTown] = useState("");
