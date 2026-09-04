@@ -20,7 +20,10 @@
       "checkRegularly": "Check your profile regularly. Updates appear here, not by SMS.",
       "markAllRead": "Mark all read",
       "empty": "No notifications yet.",
-      "open": "Open"
+      "open": "Open",
+      "markingRead": "Marking…",
+      "markAllReadError": "Could not mark notifications as read. Please try again.",
+      "openRequest": "Open request"
     },
     "details": {
       "title": "My Details",
@@ -76,7 +79,9 @@
         "declined": "Declined",
         "revoked": "Revoked",
         "new": "New"
-      }
+      },
+      "loadError": "We could not load your requests right now.",
+      "retry": "Try again"
     },
     "outgoing": {
       "title": "My Service Requests",
