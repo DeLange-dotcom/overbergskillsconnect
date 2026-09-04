@@ -199,7 +199,7 @@ function Advertise() {
         <ShortNotice className="mb-8" />
 
         <form onSubmit={onSubmit} className="space-y-5 max-w-2xl">
-          <Field label={t("advertiseForm.fields.name")} name="name" required />
+          <Field label={t("advertiseForm.fields.name")} name="name" required defaultValue={prefill.name} />
           <LocationSelect value={town} onChange={setTown} required />
 
           <div>
@@ -246,6 +246,7 @@ function Advertise() {
             required
             placeholder={t("advertiseForm.fields.phonePlaceholder")}
             help={t("advertiseForm.fields.phoneHelp")}
+            defaultValue={prefill.phone}
           />
 
           <div className="space-y-3 p-5 osc-panel">
@@ -315,6 +316,7 @@ function Field({
   help,
   min,
   max,
+  defaultValue,
 }: {
   label: string;
   name: string;
@@ -324,6 +326,7 @@ function Field({
   help?: string;
   min?: number;
   max?: number;
+  defaultValue?: string;
 }) {
   return (
     <div>
@@ -335,6 +338,7 @@ function Field({
         placeholder={placeholder}
         min={min}
         max={max}
+        defaultValue={defaultValue}
         spellCheck={!type || ["text", "search", "email"].includes(type)}
         className="w-full px-4 py-3 border border-brand-dark/10 rounded-xl"
       />
