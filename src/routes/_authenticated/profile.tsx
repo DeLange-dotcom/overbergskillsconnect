@@ -1,7 +1,7 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useTranslation, Trans } from "react-i18next";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { supabase } from "@/integrations/supabase/client";
 import { LocationSelect } from "@/components/site/LocationSelect";
@@ -136,10 +136,53 @@ function WelcomeCard() {
   );
 }
 
+// ============ Deep-link / highlight plumbing ============
+const PEOPLE_INTERESTED_ID = "people-interested";
+
+type HighlightCtx = {
+  highlightId: string | null;
+  openRequest: (relatedId: string | null) => void;
+};
+const RequestFocusContext = createContext<HighlightCtx>({
+  highlightId: null,
+  openRequest: () => {},
+});
+
+function scrollToPeopleInterested() {
+  const el = document.getElementById(PEOPLE_INTERESTED_ID);
+  if (!el) return;
+  // iOS Safari needs a frame before measuring after layout/hash changes
+  requestAnimationFrame(() => {
+    el.scrollIntoView({ behavior: "smooth", block: "start" });
+  });
+}
+
 // ============ Main ============
 function MyProfile() {
   const { t } = useTranslation();
+  const qc = useQueryClient();
+  const [highlightId, setHighlightId] = useState<string | null>(null);
+
+  const openRequest = (relatedId: string | null) => {
+    setHighlightId(relatedId);
+    qc.invalidateQueries({ queryKey: ["my-incoming-requests"] });
+    if (typeof window !== "undefined") {
+      window.history.replaceState(null, "", `#${PEOPLE_INTERESTED_ID}`);
+      scrollToPeopleInterested();
+      window.setTimeout(scrollToPeopleInterested, 350);
+    }
+  };
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    if (window.location.hash === `#${PEOPLE_INTERESTED_ID}`) {
+      const timer = window.setTimeout(scrollToPeopleInterested, 300);
+      return () => window.clearTimeout(timer);
+    }
+  }, []);
+
   return (
+    <RequestFocusContext.Provider value={{ highlightId, openRequest }}>
     <SiteLayout>
       <div className="osc-container py-8 sm:py-12 space-y-8">
         <header className="space-y-1">
@@ -170,17 +213,20 @@ function MyProfile() {
       </div>
 
     </SiteLayout>
+    </RequestFocusContext.Provider>
   );
 }
 
 // ============ Section shell ============
 function Section({
+  id,
   icon,
   title,
   subtitle,
   children,
   right,
 }: {
+  id?: string;
   icon: string;
   title: string;
   subtitle?: string;
@@ -188,7 +234,8 @@ function Section({
   right?: React.ReactNode;
 }) {
   return (
-    <section className="bg-white rounded-2xl border border-brand-dark/10 p-5 sm:p-6">
+    <section id={id} className="scroll-mt-24 bg-white rounded-2xl border border-brand-dark/10 p-5 sm:p-6">
+
       <div className="flex items-start justify-between gap-3 mb-4">
         <div>
           <h2 className="osc-heading text-xl flex items-center gap-2">
@@ -211,6 +258,7 @@ type NotificationRow = {
   title: string;
   body: string | null;
   link: string | null;
+  related_id: string | null;
   read_at: string | null;
   created_at: string;
 };
@@ -218,18 +266,21 @@ type NotificationRow = {
 function NotificationsSection() {
   const { t } = useTranslation();
   const qc = useQueryClient();
+  const { openRequest } = useContext(RequestFocusContext);
   const { data, isLoading } = useQuery({
     queryKey: ["notifications"],
     queryFn: async (): Promise<NotificationRow[]> => {
       const { data, error } = await supabase
         .from("notifications")
-        .select("id,type,title,body,link,read_at,created_at")
+        .select("id,type,title,body,link,related_id,read_at,created_at")
         .order("created_at", { ascending: false })
         .limit(20);
       if (error) throw error;
       return (data ?? []) as NotificationRow[];
     },
     refetchInterval: 30000,
+    refetchOnWindowFocus: true,
+    refetchOnMount: "always",
   });
 
   const markAllRead = useMutation({
@@ -237,7 +288,14 @@ function NotificationsSection() {
       const { error } = await supabase.rpc("notifications_mark_all_read");
       if (error) throw error;
     },
-    onSuccess: () => qc.invalidateQueries({ queryKey: ["notifications"] }),
+    onSuccess: async () => {
+      const now = new Date().toISOString();
+      qc.setQueryData<NotificationRow[]>(["notifications"], (old) =>
+        (old ?? []).map((n) => (n.read_at ? n : { ...n, read_at: now })),
+      );
+      await qc.invalidateQueries({ queryKey: ["notifications"] });
+    },
+    onError: () => toast.error(t("account.notifications.markAllReadError")),
   });
 
   const items = data ?? [];
@@ -256,10 +314,14 @@ function NotificationsSection() {
         unread > 0 && (
           <button
             type="button"
+            disabled={markAllRead.isPending}
             onClick={() => markAllRead.mutate()}
-            className="text-xs text-brand-primary hover:underline"
+            className="text-xs text-brand-primary hover:underline disabled:opacity-50 disabled:no-underline inline-flex items-center gap-1"
           >
-            {t("account.notifications.markAllRead")}
+            {markAllRead.isPending && <Loader2 className="size-3 animate-spin" />}
+            {markAllRead.isPending
+              ? t("account.notifications.markingRead")
+              : t("account.notifications.markAllRead")}
           </button>
         )
       }
@@ -270,30 +332,45 @@ function NotificationsSection() {
         <p className="text-sm text-brand-dark/50">{t("account.notifications.empty")}</p>
       ) : (
         <ul className="divide-y divide-brand-dark/5">
-          {items.slice(0, 5).map((n) => (
-            <li key={n.id} className="py-2.5 flex items-start gap-3">
-              <span
-                className={
-                  "mt-1 size-2 rounded-full shrink-0 " +
-                  (n.read_at ? "bg-brand-dark/20" : "bg-brand-primary")
-                }
-                aria-hidden
-              />
-              <div className="min-w-0 flex-1">
-                <div className="text-sm font-medium">{n.title}</div>
-                {n.body && <div className="text-sm text-brand-dark/70">{n.body}</div>}
-                <div className="text-[11px] text-brand-dark/40 mt-0.5">{fmtDate(n.created_at)}</div>
-              </div>
-              {n.link && (
-                <a
-                  href={n.link}
-                  className="text-xs text-brand-primary hover:underline shrink-0 mt-1"
-                >
-                  {t("account.notifications.open")}
-                </a>
-              )}
-            </li>
-          ))}
+          {items.slice(0, 5).map((n) => {
+            const isInterest =
+              n.type === "interest_received" ||
+              (n.link ?? "").startsWith("/profile");
+            return (
+              <li key={n.id} className="py-2.5 flex items-start gap-3">
+                <span
+                  className={
+                    "mt-1 size-2 rounded-full shrink-0 " +
+                    (n.read_at ? "bg-brand-dark/20" : "bg-brand-primary")
+                  }
+                  aria-hidden
+                />
+                <div className="min-w-0 flex-1">
+                  <div className="text-sm font-medium">{n.title}</div>
+                  {n.body && <div className="text-sm text-brand-dark/70">{n.body}</div>}
+                  <div className="text-[11px] text-brand-dark/40 mt-0.5">{fmtDate(n.created_at)}</div>
+                </div>
+                {isInterest ? (
+                  <button
+                    type="button"
+                    onClick={() => openRequest(n.related_id)}
+                    className="text-xs font-medium text-brand-primary hover:underline shrink-0 mt-1"
+                  >
+                    {t("account.notifications.openRequest")}
+                  </button>
+                ) : (
+                  n.link && (
+                    <a
+                      href={n.link}
+                      className="text-xs text-brand-primary hover:underline shrink-0 mt-1"
+                    >
+                      {t("account.notifications.open")}
+                    </a>
+                  )
+                )}
+              </li>
+            );
+          })}
         </ul>
       )}
     </Section>
@@ -634,7 +711,8 @@ function statusLabelIncoming(row: IncomingRow, t: (k: string) => string) {
 function PeopleInterestedSection() {
   const { t } = useTranslation();
   const qc = useQueryClient();
-  const { data, isLoading } = useQuery({
+  const { highlightId } = useContext(RequestFocusContext);
+  const { data, isLoading, error, refetch, isFetching } = useQuery({
     queryKey: ["my-incoming-requests"],
     queryFn: async (): Promise<IncomingRow[]> => {
       const { data, error } = await supabase.rpc("noticeboard_my_incoming_requests");
@@ -642,7 +720,30 @@ function PeopleInterestedSection() {
       return (data ?? []) as IncomingRow[];
     },
     refetchInterval: 30000,
+    refetchOnWindowFocus: true,
+    refetchOnMount: "always",
+    staleTime: 0,
+    retry: 1,
   });
+
+  // iOS Safari keeps pages alive in the back/forward cache and does not always
+  // fire focus events, so also refetch on visibility + pageshow.
+  useEffect(() => {
+    if (typeof document === "undefined") return;
+    const onVisible = () => {
+      if (document.visibilityState === "visible") refetch();
+    };
+    document.addEventListener("visibilitychange", onVisible);
+    window.addEventListener("pageshow", onVisible);
+    return () => {
+      document.removeEventListener("visibilitychange", onVisible);
+      window.removeEventListener("pageshow", onVisible);
+    };
+  }, [refetch]);
+
+  useEffect(() => {
+    if (highlightId) refetch();
+  }, [highlightId, refetch]);
 
   const decide = useMutation({
     mutationFn: async (vars: { id: string; decision: "approved" | "declined" }) => {
@@ -676,20 +777,43 @@ function PeopleInterestedSection() {
 
   return (
     <Section
+      id={PEOPLE_INTERESTED_ID}
       icon="📩"
       title={t("account.incoming.title")}
       subtitle={t("account.incoming.subtitle")}
     >
       {isLoading ? (
         <Loader2 className="size-4 animate-spin text-brand-dark/40" />
+      ) : error ? (
+        <div className="rounded-xl border border-red-200 bg-red-50 p-4">
+          <p className="text-sm text-red-800">{t("account.incoming.loadError")}</p>
+          <button
+            type="button"
+            onClick={() => refetch()}
+            disabled={isFetching}
+            className="mt-3 inline-flex items-center gap-2 px-3 py-2 rounded-lg bg-brand-primary text-white text-sm font-medium disabled:opacity-60"
+          >
+            {isFetching && <Loader2 className="size-4 animate-spin" />}
+            {t("account.incoming.retry")}
+          </button>
+        </div>
       ) : rows.length === 0 ? (
         <p className="text-sm text-brand-dark/60">{t("account.incoming.empty")}</p>
       ) : (
         <ul className="space-y-3">
           {rows.map((r) => {
             const s = statusLabelIncoming(r, t);
+            const isHighlighted = highlightId === r.id;
             return (
-              <li key={r.id} className="border border-brand-dark/10 rounded-xl p-4">
+              <li
+                key={r.id}
+                className={
+                  "border rounded-xl p-4 transition " +
+                  (isHighlighted
+                    ? "border-brand-primary ring-2 ring-brand-primary/40 bg-brand-soft/50"
+                    : "border-brand-dark/10")
+                }
+              >
                 <div className="flex items-start justify-between gap-3">
                   <div className="min-w-0">
                     <div className="font-semibold">{firstName(r.requester_name)}</div>

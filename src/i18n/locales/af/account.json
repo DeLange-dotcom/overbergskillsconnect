@@ -20,7 +20,10 @@
       "checkRegularly": "Kyk gereeld na jou profiel. Opdaterings verskyn hier, nie per SMS nie.",
       "markAllRead": "Merk alles as gelees",
       "empty": "Nog geen kennisgewings nie.",
-      "open": "Maak oop"
+      "open": "Maak oop",
+      "markingRead": "Besig om te merk…",
+      "markAllReadError": "Kon nie kennisgewings as gelees merk nie. Probeer asseblief weer.",
+      "openRequest": "Maak versoek oop"
     },
     "details": {
       "title": "My Besonderhede",
@@ -76,7 +79,9 @@
         "declined": "Afgewys",
         "revoked": "Teruggetrek",
         "new": "Nuut"
-      }
+      },
+      "loadError": "Ons kon nie jou versoeke nou laai nie.",
+      "retry": "Probeer weer"
     },
     "outgoing": {
       "title": "My Diensversoeke",
