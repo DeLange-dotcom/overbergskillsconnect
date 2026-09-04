@@ -219,12 +219,14 @@ function MyProfile() {
 
 // ============ Section shell ============
 function Section({
+  id,
   icon,
   title,
   subtitle,
   children,
   right,
 }: {
+  id?: string;
   icon: string;
   title: string;
   subtitle?: string;
@@ -232,7 +234,8 @@ function Section({
   right?: React.ReactNode;
 }) {
   return (
-    <section className="bg-white rounded-2xl border border-brand-dark/10 p-5 sm:p-6">
+    <section id={id} className="scroll-mt-24 bg-white rounded-2xl border border-brand-dark/10 p-5 sm:p-6">
+
       <div className="flex items-start justify-between gap-3 mb-4">
         <div>
           <h2 className="osc-heading text-xl flex items-center gap-2">
