@@ -711,7 +711,8 @@ function statusLabelIncoming(row: IncomingRow, t: (k: string) => string) {
 function PeopleInterestedSection() {
   const { t } = useTranslation();
   const qc = useQueryClient();
-  const { data, isLoading } = useQuery({
+  const { highlightId } = useContext(RequestFocusContext);
+  const { data, isLoading, error, refetch, isFetching } = useQuery({
     queryKey: ["my-incoming-requests"],
     queryFn: async (): Promise<IncomingRow[]> => {
       const { data, error } = await supabase.rpc("noticeboard_my_incoming_requests");
@@ -719,7 +720,30 @@ function PeopleInterestedSection() {
       return (data ?? []) as IncomingRow[];
     },
     refetchInterval: 30000,
+    refetchOnWindowFocus: true,
+    refetchOnMount: "always",
+    staleTime: 0,
+    retry: 1,
   });
+
+  // iOS Safari keeps pages alive in the back/forward cache and does not always
+  // fire focus events, so also refetch on visibility + pageshow.
+  useEffect(() => {
+    if (typeof document === "undefined") return;
+    const onVisible = () => {
+      if (document.visibilityState === "visible") refetch();
+    };
+    document.addEventListener("visibilitychange", onVisible);
+    window.addEventListener("pageshow", onVisible);
+    return () => {
+      document.removeEventListener("visibilitychange", onVisible);
+      window.removeEventListener("pageshow", onVisible);
+    };
+  }, [refetch]);
+
+  useEffect(() => {
+    if (highlightId) refetch();
+  }, [highlightId, refetch]);
 
   const decide = useMutation({
     mutationFn: async (vars: { id: string; decision: "approved" | "declined" }) => {
@@ -753,20 +777,43 @@ function PeopleInterestedSection() {
 
   return (
     <Section
+      id={PEOPLE_INTERESTED_ID}
       icon="📩"
       title={t("account.incoming.title")}
       subtitle={t("account.incoming.subtitle")}
     >
       {isLoading ? (
         <Loader2 className="size-4 animate-spin text-brand-dark/40" />
+      ) : error ? (
+        <div className="rounded-xl border border-red-200 bg-red-50 p-4">
+          <p className="text-sm text-red-800">{t("account.incoming.loadError")}</p>
+          <button
+            type="button"
+            onClick={() => refetch()}
+            disabled={isFetching}
+            className="mt-3 inline-flex items-center gap-2 px-3 py-2 rounded-lg bg-brand-primary text-white text-sm font-medium disabled:opacity-60"
+          >
+            {isFetching && <Loader2 className="size-4 animate-spin" />}
+            {t("account.incoming.retry")}
+          </button>
+        </div>
       ) : rows.length === 0 ? (
         <p className="text-sm text-brand-dark/60">{t("account.incoming.empty")}</p>
       ) : (
         <ul className="space-y-3">
           {rows.map((r) => {
             const s = statusLabelIncoming(r, t);
+            const isHighlighted = highlightId === r.id;
             return (
-              <li key={r.id} className="border border-brand-dark/10 rounded-xl p-4">
+              <li
+                key={r.id}
+                className={
+                  "border rounded-xl p-4 transition " +
+                  (isHighlighted
+                    ? "border-brand-primary ring-2 ring-brand-primary/40 bg-brand-soft/50"
+                    : "border-brand-dark/10")
+                }
+              >
                 <div className="flex items-start justify-between gap-3">
                   <div className="min-w-0">
                     <div className="font-semibold">{firstName(r.requester_name)}</div>
