@@ -494,13 +494,20 @@ function MyListingSection() {
         title={t("account.listing.title")}
         subtitle={t("account.listing.subtitle")}
       >
-        <p className="text-sm text-brand-dark/60 mb-4">{t("account.listing.empty")}</p>
-        <Link
-          to="/advertise"
-          className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-brand-primary text-white font-medium"
-        >
-          <Plus className="size-4" /> {t("account.listing.create")}
-        </Link>
+        <div className="rounded-xl border border-brand-primary/30 bg-brand-soft/70 p-4 sm:p-5 mb-4">
+          <p className="font-heading text-base sm:text-lg font-semibold text-brand-dark">
+            {t("account.listing.notVisible")}
+          </p>
+          <p className="text-sm text-brand-dark/70 mt-1.5">
+            {t("account.listing.notVisibleHelp")}
+          </p>
+          <Link
+            to="/advertise"
+            className="inline-flex items-center gap-2 px-5 py-3 mt-4 rounded-xl bg-brand-primary text-white font-semibold"
+          >
+            <Plus className="size-4" /> {t("account.listing.addMySkills")}
+          </Link>
+        </div>
       </Section>
     );
   }

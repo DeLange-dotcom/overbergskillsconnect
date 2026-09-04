@@ -41,7 +41,12 @@ function fmt(d?: string | null) {
 }
 
 function StatusPill({ status }: { status: string | null }) {
-  if (!status) return <span className="text-brand-dark/40">No listing</span>;
+  if (!status)
+    return (
+      <span className="text-brand-dark/50 text-xs">
+        Registered – skills listing not yet created
+      </span>
+    );
   const cls =
     status === "active"
       ? "bg-emerald-100 text-emerald-800"
