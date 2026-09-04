@@ -136,10 +136,53 @@ function WelcomeCard() {
   );
 }
 
+// ============ Deep-link / highlight plumbing ============
+const PEOPLE_INTERESTED_ID = "people-interested";
+
+type HighlightCtx = {
+  highlightId: string | null;
+  openRequest: (relatedId: string | null) => void;
+};
+const RequestFocusContext = createContext<HighlightCtx>({
+  highlightId: null,
+  openRequest: () => {},
+});
+
+function scrollToPeopleInterested() {
+  const el = document.getElementById(PEOPLE_INTERESTED_ID);
+  if (!el) return;
+  // iOS Safari needs a frame before measuring after layout/hash changes
+  requestAnimationFrame(() => {
+    el.scrollIntoView({ behavior: "smooth", block: "start" });
+  });
+}
+
 // ============ Main ============
 function MyProfile() {
   const { t } = useTranslation();
+  const qc = useQueryClient();
+  const [highlightId, setHighlightId] = useState<string | null>(null);
+
+  const openRequest = (relatedId: string | null) => {
+    setHighlightId(relatedId);
+    qc.invalidateQueries({ queryKey: ["my-incoming-requests"] });
+    if (typeof window !== "undefined") {
+      window.history.replaceState(null, "", `#${PEOPLE_INTERESTED_ID}`);
+      scrollToPeopleInterested();
+      window.setTimeout(scrollToPeopleInterested, 350);
+    }
+  };
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    if (window.location.hash === `#${PEOPLE_INTERESTED_ID}`) {
+      const timer = window.setTimeout(scrollToPeopleInterested, 300);
+      return () => window.clearTimeout(timer);
+    }
+  }, []);
+
   return (
+    <RequestFocusContext.Provider value={{ highlightId, openRequest }}>
     <SiteLayout>
       <div className="osc-container py-8 sm:py-12 space-y-8">
         <header className="space-y-1">
