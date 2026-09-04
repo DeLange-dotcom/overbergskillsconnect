@@ -180,10 +180,10 @@ function AuthPage() {
     setBusy(true);
     try {
       if (mode === "signin") {
-        const { error } = await supabase.auth.signInWithPassword({ email, password: pw });
+        const { data, error } = await supabase.auth.signInWithPassword({ email, password: pw });
         if (error) throw error;
         markWelcome();
-        navigate({ to: nextDest(), replace: true });
+        navigate({ to: nextDest(data.user?.created_at), replace: true });
       } else if (mode === "signup") {
         const { data, error } = await supabase.auth.signUp({
           email,
@@ -198,7 +198,7 @@ function AuthPage() {
         if (data.session) {
           toast.success(t("auth.toasts.accountCreatedSignedIn"));
           markWelcome();
-          navigate({ to: nextDest(), replace: true });
+          navigate({ to: nextDest(data.user?.created_at ?? new Date().toISOString()), replace: true });
         } else {
           setSignupEmail(email);
           setSignupSent(true);
